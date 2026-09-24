@@ -1,0 +1,142 @@
+.hero {
+  padding-block: var(--space-2xl) var(--space-3xl);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+  transition: color var(--dur-fast) var(--ease-out-quart);
+}
+
+.back:hover {
+  color: var(--fg-primary);
+}
+
+.meta,
+.fact dt,
+.caption {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block: var(--space-3xl) var(--space-lg);
+}
+
+.title {
+  max-inline-size: 15em;
+  font-size: var(--type-h2);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 80ms both;
+}
+
+.tagline {
+  color: var(--fg-secondary);
+}
+
+.lead {
+  max-inline-size: 42em;
+  margin-block-start: var(--space-lg);
+  font-size: var(--type-body-lg);
+  color: var(--fg-secondary);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 160ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-lg);
+  margin-block: var(--space-2xl) var(--space-2xl);
+  padding-block-start: var(--space-lg);
+  border-block-start: 1px solid var(--border-hair);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+.fact {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.fact dd {
+  font-size: var(--type-body-sm);
+}
+
+.site {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-block-end: 1px solid var(--border-hover);
+}
+
+.site:hover {
+  border-block-end-color: var(--fg-primary);
+}
+
+.cover {
+  display: grid;
+  gap: var(--space-sm);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 320ms both;
+}
+
+.cover > :first-child {
+  aspect-ratio: 1312 / 640;
+}
+
+/* Без скриншота плашка ниже: пустая обложка во весь экран выглядит дырой */
+.cover > [data-size='cover'] {
+  aspect-ratio: 1312 / 400;
+}
+
+.image {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--border-hair);
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-block: var(--space-lg) var(--space-2xl);
+  }
+
+  .meta {
+    margin-block: var(--space-xl) var(--space-md);
+  }
+
+  .facts {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .cover > :first-child {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cover > [data-size='cover'] {
+    aspect-ratio: 4 / 3;
+  }
+}

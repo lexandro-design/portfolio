@@ -1,0 +1,124 @@
+/* ============================================================
+   Дизайн-токены — 1:1 из переменных макета (коллекции Colors,
+   Spacing, Motion). Три темы: dark по умолчанию, light и warm.
+   Тема ставится атрибутом data-theme на <html> до первой отрисовки
+   (см. ThemeScript), поэтому при загрузке ничего не моргает.
+   ============================================================ */
+
+:root,
+[data-theme='dark'] {
+  --bg-base: #0a0a0a;
+  --bg-elevated: #121212;
+  --bg-subtle: #1a1a1a;
+  --fg-primary: #f5f5f2;
+  --fg-secondary: #a8a8a3;
+  --fg-tertiary: #6b6b68;
+  --border-hair: rgb(245 245 242 / 0.08);
+  --border-hover: rgb(245 245 242 / 0.22);
+  --signal-live: #4ade80;
+  --border-focus: #dddec7;
+  --bg-scrim: rgb(10 10 10 / 0.8);
+  --overlay-tag: rgb(0 0 0 / 0.55);
+  --fg-inverse: #0a0a0a;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg-base: #f5f4ef;
+  --bg-elevated: #eceae1;
+  --bg-subtle: #e2dfd3;
+  --fg-primary: #14140f;
+  --fg-secondary: #57564e;
+  --fg-tertiary: #8b897f;
+  --border-hair: rgb(20 20 15 / 0.1);
+  --border-hover: rgb(20 20 15 / 0.28);
+  --signal-live: #1f8a4c;
+  --border-focus: #14140f;
+  --bg-scrim: rgb(20 20 15 / 0.5);
+  --overlay-tag: rgb(0 0 0 / 0.35);
+  --fg-inverse: #f5f4ef;
+  color-scheme: light;
+}
+
+[data-theme='warm'] {
+  --bg-base: #1f1a14;
+  --bg-elevated: #2a231b;
+  --bg-subtle: #352b21;
+  --fg-primary: #f2e8d5;
+  --fg-secondary: #b8a88c;
+  --fg-tertiary: #7e6e55;
+  --border-hair: rgb(242 232 213 / 0.1);
+  --border-hover: rgb(242 232 213 / 0.26);
+  --signal-live: #c8b36a;
+  --border-focus: #e8b86b;
+  --bg-scrim: rgb(31 27 20 / 0.8);
+  --overlay-tag: rgb(0 0 0 / 0.45);
+  --fg-inverse: #1f1b14;
+  color-scheme: dark;
+}
+
+:root {
+  --accent: #dddec7;
+  --accent-warm: #e8b86b;
+
+  /* ---------- Отступы ---------- */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 128px;
+  --bleed: 64px;
+  --section-y: 192px;
+  --container: 1440px;
+  --nav-h: 76px;
+
+  /* ---------- Типографика ---------- */
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --type-h1: 120px;
+  --type-h2: 72px;
+  --type-h3: 32px;
+  --type-h4: 22px;
+  --type-body-lg: 18px;
+  --type-body: 17px;
+  --type-body-sm: 15px;
+  --type-mono: 12px;
+  --type-mono-sm: 11px;
+
+  /* ---------- Движение (Motion Lab) ---------- */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 600ms;
+  --dur-reveal: 900ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Планшет (Landing / Tablet 768): поля 32, секции 128, H1 88 */
+@media (max-width: 1023px) {
+  :root {
+    --bleed: 32px;
+    --section-y: 128px;
+    --type-h1: 88px;
+    --type-h2: 56px;
+  }
+}
+
+/* Телефон (Landing / Mobile 390): space/bleed-mobile 24, section-y-mobile 96 */
+@media (max-width: 767px) {
+  :root {
+    --bleed: 24px;
+    --section-y: 96px;
+    --nav-h: 60px;
+    --type-h1: 52px;
+    --type-h2: 40px;
+    --type-h3: 26px;
+    --type-body-lg: 17px;
+    --type-body: 16px;
+  }
+}

@@ -1,0 +1,10 @@
+# Переводы строк в репозитории — всегда LF. Без этого git на Windows
+# переписывает файлы в CRLF, и Prettier с ESLint видят «изменения» там,
+# где их нет
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff2 binary
+*.ico binary

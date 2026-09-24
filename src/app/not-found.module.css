@@ -1,0 +1,48 @@
+.page {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-block-size: calc(100svh - var(--nav-h));
+  padding-block: var(--space-3xl);
+  overflow: hidden;
+}
+
+.ghost {
+  position: absolute;
+  inset-block-start: 40px;
+  inset-inline-end: calc(var(--bleed) - 0.04em);
+  font-size: min(42vw, 560px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border-hover);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.title {
+  font-size: var(--type-h2);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

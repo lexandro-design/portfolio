@@ -1,0 +1,10 @@
+:global(.js) .reveal:not([data-visible]) {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal {
+  transition:
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    transform var(--dur-reveal) var(--ease-out-expo);
+}

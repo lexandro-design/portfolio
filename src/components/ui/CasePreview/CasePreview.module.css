@@ -1,0 +1,82 @@
+.preview {
+  position: relative;
+  display: block;
+  block-size: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.corner {
+  position: absolute;
+  inline-size: 14px;
+  block-size: 14px;
+  border: 1px solid var(--border-hover);
+}
+
+.corner[data-pos='tl'] {
+  inset: 14px auto auto 14px;
+  border-inline-end: 0;
+  border-block-end: 0;
+}
+
+.corner[data-pos='br'] {
+  inset: auto 14px 14px auto;
+  border-inline-start: 0;
+  border-block-start: 0;
+}
+
+.top {
+  position: absolute;
+  inset: 17px 40px auto 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Номер контуром, срезан правым и нижним краем, как в макете */
+.number {
+  position: absolute;
+  inset-block-end: -0.22em;
+  inset-inline-end: -0.05em;
+  font-family: var(--font-sans);
+  font-size: min(300px, 50cqi);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border-hover);
+}
+
+.preview {
+  container-type: inline-size;
+}
+
+.stack {
+  position: absolute;
+  inset: auto 45% 36px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.stack > span::before {
+  content: '· ';
+}
+
+@media (max-width: 767px) {
+  .top {
+    inset-inline: 32px;
+  }
+
+  .stack {
+    inset-inline: 32px 40%;
+    inset-block-end: 28px;
+  }
+}
