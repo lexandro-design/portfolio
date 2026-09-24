@@ -85,7 +85,8 @@
   }
 
   .email {
-    font-size: 21px;
+    gap: var(--space-sm);
+    font-size: min(21px, 5.4vw);
   }
 
   .actions,

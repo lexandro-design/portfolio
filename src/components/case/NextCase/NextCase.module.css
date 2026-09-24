@@ -30,6 +30,7 @@
 }
 
 .title {
+  min-inline-size: 0;
   font-size: var(--type-h2);
   font-weight: 450;
   line-height: 1.02;
@@ -53,6 +54,14 @@
 @media (max-width: 767px) {
   .inner {
     padding-block: var(--space-2xl);
+  }
+
+  .row {
+    gap: var(--space-md);
+  }
+
+  .title {
+    font-size: min(34px, 9vw);
   }
 
   .arrow svg {

@@ -100,15 +100,34 @@
 }
 
 @media (max-width: 767px) {
+  .inner {
+    gap: var(--space-sm);
+  }
+
   .logo {
     font-size: 18px;
   }
 
   .side {
-    gap: var(--space-sm);
+    gap: 12px;
   }
 
   .cta {
+    min-block-size: 36px;
     padding-inline: 14px;
+  }
+}
+
+/* Узкие телефоны: стрелка в кнопке уступает место */
+@media (max-width: 399px) {
+  .cta > :last-child {
+    display: none;
+  }
+}
+
+/* Совсем узкие: кнопка уходит, контакты есть в конце страницы */
+@media (max-width: 359px) {
+  .cta {
+    display: none;
   }
 }
