@@ -36,6 +36,8 @@
       n8n<br>
       Supabase / PostgreSQL<br>
       Telegram Bot API<br>
+      OpenAI API: GPT, Whisper<br>
+      Платежи: YooKassa<br>
       RAG, эмбеддинги, Ollama<br>
       AI-агенты, MCP
     </td>
@@ -59,18 +61,18 @@
       <br><sub>Figma · Next.js · TypeScript · CSS Modules · Битрикс</sub>
     </td>
     <td width="50%">
-      <a href="cases/mimimibot/"><img src="cases/mimimibot/images/cover.svg" alt="mimimibot" width="100%"></a>
-      <br><b><a href="cases/mimimibot/">mimimibot</a></b>
-      <br>Telegram-бот с AI-генерацией фото
-      <br><sub>Telegram Bot API · AI</sub>
+      <a href="cases/mimimibot/"><img src="cases/mimimibot/images/cover.svg" alt="MiMiMi AI" width="100%"></a>
+      <br><b><a href="cases/mimimibot/">MiMiMi AI</a></b>
+      <br>Telegram-бот для AI-фотосессий с цифровым двойником пользователя
+      <br><sub>n8n · Supabase · YooKassa · Telegram Bot API</sub>
     </td>
   </tr>
   <tr valign="top">
     <td width="50%">
       <a href="cases/jarvis/"><img src="cases/jarvis/images/cover.svg" alt="Jarvis" width="100%"></a>
       <br><b><a href="cases/jarvis/">Jarvis</a></b>
-      <br>Личный AI-ассистент
-      <br><sub>AI-агент · LLM</sub>
+      <br>Личный self-hosted ассистент в Telegram: текст, голос, напоминания по расписанию
+      <br><sub>n8n · Supabase · OpenAI · Telegram Bot API</sub>
     </td>
     <td width="50%">
       <a href="cases/brain-search/"><img src="cases/brain-search/images/cover.svg" alt="brain-search" width="100%"></a>
@@ -84,14 +86,14 @@
 | № | Проект | Направление | Стек | Результат |
 |---|---|---|---|---|
 | 01 | [Parfumeria.by](cases/parfumeria/) | Дизайн, фронтенд | Figma, Next.js, TypeScript, CSS Modules, Битрикс | уточняется |
-| 02 | [mimimibot](cases/mimimibot/) | Автоматизация, AI | Telegram Bot API | уточняется |
-| 03 | [Jarvis](cases/jarvis/) | Автоматизация, AI | уточняется | уточняется |
+| 02 | [MiMiMi AI](cases/mimimibot/) | Продукт, автоматизация, AI | n8n, Supabase, Telegram Bot API, YooKassa | уточняется |
+| 03 | [Jarvis](cases/jarvis/) | Автоматизация, AI | n8n, Supabase, OpenAI API, Telegram Bot API | уточняется |
 | 04 | [brain-search](cases/brain-search/) | AI-инструменты | MCP, Ollama, эмбеддинги, гибридный поиск | уточняется |
 
 ## Контакты
 
-- Telegram: уточняется
-- Email: уточняется
+- Telegram: [@lexandr0](https://t.me/lexandr0)
+- Email: [alexssveshnikov@gmail.com](mailto:alexssveshnikov@gmail.com)
 - GitHub: [lexandro-design](https://github.com/lexandro-design)
 
 ---
