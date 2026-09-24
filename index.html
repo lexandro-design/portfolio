@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LEXANDRO — Алексей Свешников</title>
+  <meta name="description" content="Алексей Свешников: дизайн интерфейсов, автоматизация, фронтенд. Кейсы.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230e1014'/%3E%3Crect x='4' y='4' width='8' height='8' fill='%23c2a878'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #0e1014;
+      --surface: #151920;
+      --surface-2: #1c2129;
+      --line: #2a2f38;
+      --grid: #161a20;
+      --text: #ece9e3;
+      --soft: #c3c6cc;
+      --muted: #8b919b;
+      --dim: #5b616b;
+      --accent: #c2a878;
+      --sans: Inter, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --mono: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    header.top { border-bottom: 1px solid var(--line); }
+    header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 600; letter-spacing: .28em; font-size: 15px; }
+    .brand i { width: 12px; height: 12px; background: var(--accent); display: block; }
+    nav { display: flex; gap: 24px; font-size: 14px; }
+    nav a { color: var(--muted); text-decoration: none; }
+    nav a:hover { color: var(--text); }
+
+    .label { font: 13px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .hero {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--line);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 80px 80px;
+      background-position: -1px -1px;
+    }
+    .hero h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1.05; letter-spacing: -.02em; margin: 20px 0 20px; font-weight: 600; }
+    .hero p { font-size: clamp(18px, 2.2vw, 22px); color: var(--soft); max-width: 720px; margin: 0; }
+    .meta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { font: 13px/1 var(--mono); color: var(--soft); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; }
+
+    section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+    section h2 { font-size: 28px; letter-spacing: -.01em; margin: 12px 0 32px; font-weight: 600; }
+
+    .cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .case {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .15s ease;
+    }
+    .case:hover { border-color: var(--dim); }
+    .case img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 1px solid var(--line); background: var(--bg); }
+    .case .body { padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .case h3 { margin: 0; font-size: 22px; font-weight: 600; }
+    .case h3 a { text-decoration: none; }
+    .case h3 a::after { content: ""; position: absolute; inset: 0; }
+    .case { position: relative; }
+    .case p { margin: 0; color: var(--soft); }
+    .case .stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
+    .case .stack span { font: 12px/1 var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 6px 8px; }
+    .case .more { font: 13px/1 var(--mono); color: var(--accent); }
+
+    .skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .skill { border-top: 1px solid var(--line); padding-top: 20px; }
+    .skill h3 { margin: 0 0 12px; font-size: 17px; font-weight: 600; }
+    .skill ul { margin: 0; padding: 0; list-style: none; color: var(--soft); }
+    .skill li { padding: 4px 0; }
+    .about p { color: var(--soft); max-width: 760px; margin: 0 0 16px; font-size: 18px; }
+
+    .contacts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .contact { border: 1px solid var(--line); border-radius: 10px; padding: 20px; background: var(--surface); }
+    .contact .label { display: block; margin-bottom: 10px; }
+    .contact a, .contact span { font-size: 17px; color: var(--text); }
+
+    footer { padding: 32px 0 48px; color: var(--dim); font: 13px/1.6 var(--mono); }
+
+    @media (max-width: 860px) {
+      .cases, .skills, .contacts { grid-template-columns: 1fr; }
+      nav { gap: 16px; }
+      .hero { padding: 64px 0 56px; }
+      section { padding: 56px 0; }
+    }
+    @media (max-width: 520px) {
+      .wrap { padding: 0 16px; }
+      nav a.hide-sm { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .case { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#"><i></i>LEXANDRO</a>
+      <nav aria-label="Разделы">
+        <a href="#cases">Кейсы</a>
+        <a href="#about" class="hide-sm">Обо мне</a>
+        <a href="#contacts">Контакты</a>
+        <a href="https://github.com/lexandro-design" class="hide-sm">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="wrap">
+        <span class="label">Дизайн интерфейсов · Автоматизация · Фронтенд</span>
+        <h1>Алексей Свешников</h1>
+        <p>Проектирую интерфейсы и автоматизирую процессы: от дизайн-системы в Figma до работающего кода на Next.js и сценариев в n8n.</p>
+        <div class="meta">
+          <span class="chip">Санкт-Петербург</span>
+          <span class="chip">Холдинг ТИТАН-2</span>
+          <span class="chip">Фриланс</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="cases">
+      <div class="wrap">
+        <span class="label">Кейсы</span>
+        <h2>Избранные проекты</h2>
+        <div class="cases">
+          <article class="case">
+            <img src="cases/parfumeria/images/cover.svg" alt="" loading="lazy" width="1600" height="900">
+            <div class="body">
+              <span class="label">01 · Дизайн · Фронтенд</span>
+              <h3><a href="https://github.com/lexandro-design/portfolio/tree/main/cases/parfumeria">Parfumeria.by</a></h3>
+              <p>Интернет-магазин парфюмерии: дизайн-система и 450+ экранов в Figma на трёх брейкпоинтах, перенос сайта на Next.js с headless-каталогом из Aspro/Битрикс, поиском с транслитом, корзиной и входом по SMS.</p>
+              <div class="stack"><span>Figma</span><span>Next.js</span><span>TypeScript</span><span>CSS Modules</span><span>Битрикс</span></div>
+              <span class="more">Открыть кейс →</span>
+            </div>
+          </article>
+          <article class="case">
+            <img src="cases/mimimibot/images/cover.svg" alt="" loading="lazy" width="1600" height="900">
+            <div class="body">
+              <span class="label">02 · Автоматизация · AI</span>
+              <h3><a href="https://github.com/lexandro-design/portfolio/tree/main/cases/mimimibot">mimimibot</a></h3>
+              <p>Telegram-бот с AI-генерацией фото.</p>
+              <div class="stack"><span>Telegram Bot API</span><span>AI</span></div>
+              <span class="more">Открыть кейс →</span>
+            </div>
+          </article>
+          <article class="case">
+            <img src="cases/jarvis/images/cover.svg" alt="" loading="lazy" width="1600" height="900">
+            <div class="body">
+              <span class="label">03 · Автоматизация · AI</span>
+              <h3><a href="https://github.com/lexandro-design/portfolio/tree/main/cases/jarvis">Jarvis</a></h3>
+              <p>Личный AI-ассистент.</p>
+              <div class="stack"><span>AI-агент</span><span>LLM</span></div>
+              <span class="more">Открыть кейс →</span>
+            </div>
+          </article>
+          <article class="case">
+            <img src="cases/brain-search/images/cover.svg" alt="" loading="lazy" width="1600" height="900">
+            <div class="body">
+              <span class="label">04 · AI · Инструменты</span>
+              <h3><a href="https://github.com/lexandro-design/portfolio/tree/main/cases/brain-search">brain-search</a></h3>
+              <p>Локальный MCP-сервер семантического поиска по базе знаний: RAG на Ollama, эмбеддинги, гибридный поиск. Подключается к Claude Code.</p>
+              <div class="stack"><span>MCP</span><span>RAG</span><span>Ollama</span><span>Hybrid Search</span></div>
+              <span class="more">Открыть кейс →</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="wrap">
+        <span class="label">Обо мне</span>
+        <h2>Дизайн, автоматизация, фронтенд</h2>
+        <p>Работаю в холдинге ТИТАН-2: дизайн интерфейсов и автоматизация внутренних процессов. Отдельно беру проекты на фрилансе.</p>
+        <div class="skills">
+          <div class="skill">
+            <h3>Дизайн интерфейсов</h3>
+            <ul><li>Figma</li><li>Дизайн-системы</li><li>Библиотеки компонентов</li><li>Адаптив на нескольких брейкпоинтах</li></ul>
+          </div>
+          <div class="skill">
+            <h3>Автоматизация и AI</h3>
+            <ul><li>n8n</li><li>Supabase / PostgreSQL</li><li>Telegram Bot API</li><li>RAG, эмбеддинги, Ollama</li><li>AI-агенты, MCP</li></ul>
+          </div>
+          <div class="skill">
+            <h3>Фронтенд</h3>
+            <ul><li>React</li><li>TypeScript</li><li>Next.js (App Router)</li><li>CSS Modules</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacts">
+      <div class="wrap">
+        <span class="label">Контакты</span>
+        <h2>Связаться</h2>
+        <div class="contacts">
+          <div class="contact"><span class="label">Telegram</span><span>уточняется</span></div>
+          <div class="contact"><span class="label">Email</span><span>уточняется</span></div>
+          <div class="contact"><span class="label">GitHub</span><a href="https://github.com/lexandro-design">lexandro-design</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">LEXANDRO · Алексей Свешников · Санкт-Петербург</div>
+  </footer>
+</body>
+</html>
