@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { Footer } from '@/components/layout/Footer'
 import { Nav } from '@/components/layout/Nav'
 import { ThemeScript } from '@/components/layout/ThemeScript'
+import { asset } from '@/lib/asset'
 import './styles.css'
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ru_RU',
     siteName: 'LEXANDRO',
+    images: [{ url: asset('/og/home.png'), width: 1200, height: 630 }],
   },
+  twitter: { card: 'summary_large_image' },
 }
 
 export const viewport: Viewport = {

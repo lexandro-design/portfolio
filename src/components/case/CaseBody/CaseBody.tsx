@@ -38,7 +38,7 @@ export function CaseBody({ item }: { item: Case }) {
             <div className={styles.gallery}>
               {gallery.map((shot, i) => (
                 <Reveal as="figure" key={shot.src} className={styles.figure} delay={(i % 2) * 80}>
-                  <Shot shot={shot} className={styles.image} />
+                  <Shot shot={shot} className={styles.image} zoom />
                   <figcaption className={styles.label}>
                     {pad(i + 2)} · {shot.caption}
                   </figcaption>

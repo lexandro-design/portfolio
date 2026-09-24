@@ -75,6 +75,10 @@ img {
   color: #14140f;
 }
 
+img[data-zoom] {
+  cursor: zoom-in;
+}
+
 .container {
   max-inline-size: var(--container);
   margin-inline: auto;

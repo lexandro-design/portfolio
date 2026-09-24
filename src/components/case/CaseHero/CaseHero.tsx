@@ -62,7 +62,7 @@ export function CaseHero({ item, index, total }: Props) {
 
         <figure className={styles.cover}>
           {cover ? (
-            <Shot shot={cover} className={styles.image} eager />
+            <Shot shot={cover} className={styles.image} eager zoom />
           ) : (
             <CasePreview index={index} year={item.year} stack={item.stack} size="cover" />
           )}

@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { contacts, nav } from '@/content/site'
 import { Button } from '@/components/ui/Button'
+import { MobileMenu } from '../MobileMenu'
+import { ScrollProgress } from '../ScrollProgress'
 import { ThemeSwitch } from '../ThemeSwitch'
 import styles from './Nav.module.css'
 
-/** Шапка: логотип, разделы, статус, переключатель тем, «написать» */
+/** Шапка: логотип, разделы, статус, переключатель тем, «написать». Уже 1024 разделы уходят в меню */
 export function Nav() {
   return (
     <header className={styles.nav}>
@@ -30,8 +32,10 @@ export function Nav() {
           <Button href={contacts.telegram} external className={styles.cta}>
             написать
           </Button>
+          <MobileMenu />
         </div>
       </div>
+      <ScrollProgress />
     </header>
   )
 }
