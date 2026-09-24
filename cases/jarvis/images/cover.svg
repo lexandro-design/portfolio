@@ -7,11 +7,15 @@
   <rect x="96" y="104" width="14" height="14" fill="#c2a878"/>
   <text x="126" y="117" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" font-weight="400" letter-spacing="3" fill="#8b919b" text-anchor="start">LEXANDRO / 03 / АВТОМАТИЗАЦИЯ · AI</text>
   <text x="96" y="350" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="92" font-weight="600" letter-spacing="-1" fill="#ece9e3" text-anchor="start">Jarvis</text>
-  <text x="96" y="420" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">Личный AI-ассистент</text>
-  <rect x="96" y="700" width="125.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
-  <text x="158.8" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">AI-агент</text>
-  <rect x="233.6" y="700" width="69.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
-  <text x="268.4" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">LLM</text>
+  <text x="96" y="420" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">Личный self-hosted ассистент в Telegram</text>
+  <rect x="96" y="700" width="69.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="130.8" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">n8n</text>
+  <rect x="177.6" y="700" width="125.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="240.39999999999998" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Supabase</text>
+  <rect x="315.2" y="700" width="103.19999999999999" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="366.79999999999995" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">OpenAI</text>
+  <rect x="430.4" y="700" width="215.2" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="538.0" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Telegram Bot API</text>
   <circle cx="1200" cy="460" r="170" fill="none" stroke="#2a2f38" stroke-dasharray="4 8"/>
   <circle cx="1200" cy="460" r="250" fill="none" stroke="#161a20" stroke-width="1.5"/>
   <circle cx="1359.7" cy="518.1" r="5" fill="#8b919b"/>
@@ -21,18 +25,18 @@
   <circle cx="1243.4" cy="706.2" r="5" fill="#8b919b"/>
   <circle cx="1200" cy="460" r="78" fill="#151920" stroke="#c2a878" stroke-width="2"/>
   <circle cx="1200" cy="460" r="60" fill="none" stroke="#c2a878" stroke-opacity="0.35"/>
-  <text x="1200" y="467" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="400" letter-spacing="0" fill="#ece9e3" text-anchor="middle">агент</text>
-  <rect x="900" y="434" width="150" height="52" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
-  <text x="975.0" y="466.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">запрос</text>
+  <text x="1200" y="467" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" font-weight="400" letter-spacing="0" fill="#ece9e3" text-anchor="middle">n8n</text>
+  <rect x="880" y="434" width="170" height="52" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="965.0" y="466.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">текст · голос</text>
   <path d="M1050 460L1114 460" stroke="#5b616b" stroke-width="1.5" marker-end="url(#arr)"/>
   <path d="M1286 460L1352 460" stroke="#5b616b" stroke-width="1.5" marker-end="url(#arr)"/>
   <rect x="1354" y="434" width="150" height="52" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
   <text x="1429.0" y="466.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">ответ</text>
   <rect x="1110" y="170" width="180" height="52" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
-  <text x="1200.0" y="202.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">LLM</text>
+  <text x="1200.0" y="202.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">GPT</text>
   <path d="M1200 222V374" stroke="#5b616b" stroke-width="1.5"/>
-  <rect x="1100" y="698" width="200" height="52" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
-  <text x="1200.0" y="730.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">инструменты</text>
+  <rect x="1090" y="698" width="220" height="52" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1200.0" y="730.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">память · задачи</text>
   <path d="M1200 546V698" stroke="#5b616b" stroke-width="1.5"/>
 
 </svg>

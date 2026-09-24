@@ -102,4 +102,4 @@
 
 ---
 
-[← Все кейсы](../../README.md) · [Следующий кейс: mimimibot →](../mimimibot/)
+[← Все кейсы](../../README.md) · [Следующий кейс: MiMiMi AI →](../mimimibot/)
