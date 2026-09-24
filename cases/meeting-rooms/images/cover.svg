@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Переговорные">
+  <title>Переговорные</title>
+  <rect width="1600" height="900" fill="#0e1014"/>
+  <g stroke="#161a20" stroke-width="1"><path d="M80 0V900" /><path d="M160 0V900" /><path d="M240 0V900" /><path d="M320 0V900" /><path d="M400 0V900" /><path d="M480 0V900" /><path d="M560 0V900" /><path d="M640 0V900" /><path d="M720 0V900" /><path d="M800 0V900" /><path d="M880 0V900" /><path d="M960 0V900" /><path d="M1040 0V900" /><path d="M1120 0V900" /><path d="M1200 0V900" /><path d="M1280 0V900" /><path d="M1360 0V900" /><path d="M1440 0V900" /><path d="M1520 0V900" /><path d="M0 80H1600" /><path d="M0 160H1600" /><path d="M0 240H1600" /><path d="M0 320H1600" /><path d="M0 400H1600" /><path d="M0 480H1600" /><path d="M0 560H1600" /><path d="M0 640H1600" /><path d="M0 720H1600" /><path d="M0 800H1600" /><path d="M0 880H1600" /></g>
+  <rect x="0.5" y="0.5" width="1599" height="899" fill="none" stroke="#2a2f38"/>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 1L9 5L0 9" fill="none" stroke="#8b919b" stroke-width="1.5"/></marker></defs>
+  <rect x="96" y="104" width="14" height="14" fill="#c2a878"/>
+  <text x="126" y="117" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" font-weight="400" letter-spacing="3" fill="#8b919b" text-anchor="start">LEXANDRO / 03 / ТИТАН-2 · ВНУТРЕННИЙ СЕРВИС</text>
+  <text x="96" y="350" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="92" font-weight="600" letter-spacing="-1" fill="#ece9e3" text-anchor="start">Переговорные</text>
+  <text x="96" y="420" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">Сервис бронирования переговорных</text>
+  <text x="96" y="464" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">для сотрудников холдинга</text>
+  <rect x="96" y="700" width="92.0" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="142.0" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Figma</text>
+  <rect x="200.0" y="700" width="125.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="262.8" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Taiga UI</text>
+  <rect x="337.6" y="700" width="215.2" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="445.20000000000005" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Figma Plugin API</text>
+  <rect x="564.8" y="700" width="125.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="627.5999999999999" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Keycloak</text>
+  <rect x="900" y="150" width="604" height="560" rx="10" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1030.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">08:00</text>
+  <path d="M1030.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <text x="1102.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">10:00</text>
+  <path d="M1102.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <text x="1174.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">12:00</text>
+  <path d="M1174.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <text x="1246.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">14:00</text>
+  <path d="M1246.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <text x="1318.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">16:00</text>
+  <path d="M1318.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <text x="1390.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">18:00</text>
+  <path d="M1390.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <text x="1462.0" y="186" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">20:00</text>
+  <path d="M1462.0 202V650" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="920.0" y="236.0" width="84.0" height="10.0" rx="3" fill="#c3c6cc"/>
+  <rect x="920.0" y="254.0" width="48.0" height="8.0" rx="3" fill="#5b616b"/>
+  <path d="M910 282H1494" stroke="#161a20"/>
+  <rect x="1033.0" y="228" width="102.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="1249.0" y="228" width="102.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="920.0" y="304.0" width="70.0" height="10.0" rx="3" fill="#c3c6cc"/>
+  <rect x="920.0" y="322.0" width="48.0" height="8.0" rx="3" fill="#5b616b"/>
+  <path d="M910 350H1494" stroke="#161a20"/>
+  <rect x="1105.0" y="296" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="1213.0" y="296" width="102.0" height="44" rx="6" fill="#26231d" stroke="#c2a878" stroke-width="1.5"/>
+  <rect x="1393.0" y="296" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="920.0" y="372.0" width="96.0" height="10.0" rx="3" fill="#c3c6cc"/>
+  <rect x="920.0" y="390.0" width="48.0" height="8.0" rx="3" fill="#5b616b"/>
+  <path d="M910 418H1494" stroke="#161a20"/>
+  <rect x="1069.0" y="364" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="1321.0" y="364" width="102.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="920.0" y="440.0" width="64.0" height="10.0" rx="3" fill="#c3c6cc"/>
+  <rect x="920.0" y="458.0" width="48.0" height="8.0" rx="3" fill="#5b616b"/>
+  <path d="M910 486H1494" stroke="#161a20"/>
+  <rect x="1177.0" y="432" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="1285.0" y="432" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="920.0" y="508.0" width="90.0" height="10.0" rx="3" fill="#c3c6cc"/>
+  <rect x="920.0" y="526.0" width="48.0" height="8.0" rx="3" fill="#5b616b"/>
+  <path d="M910 554H1494" stroke="#161a20"/>
+  <rect x="1033.0" y="500" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="1141.0" y="500" width="102.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="1357.0" y="500" width="102.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <rect x="920.0" y="576.0" width="76.0" height="10.0" rx="3" fill="#c3c6cc"/>
+  <rect x="920.0" y="594.0" width="48.0" height="8.0" rx="3" fill="#5b616b"/>
+  <path d="M910 622H1494" stroke="#161a20"/>
+  <rect x="1249.0" y="568" width="66.0" height="44" rx="6" fill="#1c2129" stroke="#2a2f38"/>
+  <path d="M1188.4 202V650" stroke="#7d8fa3" stroke-width="1.5"/><circle cx="1188.4" cy="202" r="4" fill="#7d8fa3"/>
+  <text x="920" y="686" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">сотрудник · администратор</text>
+  <text x="1484" y="686" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="end">403 · 404</text>
+
+</svg>

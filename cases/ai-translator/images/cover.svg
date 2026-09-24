@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="AI Translator">
+  <title>AI Translator</title>
+  <rect width="1600" height="900" fill="#0e1014"/>
+  <g stroke="#161a20" stroke-width="1"><path d="M80 0V900" /><path d="M160 0V900" /><path d="M240 0V900" /><path d="M320 0V900" /><path d="M400 0V900" /><path d="M480 0V900" /><path d="M560 0V900" /><path d="M640 0V900" /><path d="M720 0V900" /><path d="M800 0V900" /><path d="M880 0V900" /><path d="M960 0V900" /><path d="M1040 0V900" /><path d="M1120 0V900" /><path d="M1200 0V900" /><path d="M1280 0V900" /><path d="M1360 0V900" /><path d="M1440 0V900" /><path d="M1520 0V900" /><path d="M0 80H1600" /><path d="M0 160H1600" /><path d="M0 240H1600" /><path d="M0 320H1600" /><path d="M0 400H1600" /><path d="M0 480H1600" /><path d="M0 560H1600" /><path d="M0 640H1600" /><path d="M0 720H1600" /><path d="M0 800H1600" /><path d="M0 880H1600" /></g>
+  <rect x="0.5" y="0.5" width="1599" height="899" fill="none" stroke="#2a2f38"/>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 1L9 5L0 9" fill="none" stroke="#8b919b" stroke-width="1.5"/></marker></defs>
+  <rect x="96" y="104" width="14" height="14" fill="#c2a878"/>
+  <text x="126" y="117" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" font-weight="400" letter-spacing="3" fill="#8b919b" text-anchor="start">LEXANDRO / 04 / ТИТАН-2 · AI</text>
+  <text x="96" y="350" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="92" font-weight="600" letter-spacing="-1" fill="#ece9e3" text-anchor="start">AI Translator</text>
+  <text x="96" y="420" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">AI-переводчик для группы</text>
+  <text x="96" y="464" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">юридического перевода</text>
+  <rect x="96" y="700" width="92.0" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="142.0" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Figma</text>
+  <rect x="200.0" y="700" width="192.79999999999998" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="296.4" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">HTML-прототипы</text>
+  <rect x="404.79999999999995" y="700" width="69.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="439.59999999999997" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">RAG</text>
+  <rect x="900" y="130" width="604" height="640" rx="16" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="920" y="148" width="86" height="34" rx="6" fill="#0e1014" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="963.0" y="170.25" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="15" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">авто</text>
+  <text x="1022" y="171" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="start">→</text>
+  <rect x="1048" y="148" width="62" height="34" rx="6" fill="#26231d" stroke="#c2a878" stroke-width="1.5"/>
+  <text x="1079.0" y="170.25" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="15" font-weight="400" letter-spacing="0" fill="#ece9e3" text-anchor="middle">EN</text>
+  <rect x="1354" y="148" width="130" height="34" rx="6" fill="#0e1014" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1419.0" y="170.25" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="15" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">глоссарий</text>
+  <path d="M900 200H1504" stroke="#2a2f38"/>
+  <rect x="1204" y="222" width="276" height="84" rx="10" fill="#26231d"/>
+  <rect x="1220" y="236" width="40" height="52" rx="4" fill="none" stroke="#c2a878" stroke-width="1.5"/><path d="M1228 252H1252M1228 262H1252M1228 272H1244" stroke="#c2a878" stroke-width="1.5"/>
+  <rect x="1276.0" y="246.0" width="160.0" height="10.0" rx="3" fill="#c2a878" opacity="0.7"/>
+  <rect x="1276.0" y="266.0" width="110.0" height="9.0" rx="3" fill="#c2a878" opacity="0.4"/>
+  <rect x="924" y="326" width="380" height="120" rx="10" fill="#1c2129"/>
+  <rect x="942.0" y="344.0" width="320.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="942.0" y="366.0" width="300.0" height="9.0" rx="3" fill="#8b919b"/>
+  <rect x="942.0" y="388.0" width="336.0" height="9.0" rx="3" fill="#8b919b"/>
+  <rect x="942.0" y="410.0" width="210.0" height="9.0" rx="3" fill="#8b919b"/>
+  <text x="924" y="476" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="start">варианты</text>
+  <rect x="924" y="488" width="184" height="62" rx="8" fill="none" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="940.0" y="504.0" width="140.0" height="8.0" rx="3" fill="#8b919b"/>
+  <rect x="940.0" y="522.0" width="96.0" height="8.0" rx="3" fill="#5b616b"/>
+  <rect x="1120" y="488" width="184" height="62" rx="8" fill="none" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1136.0" y="504.0" width="140.0" height="8.0" rx="3" fill="#8b919b"/>
+  <rect x="1136.0" y="522.0" width="96.0" height="8.0" rx="3" fill="#5b616b"/>
+  <rect x="1230" y="576" width="250" height="44" rx="10" fill="#26231d" stroke="#26231d" stroke-width="1.5"/>
+  <text x="1355.0" y="603.6" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="16" font-weight="400" letter-spacing="0" fill="#c2a878" text-anchor="middle">сделай официальнее</text>
+  <rect x="924" y="640" width="300" height="50" rx="10" fill="#1c2129"/>
+  <rect x="942.0" y="660.0" width="240.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="924" y="708" width="556" height="42" rx="10" fill="#0e1014" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="944" y="735" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="start">Текст или документ</text>
+  <circle cx="1458" cy="729" r="11" fill="#c2a878"/>
+
+</svg>

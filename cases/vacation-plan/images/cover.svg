@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="План отпусков">
+  <title>План отпусков</title>
+  <rect width="1600" height="900" fill="#0e1014"/>
+  <g stroke="#161a20" stroke-width="1"><path d="M80 0V900" /><path d="M160 0V900" /><path d="M240 0V900" /><path d="M320 0V900" /><path d="M400 0V900" /><path d="M480 0V900" /><path d="M560 0V900" /><path d="M640 0V900" /><path d="M720 0V900" /><path d="M800 0V900" /><path d="M880 0V900" /><path d="M960 0V900" /><path d="M1040 0V900" /><path d="M1120 0V900" /><path d="M1200 0V900" /><path d="M1280 0V900" /><path d="M1360 0V900" /><path d="M1440 0V900" /><path d="M1520 0V900" /><path d="M0 80H1600" /><path d="M0 160H1600" /><path d="M0 240H1600" /><path d="M0 320H1600" /><path d="M0 400H1600" /><path d="M0 480H1600" /><path d="M0 560H1600" /><path d="M0 640H1600" /><path d="M0 720H1600" /><path d="M0 800H1600" /><path d="M0 880H1600" /></g>
+  <rect x="0.5" y="0.5" width="1599" height="899" fill="none" stroke="#2a2f38"/>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 1L9 5L0 9" fill="none" stroke="#8b919b" stroke-width="1.5"/></marker></defs>
+  <rect x="96" y="104" width="14" height="14" fill="#c2a878"/>
+  <text x="126" y="117" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" font-weight="400" letter-spacing="3" fill="#8b919b" text-anchor="start">LEXANDRO / 07 / ТИТАН-2 · ПРОТОТИП</text>
+  <text x="96" y="350" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="92" font-weight="600" letter-spacing="-1" fill="#ece9e3" text-anchor="start">План отпусков</text>
+  <text x="96" y="420" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">Внутренний инструмент</text>
+  <text x="96" y="464" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">планирования отпусков</text>
+  <rect x="96" y="700" width="204.0" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="198.0" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">HTML / CSS / JS</text>
+  <rect x="312.0" y="700" width="114.39999999999999" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="369.2" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Angular</text>
+  <rect x="438.4" y="700" width="125.6" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="501.2" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Taiga UI</text>
+  <rect x="900" y="130" width="113" height="36" rx="6" fill="#26231d" stroke="#c2a878" stroke-width="1.5"/>
+  <text x="956.5" y="152.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#ece9e3" text-anchor="middle">гл. админ</text>
+  <rect x="1023" y="130" width="122" height="36" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1084.0" y="152.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">лок. админ</text>
+  <rect x="1155" y="130" width="140" height="36" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1225.0" y="152.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">пользователь</text>
+  <rect x="900" y="186" width="604" height="540" rx="10" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1058.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">янв</text>
+  <path d="M1040.0 232V656" stroke="#161a20"/>
+  <text x="1095.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">фев</text>
+  <path d="M1077.0 232V656" stroke="#161a20"/>
+  <text x="1132.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">мар</text>
+  <path d="M1114.0 232V656" stroke="#161a20"/>
+  <text x="1169.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">апр</text>
+  <path d="M1151.0 232V656" stroke="#161a20"/>
+  <text x="1206.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">май</text>
+  <path d="M1188.0 232V656" stroke="#161a20"/>
+  <text x="1243.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">июн</text>
+  <path d="M1225.0 232V656" stroke="#161a20"/>
+  <text x="1280.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">июл</text>
+  <path d="M1262.0 232V656" stroke="#161a20"/>
+  <text x="1317.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">авг</text>
+  <path d="M1299.0 232V656" stroke="#161a20"/>
+  <text x="1354.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">сен</text>
+  <path d="M1336.0 232V656" stroke="#161a20"/>
+  <text x="1391.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">окт</text>
+  <path d="M1373.0 232V656" stroke="#161a20"/>
+  <text x="1428.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">ноя</text>
+  <path d="M1410.0 232V656" stroke="#161a20"/>
+  <text x="1465.5" y="218" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="12" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">дек</text>
+  <path d="M1447.0 232V656" stroke="#161a20"/>
+  <rect x="918.0" y="258.0" width="92.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="272.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1077.0" y="254" width="22.2" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1262.0" y="254" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="918.0" y="308.0" width="78.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="322.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1188.0" y="304" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="918.0" y="358.0" width="104.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="372.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1114.0" y="354" width="18.5" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1299.0" y="354" width="44.4" height="26" rx="5" fill="#26231d" stroke="#c2a878" stroke-width="1.5"/>
+  <rect x="918.0" y="408.0" width="70.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="422.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1243.5" y="404" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="918.0" y="458.0" width="88.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="472.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1051.1" y="454" width="25.9" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1336.0" y="454" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="918.0" y="508.0" width="96.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="522.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1280.5" y="504" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="918.0" y="558.0" width="74.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="572.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1151.0" y="554" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="918.0" y="608.0" width="84.0" height="9.0" rx="3" fill="#c3c6cc"/>
+  <rect x="918.0" y="622.0" width="52.0" height="7.0" rx="3" fill="#5b616b"/>
+  <rect x="1373.0" y="604" width="37.0" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1447.0" y="604" width="22.2" height="26" rx="5" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1284" y="674" width="32" height="32" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1300.0" y="694.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">‹</text>
+  <rect x="1324" y="674" width="32" height="32" rx="6" fill="#151920" stroke="#c2a878" stroke-width="1.5"/>
+  <text x="1340.0" y="694.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#ece9e3" text-anchor="middle">1</text>
+  <rect x="1364" y="674" width="32" height="32" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1380.0" y="694.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">2</text>
+  <rect x="1404" y="674" width="32" height="32" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1420.0" y="694.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">3</text>
+  <rect x="1444" y="674" width="32" height="32" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1460.0" y="694.9" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="middle">›</text>
+  <text x="918" y="696" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="start">сортировка · пагинация · CRUD</text>
+
+</svg>
