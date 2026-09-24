@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Название проекта">
+  <title>Название проекта</title>
+  <rect width="1600" height="900" fill="#0e1014"/>
+  <g stroke="#161a20" stroke-width="1"><path d="M80 0V900" /><path d="M160 0V900" /><path d="M240 0V900" /><path d="M320 0V900" /><path d="M400 0V900" /><path d="M480 0V900" /><path d="M560 0V900" /><path d="M640 0V900" /><path d="M720 0V900" /><path d="M800 0V900" /><path d="M880 0V900" /><path d="M960 0V900" /><path d="M1040 0V900" /><path d="M1120 0V900" /><path d="M1200 0V900" /><path d="M1280 0V900" /><path d="M1360 0V900" /><path d="M1440 0V900" /><path d="M1520 0V900" /><path d="M0 80H1600" /><path d="M0 160H1600" /><path d="M0 240H1600" /><path d="M0 320H1600" /><path d="M0 400H1600" /><path d="M0 480H1600" /><path d="M0 560H1600" /><path d="M0 640H1600" /><path d="M0 720H1600" /><path d="M0 800H1600" /><path d="M0 880H1600" /></g>
+  <rect x="0.5" y="0.5" width="1599" height="899" fill="none" stroke="#2a2f38"/>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 1L9 5L0 9" fill="none" stroke="#8b919b" stroke-width="1.5"/></marker></defs>
+  <rect x="96" y="104" width="14" height="14" fill="#c2a878"/>
+  <text x="126" y="117" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" font-weight="400" letter-spacing="3" fill="#8b919b" text-anchor="start">LEXANDRO / 00 / НАПРАВЛЕНИЕ</text>
+  <text x="96" y="350" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="92" font-weight="600" letter-spacing="-1" fill="#ece9e3" text-anchor="start">Название проекта</text>
+  <text x="96" y="420" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">Одна строка о том, что это за продукт</text>
+  <rect x="96" y="700" width="80.8" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="136.4" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Стек</text>
+  <rect x="188.8" y="700" width="80.8" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="229.20000000000002" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Стек</text>
+  <rect x="281.6" y="700" width="80.8" height="44" rx="6" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="322.0" y="728.3" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="18" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="middle">Стек</text>
+  <rect x="900" y="150" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1024" y="150" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1148" y="150" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1272" y="150" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1396" y="150" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="900" y="300" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1024" y="300" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1148" y="300" width="108" height="130" rx="8" fill="#26231d" stroke="#c2a878" stroke-width="1.5"/>
+  <rect x="1272" y="300" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1396" y="300" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="900" y="450" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1024" y="450" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1148" y="450" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1272" y="450" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1396" y="450" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="900" y="600" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1024" y="600" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1148" y="600" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1272" y="600" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1396" y="600" width="108" height="130" rx="8" fill="#151920" stroke="#2a2f38" stroke-width="1.5"/>
+  <text x="1200" y="760" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="16" font-weight="400" letter-spacing="0" fill="#5b616b" text-anchor="middle">images/cover.svg — заменить скриншотом 1600×900</text>
+
+</svg>

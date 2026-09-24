@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420" role="img" aria-label="LEXANDRO">
+  <title>LEXANDRO</title>
+  <rect width="1600" height="420" fill="#0e1014"/>
+  <g stroke="#161a20" stroke-width="1"><path d="M80 0V420" /><path d="M160 0V420" /><path d="M240 0V420" /><path d="M320 0V420" /><path d="M400 0V420" /><path d="M480 0V420" /><path d="M560 0V420" /><path d="M640 0V420" /><path d="M720 0V420" /><path d="M800 0V420" /><path d="M880 0V420" /><path d="M960 0V420" /><path d="M1040 0V420" /><path d="M1120 0V420" /><path d="M1200 0V420" /><path d="M1280 0V420" /><path d="M1360 0V420" /><path d="M1440 0V420" /><path d="M1520 0V420" /><path d="M0 80H1600" /><path d="M0 160H1600" /><path d="M0 240H1600" /><path d="M0 320H1600" /><path d="M0 400H1600" /></g>
+  <rect x="0.5" y="0.5" width="1599" height="419" fill="none" stroke="#2a2f38"/>
+  <rect x="96" y="98" width="14" height="14" fill="#c2a878"/>
+  <text x="126" y="111" font-family="'JetBrains Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" font-weight="400" letter-spacing="3" fill="#8b919b" text-anchor="start">ПОРТФОЛИО</text>
+  <text x="92" y="226" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="96" font-weight="600" letter-spacing="18" fill="#ece9e3" text-anchor="start">LEXANDRO</text>
+  <text x="96" y="288" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" font-weight="400" letter-spacing="0" fill="#c3c6cc" text-anchor="start">Алексей Свешников</text>
+  <text x="96" y="334" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" letter-spacing="0" fill="#8b919b" text-anchor="start">Дизайн интерфейсов · Автоматизация · Фронтенд</text>
+  <rect x="1040" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1106" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1172" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1238" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1304" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1370" y="78" width="52" height="52" rx="6" fill="#c2a878"/>
+  <rect x="1436" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1502" y="78" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1040" y="144" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1106" y="144" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1172" y="144" width="52" height="52" rx="6" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1238" y="144" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1304" y="144" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1370" y="144" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1436" y="144" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1502" y="144" width="52" height="52" rx="6" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1040" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1106" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1172" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1238" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1304" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1370" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1436" y="210" width="52" height="52" rx="6" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1502" y="210" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1040" y="276" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1106" y="276" width="52" height="52" rx="6" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1172" y="276" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1238" y="276" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1304" y="276" width="52" height="52" rx="6" fill="#1c2129" stroke="#2a2f38" stroke-width="1.5"/>
+  <rect x="1370" y="276" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1436" y="276" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <rect x="1502" y="276" width="52" height="52" rx="6" fill="none" stroke="#161a20" stroke-width="1.5"/>
+  <path d="M1132.0 302.0 L1132.0 170.0 L1198.0 170.0 L1330.0 170.0 L1330.0 302.0 L1330.0 236.0 L1462.0 236.0 L1462.0 170.0 L1528.0 170.0 L1528.0 104.0 L1396.0 104.0" fill="none" stroke="#7d8fa3" stroke-opacity="0.6" stroke-width="1.5"/>
+  <circle cx="1132.0" cy="302.0" r="5" fill="#7d8fa3"/>
+  <circle cx="1198.0" cy="170.0" r="5" fill="#7d8fa3"/>
+  <circle cx="1330.0" cy="302.0" r="5" fill="#7d8fa3"/>
+  <circle cx="1462.0" cy="236.0" r="5" fill="#7d8fa3"/>
+  <circle cx="1528.0" cy="170.0" r="5" fill="#7d8fa3"/>
+
+</svg>
