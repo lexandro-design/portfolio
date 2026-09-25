@@ -3,20 +3,13 @@ name: deploy
 on:
   push:
     branches: [main]
-  # Пока в Settings → Pages источник «Deploy from a branch», GitHub параллельно
-  # собирает сайт из ветки (README вместо сайта) и заканчивает позже нас.
-  # Этот запуск идёт после той сборки, поэтому последним всегда выкладывается
-  # наш сайт. Когда источник переключат на «GitHub Actions», та сборка
-  # пропадёт и этот триггер просто перестанет срабатывать
-  workflow_run:
-    workflows: ['pages build and deployment']
-    types: [completed]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: pages
@@ -47,5 +40,21 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Пока в Settings → Pages источник «Deploy from a branch», GitHub
+      # параллельно собирает из ветки README и выкладывает его на пару секунд
+      # позже нас. Ждём, пока та сборка закончится, и выкладываем свою
+      # последней. Когда источник переключат на «GitHub Actions», той сборки
+      # не будет, и шаг выйдет сам через полминуты
+      - name: Wait for branch Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            status=$(gh api "repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}"               --jq '[.workflow_runs[] | select(.name == "pages build and deployment")][0].status // "none"')
+            echo "branch build: $status"
+            if [ "$status" = "completed" ]; then sleep 5; break; fi
+            if [ "$status" = "none" ] && [ "$i" -ge 3 ]; then break; fi
+            sleep 10
+          done
       - id: deployment
         uses: actions/deploy-pages@v4
