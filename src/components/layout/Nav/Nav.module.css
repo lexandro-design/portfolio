@@ -28,6 +28,7 @@
 
 .link,
 .status {
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   letter-spacing: 0.08em;
@@ -84,6 +85,13 @@
 @keyframes pulse {
   70% {
     box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+/* Статус влезает рядом с разделами только от 1360 */
+@media (max-width: 1359px) {
+  .status {
+    display: none;
   }
 }
 

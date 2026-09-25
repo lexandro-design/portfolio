@@ -144,6 +144,25 @@
   }
 }
 
+/* Планшет: фото уже, заголовок меньше, строки заголовка не рвутся
+   внутри себя («Дизайн-» отдельной строкой выглядело случайно) */
+@media (min-width: 768px) {
+  .line {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) 176px;
+    gap: var(--space-lg);
+  }
+
+  .title {
+    font-size: 56px;
+  }
+}
+
 @media (max-width: 767px) {
   .hero {
     gap: var(--space-xl);
