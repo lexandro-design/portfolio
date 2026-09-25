@@ -34,8 +34,14 @@ export type Case = {
   year: string
   stack: string[]
   sections: CaseSection[]
-  /** Первый — обложка. Нет скринов — вместо обложки превью с номером кейса */
+  /** Скриншоты для галереи и полноэкранного просмотра */
   shots: Shot[]
+  /**
+   * Собранные обложки (tools/cards/covers.mjs): thumb — строка на главной,
+   * cover — шапка кейса. Нет обложки и скринов — превью с номером кейса
+   */
+  thumb?: Shot
+  cover?: Shot
   /** Пометка к галерее, например про демо-данные */
   note?: string
   link?: { href: string; label: string }
@@ -100,6 +106,8 @@ export const cases: Case[] = [
         h: 1125,
       },
     ],
+    thumb: { src: '/cases/parfumeria/thumb.jpg', caption: '', w: 1216, h: 860 },
+    cover: { src: '/cases/parfumeria/cover.jpg', caption: '', w: 2624, h: 1280 },
     link: { href: 'https://parfumeria.by', label: 'parfumeria.by' },
   },
   {
@@ -193,6 +201,8 @@ export const cases: Case[] = [
         h: 1024,
       },
     ],
+    thumb: { src: '/cases/meeting-rooms/thumb.jpg', caption: '', w: 1216, h: 860 },
+    cover: { src: '/cases/meeting-rooms/cover.jpg', caption: '', w: 2624, h: 1280 },
     note: TITAN_NOTE,
   },
   {
@@ -257,6 +267,8 @@ export const cases: Case[] = [
         h: 1024,
       },
     ],
+    thumb: { src: '/cases/pix-bi/thumb.jpg', caption: '', w: 1216, h: 860 },
+    cover: { src: '/cases/pix-bi/cover.jpg', caption: '', w: 2624, h: 1280 },
     note: TITAN_NOTE,
   },
   {
@@ -369,7 +381,7 @@ export const cases: Case[] = [
     slug: 'brain-search',
     title: 'brain-search',
     tagline: 'поиск по базе знаний',
-    lead: 'Локальный MCP-сервер, который ищет по моей базе знаний по смыслу. Подключаю его к Claude Code как инструмент.',
+    lead: 'Локальный MCP-сервер, который ищет по моей базе знаний по смыслу. Подключаю его к своим инструментам разработки.',
     directions: ['ai'],
     label: 'ai · tools',
     group: 'own',
@@ -380,7 +392,7 @@ export const cases: Case[] = [
       {
         title: 'как устроено',
         body: [
-          'Сервер на Python общается с Claude Code по MCP. База — SQLite: полнотекстовый индекс FTS5 и векторы эмбеддингов в одном файле. Эмбеддинги считает Ollama локально, наружу уходят только найденные фрагменты.',
+          'Сервер на Python работает по протоколу MCP. База — SQLite: полнотекстовый индекс FTS5 и векторы эмбеддингов в одном файле. Эмбеддинги считает Ollama локально, наружу уходят только найденные фрагменты.',
           'Поиск гибридный: косинусная близость по векторам и BM25 по полнотекстовому индексу, результаты сливаются через Reciprocal Rank Fusion. В индексе около 17 тысяч фрагментов: заметки, документы проектов и история переписки. Индексация инкрементальная, по хешу файла, поэтому переиндексируется только изменённое.',
         ],
       },
@@ -410,11 +422,3 @@ export const cases: Case[] = [
     shots: [],
   },
 ]
-
-export const caseBySlug = (slug: string) => cases.find((c) => c.slug === slug) ?? null
-
-export const DIRECTION_LABELS: Record<Direction, string> = {
-  design: 'дизайн',
-  web: 'веб',
-  ai: 'автоматизация / ai',
-}

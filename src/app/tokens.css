@@ -72,12 +72,15 @@
   --space-3xl: 96px;
   --space-4xl: 128px;
   --bleed: 64px;
-  --section-y: 192px;
+  /* В макете 192, но между секциями выходило ~400px пустоты — 144 */
+  --section-y: 144px;
   --container: 1440px;
   --nav-h: 76px;
 
   /* ---------- Типографика ---------- */
   --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-cjk-zh: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', sans-serif;
+  --font-cjk-ja: 'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
   --type-h1: 120px;
   --type-h2: 72px;
@@ -103,7 +106,7 @@
 @media (max-width: 1023px) {
   :root {
     --bleed: 32px;
-    --section-y: 128px;
+    --section-y: 112px;
     --type-h1: 88px;
     --type-h2: 56px;
   }
@@ -113,7 +116,7 @@
 @media (max-width: 767px) {
   :root {
     --bleed: 24px;
-    --section-y: 96px;
+    --section-y: 80px;
     --nav-h: 60px;
     --type-h1: 52px;
     --type-h2: 40px;

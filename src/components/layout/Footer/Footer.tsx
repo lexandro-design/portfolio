@@ -1,4 +1,7 @@
+'use client'
+
 import { contacts } from '@/content/site'
+import { useLocale } from '../useLocale'
 import styles from './Footer.module.css'
 
 const links = [
@@ -9,12 +12,13 @@ const links = [
 
 /** Подвал: кто и где, контакты, год */
 export function Footer() {
+  const { t } = useLocale()
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
         <div className={styles.col}>
-          <span className={styles.primary}>LEXANDRO · дизайн, разработка, автоматизация</span>
-          <span>Алексей Свешников · санкт-петербург</span>
+          <span className={styles.primary}>{t.footer.line}</span>
+          <span>{t.footer.place}</span>
         </div>
         <ul className={styles.links}>
           {links.map((l) => (
@@ -29,7 +33,7 @@ export function Footer() {
           ))}
         </ul>
         <div className={`${styles.col} ${styles.end}`}>
-          <span>© {new Date().getFullYear()}</span>
+          <span>© 2026</span>
           <span>next.js · github pages</span>
         </div>
       </div>

@@ -1,0 +1,204 @@
+.intro {
+  max-inline-size: 44em;
+  margin-block-end: var(--space-2xl);
+  font-size: var(--type-body-lg);
+  line-height: 1.6;
+  color: var(--fg-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  border-block: 1px solid var(--border-hair);
+}
+
+.cell {
+  display: grid;
+  align-content: start;
+  gap: var(--space-lg);
+  min-inline-size: 0;
+  padding: 40px 32px 48px;
+}
+
+.cell + .cell {
+  border-inline-start: 1px solid var(--border-hair);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+/* ---------- цвет ---------- */
+
+.swatches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md) var(--space-sm);
+}
+
+.swatch {
+  display: grid;
+  gap: 4px;
+}
+
+.chip {
+  block-size: 64px;
+  margin-block-end: 6px;
+  border: 1px solid var(--border-hover);
+  transition: background-color var(--dur-base) var(--ease-out-quart);
+}
+
+.name {
+  font-size: var(--type-body-sm);
+}
+
+/* ---------- типографика ---------- */
+
+.type {
+  display: grid;
+  gap: 14px;
+}
+
+.type li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.sample {
+  overflow: hidden;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.type .code {
+  flex: none;
+}
+
+/* ---------- отступы ---------- */
+
+.spacing {
+  display: grid;
+  gap: 10px;
+}
+
+.spacing li {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.bar {
+  block-size: 8px;
+  max-inline-size: 100%;
+  background: var(--fg-primary);
+  opacity: 0.85;
+}
+
+/* ---------- движение ---------- */
+
+.motion {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.curve {
+  inline-size: 100%;
+  max-inline-size: 240px;
+  overflow: visible;
+}
+
+.linear {
+  fill: none;
+  stroke: var(--border-hover);
+  stroke-dasharray: 3 4;
+}
+
+.ease {
+  fill: none;
+  stroke: var(--fg-primary);
+  stroke-width: 1.5;
+}
+
+/* Шарик ездит по дорожке с той же кривой, что у появления блоков */
+.track {
+  position: relative;
+  block-size: 12px;
+  border-block-end: 1px solid var(--border-hair);
+}
+
+.ball {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 12px;
+  block-size: 12px;
+  border-radius: 50%;
+  background: var(--signal-live);
+  animation: travel 2.6s var(--ease-out-expo) infinite;
+}
+
+@keyframes travel {
+  0%,
+  8% {
+    inset-inline-start: 0;
+  }
+
+  60%,
+  100% {
+    inset-inline-start: calc(100% - 12px);
+  }
+}
+
+.note {
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+}
+
+@media (max-width: 1199px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cell:nth-child(3) {
+    border-inline-start: 0;
+  }
+
+  .cell:nth-child(n + 3) {
+    border-block-start: 1px solid var(--border-hair);
+  }
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cell {
+    padding-inline: 0;
+  }
+
+  .cell + .cell {
+    border-inline-start: 0;
+    border-block-start: 1px solid var(--border-hair);
+  }
+
+  .swatches {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

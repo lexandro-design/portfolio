@@ -1,9 +1,7 @@
 .hero {
   display: grid;
-  grid-template-rows: auto 1fr auto;
   gap: var(--space-2xl);
-  min-block-size: max(760px, calc(100svh - var(--nav-h)));
-  padding-block: 120px var(--space-2xl);
+  padding-block: var(--space-2xl) var(--space-xl);
 }
 
 .meta,
@@ -32,23 +30,28 @@
   text-align: end;
 }
 
-.body {
+/* Заголовок и фото стоят на одной нижней линии */
+.main {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 460px;
+  grid-template-columns: minmax(0, 1fr) 296px;
   align-items: end;
   gap: var(--space-2xl);
 }
 
 .title {
-  font-size: var(--type-h1);
+  font-size: clamp(64px, 7.3vw, 106px);
   font-weight: 450;
-  line-height: 0.94;
+  line-height: 0.95;
   letter-spacing: -0.045em;
 }
 
 .line {
   display: block;
   animation: rise var(--dur-reveal) var(--ease-out-expo) both;
+}
+
+.line[data-accent] {
+  color: var(--fg-tertiary);
 }
 
 @keyframes rise {
@@ -58,23 +61,61 @@
   }
 }
 
-.aside {
+/* Фото в ч/б, на ховере проявляется цвет. Уголки — как у превью кейсов */
+.photo {
+  position: relative;
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 360ms both;
+}
+
+.photo img {
+  inline-size: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 63% 50%;
+  border: 1px solid var(--border-hair);
+  filter: grayscale(1) contrast(1.06) brightness(0.96);
+  transition: filter var(--dur-slow) var(--ease-out-expo);
+}
+
+.photo:hover img {
+  filter: none;
+}
+
+.photo figcaption {
+  position: absolute;
+  inset-block-start: calc(100% + 12px);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.bottom {
   display: grid;
-  gap: var(--space-lg);
-  min-inline-size: 0;
-  padding-block-end: 10px;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: end;
+  gap: var(--space-2xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 480ms both;
 }
 
 .lead {
+  max-inline-size: 34em;
   font-size: var(--type-body-lg);
   line-height: 1.55;
   color: var(--fg-secondary);
 }
 
 .actions {
+  display: grid;
+  gap: 12px;
+  min-inline-size: 0;
+}
+
+.buttons {
   display: flex;
   flex-wrap: wrap;
+  justify-content: end;
   gap: 12px;
 }
 
@@ -89,20 +130,23 @@
 }
 
 @media (max-width: 1199px) {
-  .body {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
+  .main {
+    grid-template-columns: minmax(0, 1fr) 220px;
   }
 
-  .aside {
-    max-inline-size: 560px;
+  .bottom {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .buttons {
+    justify-content: start;
   }
 }
 
 @media (max-width: 767px) {
   .hero {
     gap: var(--space-xl);
-    min-block-size: 0;
     padding-block: var(--space-xl) var(--space-lg);
   }
 
@@ -116,11 +160,27 @@
     text-align: start;
   }
 
+  .main {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
   .title {
+    font-size: var(--type-h1);
     line-height: 1;
   }
 
-  .actions > * {
+  .photo img {
+    aspect-ratio: 16 / 11;
+    object-position: 60% 45%;
+  }
+
+  .photo figcaption {
+    position: static;
+    margin-block-start: 12px;
+  }
+
+  .buttons > * {
     flex: 1 1 auto;
   }
 }

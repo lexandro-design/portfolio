@@ -79,6 +79,23 @@ img[data-zoom] {
   cursor: zoom-in;
 }
 
+/* Китайский и японский: латиница остаётся в Inter, иероглифы берутся
+   из системного шрифта. Отрицательный трекинг заголовков, рассчитанный
+   на латиницу и кириллицу, иероглифы слепляет — у них его нет */
+:lang(zh) {
+  font-family: 'Inter Variable', var(--font-cjk-zh);
+}
+
+:lang(ja) {
+  font-family: 'Inter Variable', var(--font-cjk-ja);
+}
+
+:is(:lang(zh), :lang(ja)) :is(h1, h2, h3) {
+  letter-spacing: 0;
+  line-height: 1.18;
+  font-weight: 500;
+}
+
 .container {
   max-inline-size: var(--container);
   margin-inline: auto;

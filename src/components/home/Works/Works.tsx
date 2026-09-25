@@ -1,40 +1,30 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { cases, DIRECTION_LABELS, type Direction } from '@/content/cases'
+import type { Case, Direction } from '@/content/cases'
+import type { Dict } from '@/i18n/dict'
 import { CaseIndexRow } from './CaseIndexRow'
 import { CaseRow } from './CaseRow'
 import { FILTER_EVENT } from './FilterLink'
 import styles from './Works.module.css'
 
 type Filter = 'all' | Direction
-
-const TABS: { id: Filter; label: string }[] = [
-  { id: 'all', label: 'всё' },
-  ...(Object.keys(DIRECTION_LABELS) as Direction[]).map((id) => ({
-    id,
-    label: DIRECTION_LABELS[id],
-  })),
-]
-
-const count = (f: Filter) =>
-  f === 'all' ? cases.length : cases.filter((c) => c.directions.includes(f)).length
-const pad = (n: number) => String(n).padStart(2, '0')
-const plural = (n: number) => {
-  const d = n % 10
-  const dd = n % 100
-  if (d === 1 && dd !== 11) return 'проект'
-  if (d >= 2 && d <= 4 && (dd < 12 || dd > 14)) return 'проекта'
-  return 'проектов'
+type Props = {
+  items: Case[]
+  t: Dict['works']
+  /** Префикс языка для ссылок на кейсы: '' или '/en' */
+  base: string
 }
 
+const pad = (n: number) => String(n).padStart(2, '0')
+
 /**
- * Кейсы с вкладками по направлениям. Кейсы со скриншотами идут крупными
+ * Кейсы с вкладками по направлениям. Кейсы с картинками идут крупными
  * строками, остальные компактным индексом ниже: пустые превью подряд
  * выглядят пусто. Появились скрины у кейса — он сам поднимается наверх.
  * Номер кейса — его место в общем списке.
  */
-export function Works() {
+export function Works({ items, t, base }: Props) {
   const [filter, setFilter] = useState<Filter>('all')
 
   useEffect(() => {
@@ -43,29 +33,37 @@ export function Works() {
     return () => window.removeEventListener(FILTER_EVENT, onFilter)
   }, [])
 
-  const shown = cases
+  const tabs: { id: Filter; label: string }[] = [
+    { id: 'all', label: t.all },
+    ...(Object.keys(t.directions) as Direction[]).map((id) => ({ id, label: t.directions[id] })),
+  ]
+  const count = (f: Filter) =>
+    f === 'all' ? items.length : items.filter((c) => c.directions.includes(f)).length
+
+  const shown = items
     .map((c, i) => ({ c, index: i + 1 }))
     .filter(({ c }) => filter === 'all' || c.directions.includes(filter))
-  const featured = shown.filter(({ c }) => c.shots.length > 0)
-  const rest = shown.filter(({ c }) => c.shots.length === 0)
+  const hasMedia = (c: Case) => Boolean(c.thumb || c.shots.length)
+  const featured = shown.filter(({ c }) => hasMedia(c))
+  const rest = shown.filter(({ c }) => !hasMedia(c))
 
   return (
     <>
-      <div className={styles.tabs} role="tablist" aria-label="Направления">
-        {TABS.map((t, i) => (
+      <div className={styles.tabs} role="tablist">
+        {tabs.map((tab, i) => (
           <button
-            key={t.id}
+            key={tab.id}
             type="button"
             role="tab"
-            aria-selected={filter === t.id}
+            aria-selected={filter === tab.id}
             className={styles.tab}
-            onClick={() => setFilter(t.id)}
+            onClick={() => setFilter(tab.id)}
           >
             <span className={styles.dot} />
             <span>
-              {pad(i + 1)} {t.label}
+              {pad(i + 1)} {tab.label}
             </span>
-            <span className={styles.count}>{pad(count(t.id))}</span>
+            <span className={styles.count}>{pad(count(tab.id))}</span>
           </button>
         ))}
       </div>
@@ -74,20 +72,28 @@ export function Works() {
         {featured.length > 0 && (
           <div className={styles.list}>
             {featured.map(({ c, index }) => (
-              <CaseRow key={c.slug} item={c} index={index} total={cases.length} />
+              <CaseRow
+                key={c.slug}
+                item={c}
+                index={index}
+                total={items.length}
+                href={`${base}/cases/${c.slug}/`}
+                read={t.read}
+              />
             ))}
           </div>
         )}
         {rest.length > 0 && (
           <>
-            {featured.length > 0 && (
-              <p className={styles.restLabel}>
-                ещё {rest.length} {plural(rest.length)} · скриншоты под NDA или в работе
-              </p>
-            )}
+            {featured.length > 0 && <p className={styles.restLabel}>{t.rest}</p>}
             <ul className={styles.list}>
               {rest.map(({ c, index }) => (
-                <CaseIndexRow key={c.slug} item={c} index={index} />
+                <CaseIndexRow
+                  key={c.slug}
+                  item={c}
+                  index={index}
+                  href={`${base}/cases/${c.slug}/`}
+                />
               ))}
             </ul>
           </>

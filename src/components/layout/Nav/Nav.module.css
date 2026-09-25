@@ -87,13 +87,9 @@
   }
 }
 
+/* Пять разделов, язык, тема и кнопка в одну строку помещаются от 1200 */
 @media (max-width: 1199px) {
-  .status {
-    display: none;
-  }
-}
-
-@media (max-width: 1023px) {
+  .status,
   .links {
     display: none;
   }

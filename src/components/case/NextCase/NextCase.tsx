@@ -5,13 +5,15 @@ import styles from './NextCase.module.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
+type Props = { item: Case; index: number; total: number; href: string; label: string }
+
 /** Переход к следующему кейсу по кругу */
-export function NextCase({ item, index, total }: { item: Case; index: number; total: number }) {
+export function NextCase({ item, index, total, href, label }: Props) {
   return (
-    <Link href={`/cases/${item.slug}/`} className={styles.next}>
+    <Link href={href} className={styles.next}>
       <div className={`container ${styles.inner}`}>
         <span className={styles.label}>
-          следующий кейс · {pad(index)} / {pad(total)}
+          {label} · {pad(index)} / {pad(total)}
         </span>
         <div className={styles.row}>
           <span className={styles.title}>

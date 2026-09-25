@@ -1,13 +1,17 @@
 import type { MetadataRoute } from 'next'
-import { cases } from '@/content/cases'
+import { LOCALES, localePath } from '@/i18n/config'
+import { caseSlugs } from '@/lib/routes'
+import { absolute } from '@/lib/meta'
 
 export const dynamic = 'force-static'
 
-const SITE = `https://lexandro-design.github.io${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}`
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: `${SITE}/`, priority: 1 },
-    ...cases.map((c) => ({ url: `${SITE}/cases/${c.slug}/`, priority: 0.8 })),
-  ]
+  const paths = ['/', ...caseSlugs().map(({ slug }) => `/cases/${slug}/`)]
+  return paths.map((path) => ({
+    url: absolute(path),
+    priority: path === '/' ? 1 : 0.8,
+    alternates: {
+      languages: Object.fromEntries(LOCALES.map((l) => [l, absolute(localePath(l, path))])),
+    },
+  }))
 }

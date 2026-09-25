@@ -1,12 +1,12 @@
-import { principles } from '@/content/site'
+import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './Principles.module.css'
 
 /** Четыре правила строками: номер, заголовок, пояснение */
-export function Principles() {
+export function Principles({ items }: { items: Dict['principles'] }) {
   return (
     <ol className={styles.list}>
-      {principles.map((p, i) => (
+      {items.map((p, i) => (
         <Reveal as="li" key={p.title} className={styles.item}>
           <span className={styles.number}>0{i + 1}</span>
           <div className={styles.body}>

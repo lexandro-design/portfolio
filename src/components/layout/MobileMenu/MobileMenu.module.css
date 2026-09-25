@@ -48,7 +48,7 @@
   transform: rotate(-45deg);
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1199px) {
   .trigger {
     display: block;
   }
@@ -127,6 +127,20 @@
   font-size: var(--type-mono);
   letter-spacing: 0.08em;
   color: var(--fg-tertiary);
+}
+
+.langs {
+  display: flex;
+  gap: var(--space-md);
+  margin-block-end: var(--space-sm);
+}
+
+.langs a {
+  color: var(--fg-tertiary);
+}
+
+.langs a[aria-current='true'] {
+  color: var(--fg-primary);
 }
 
 .foot {

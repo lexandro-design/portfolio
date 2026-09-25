@@ -6,11 +6,11 @@ import styles from './CaseIndexRow.module.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
-/** Кейс без скриншотов — строкой индекса: номер, название, лид, направление и год */
-export function CaseIndexRow({ item, index }: { item: Case; index: number }) {
+/** Кейс без картинок — строкой индекса: номер, название, лид, направление и год */
+export function CaseIndexRow({ item, index, href }: { item: Case; index: number; href: string }) {
   return (
     <Reveal as="li" className={styles.row}>
-      <Link href={`/cases/${item.slug}/`} className={styles.link}>
+      <Link href={href} className={styles.link}>
         <span className={styles.number}>{pad(index)}</span>
         <span className={styles.title}>
           {item.title}

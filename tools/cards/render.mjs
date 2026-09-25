@@ -85,16 +85,49 @@ const TOTAL = cases.length
 
 // ---------- превью ссылок ----------
 
-const ogHome = (t) =>
+const OG_HOME = {
+  ru: {
+    meta: 'LEXANDRO · санкт-петербург',
+    title: 'Дизайн-системы,<br>которые работают<br>на вас, <span>а не против.</span>',
+    who: 'Алексей Свешников · ux/ui и разработка',
+    status: 'открыт к проектам',
+    size: 96,
+  },
+  en: {
+    meta: 'LEXANDRO · saint petersburg',
+    title: 'Design systems<br>that work for you,<br><span>not against you.</span>',
+    who: 'Alexey Sveshnikov · ux/ui and development',
+    status: 'open to projects',
+    size: 104,
+  },
+  zh: {
+    meta: 'LEXANDRO · 圣彼得堡',
+    title: '为你所用的<br>设计系统，<br><span>一直落地到代码。</span>',
+    who: 'Alexey Sveshnikov · ux/ui 与开发',
+    status: '可接项目',
+    size: 96,
+    ls: 0,
+  },
+  ja: {
+    meta: 'LEXANDRO · サンクトペテルブルク',
+    title: '味方になる<br>デザインシステムを、<br><span>コードまで。</span>',
+    who: 'Alexey Sveshnikov · ux/ui と開発',
+    status: '案件受付中',
+    size: 92,
+    ls: 0,
+  },
+}
+
+const ogHome = (t, l = OG_HOME.ru) =>
   page(
     t,
     1200,
     630,
     `
   <div style="position:absolute;inset:56px 64px;display:grid;grid-template-rows:auto 1fr auto">
-    <div class="row m" style="font-size:15px"><span>LEXANDRO · санкт-петербург</span><span>lexandro-design.github.io/portfolio</span></div>
-    <div class="h" style="align-self:end;font-size:104px">Дизайн, код и AI.<br>От первой строчки<br>до прода.</div>
-    <div class="row m" style="font-size:15px;margin-top:44px"><span class="m2">Алексей Свешников · дизайнер и разработчик</span><span style="color:${t.fg}"><i class="dot"></i>открыт к проектам</span></div>
+    <div class="row m" style="font-size:15px"><span>${l.meta}</span><span>lexandro-design.github.io/portfolio</span></div>
+    <div class="h" style="align-self:end;font-size:${l.size}px;font-family:Inter,'Microsoft YaHei','Yu Gothic UI',sans-serif;${l.ls === 0 ? 'letter-spacing:0;line-height:1.12' : ''}">${l.title.replace('<span>', `<span style="color:${t.fg3}">`)}</div>
+    <div class="row m" style="font-size:15px;margin-top:40px"><span class="m2">${l.who}</span><span style="color:${t.fg}"><i class="dot"></i>${l.status}</span></div>
   </div>`,
   )
 
@@ -195,7 +228,7 @@ const STACK = [
   ['design', ['UX/UI', 'Design systems', 'Design tokens', 'Figma, Plugin API']],
   ['development', ['Next.js, React', 'TypeScript', 'CSS Modules', 'Node.js']],
   ['data', ['PostgreSQL', 'Supabase', 'SQLite', 'REST APIs']],
-  ['ai', ['RAG', 'MCP', 'OpenAI API', 'Ollama']],
+  ['ai', ['RAG', 'MCP', 'AI agents', 'Prompt design']],
 ]
 const APPROACH = [
   [
@@ -268,7 +301,13 @@ const shot = async (markup, w, h, out, scale = 1) => {
 const mode = process.argv[2]
 if (!mode || mode === 'og') {
   await mkdir(join(ROOT, 'public/og'), { recursive: true })
-  await shot(ogHome(THEMES.dark), 1200, 630, join(ROOT, 'public/og/home.png'))
+  for (const [l, copy] of Object.entries(OG_HOME))
+    await shot(
+      ogHome(THEMES.dark, copy),
+      1200,
+      630,
+      join(ROOT, `public/og/home${l === 'ru' ? '' : '-' + l}.png`),
+    )
   for (const c of cases)
     await shot(ogCase(THEMES.dark, c), 1200, 630, join(ROOT, `public/og/${c.slug}.png`))
 }

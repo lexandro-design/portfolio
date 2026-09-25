@@ -11,7 +11,9 @@ type Item = { src: string; alt: string }
  * открываются по клику; листать стрелками, клавишами и свайпом.
  * Список собирается из DOM в порядке страницы: обложка, потом галерея.
  */
-export function Lightbox() {
+type Labels = { viewer: string; close: string; prev: string; next: string }
+
+export function Lightbox({ labels }: { labels: Labels }) {
   const ref = useRef<HTMLDialogElement>(null)
   const [items, setItems] = useState<Item[]>([])
   const [index, setIndex] = useState<number | null>(null)
@@ -55,7 +57,7 @@ export function Lightbox() {
     <dialog
       ref={ref}
       className={styles.box}
-      aria-label="Просмотр скриншота"
+      aria-label={labels.viewer}
       onClose={() => setIndex(null)}
       onClick={(e) => {
         if (e.target === e.currentTarget) setIndex(null)
@@ -76,17 +78,17 @@ export function Lightbox() {
               · {current.alt}
             </span>
             <button type="button" className={styles.close} onClick={() => setIndex(null)}>
-              закрыть
+              {labels.close}
             </button>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element -- уже загруженная картинка со страницы */}
           <img key={current.src} className={styles.image} src={current.src} alt={current.alt} />
           {items.length > 1 && (
             <div className={styles.nav}>
-              <button type="button" aria-label="Предыдущий" onClick={() => step(-1)}>
+              <button type="button" aria-label={labels.prev} onClick={() => step(-1)}>
                 <Arrow size={20} dir="left" />
               </button>
-              <button type="button" aria-label="Следующий" onClick={() => step(1)}>
+              <button type="button" aria-label={labels.next} onClick={() => step(1)}>
                 <Arrow size={20} />
               </button>
             </div>

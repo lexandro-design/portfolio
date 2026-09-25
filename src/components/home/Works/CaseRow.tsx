@@ -8,15 +8,17 @@ import styles from './CaseRow.module.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
-/** Строка кейса: обложка или превью с номером слева, текст справа. Кликается целиком */
-export function CaseRow({ item, index, total }: { item: Case; index: number; total: number }) {
-  const cover = item.shots[0]
+type Props = { item: Case; index: number; total: number; href: string; read: string }
+
+/** Строка кейса: обложка слева, текст справа. Кликается целиком */
+export function CaseRow({ item, index, total, href, read }: Props) {
+  const media = item.thumb ?? item.shots[0]
   return (
     <Reveal as="article" className={styles.row}>
-      <Link href={`/cases/${item.slug}/`} className={styles.link}>
+      <Link href={href} className={styles.link}>
         <div className={styles.media}>
-          {cover ? (
-            <Shot shot={cover} className={styles.image} />
+          {media ? (
+            <Shot shot={{ ...media, caption: item.title }} className={styles.image} />
           ) : (
             <CasePreview index={index} year={item.year} stack={item.stack.slice(0, 4)} />
           )}
@@ -43,7 +45,7 @@ export function CaseRow({ item, index, total }: { item: Case; index: number; tot
           </ul>
 
           <span className={styles.more}>
-            читать кейс
+            {read}
             <span className={styles.arrow}>
               <Arrow />
             </span>

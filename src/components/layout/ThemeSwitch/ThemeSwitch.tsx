@@ -3,20 +3,16 @@
 import { useSyncExternalStore } from 'react'
 import styles from './ThemeSwitch.module.css'
 
-const THEMES = [
-  { id: 'dark', label: 'Тёмная тема' },
-  { id: 'warm', label: 'Тёплая тема' },
-  { id: 'light', label: 'Светлая тема' },
-] as const
-
-type Theme = (typeof THEMES)[number]['id']
+type Theme = 'dark' | 'warm' | 'light'
+const THEMES: Theme[] = ['dark', 'warm', 'light']
 
 /* Тема живёт в data-theme на <html> (его же ставит ThemeScript до
-   отрисовки), компонент на него только подписан */
-const EVENT = 'themechange'
+   отрисовки), компонент на него только подписан. Событие themechange
+   слушает и блок «система», чтобы показать новые значения токенов */
+export const THEME_EVENT = 'themechange'
 const subscribe = (cb: () => void) => {
-  window.addEventListener(EVENT, cb)
-  return () => window.removeEventListener(EVENT, cb)
+  window.addEventListener(THEME_EVENT, cb)
+  return () => window.removeEventListener(THEME_EVENT, cb)
 }
 const read = () => (document.documentElement.dataset.theme as Theme | undefined) ?? 'dark'
 
@@ -25,27 +21,29 @@ function applyTheme(next: Theme) {
   try {
     localStorage.setItem('theme', next)
   } catch {}
-  window.dispatchEvent(new Event(EVENT))
+  window.dispatchEvent(new Event(THEME_EVENT))
 }
 
+type Props = { label: string; labels: Record<Theme, string> }
+
 /** Переключатель трёх тем из макета: тёмная, тёплая, светлая. Выбор помнится */
-export function ThemeSwitch() {
+export function ThemeSwitch({ label, labels }: Props) {
   const theme = useSyncExternalStore(subscribe, read, () => 'dark' as Theme)
 
   return (
-    <div className={styles.switch} role="radiogroup" aria-label="Тема">
-      {THEMES.map((t) => (
+    <div className={styles.switch} role="radiogroup" aria-label={label}>
+      {THEMES.map((id) => (
         <button
-          key={t.id}
+          key={id}
           type="button"
           role="radio"
-          aria-checked={theme === t.id}
-          aria-label={t.label}
-          title={t.label}
+          aria-checked={theme === id}
+          aria-label={labels[id]}
+          title={labels[id]}
           className={styles.option}
-          onClick={() => applyTheme(t.id)}
+          onClick={() => applyTheme(id)}
         >
-          <Icon id={t.id} />
+          <Icon id={id} />
         </button>
       ))}
     </div>
