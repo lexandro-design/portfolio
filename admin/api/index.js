@@ -3,7 +3,6 @@
  * приходит в параметре __p — возвращаем его на место и отдаём в lib/admin.js
  */
 import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { handle } from '../lib/admin.js'
 
 const TYPES = {
@@ -12,9 +11,19 @@ const TYPES = {
   css: 'text/css; charset=utf-8',
 }
 
-/** Файлы интерфейса лежат в app/ (не в public/, иначе Vercel раздал бы их без входа) */
+/**
+ * Файлы интерфейса лежат в app/ (не в public/, иначе Vercel раздал бы их без входа).
+ * Пути — литералами от этого файла: так сборщик Vercel видит их и кладёт рядом с функцией,
+ * а на сервере они находятся независимо от рабочей папки (у Vercel это корень репо, не admin/)
+ */
+const FILES = {
+  'index.html': new URL('../app/index.html', import.meta.url),
+  'app.js': new URL('../app/app.js', import.meta.url),
+  'app.css': new URL('../app/app.css', import.meta.url),
+}
+
 export async function asset(name) {
-  const body = await readFile(join(process.cwd(), 'app', name))
+  const body = await readFile(FILES[name])
   return new Response(body, { headers: { 'Content-Type': TYPES[name.split('.').pop()] } })
 }
 
