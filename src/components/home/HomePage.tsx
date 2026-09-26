@@ -1,4 +1,4 @@
-import { sectionIndex, TICKER } from '@/content/site'
+import { sectionIndex } from '@/content/site'
 import { getCases } from '@/content/cases-i18n'
 import { HTML_LANG, localePath, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
@@ -17,14 +17,11 @@ import styles from './HomePage.module.css'
 export function HomePage({ locale }: { locale: Locale }) {
   const t = getDict(locale)
   const items = getCases(locale)
-  const ticker = TICKER.map(
-    (slug) => items.find((c) => c.slug === slug)?.title.toLowerCase() ?? slug,
-  )
   const base = localePath(locale, '').replace(/\/$/, '')
 
   return (
     <div lang={HTML_LANG[locale]}>
-      <Hero t={t.hero} locale={locale} ticker={ticker} />
+      <Hero t={t.hero} locale={locale} />
 
       <section id="services" className={styles.section}>
         <div className="container">

@@ -6,6 +6,7 @@ import { contacts } from '@/content/site'
 import { HTML_LANG, localePath } from '@/i18n/config'
 import { Button } from '@/components/ui/Button'
 import { LangSwitch } from '../LangSwitch'
+import { Logo } from './Logo'
 import { MobileMenu } from '../MobileMenu'
 import { ScrollProgress } from '../ScrollProgress'
 import { ThemeSwitch } from '../ThemeSwitch'
@@ -35,9 +36,7 @@ export function Nav() {
   return (
     <header className={styles.nav}>
       <div className={`container ${styles.inner}`}>
-        <Link href={localePath(locale, '/')} className={styles.logo} aria-label="LEXANDRO">
-          LEXANDRO
-        </Link>
+        <Logo href={localePath(locale, '/')} />
 
         <nav className={styles.links} aria-label={t.nav.works}>
           {links.map((item) => (

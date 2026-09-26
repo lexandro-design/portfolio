@@ -82,6 +82,8 @@
   --font-cjk-zh: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', sans-serif;
   --font-cjk-ja: 'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  /* Только логотип: широкий гротеск отделяет бренд от Inter интерфейса */
+  --font-display: 'Unbounded Variable', var(--font-sans);
   --type-h1: 120px;
   --type-h2: 72px;
   --type-h3: 32px;

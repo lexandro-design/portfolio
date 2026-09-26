@@ -6,3 +6,7 @@ next-env.d.ts
 .env*.local
 /test-results/
 /_shots/
+
+# Файлы-подсказки, которые пишет next dev — не часть сайта
+/AGENTS.md
+/CLAUDE.md

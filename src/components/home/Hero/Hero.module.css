@@ -61,36 +61,6 @@
   }
 }
 
-/* Фото в ч/б, на ховере проявляется цвет. Уголки — как у превью кейсов */
-.photo {
-  position: relative;
-  animation: rise var(--dur-reveal) var(--ease-out-expo) 360ms both;
-}
-
-.photo img {
-  inline-size: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: 63% 50%;
-  border: 1px solid var(--border-hair);
-  filter: grayscale(1) contrast(1.06) brightness(0.96);
-  transition: filter var(--dur-slow) var(--ease-out-expo);
-}
-
-.photo:hover img {
-  filter: none;
-}
-
-.photo figcaption {
-  position: absolute;
-  inset-block-start: calc(100% + 12px);
-  font-family: var(--font-mono);
-  font-size: var(--type-mono-sm);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-tertiary);
-}
-
 .bottom {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
@@ -187,16 +157,6 @@
   .title {
     font-size: var(--type-h1);
     line-height: 1;
-  }
-
-  .photo img {
-    aspect-ratio: 16 / 11;
-    object-position: 60% 45%;
-  }
-
-  .photo figcaption {
-    position: static;
-    margin-block-start: 12px;
   }
 
   .buttons > * {

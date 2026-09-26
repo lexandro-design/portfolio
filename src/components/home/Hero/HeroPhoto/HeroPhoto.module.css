@@ -1,0 +1,125 @@
+.photo {
+  position: relative;
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 360ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+}
+
+/* ---------- Слои форматов ---------- */
+
+.layer {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  visibility: hidden;
+}
+
+/* Монохромный формат: заливка цветом текста, рисунок — из маски */
+.layer[data-mask] {
+  background: var(--fg-primary);
+  mask: var(--mask) center / 100% 100% no-repeat;
+  -webkit-mask: var(--mask) center / 100% 100% no-repeat;
+}
+
+.layer[data-state='on'] {
+  visibility: visible;
+  z-index: 1;
+}
+
+/* Новый формат открывается сверху вниз ровно за полосой */
+.layer[data-state='in'] {
+  visibility: visible;
+  z-index: 2;
+  animation: wipe var(--sweep) var(--ease-in-out) both;
+}
+
+@keyframes wipe {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/* ---------- Полоса развёртки ---------- */
+
+/* Яркая линия со свечением над ней: кажется, что кадр перепечатывается.
+   Низ полосы идёт по краю открывающегося слоя, поэтому едет top, а не
+   transform: проценты transform считаются от высоты самой полосы */
+.band {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 3;
+  block-size: 56px;
+  margin-block-start: -56px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--accent) 22%, transparent) 70%,
+    var(--accent) 100%
+  );
+  box-shadow: 0 1px 18px color-mix(in srgb, var(--accent) 60%, transparent);
+  animation: band var(--sweep) var(--ease-in-out) both;
+  pointer-events: none;
+}
+
+@keyframes band {
+  from {
+    top: 0;
+  }
+
+  to {
+    top: 100%;
+  }
+}
+
+/* ---------- Подпись ---------- */
+
+.caption {
+  position: absolute;
+  inset-block-start: calc(100% + 12px);
+  inset-inline: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.format {
+  color: var(--fg-secondary);
+}
+
+/* ---------- Адаптив ---------- */
+
+@media (max-width: 767px) {
+  .frame {
+    max-inline-size: 360px;
+  }
+
+  .caption {
+    position: static;
+    max-inline-size: 360px;
+    margin-block-start: 12px;
+  }
+}

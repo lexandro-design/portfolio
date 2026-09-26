@@ -35,6 +35,8 @@ export type Dict = {
     primary: string
     secondary: string
     ticker: string
+    /** Что входит в работу под ключ — бегущая строка первого экрана */
+    tickerItems: string[]
     scroll: string
     photoAlt: string
     photoCaption: string
@@ -101,5 +103,7 @@ export type Dict = {
     close: string
     prev: string
     nextShot: string
+    /** Переключатель темы у скриншотов, если проект сделан в двух темах */
+    shotTheme: { label: string; light: string; dark: string }
   }
 }

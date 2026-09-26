@@ -2,9 +2,9 @@ import type { Dict } from './types'
 
 export const ja: Dict = {
   meta: {
-    title: 'Alexey Sveshnikov · UX/UI とデザインシステム',
+    title: 'Alexey Sveshnikov · デザイン、コード、AI をワンストップで',
     description:
-      'デザイナー兼開発者。Figma で緻密に設計したデザインシステムを Next.js で実装し、自動化と AI サービスも手がけます。',
+      'デザイナー兼開発者。分析、Figma でのデザインシステムとインターフェース、そのデザインに基づくサイト構築、AI エージェントを使った自動化まで。すべてひとりで一貫対応。',
     caseTitle: 'Alexey Sveshnikov',
   },
 
@@ -24,27 +24,47 @@ export const ja: Dict = {
   },
 
   hero: {
-    metaLeft: ['LEXANDRO · サンクトペテルブルク', 'ux/ui · デザインシステム · 開発'],
-    title: ['味方になる', 'デザインシステムを、'],
-    accent: ['コードまで。'],
-    body: 'トークン、コンポーネント、状態をすべて先に決めたシステムの上にインターフェースを設計し、本番のコードまで自分で仕上げます。現在は TITAN-2 ホールディングスの社内プロダクトを担当しています。',
+    metaLeft: ['LEXANDRO · サンクトペテルブルク', 'ux/ui · デザインシステム · サイト · 自動化'],
+    title: ['デザイン、コード、', 'AI エージェントまで、'],
+    accent: ['ひとりで一貫して。'],
+    body: 'デザインとデザインシステムをつくり、きれいに実装し、バックエンドを書き、データベースとサーバーを整え、AI エージェントを組み込みます。アイデアから公開まで、プロダクトを丸ごと。',
     primary: 'プロジェクトを相談する',
     secondary: '実績を見る',
-    ticker: '進行中：',
+    ticker: 'ワンストップ：',
+    tickerItems: [
+      '分析',
+      'デザインシステム',
+      'インターフェース',
+      'フロントエンド',
+      'バックエンド',
+      'データベース',
+      'サーバー',
+      'ai エージェント',
+      'crm 連携',
+      '公開',
+    ],
     scroll: 'スクロール',
     photoAlt: 'サンクトペテルブルクの河岸に立つ Alexey Sveshnikov',
     photoCaption: 'わたし · サンクトペテルブルク',
   },
 
   sections: {
-    services: { label: 'サービス', title: 'できること', aside: '三つの領域 · ひとりで一貫対応' },
-    works: { label: '実績', title: '主な実績', aside: 'TITAN-2、クライアント、自社プロダクト' },
+    services: {
+      label: 'サービス',
+      title: 'できること',
+      aside: '分析 · デザイン · コード · 自動化',
+    },
+    works: {
+      label: '実績',
+      title: '主な実績',
+      aside: 'TITAN-2、EnterSales、フリーランス、自社プロダクト',
+    },
     system: {
       label: 'システム',
       title: 'このサイトの土台',
       aside: '三つのテーマ · ひと組のトークン',
     },
-    process: { label: 'プロセス', title: '進め方', aside: '五つのステップ · 想定外なし' },
+    process: { label: 'プロセス', title: '進め方', aside: '一貫対応 · ひとりで' },
     about: {
       label: 'わたしについて',
       title: 'つくっている人',
@@ -59,21 +79,21 @@ export const ja: Dict = {
       code: 'design',
       title: 'UX/UI とデザインシステム',
       text: 'プロダクトの味方になるデザインシステム。色・文字・余白のトークン、すべての状態を備えたコンポーネント、グリッドのルール。新しい画面は既存のパーツから組み立てられ、開発者は迷わず実装できます。',
-      tags: ['ux/ui', 'design systems', 'design tokens', 'figma', 'plugin api'],
+      tags: ['ux/ui', 'design systems', 'design tokens', 'figma', 'auto layout'],
       filter: 'design',
     },
     {
       code: 'web',
-      title: 'ウェブサイトとフロントエンド',
-      text: 'Next.js、React、TypeScript によるサイトとウェブアプリ。デザイン通りのコーディングから、CMS と連携したヘッドレスなカタログまで。すべての画面を全ブレークポイントでデザインと照合します。',
-      tags: ['react', 'next.js', 'typescript', 'css modules', 'headless cms'],
+      title: 'サイトとバックエンド',
+      text: '自分のデザインでつくるサイトとウェブアプリ。Tilda または React・Next.js でのフロントエンド、バックエンド、データベース、サーバーまで。すべての画面を全幅でデザインと照合します。',
+      tags: ['react', 'next.js', 'node.js', 'postgresql', 'tilda'],
       filter: 'web',
     },
     {
       code: 'automation',
       title: '自動化と AI',
-      text: 'Telegram ボット、CRM と決済の連携、PostgreSQL のデータベース、RAG 検索と AI アシスタント。',
-      tags: ['postgresql', 'supabase', 'telegram api', 'rag', 'ai agents', 'bitrix24'],
+      text: 'Telegram ボットと AI アシスタント、CRM と決済の連携、データベース、文書の RAG 検索。データ法 152-FZ に沿ってデータとモデルをロシア国内に置くこともできます。',
+      tags: ['javascript', 'postgresql', 'rag', 'ai agents', 'bitrix24', '152-fz'],
       filter: 'ai',
     },
   ],
@@ -83,7 +103,7 @@ export const ja: Dict = {
     all: 'すべて',
     directions: { design: 'デザイン', web: 'ウェブ', ai: '自動化 / ai' },
     read: 'ケースを読む',
-    rest: 'その他のプロジェクト · 画面は NDA 対象または進行中',
+    rest: '小規模な自動化',
   },
 
   system: {
@@ -109,49 +129,49 @@ export const ja: Dict = {
     step: 'ステップ',
     steps: [
       {
-        title: 'ヒアリング',
-        text: '課題とスケジュールを把握します。合わない場合はすぐにお伝えします。',
+        title: '分析',
+        text: '課題、業務の流れ、スケジュールを把握します。合わない場合や既製のサービスで解決できる場合は、すぐにお伝えします。',
       },
       {
-        title: 'システム',
-        text: 'データ、状態、トークン、コンポーネントという土台をつくります。決定事項は口頭ではなく文書に残します。',
-      },
-      {
-        title: 'インターフェース',
-        text: 'システムのコンポーネントで画面を設計します。Figma の定型作業は自作のスクリプトで自動化しています。',
+        title: 'デザイン',
+        text: 'デザインシステムをつくり、すべての状態を含む画面を設計します。決定事項は口頭ではなく文書に残します。',
       },
       {
         title: 'コード',
-        text: '動くプロダクトとして仕上げ、クライアントが不具合を見つける前に全ブレークポイントでデザインと照合します。',
+        text: '自分のデザインでサイトを構築し、クライアントが不具合を見つける前に全幅で各画面を照合します。',
+      },
+      {
+        title: '自動化',
+        text: 'チームの定型作業を引き受けるボット、CRM 連携、AI エージェントを組み込みます。',
       },
       {
         title: '引き渡し',
-        text: 'ドキュメントと決定の記録を添えて、わたしがいなくても育てていける状態で渡します。',
+        text: 'ドキュメントと使い方の説明を添えて、わたしがいなくても育てていける状態で渡します。',
       },
     ],
   },
 
   about: {
-    lead: 'サンクトペテルブルクを拠点にするデザイナー兼開発者の Alexey です。設計した画面を自分で実装するので、わたしのデザインには実装できない案が入りません。',
+    lead: 'サンクトペテルブルクを拠点にするデザイナー兼開発者の Alexey です。分析とデザインからサイト、自動化までプロダクト全体を手がけるので、委託先どうしの間で何かが抜け落ちることがありません。',
     text: [
       '画面からではなく、システムから始めます。トークン、コンポーネント、状態、ルール。土台がしっかりしていれば、新しい画面は数時間でつくれて、プロダクトが大きくなっても崩れません。',
-      '定型作業は自動化します。Figma の画面は Plugin API で書いた自作スクリプトで組み立て、サイトのすべてのページを三つの幅でデザインと並べて確認します。',
+      'デザイン、コード、自動化をひとりで。デザインは最初から実装を前提にしていて、ボットや連携は後付けではなく同じプロダクトの一部になります。',
     ],
     timeline: [
       {
         when: '2025 年〜',
         title: 'TITAN-2 ホールディングス',
-        text: '社内プロダクト：管理画面、社員向けサービス、BI ダッシュボード、コーポレートサイト。',
+        text: '社内プロダクトのデザイン：管理画面、社員向けサービス、BI ダッシュボード、コーポレートサイト。',
+      },
+      {
+        when: '2024–2025',
+        title: 'EnterSales',
+        text: 'スタジオの顧客向けのサイトデザインと自動化：ボット、メールの仕分け、Bitrix24 連携。',
       },
       {
         when: '2024 年〜',
-        title: 'フリーランス',
-        text: '企業向けのサイト、Telegram ボット、システム連携、AI アシスタント。最大の案件は Parfumeria.by。',
-      },
-      {
-        when: '自社',
-        title: 'プロダクト',
-        text: 'MiMiMi AI、brain-search、Jarvis。アイデアを自分でつくり、自分で試しています。',
+        title: 'フリーランスと自社プロダクト',
+        text: '企業向けのサイト、ボット、AI アシスタント。自社プロダクトの MiMiMi AI はユーザー 3000 人以上。',
       },
     ],
   },
@@ -197,5 +217,6 @@ export const ja: Dict = {
     close: '閉じる',
     prev: '前へ',
     nextShot: '次へ',
+    shotTheme: { label: 'スクリーンショットのテーマ', light: 'ライト', dark: 'ダーク' },
   },
 }

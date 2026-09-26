@@ -2,9 +2,9 @@ import type { Dict } from './types'
 
 export const en: Dict = {
   meta: {
-    title: 'Alexey Sveshnikov · UX/UI and design systems',
+    title: 'Alexey Sveshnikov · design, code and AI end to end',
     description:
-      'Designer and developer: interfaces built on well-thought-out design systems in Figma and shipped in Next.js, plus automation and AI services.',
+      'Designer and developer: analysis, design systems and interfaces in Figma, websites built on that design and automation with AI agents. End to end, one pair of hands.',
     caseTitle: 'Alexey Sveshnikov',
   },
 
@@ -24,27 +24,47 @@ export const en: Dict = {
   },
 
   hero: {
-    metaLeft: ['LEXANDRO · saint petersburg', 'ux/ui · design systems · development'],
-    title: ['Design systems', 'that work for you,'],
-    accent: ['not against you.'],
-    body: 'I design interfaces on systems where every token, component and state is decided up front, then take them all the way to production code. Currently building internal products for the TITAN-2 holding.',
+    metaLeft: ['LEXANDRO · saint petersburg', 'ux/ui · design systems · websites · automation'],
+    title: ['Design, code', 'and AI agents,', 'end to end,'],
+    accent: ['in one pair of hands.'],
+    body: 'I design the product and its design system, build a clean front end, write the back end, set up the database and server and wire in AI agents. The whole product, from idea to launch.',
     primary: 'discuss a project',
     secondary: 'see the work',
-    ticker: 'now working on:',
+    ticker: 'end to end:',
+    tickerItems: [
+      'analysis',
+      'design system',
+      'interfaces',
+      'front end',
+      'back end',
+      'database',
+      'server',
+      'ai agents',
+      'crm integrations',
+      'launch',
+    ],
     scroll: 'scroll down',
     photoAlt: 'Alexey Sveshnikov on an embankment in Saint Petersburg',
     photoCaption: "that's me · saint petersburg",
   },
 
   sections: {
-    services: { label: 'services', title: 'what I do', aside: 'three disciplines · one person' },
-    works: { label: 'work', title: 'selected work', aside: 'TITAN-2, clients and my own products' },
+    services: {
+      label: 'services',
+      title: 'what I do',
+      aside: 'analysis · design · code · automation',
+    },
+    works: {
+      label: 'work',
+      title: 'selected work',
+      aside: 'TITAN-2, EnterSales, freelance and my own products',
+    },
     system: {
       label: 'system',
       title: 'what this site runs on',
       aside: 'three themes · one set of tokens',
     },
-    process: { label: 'process', title: 'how I work', aside: 'five steps · no surprises' },
+    process: { label: 'process', title: 'how I work', aside: 'end to end · one person' },
     about: {
       label: 'about',
       title: 'who is behind it',
@@ -59,21 +79,21 @@ export const en: Dict = {
       code: 'design',
       title: 'UX/UI and design systems',
       text: 'Design systems that work for the product: colour, type and spacing tokens, components with every state, grid rules. New screens are assembled from ready parts, and developers build without guessing.',
-      tags: ['ux/ui', 'design systems', 'design tokens', 'figma', 'plugin api'],
+      tags: ['ux/ui', 'design systems', 'design tokens', 'figma', 'auto layout'],
       filter: 'design',
     },
     {
       code: 'web',
-      title: 'Websites and frontend',
-      text: 'Websites and web apps in Next.js and React with TypeScript, from pixel-accurate layout to a headless catalog from a CMS. Every screen is checked against the design at every breakpoint.',
-      tags: ['react', 'next.js', 'typescript', 'css modules', 'headless cms'],
+      title: 'Websites and back end',
+      text: 'Websites and web apps built on my own design: front end on Tilda or React and Next.js, back end, database and server. Every screen is checked against the design at every width.',
+      tags: ['react', 'next.js', 'node.js', 'postgresql', 'tilda'],
       filter: 'web',
     },
     {
       code: 'automation',
       title: 'Automation and AI',
-      text: 'Telegram bots, CRM and payment integrations, PostgreSQL databases, RAG search and AI assistants.',
-      tags: ['postgresql', 'supabase', 'telegram api', 'rag', 'ai agents', 'bitrix24'],
+      text: 'Telegram bots and AI assistants, CRM and payment integrations, databases, RAG search over documents. Can keep data and models in Russia under data law 152-FZ.',
+      tags: ['javascript', 'postgresql', 'rag', 'ai agents', 'bitrix24', '152-fz'],
       filter: 'ai',
     },
   ],
@@ -83,7 +103,7 @@ export const en: Dict = {
     all: 'all',
     directions: { design: 'design', web: 'web', ai: 'automation / ai' },
     read: 'read the case',
-    rest: 'more projects · screens under NDA or in progress',
+    rest: 'smaller automations',
   },
 
   system: {
@@ -109,49 +129,49 @@ export const en: Dict = {
     step: 'step',
     steps: [
       {
-        title: 'Brief',
-        text: 'I get into the task and the timeline. If it is not a fit, I say so right away.',
+        title: 'Analysis',
+        text: 'I get into the task, the processes and the timeline. If it is not a fit or an off-the-shelf service solves it, I say so right away.',
       },
       {
-        title: 'System',
-        text: 'I lay the foundation: data, states, tokens and components. Decisions are written down, not agreed verbally.',
-      },
-      {
-        title: 'Interface',
-        text: 'I design screens from the components of the system. Routine work in Figma runs on my own scripts.',
+        title: 'Design',
+        text: 'I build the design system and design screens with every state. Decisions are written down, not agreed verbally.',
       },
       {
         title: 'Code',
-        text: 'I ship a working product and check it against the design at every breakpoint before the client finds a bug.',
+        text: 'I build the site on my own design and check every screen at every width before the client finds a bug.',
+      },
+      {
+        title: 'Automation',
+        text: 'I wire in bots, CRM integrations and AI agents that take routine off the team.',
       },
       {
         title: 'Handover',
-        text: 'Documentation and a record of decisions, so the project can grow without me.',
+        text: 'Documentation and training, so the project can grow without me.',
       },
     ],
   },
 
   about: {
-    lead: "I'm Alexey, a designer and developer from Saint Petersburg. I design interfaces and build them myself, so my layouts never contain decisions that cannot be coded.",
+    lead: "I'm Alexey, a designer and developer from Saint Petersburg. I build the whole product: from analysis and design to the website and automation, so nothing gets lost between contractors.",
     text: [
       'I start with the system, not the screens: tokens, components, states, rules. Once the foundation is solid, a new screen takes hours and the product does not fall apart as it grows.',
-      'I automate the routine: Figma screens are assembled by my own Plugin API scripts, and every page of a site is checked against the design side by side at three widths.',
+      'Design, code and automation in one pair of hands: the layout is built to be implemented, and bots and integrations become part of the same product instead of being bolted on.',
     ],
     timeline: [
       {
         when: 'since 2025',
         title: 'TITAN-2 holding',
-        text: 'Internal products: admin panels, employee services, BI dashboards, a corporate website.',
+        text: 'Design of internal products: admin panels, employee services, BI dashboards, corporate websites.',
+      },
+      {
+        when: '2024–2025',
+        title: 'EnterSales',
+        text: 'Website design and automation for the studio’s clients: bots, email triage, Bitrix24 integrations.',
       },
       {
         when: 'since 2024',
-        title: 'Freelance',
-        text: 'Websites, Telegram bots, integrations and AI assistants for businesses. The largest is Parfumeria.by.',
-      },
-      {
-        when: 'my own',
-        title: 'Products',
-        text: 'MiMiMi AI, brain-search, Jarvis: ideas I build and test on myself.',
+        title: 'Freelance and own products',
+        text: 'Websites, bots and AI assistants for businesses. My own product, MiMiMi AI, has 3,000+ users.',
       },
     ],
   },
@@ -203,5 +223,6 @@ export const en: Dict = {
     close: 'close',
     prev: 'Previous',
     nextShot: 'Next',
+    shotTheme: { label: 'Screenshot theme', light: 'light', dark: 'dark' },
   },
 }

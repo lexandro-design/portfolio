@@ -1,20 +1,20 @@
-import { COORDS, PHOTO, SECTION_COUNT } from '@/content/site'
+import { COORDS, SECTION_COUNT } from '@/content/site'
 import { localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
-import { asset } from '@/lib/asset'
 import { Button } from '@/components/ui/Button'
 import { Clock } from '@/components/ui/Clock'
 import { Ticker } from '@/components/ui/Ticker'
+import { HeroPhoto } from './HeroPhoto'
 import styles from './Hero.module.css'
 
-type Props = { t: Dict['hero']; locale: Locale; ticker: string[] }
+type Props = { t: Dict['hero']; locale: Locale }
 
 /**
  * Первый экран: мета по краям, заголовок слева и фото справа, под ними
  * описание и действия. Высота по содержимому, а не на весь экран:
  * растянутый первый экран давал дыру между метой и заголовком.
  */
-export function Hero({ t, locale, ticker }: Props) {
+export function Hero({ t, locale }: Props) {
   const lines = [
     ...t.title.map((text) => ({ text, accent: false })),
     ...t.accent.map((text) => ({ text, accent: true })),
@@ -47,11 +47,7 @@ export function Hero({ t, locale, ticker }: Props) {
           ))}
         </h1>
 
-        <figure className={styles.photo}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
-          <img src={asset(PHOTO.src)} alt={t.photoAlt} width={PHOTO.w} height={PHOTO.h} />
-          <figcaption>{t.photoCaption}</figcaption>
-        </figure>
+        <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
       </div>
 
       <div className={styles.bottom}>
@@ -63,7 +59,7 @@ export function Hero({ t, locale, ticker }: Props) {
               {t.secondary}
             </Button>
           </div>
-          <Ticker label={t.ticker} items={ticker} />
+          <Ticker label={t.ticker} items={t.tickerItems} />
         </div>
       </div>
 

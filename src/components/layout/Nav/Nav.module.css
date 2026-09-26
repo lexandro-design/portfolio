@@ -15,12 +15,6 @@
   block-size: var(--nav-h);
 }
 
-.logo {
-  font-size: 21px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
 .links {
   display: flex;
   gap: var(--space-lg);
@@ -106,10 +100,6 @@
 @media (max-width: 767px) {
   .inner {
     gap: var(--space-sm);
-  }
-
-  .logo {
-    font-size: 18px;
   }
 
   .side {
