@@ -95,6 +95,32 @@
   border-block-end-color: var(--fg-primary);
 }
 
+.credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-block-start: var(--space-lg);
+  padding: 14px 20px;
+  border: 1px solid var(--border-hover);
+  font-size: var(--type-body);
+  transition:
+    border-color var(--dur-base) var(--ease-out-quart),
+    background-color var(--dur-base) var(--ease-out-quart);
+}
+
+.credit:hover {
+  border-color: var(--fg-primary);
+  background: var(--bg-elevated);
+}
+
+.creditRole {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
 .cover {
   display: grid;
   gap: var(--space-sm);

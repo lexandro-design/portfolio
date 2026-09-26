@@ -75,26 +75,61 @@
   content: '· ';
 }
 
+/* ---------- Общая шапка превью ---------- */
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-secondary);
+  text-transform: lowercase;
+  letter-spacing: 0.06em;
+}
+
+.live {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--signal-live);
+  animation: pulse 2s var(--ease-out-quart) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal-live) 60%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
 /* ---------- Цепочка шагов ---------- */
 
-/* В строке кейса шаги идут столбиком, в шапке кейса — в ряд:
-   на широкой плашке столбик терялся в левом углу */
+/* В строке кейса шаги идут столбиком, в шапке кейса — в ряд: на широкой
+   плашке столбик терялся в левом углу. Цикл 6 с на всю цепочку, шаг
+   срабатывает через 1,2 с после предыдущего, пакет бежит между ними */
 .flow {
   position: absolute;
-  inset: 64px 40px 48px;
+  inset: 52px 40px 40px;
   display: grid;
-  grid-auto-rows: minmax(0, 1fr);
+  grid-template-rows: auto repeat(4, minmax(0, 1fr));
   gap: 14px;
-  max-inline-size: 360px;
+  max-inline-size: 380px;
 }
 
 .preview[data-size='cover'] .flow {
-  inset: auto 40px 56px;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-rows: auto;
+  inset: 56px 40px 48px;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: 16px 28px;
   max-inline-size: none;
-  gap: 24px;
+}
+
+.preview[data-size='cover'] .flow .head {
+  grid-column: 1 / -1;
+  align-self: start;
 }
 
 .step {
@@ -113,10 +148,29 @@
 }
 
 .preview[data-size='cover'] .step {
-  padding: 18px 16px;
+  padding: 22px 16px;
 }
 
-/* Соединительная линия к следующему шагу */
+.stepIndex {
+  color: var(--fg-tertiary);
+}
+
+.stepName {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* «ok» загорается, когда шаг сработал, и гаснет к следующему кругу */
+.status {
+  color: var(--signal-live);
+  opacity: 0;
+  animation: done 6s steps(1, end) calc(var(--i) * 1.2s + 0.35s) infinite;
+}
+
+/* Связь к следующему шагу и пакет, который по ней бежит */
 .step:not(:last-child)::after {
   content: '';
   position: absolute;
@@ -127,30 +181,90 @@
   background: var(--border-hover);
 }
 
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 100%;
+  inset-inline-start: 24px;
+  inline-size: 5px;
+  block-size: 5px;
+  background: var(--fg-primary);
+  opacity: 0;
+  animation: packet 6s linear calc(var(--i) * 1.2s + 0.7s) infinite;
+}
+
 .preview[data-size='cover'] .step:not(:last-child)::after {
   inset-block-start: 50%;
   inset-inline-start: 100%;
-  inline-size: 24px;
+  inline-size: 28px;
   block-size: 1px;
 }
 
-.stepIndex {
-  color: var(--fg-tertiary);
+.preview[data-size='cover'] .step:not(:last-child)::before {
+  inset-block-start: calc(50% - 2px);
+  inset-inline-start: 100%;
+  animation-name: packet-x;
 }
 
-/* Шаг «срабатывает»: подсветка бежит по цепочке сверху вниз и по кругу */
 @keyframes lit {
   0%,
   22%,
   100% {
     border-color: var(--border-hair);
     color: var(--fg-secondary);
+    background: var(--bg-base);
   }
 
   6%,
   14% {
     border-color: var(--fg-primary);
     color: var(--fg-primary);
+    background: var(--bg-subtle);
+  }
+}
+
+@keyframes done {
+  0% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+}
+
+@keyframes packet {
+  0% {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  8% {
+    opacity: 1;
+    translate: 0 10px;
+  }
+
+  9%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes packet-x {
+  0% {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  8% {
+    opacity: 1;
+    translate: 24px 0;
+  }
+
+  9%,
+  100% {
+    opacity: 0;
   }
 }
 
@@ -158,56 +272,42 @@
 
 .chat {
   position: absolute;
-  inset: 60px 40px 40px;
+  inset: 52px 40px 28px;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  gap: 10px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  letter-spacing: 0;
-  text-transform: none;
+  gap: 12px;
 }
 
 .preview[data-size='cover'] .chat {
   inset-inline: 25%;
-  font-size: 15px;
 }
 
-.bubble {
-  max-inline-size: 78%;
-  padding: 9px 13px;
+.avatar {
+  inline-size: 18px;
+  block-size: 18px;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, var(--fg-primary), var(--fg-tertiary), var(--fg-primary));
+}
+
+/* Строка ввода с мигающей кареткой — чтобы было видно, что это чат */
+.input {
+  display: flex;
+  align-items: center;
+  block-size: 34px;
+  padding-inline: 14px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px 14px 14px 4px;
-  background: var(--bg-subtle);
-  color: var(--fg-primary);
-  line-height: 1.35;
-  animation: typed 9s var(--ease-out-quart) calc(var(--i) * 0.9s) infinite both;
+  border-radius: 17px;
 }
 
-.bubble[data-from='user'] {
-  align-self: end;
-  border-color: transparent;
-  border-radius: 14px 14px 4px;
-  background: var(--fg-primary);
-  color: var(--fg-inverse);
+.caret {
+  inline-size: 1px;
+  block-size: 14px;
+  background: var(--fg-secondary);
+  animation: blink 1s steps(1, end) infinite;
 }
 
-/* Сообщения появляются по одному, висят и тают — диалог идёт по кругу */
-@keyframes typed {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  6%,
-  82% {
-    opacity: 1;
-    transform: none;
-  }
-
-  90%,
-  100% {
+@keyframes blink {
+  50% {
     opacity: 0;
   }
 }
@@ -215,10 +315,21 @@
 @media (max-width: 767px) {
   .flow,
   .preview[data-size='cover'] .flow {
-    inset: 52px 32px 32px;
-    grid-auto-flow: row;
-    grid-auto-rows: minmax(0, 1fr);
+    inset: 48px 24px 24px;
+    grid-template-rows: auto repeat(4, minmax(0, 1fr));
+    grid-template-columns: none;
+    align-items: stretch;
     gap: 10px;
+  }
+
+  .preview[data-size='cover'] .step {
+    padding: 8px 12px;
+  }
+
+  .preview[data-size='cover'] .step:not(:last-child)::before {
+    inset-block-start: 100%;
+    inset-inline-start: 24px;
+    animation-name: packet;
   }
 
   .preview[data-size='cover'] .step:not(:last-child)::after {
@@ -230,8 +341,7 @@
 
   .chat,
   .preview[data-size='cover'] .chat {
-    inset: 52px 24px 28px;
-    font-size: 12px;
+    inset: 48px 20px 20px;
   }
 
   .top {
@@ -246,7 +356,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .step,
-  .bubble {
+  .status,
+  .step::before,
+  .live,
+  .caret {
     animation: none;
+  }
+
+  .status {
+    opacity: 1;
   }
 }

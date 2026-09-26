@@ -116,10 +116,10 @@ export const en: Record<string, CaseCopy> = {
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'bot', text: 'Pick a photoshoot category' },
-        { from: 'user', text: 'Vacation' },
-        { from: 'bot', text: 'Generate this shot or the whole photoshoot?' },
-        { from: 'user', text: 'The whole photoshoot' },
+        { from: 'user', text: 'I want a “Vacation” photoshoot' },
+        { from: 'bot', text: 'Your shot is ready', media: 'photo' },
+        { from: 'bot', text: 'Generate the whole photoshoot?' },
+        { from: 'user', text: 'Yes' },
       ],
     },
   },
@@ -460,7 +460,7 @@ export const en: Record<string, CaseCopy> = {
   lotus: {
     tagline: 'restaurant website',
     lead: 'A concept website for an Asian restaurant in five breakpoints: 1440, 1280, 838, 697 and 375. The design is mine, the front end is by Nika.',
-    client: 'concept · front end by Nika',
+    client: 'concept',
     sections: [
       {
         title: 'the idea',

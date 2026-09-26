@@ -29,7 +29,11 @@ export type CaseSection = {
  */
 export type Preview =
   | { kind: 'flow'; steps: string[] }
-  | { kind: 'chat'; lines: { from: 'user' | 'bot'; text: string }[] }
+  | {
+      kind: 'chat'
+      /** media: 'photo' — бот присылает сгенерированный кадр */
+      lines: { from: 'user' | 'bot'; text: string; media?: 'photo' }[]
+    }
 
 export type Case = {
   slug: string
@@ -60,6 +64,8 @@ export type Case = {
   /** Пометка к галерее, например про демо-данные */
   note?: string
   link?: { href: string; label: string }
+  /** Соавтор: кнопка на его GitHub под лидом кейса. Роль подписывается из словаря */
+  credit?: { href: string; handle: string }
 }
 
 const TITAN_NOTE = 'Все скриншоты на демо-данных.'
@@ -219,10 +225,10 @@ export const cases: Case[] = [
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'bot', text: 'Выбери категорию фотосессии' },
-        { from: 'user', text: 'Отпуск' },
-        { from: 'bot', text: 'Сгенерировать этот кадр или всю фотосессию?' },
-        { from: 'user', text: 'Всю фотосессию' },
+        { from: 'user', text: 'Хочу фотосессию «Отпуск»' },
+        { from: 'bot', text: 'Твой кадр готов', media: 'photo' },
+        { from: 'bot', text: 'Сгенерировать всю фотосессию?' },
+        { from: 'user', text: 'Да' },
       ],
     },
   },
@@ -649,7 +655,7 @@ export const cases: Case[] = [
     directions: ['design'],
     label: 'design',
     group: 'own',
-    client: 'концепт · вёрстка — Ника',
+    client: 'концепт',
     year: '2025',
     stack: ['Figma', 'Адаптив', 'Прототип'],
     sections: [
@@ -676,7 +682,7 @@ export const cases: Case[] = [
       [1600, 5200, 'Планшет: главная.'],
     ]),
     ...covers('lotus'),
-    link: { href: 'https://github.com/zeawale', label: 'вёрстка: github.com/zeawale' },
+    credit: { href: 'https://github.com/zeawale', handle: 'zeawale' },
   },
   {
     slug: 'mail-to-crm',

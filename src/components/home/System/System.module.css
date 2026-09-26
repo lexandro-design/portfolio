@@ -1,6 +1,5 @@
 .intro {
   max-inline-size: 44em;
-  margin-block-end: var(--space-2xl);
   font-size: var(--type-body-lg);
   line-height: 1.6;
   color: var(--fg-secondary);
@@ -38,6 +37,26 @@
   color: var(--fg-tertiary);
 }
 
+/* Интро и переключатель темы в одну строку */
+.introRow {
+  display: flex;
+  margin-block-end: var(--space-2xl);
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.try {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.dot {
+  fill: var(--signal-live);
+}
+
 /* ---------- цвет ---------- */
 
 .swatches {
@@ -49,13 +68,25 @@
 .swatch {
   display: grid;
   gap: 4px;
+  inline-size: 100%;
+  text-align: start;
 }
 
 .chip {
   block-size: 64px;
   margin-block-end: 6px;
   border: 1px solid var(--border-hover);
-  transition: background-color var(--dur-base) var(--ease-out-quart);
+  transition:
+    background-color var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-base) var(--ease-out-expo);
+}
+
+.swatch:hover .chip {
+  transform: translateY(-4px);
+}
+
+.swatch:hover .code {
+  color: var(--fg-primary);
 }
 
 .name {
@@ -79,6 +110,7 @@
 .sample {
   overflow: hidden;
   font-weight: 450;
+  animation: weight 4s var(--ease-in-out) calc(var(--i) * 0.3s) infinite;
   line-height: 1;
   letter-spacing: -0.03em;
   white-space: nowrap;
@@ -108,6 +140,25 @@
   max-inline-size: 100%;
   background: var(--fg-primary);
   opacity: 0.85;
+  transform-origin: left;
+  transition: transform var(--dur-reveal) var(--ease-out-expo) calc(var(--i) * 70ms);
+}
+
+/* Шкала вырастает лесенкой, когда ячейка появилась (Reveal ставит data-visible) */
+:global(.js) .cell:not([data-visible]) .bar {
+  transform: scaleX(0);
+}
+
+/* Ось толщины переменного шрифта: образцы «дышат» от тонкого к жирному */
+@keyframes weight {
+  0%,
+  100% {
+    font-weight: 300;
+  }
+
+  50% {
+    font-weight: 700;
+  }
 }
 
 /* ---------- движение ---------- */
@@ -181,6 +232,12 @@
 
   .cell:nth-child(n + 3) {
     border-block-start: 1px solid var(--border-hair);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sample {
+    animation: none;
   }
 }
 

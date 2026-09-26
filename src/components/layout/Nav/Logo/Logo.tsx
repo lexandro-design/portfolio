@@ -8,6 +8,8 @@ const WORD = 'LEXANDRO'
 const GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*/<>'
 // Буква «встаёт на место» с шагом 45 мс слева направо, всё вместе — около 0,4 с
 const STEP = 45
+// Сам по себе логотип сбоит раз в 20 секунд — сайт живёт, даже если мышь стоит
+const IDLE = 20_000
 
 type Props = { href: string }
 
@@ -15,7 +17,8 @@ type Props = { href: string }
  * Логотип-вордмарк. Шрифт Unbounded — широкий гротеск, который сразу
  * отличает бренд от Inter в интерфейсе. На наведении буквы коротко
  * перебирают случайные знаки и собираются обратно слева направо —
- * тот же мотив «пересборки», что у фото на первом экране.
+ * тот же мотив «пересборки», что у фото на первом экране. Раз в 20 секунд
+ * это происходит и без наведения.
  */
 export function Logo({ href }: Props) {
   const [text, setText] = useState(WORD)
@@ -46,6 +49,16 @@ export function Logo({ href }: Props) {
 
     frame.current = requestAnimationFrame(tick)
   }
+
+  useEffect(() => {
+    const idle = window.setInterval(() => {
+      if (document.visibilityState === 'visible') scramble()
+    }, IDLE)
+    return () => {
+      window.clearInterval(idle)
+      if (frame.current) cancelAnimationFrame(frame.current)
+    }
+  }, [])
 
   return (
     <Link href={href} className={styles.logo} aria-label={WORD} onPointerEnter={scramble}>

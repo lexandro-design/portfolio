@@ -43,7 +43,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section id="system" className={styles.section}>
         <div className="container">
           <SectionHeader index={sectionIndex('system')} copy={t.sections.system} />
-          <System t={t.system} />
+          <System t={t.system} themes={{ label: t.nav.theme, labels: t.nav.themes }} />
         </div>
       </section>
 

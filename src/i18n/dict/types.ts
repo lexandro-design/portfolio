@@ -78,6 +78,8 @@ export type Dict = {
       live: string
     }
     specimen: string
+    tryTheme: string
+    copied: string
   }
 
   process: { steps: { title: string; text: string }[]; step: string }
@@ -105,5 +107,7 @@ export type Dict = {
     nextShot: string
     /** Переключатель темы у скриншотов, если проект сделан в двух темах */
     shotTheme: { label: string; light: string; dark: string }
+    /** Подпись кнопки соавтора: «вёрстка — github.com/…» */
+    credit: string
   }
 }

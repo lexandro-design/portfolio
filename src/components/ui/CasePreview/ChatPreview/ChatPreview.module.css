@@ -1,0 +1,145 @@
+.thread {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: end;
+  gap: 10px;
+  min-block-size: 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.bubble {
+  display: grid;
+  gap: 8px;
+  max-inline-size: 78%;
+  padding: 9px 13px;
+  border: 1px solid var(--border-hair);
+  border-radius: 14px 14px 14px 4px;
+  background: var(--bg-subtle);
+  color: var(--fg-primary);
+  line-height: 1.35;
+  animation: arrive var(--dur-base) var(--ease-out-quart) both;
+}
+
+.bubble[data-from='user'] {
+  align-self: end;
+  border-color: transparent;
+  border-radius: 14px 14px 4px;
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* ---------- Бот печатает ---------- */
+
+.typing {
+  display: flex;
+  gap: 4px;
+  inline-size: max-content;
+  padding-block: 13px;
+}
+
+.typing span {
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: 50%;
+  background: var(--fg-tertiary);
+  animation: dot 0.9s var(--ease-in-out) infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes dot {
+  50% {
+    transform: translateY(-3px);
+    background: var(--fg-primary);
+  }
+}
+
+/* ---------- Фото от бота ---------- */
+
+/* Кадр проявляется, как при генерации: из размытого и серого в чёткий,
+   снизу бежит полоса прогресса */
+.photo {
+  position: relative;
+  inline-size: 92px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+}
+
+.photo img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  animation: develop 1.6s var(--ease-out-quart) both;
+}
+
+.photo::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+  block-size: 2px;
+  background: var(--signal-live);
+  animation: progress 1.6s var(--ease-out-quart) both;
+}
+
+@keyframes develop {
+  from {
+    filter: blur(10px) grayscale(1) brightness(1.4);
+    transform: scale(1.1);
+  }
+}
+
+@keyframes progress {
+  from {
+    inline-size: 0;
+  }
+
+  90% {
+    inline-size: 100%;
+    opacity: 1;
+  }
+
+  to {
+    inline-size: 100%;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .thread {
+    font-size: 12px;
+  }
+
+  .photo {
+    inline-size: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble,
+  .photo img,
+  .photo::after,
+  .typing span {
+    animation: none;
+  }
+}

@@ -108,7 +108,7 @@ export const en: Dict = {
 
   system: {
     intro:
-      'This site is built the way I build products: colour, type, spacing and motion are tokens, and components refer to nothing else. Switch the theme in the header: token values change, and not a single component is touched.',
+      'This site is built the way I build products: colour, type, spacing and motion are tokens, and components refer to nothing else. Switch the theme on the right: token values change, and not a single component is touched.',
     colors: 'colour',
     type: 'type',
     spacing: 'spacing',
@@ -123,6 +123,8 @@ export const en: Dict = {
       live: 'status',
     },
     specimen: 'Design system',
+    tryTheme: 'try a theme',
+    copied: 'copied',
   },
 
   process: {
@@ -224,5 +226,6 @@ export const en: Dict = {
     prev: 'Previous',
     nextShot: 'Next',
     shotTheme: { label: 'Screenshot theme', light: 'light', dark: 'dark' },
+    credit: 'front end by',
   },
 }

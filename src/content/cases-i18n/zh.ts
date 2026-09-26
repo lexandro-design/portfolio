@@ -116,10 +116,10 @@ export const zh: Record<string, CaseCopy> = {
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'bot', text: '选择写真类别' },
-        { from: 'user', text: '度假' },
-        { from: 'bot', text: '生成这张，还是整组写真？' },
-        { from: 'user', text: '整组写真' },
+        { from: 'user', text: '我想要“度假”写真' },
+        { from: 'bot', text: '你的画面生成好了', media: 'photo' },
+        { from: 'bot', text: '要生成整组写真吗？' },
+        { from: 'user', text: '要' },
       ],
     },
   },
@@ -436,7 +436,7 @@ export const zh: Record<string, CaseCopy> = {
   lotus: {
     tagline: '餐厅网站',
     lead: '亚洲餐厅网站概念，五种断点：1440、1280、838、697 和 375。设计是我做的，前端由 Nika 完成。',
-    client: '概念项目 · 前端由 Nika 完成',
+    client: '概念项目',
     sections: [
       {
         title: '想法',

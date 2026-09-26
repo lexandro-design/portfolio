@@ -7,20 +7,21 @@ import styles from './HeroPhoto.module.css'
 
 type Props = { alt: string; caption: string }
 
-// Сколько кадр держится до следующей полосы и сколько идёт сама полоса.
-// Длительность прохода уходит в CSS переменной --sweep
-const HOLD = 3200
-const SWEEP = 1400
+// Сколько кадр держится и сколько длится сбой при смене формата.
+// Длительность сбоя уходит в CSS переменной --glitch
+const HOLD = 2600
+const GLITCH = 620
 
 /**
- * Фото на первом экране меняет «формат»: сверху вниз проходит полоса
- * развёртки, и за ней кадр пересобирается в другой технике — чешуя,
- * точки, символы, полутон, пиксели, снова обычное фото. Все форматы
+ * Фото на первом экране меняет «формат» через короткий сбой, как у
+ * барахлящего сигнала: кадр рвётся на полосы, сдвигается, и из обрывков
+ * собирается другая техника — гравюра, точки, символы, полутон, пиксели,
+ * снова обычное фото. Все форматы
  * нарезаны заранее из одного снимка (public/me/*). Монохромные хранятся
  * масками, поэтому красятся цветом текста темы и не требуют трёх копий.
  *
- * Слой, который въезжает, лежит поверх текущего и открывается clip-path
- * синхронно с полосой. Пока вкладка скрыта, смена стоит: иначе после
+ * Новый слой лежит поверх текущего и проступает полосами clip-path,
+ * старый в это время дёргается (см. CSS). Пока вкладка скрыта, смена стоит: иначе после
  * возвращения кадры пролистывались бы пачкой.
  */
 export function HeroPhoto({ alt, caption }: Props) {
@@ -36,7 +37,7 @@ export function HeroPhoto({ alt, caption }: Props) {
       const done = window.setTimeout(() => {
         setCurrent(next)
         setNext(null)
-      }, SWEEP)
+      }, GLITCH)
       return () => window.clearTimeout(done)
     }
 
@@ -51,7 +52,11 @@ export function HeroPhoto({ alt, caption }: Props) {
 
   return (
     <figure className={styles.photo}>
-      <div className={styles.frame} style={{ '--sweep': `${SWEEP}ms` } as CSSProperties}>
+      <div
+        className={styles.frame}
+        style={{ '--glitch': `${GLITCH}ms` } as CSSProperties}
+        data-glitch={next !== null || undefined}
+      >
         {PHOTO.formats.map((format, i) => {
           const state = i === next ? 'in' : i === current ? 'on' : undefined
           const src = asset(format.src)
@@ -78,7 +83,7 @@ export function HeroPhoto({ alt, caption }: Props) {
             />
           )
         })}
-        {next !== null && <span key={next} className={styles.band} aria-hidden="true" />}
+        {next !== null && <span key={next} className={styles.noise} aria-hidden="true" />}
       </div>
 
       <figcaption className={styles.caption}>

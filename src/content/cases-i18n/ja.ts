@@ -116,10 +116,10 @@ export const ja: Record<string, CaseCopy> = {
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'bot', text: 'フォトセッションのカテゴリを選んでください' },
-        { from: 'user', text: 'バカンス' },
-        { from: 'bot', text: 'このショットだけ？それともまとめて生成？' },
-        { from: 'user', text: 'まとめて生成' },
+        { from: 'user', text: '「バカンス」のフォトセッションがしたい' },
+        { from: 'bot', text: 'ショットができました', media: 'photo' },
+        { from: 'bot', text: 'フォトセッションをまとめて生成しますか？' },
+        { from: 'user', text: 'はい' },
       ],
     },
   },
@@ -458,7 +458,7 @@ export const ja: Record<string, CaseCopy> = {
   lotus: {
     tagline: 'レストランのサイト',
     lead: 'アジア料理レストランのサイトのコンセプト、5 つのブレークポイント：1440、1280、838、697、375。デザインはわたし、コーディングはニカ。',
-    client: 'コンセプト · コーディングはニカ',
+    client: 'コンセプト',
     sections: [
       {
         title: 'アイデア',

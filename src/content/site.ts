@@ -36,7 +36,7 @@ export const PHOTO = {
   h: 900,
   formats: [
     { id: 'photo', src: '/me/photo.jpg', mask: false },
-    { id: 'scales', src: '/me/scales.png', mask: true },
+    { id: 'engraving', src: '/me/lines.png', mask: true },
     { id: 'dither', src: '/me/dots.png', mask: true },
     { id: 'ascii', src: '/me/ascii.png', mask: true },
     { id: 'halftone', src: '/me/halftone.png', mask: true },

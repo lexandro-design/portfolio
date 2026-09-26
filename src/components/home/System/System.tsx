@@ -1,8 +1,9 @@
 'use client'
 
-import { useSyncExternalStore } from 'react'
+import { useState, useSyncExternalStore, type CSSProperties } from 'react'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
+import { ThemeSwitch } from '@/components/layout/ThemeSwitch'
 import { THEME_EVENT } from '@/components/layout/ThemeSwitch/ThemeSwitch'
 import styles from './System.module.css'
 
@@ -36,14 +37,41 @@ const readValues = () => {
   return SWATCHES.map(([, v]) => css.getPropertyValue(v).trim()).join('|')
 }
 
-/** Живая спецификация токенов этого сайта: цвет, типографика, отступы, движение */
-export function System({ t }: { t: Dict['system'] }) {
+type Props = {
+  t: Dict['system']
+  /** Подписи переключателя тем — те же, что в шапке */
+  themes: { label: string; labels: Dict['nav']['themes'] }
+}
+
+/**
+ * Живая спецификация токенов этого сайта: цвет, типографика, отступы,
+ * движение. Тему можно переключить прямо здесь — значения под образцами
+ * меняются на глазах. Цвет копируется по клику, «Aa» показывает ось
+ * толщины переменного шрифта, шкала отступов вырастает при появлении,
+ * по кривой out-expo бежит точка в такт шару на дорожке.
+ */
+export function System({ t, themes }: Props) {
   const values = useSyncExternalStore(subscribe, readValues, () => '').split('|')
+  const [copied, setCopied] = useState<string | null>(null)
+
+  const copy = async (key: string, value: string) => {
+    try {
+      await navigator.clipboard.writeText(value)
+      setCopied(key)
+      window.setTimeout(() => setCopied((c) => (c === key ? null : c)), 1400)
+    } catch {
+      // Без доступа к буферу (http, старый браузер) просто ничего не копируем
+    }
+  }
 
   return (
     <>
-      <Reveal as="p" className={styles.intro}>
-        {t.intro}
+      <Reveal className={styles.introRow}>
+        <p className={styles.intro}>{t.intro}</p>
+        <div className={styles.try}>
+          <span className={styles.label}>{t.tryTheme}</span>
+          <ThemeSwitch label={themes.label} labels={themes.labels} />
+        </div>
       </Reveal>
 
       <div className={styles.grid}>
@@ -51,10 +79,18 @@ export function System({ t }: { t: Dict['system'] }) {
           <span className={styles.label}>01 / {t.colors}</span>
           <ul className={styles.swatches}>
             {SWATCHES.map(([key, variable], i) => (
-              <li key={key} className={styles.swatch}>
-                <span className={styles.chip} style={{ background: `var(${variable})` }} />
-                <span className={styles.name}>{t.swatches[key]}</span>
-                <code className={styles.code}>{values[i] || variable}</code>
+              <li key={key}>
+                <button
+                  type="button"
+                  className={styles.swatch}
+                  onClick={() => copy(key, values[i] || variable)}
+                >
+                  <span className={styles.chip} style={{ background: `var(${variable})` }} />
+                  <span className={styles.name}>{t.swatches[key]}</span>
+                  <code className={styles.code} aria-live="polite">
+                    {copied === key ? t.copied : values[i] || variable}
+                  </code>
+                </button>
               </li>
             ))}
           </ul>
@@ -63,14 +99,17 @@ export function System({ t }: { t: Dict['system'] }) {
         <Reveal className={styles.cell} delay={80}>
           <span className={styles.label}>02 / {t.type}</span>
           <ul className={styles.type}>
-            {TYPE.map((row) => (
+            {TYPE.map((row, i) => (
               <li key={row.token}>
                 <span
                   className={styles.sample}
-                  style={{
-                    fontSize: row.sample,
-                    fontFamily: row.mono ? 'var(--font-mono)' : undefined,
-                  }}
+                  style={
+                    {
+                      fontSize: row.sample,
+                      fontFamily: row.mono ? 'var(--font-mono)' : undefined,
+                      '--i': i,
+                    } as CSSProperties
+                  }
                 >
                   {row.mono ? 'MONO 0123' : row.token === 'body' ? t.specimen : 'Aa'}
                 </span>
@@ -85,10 +124,10 @@ export function System({ t }: { t: Dict['system'] }) {
         <Reveal className={styles.cell} delay={160}>
           <span className={styles.label}>03 / {t.spacing}</span>
           <ul className={styles.spacing}>
-            {SPACING.map((s) => (
+            {SPACING.map((s, i) => (
               <li key={s}>
                 <code className={styles.code}>{s}</code>
-                <span className={styles.bar} style={{ inlineSize: s }} />
+                <span className={styles.bar} style={{ inlineSize: s, '--i': i } as CSSProperties} />
               </li>
             ))}
           </ul>
@@ -100,6 +139,10 @@ export function System({ t }: { t: Dict['system'] }) {
             <svg viewBox="0 0 200 120" className={styles.curve} aria-hidden="true">
               <path d="M0 120 L200 0" className={styles.linear} />
               <path d="M0 120 C32 0 60 0 200 0" className={styles.ease} />
+              {/* Точка идёт по кривой за то же время, что шар по дорожке */}
+              <circle r="4" className={styles.dot}>
+                <animateMotion dur="2.6s" repeatCount="indefinite" path="M0 120 C32 0 60 0 200 0" />
+              </circle>
             </svg>
             <div className={styles.track}>
               <span className={styles.ball} />

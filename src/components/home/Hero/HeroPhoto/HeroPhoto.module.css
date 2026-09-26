@@ -41,52 +41,120 @@
   z-index: 1;
 }
 
-/* Новый формат открывается сверху вниз ровно за полосой */
+/* Новый формат проступает рваными полосами со сдвигом — шаги без
+   плавности, иначе сбой выглядит как обычный переход */
 .layer[data-state='in'] {
   visibility: visible;
   z-index: 2;
-  animation: wipe var(--sweep) var(--ease-in-out) both;
+  animation: tear var(--glitch) steps(1, end) both;
 }
 
-@keyframes wipe {
-  from {
-    clip-path: inset(0 0 100% 0);
+/* Старый формат в это же время дёргается по горизонтали */
+.frame[data-glitch] .layer[data-state='on'] {
+  animation: jitter var(--glitch) steps(1, end) both;
+}
+
+@keyframes tear {
+  0% {
+    clip-path: inset(18% 0 64% 0);
+    translate: -10px 0;
   }
 
-  to {
+  14% {
+    clip-path: inset(52% 0 30% 0);
+    translate: 12px 0;
+  }
+
+  28% {
+    clip-path: inset(6% 0 78% 0);
+    translate: -5px 0;
+  }
+
+  42% {
+    clip-path: inset(34% 0 28% 0);
+    translate: 8px 0;
+  }
+
+  56% {
+    clip-path: inset(0 0 46% 0);
+    translate: -3px 0;
+  }
+
+  70% {
+    clip-path: inset(42% 0 0 0);
+    translate: 4px 0;
+  }
+
+  84% {
     clip-path: inset(0);
+    translate: -2px 0;
+  }
+
+  100% {
+    clip-path: inset(0);
+    translate: 0 0;
   }
 }
 
-/* ---------- Полоса развёртки ---------- */
+@keyframes jitter {
+  0% {
+    translate: 6px 0;
+  }
 
-/* Яркая линия со свечением над ней: кажется, что кадр перепечатывается.
-   Низ полосы идёт по краю открывающегося слоя, поэтому едет top, а не
-   transform: проценты transform считаются от высоты самой полосы */
-.band {
+  20% {
+    translate: -8px 0;
+  }
+
+  40% {
+    translate: 3px 0;
+  }
+
+  60% {
+    translate: -4px 0;
+  }
+
+  80%,
+  100% {
+    translate: 0 0;
+  }
+}
+
+/* ---------- Помехи ---------- */
+
+/* Строки развёртки и цветной сдвиг поверх кадра на время сбоя */
+.noise {
   position: absolute;
-  inset-inline: 0;
+  inset: 0;
   z-index: 3;
-  block-size: 56px;
-  margin-block-start: -56px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    color-mix(in srgb, var(--accent) 22%, transparent) 70%,
-    var(--accent) 100%
-  );
-  box-shadow: 0 1px 18px color-mix(in srgb, var(--accent) 60%, transparent);
-  animation: band var(--sweep) var(--ease-in-out) both;
+  background:
+    repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 3px),
+    linear-gradient(
+      90deg,
+      rgb(255 0 80 / 0.12),
+      transparent 30%,
+      transparent 70%,
+      rgb(0 200 255 / 0.12)
+    );
+  mix-blend-mode: screen;
+  animation: flicker var(--glitch) steps(1, end) both;
   pointer-events: none;
 }
 
-@keyframes band {
-  from {
-    top: 0;
+@keyframes flicker {
+  0%,
+  30%,
+  60% {
+    opacity: 1;
   }
 
-  to {
-    top: 100%;
+  15%,
+  45% {
+    opacity: 0.3;
+  }
+
+  90%,
+  100% {
+    opacity: 0;
   }
 }
 

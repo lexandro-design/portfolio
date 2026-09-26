@@ -92,7 +92,7 @@ export const zh: Dict = {
 
   system: {
     intro:
-      '这个网站的构建方式和我做产品一样：颜色、字体、间距和动效都是令牌，组件只引用令牌。在顶部切换主题试试：改变的只是令牌的值，没有任何组件被改动。',
+      '这个网站的构建方式和我做产品一样：颜色、字体、间距和动效都是令牌，组件只引用令牌。在右侧切换主题试试：改变的只是令牌的值，没有任何组件被改动。',
     colors: '颜色',
     type: '字体',
     spacing: '间距',
@@ -107,6 +107,8 @@ export const zh: Dict = {
       live: '状态',
     },
     specimen: '设计系统',
+    tryTheme: '试试主题',
+    copied: '已复制',
   },
 
   process: {
@@ -184,5 +186,6 @@ export const zh: Dict = {
     prev: '上一张',
     nextShot: '下一张',
     shotTheme: { label: '截图主题', light: '浅色', dark: '深色' },
+    credit: '前端',
   },
 }

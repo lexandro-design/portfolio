@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { Preview } from '@/content/cases'
+import { ChatPreview } from './ChatPreview'
 import styles from './CasePreview.module.css'
 
 type Props = {
@@ -17,8 +18,9 @@ const order = (i: number) => ({ '--i': i }) as CSSProperties
 /**
  * Превью кейса без скриншотов: плашка с уголками, номер кейса контуром
  * и стек. У автоматизаций картинок нет вообще, поэтому на плашке видно,
- * как они работают: шаги цепочки по очереди подсвечиваются, а переписка
- * с ботом набирается сообщение за сообщением. Так кейсы без фото стоят
+ * как они работают: по цепочке бежит пакет данных, шаги по очереди
+ * срабатывают и получают «ok», а в переписке бот сначала «печатает»,
+ * потом отвечает. Подписи служебные и на английском — как в логах. Так кейсы без фото стоят
  * в том же ритме, что и с фото, и не выглядят пустыми.
  */
 export function CasePreview({ index, year, stack, size = 'row', preview }: Props) {
@@ -36,10 +38,15 @@ export function CasePreview({ index, year, stack, size = 'row', preview }: Props
 
       {preview?.kind === 'flow' && (
         <span className={styles.flow}>
+          <span className={styles.head}>
+            <span className={styles.live} />
+            pipeline · running
+          </span>
           {preview.steps.map((step, i) => (
             <span key={step} className={styles.step} style={order(i)}>
               <span className={styles.stepIndex}>{String(i + 1).padStart(2, '0')}</span>
-              {step}
+              <span className={styles.stepName}>{step}</span>
+              <span className={styles.status}>ok</span>
             </span>
           ))}
         </span>
@@ -47,11 +54,16 @@ export function CasePreview({ index, year, stack, size = 'row', preview }: Props
 
       {preview?.kind === 'chat' && (
         <span className={styles.chat}>
-          {preview.lines.map((line, i) => (
-            <span key={line.text} className={styles.bubble} data-from={line.from} style={order(i)}>
-              {line.text}
-            </span>
-          ))}
+          <span className={styles.head}>
+            <span className={styles.avatar} />
+            bot
+            <span className={styles.live} />
+            online
+          </span>
+          <ChatPreview lines={preview.lines} />
+          <span className={styles.input}>
+            <span className={styles.caret} />
+          </span>
         </span>
       )}
 

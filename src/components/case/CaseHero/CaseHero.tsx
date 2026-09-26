@@ -51,6 +51,14 @@ export function CaseHero({ item, index, total, t, directions, backHref }: Props)
         </h1>
         <p className={styles.lead}>{item.lead}</p>
 
+        {item.credit && (
+          <a href={item.credit.href} target="_blank" rel="noreferrer" className={styles.credit}>
+            <span className={styles.creditRole}>{t.credit}</span>
+            <span>github.com/{item.credit.handle}</span>
+            <Arrow size={14} dir="up-right" />
+          </a>
+        )}
+
         <dl className={styles.facts}>
           {facts.map((f) => (
             <div key={f.label} className={styles.fact}>
