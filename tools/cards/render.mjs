@@ -188,10 +188,10 @@ const featured = (t, c) =>
   page(
     t,
     W,
-    548,
+    598,
     `
-  <div style="position:absolute;inset:24px;display:grid;grid-template-rows:330px auto">
-    <div style="border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" src="/public${c.shots[0].src}"></div>
+  <div style="position:absolute;inset:24px;display:grid;grid-template-rows:380px auto">
+    <div style="border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:center" src="/public${(c.cover ?? c.thumb ?? c.shots[0]).src}"></div>
     <div style="padding-top:22px">
       <div class="row m"><span>${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</span><span>${c.year}</span></div>
       <div class="h" style="font-size:38px;margin-top:14px;letter-spacing:-.035em;line-height:1.06">${c.title} <span style="color:${t.fg2}">· ${c.tagline}</span></div>
@@ -201,9 +201,10 @@ const featured = (t, c) =>
   )
 
 const half = (t, c) => {
-  const cover = c.shots[0]
+  // Превью строки с сайта (окна браузера на фоне), а не голый скрин
+  const cover = c.thumb ?? c.shots[0]
   const media = cover
-    ? `<div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" src="/public${cover.src}"></div>`
+    ? `<div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:${c.thumb ? 'center' : 'top left'}" src="/public${cover.src}"></div>`
     : `<div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden">
          <i class="corner tl"></i><i class="corner br"></i>
          <div class="row m" style="position:absolute;top:14px;left:34px;right:34px;font-size:10px"><span>case ${pad(c.index)}</span><span>${c.year}</span></div>
@@ -352,6 +353,26 @@ const contact = (t) =>
   </div>`,
   )
 
+// ---------- обложки файлов Figma: строка кейса как на главной сайта, 1920×1080 ----------
+
+const figmaCover = (t, c) =>
+  page(
+    t,
+    1920,
+    1080,
+    `
+  <div style="position:absolute;inset:96px;display:grid;grid-template-columns:1040px 1fr;gap:88px;align-items:center">
+    <div style="height:736px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:center" src="/public${(c.thumb ?? c.shots[0]).src}"></div>
+    <div style="display:grid;gap:36px;align-content:center">
+      <div class="row m" style="font-size:18px"><span>${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</span><span>${c.year}</span></div>
+      <div class="h" style="font-size:78px;letter-spacing:-.04em;line-height:1.02">${c.title} <span style="color:${t.fg2}">· ${c.tagline}</span></div>
+      <p class="p" style="font-size:24px">${c.lead}</p>
+      <div class="m" style="font-size:16px;display:flex;flex-wrap:wrap;gap:10px 28px;text-transform:lowercase;letter-spacing:.02em">${c.stack.map((s) => `<span>· ${s}</span>`).join('')}</div>
+    </div>
+  </div>
+  <div class="row m" style="position:absolute;left:96px;right:96px;top:40px;font-size:16px"><span>LEXANDRO</span><span>${c.client}</span></div>`,
+  )
+
 // ---------- съёмка ----------
 
 // CHROME_PATH — если браузер Playwright лежит не там, где он его ищет (например, в облачной среде)
@@ -427,10 +448,16 @@ if (!mode || mode === 'profile') {
     await shot(tryCard(t, 'brief'), 405, 340, join(PROFILE, `try-brief-${name}.png`), 2)
     await shot(stack(t), W, 200, join(PROFILE, `stack-${name}.png`), 2)
     await shot(contact(t), W, 300, join(PROFILE, `contact-${name}.png`), 2)
-    await shot(featured(t, first), W, 548, join(PROFILE, `case-${first.slug}-${name}.png`), 2)
+    await shot(featured(t, first), W, 598, join(PROFILE, `case-${first.slug}-${name}.png`), 2)
     for (const c of rest)
       await shot(half(t, c), 405, 340, join(PROFILE, `case-${c.slug}-${name}.png`), 2)
   }
+}
+if (mode === 'figma') {
+  const out = join(ROOT, '_shots/figma-covers')
+  await mkdir(out, { recursive: true })
+  for (const c of cases.filter((c) => c.thumb || c.shots.length))
+    await shot(figmaCover(THEMES.dark, c), 1920, 1080, join(out, `${c.slug}.png`))
 }
 await browser.close()
 server.close()
