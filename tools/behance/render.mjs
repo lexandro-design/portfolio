@@ -36,6 +36,7 @@ const server = createServer(async (req, res) => {
 await new Promise((r) => server.listen(8797, r))
 
 // Тон фона — как у обложек Figma: ТИТАН-2 в их синем, остальные на тёплом светлом
+const W = 1400
 const TONES = {
   titan: { bg: '#0a4a9a', fg: '#ffffff', sub: 'rgb(255 255 255 / .62)', bar: '#f4f6fa' },
   base: { bg: '#e9e6df', fg: '#14140f', sub: 'rgb(20 20 15 / .55)', bar: '#f6f5f1' },
@@ -75,6 +76,34 @@ const shot = async (markup, w, h, out) => {
     path: out,
     type: out.endsWith('.jpg') ? 'jpeg' : 'png',
     quality: out.endsWith('.jpg') ? 92 : undefined,
+  })
+  await p.close()
+}
+
+/** Текстовый блок проекта картинкой: в редакторе Behance текст не оформить, а так
+    он в той же типографике, что и сайт. Высота по содержимому */
+const textShot = async (tone, label, title, body, out, foot = '') => {
+  html = shell(
+    tone,
+    W,
+    2400,
+    `<div class="t" style="display:grid;grid-template-columns:5fr 7fr;gap:64px;padding:120px 80px">
+      <div class="m" style="font-size:14px;padding-top:14px">${label}</div>
+      <div>
+        <div style="font-size:48px;font-weight:450;letter-spacing:-.035em;line-height:1.08">${title}</div>
+        ${body.map((b) => `<p style="margin-top:28px;font-size:22px;line-height:1.6;color:${tone.sub}">${b}</p>`).join('')}
+        ${foot ? `<div class="m" style="margin-top:48px;font-size:13px;line-height:1.8">${foot}</div>` : ''}
+      </div></div>`,
+  )
+  const p = await browser.newPage({ viewport: { width: W, height: 2400 } })
+  await p.goto('http://localhost:8797/card', { waitUntil: 'networkidle' })
+  await p.evaluate(() => document.fonts.ready)
+  const h = await p.$eval('.t', (e) => Math.ceil(e.getBoundingClientRect().height))
+  await p.screenshot({
+    path: out,
+    type: 'jpeg',
+    quality: 92,
+    clip: { x: 0, y: 0, width: W, height: h },
   })
   await p.close()
 }
@@ -125,13 +154,12 @@ const video = async (markup, w, h, seconds, out, fps = 30) => {
     '-i',
     `${out}.mp4`,
     '-vf',
-    `fps=12,scale=${Math.round(w / 2)}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160[p];[b][p]paletteuse=dither=sierra2_4a`,
+    `fps=${process.env.GIF_FPS || 12},scale=${w}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle`,
     `${out}.gif`,
   ])
   await rm(dir, { recursive: true, force: true })
 }
 
-const W = 1400
 for (const slug of process.argv.slice(2)) {
   const c = cases.find((x) => x.slug === slug)
   if (!c) throw new Error(`нет кейса ${slug}`)
@@ -170,6 +198,39 @@ for (const slug of process.argv.slice(2)) {
     join(out, '02-hero.jpg'),
   )
 
+  // Тексты блоков — английские с сайта: разделы кейса по одному между картинками
+  const en = (await read('cases-i18n/en.json'))[slug]
+  const secs = en?.sections ?? c.sections
+  const label = (i) => `${String(i + 1).padStart(2, '0')} / ${c.title}`
+  const STACK_EN = {
+    'Дизайн-система': 'Design system',
+    Прототип: 'Prototype',
+    'Дизайн-система AIPlan-R': 'AIPlan-R design system',
+    Адаптив: 'Responsive',
+    'Анимация по скроллу': 'Scroll animation',
+    'UI-кит': 'UI kit',
+    'Светлая и тёмная тема': 'Light and dark theme',
+    Дашборды: 'Dashboards',
+    '152-ФЗ': '152-FZ',
+    'Vision-модель': 'Vision model',
+    Эмбеддинги: 'Embeddings',
+  }
+  const stack = `Stack: ${c.stack.map((x) => STACK_EN[x] ?? x).join(', ')}`
+  const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1)
+  const last = Math.min(secs.length, 3) - 1
+  const block = (i, file, title = cap(secs[i].title)) =>
+    textShot(
+      tone,
+      label(i),
+      title,
+      i === last
+        ? secs.slice(i).flatMap((x, j) => (j ? [cap(x.title), ...x.body] : x.body))
+        : secs[i].body,
+      join(out, file),
+      i === last ? stack : '',
+    )
+  if (secs[0]) await block(0, '03-text.jpg', en?.lead ?? c.lead)
+
   // 3. Видео: прокрутка главной в окне браузера — вниз, пауза, обратно
   const winW = 1100
   const imgH = Math.round((winW * a.h) / a.w)
@@ -187,7 +248,7 @@ for (const slug of process.argv.slice(2)) {
     W,
     900,
     12,
-    join(out, '03-scroll'),
+    join(out, '04-scroll'),
   )
 
   // 4. Видео: ключевые экраны сменяют друг друга с лёгким наездом
@@ -217,8 +278,11 @@ for (const slug of process.argv.slice(2)) {
     W,
     900,
     total,
-    join(out, '04-screens'),
+    join(out, '06-screens'),
   )
+
+  if (secs[1]) await block(1, '05-text.jpg')
+  if (secs[2]) await block(2, '07-text.jpg')
 
   // 5. Телефон и файл Figma — статикой на всю ширину
   const ph = phone(c)
@@ -232,7 +296,7 @@ for (const slug of process.argv.slice(2)) {
       ),
       W,
       Math.round((W * ph.h) / ph.w),
-      join(out, '05-phone.jpg'),
+      join(out, '08-phone.jpg'),
     )
   const ff = figmaFile(c)
   if (ff)
@@ -245,11 +309,10 @@ for (const slug of process.argv.slice(2)) {
       ),
       W,
       Math.round((W * ff.h) / ff.w),
-      join(out, '06-figma.jpg'),
+      join(out, '09-figma.jpg'),
     )
 
   // 6. Текст проекта для блоков Behance — с сайта, RU и EN
-  const en = (await read('cases-i18n/en.json'))[slug]
   const text = (t) =>
     [
       t.title ?? c.title,
