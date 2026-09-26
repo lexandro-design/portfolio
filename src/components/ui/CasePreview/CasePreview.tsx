@@ -58,7 +58,7 @@ export function CasePreview({ index, year, stack, size = 'row', preview }: Props
         <span className={styles.chat}>
           <span className={styles.head}>
             <span className={styles.avatar} />
-            bot
+            {preview.bot || 'bot'}
             <span className={styles.live} />
             online
           </span>

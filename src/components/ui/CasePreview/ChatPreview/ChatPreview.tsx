@@ -44,7 +44,7 @@ function Media({ line }: { line: ChatLine }) {
       return (
         <span className={styles.products}>
           {line.items?.map((item, i) => (
-            <span key={item} className={styles.product} style={{ animationDelay: `${i * 120}ms` }}>
+            <span key={i} className={styles.product} style={{ animationDelay: `${i * 120}ms` }}>
               <span className={styles.thumb} />
               <span className={styles.productName}>{item}</span>
               <span className={styles.stock}>in stock</span>
@@ -118,9 +118,10 @@ export function ChatPreview({ lines }: Props) {
 
   return (
     <span className={styles.thread}>
-      {lines.slice(0, count).map((line) => (
+      {lines.slice(0, count).map((line, i) => (
         <span
-          key={line.text}
+          // по номеру: в длинной переписке реплики могут повторяться («да», «ок»)
+          key={i}
           className={styles.bubble}
           data-from={line.from}
           data-wide={line.media === 'products' || line.media === 'booking' || undefined}

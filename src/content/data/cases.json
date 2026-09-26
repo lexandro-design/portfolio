@@ -291,22 +291,23 @@
     "shots": [],
     "preview": {
       "kind": "chat",
+      "bot": "Mimimi_bot",
       "lines": [
         {
-          "from": "lexandro",
+          "from": "user",
           "text": "Хочу фотосессию «Отпуск»"
         },
         {
-          "from": "Mimimi_bot",
+          "from": "bot",
           "text": "Твой кадр готов",
           "media": "photo"
         },
         {
-          "from": "Mimimi_bot",
+          "from": "bot",
           "text": "Понравился результат?"
         },
         {
-          "from": "lexandro",
+          "from": "user",
           "text": "Да!"
         }
       ]

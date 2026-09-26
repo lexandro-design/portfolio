@@ -22,7 +22,11 @@ export function getCases(locale: Locale): Case[] {
       client: t.client,
       sections: t.sections,
       note: t.note,
-      preview: t.preview ?? c.preview,
+      // Перевод превью — только тексты: имя бота и прочее берутся из русской версии
+      preview:
+        t.preview && c.preview?.kind === t.preview.kind
+          ? ({ ...c.preview, ...t.preview } as Case['preview'])
+          : (t.preview ?? c.preview),
       shots: c.shots.map((s, i) => ({ ...s, caption: t.captions[i] ?? s.caption })),
     }
   })

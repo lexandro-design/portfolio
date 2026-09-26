@@ -59,6 +59,14 @@ function checkPreview(p, where) {
   ) {
     fail(where, 'в lines у каждой реплики нужны from (user/bot) и text')
   }
+  if (p.kind === 'chat' && p.bot !== undefined && !str(p.bot)) fail(where, 'bot — строка')
+  const MEDIA = ['photo', 'products', 'booking', 'drawing']
+  if (
+    p.kind === 'chat' &&
+    !p.lines?.every((l) => l.media === undefined || MEDIA.includes(l.media))
+  ) {
+    fail(where, `media — одно из ${MEDIA}`)
+  }
   if (p.kind === 'inbox' && (!strs(p.columns) || !Array.isArray(p.mails))) {
     fail(where, 'нужны columns и mails')
   }

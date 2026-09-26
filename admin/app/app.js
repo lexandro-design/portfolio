@@ -168,9 +168,15 @@ function toast(text, error = false, ms = 4000) {
 }
 
 async function api(path, init = {}) {
-  const res = await fetch(path, {
-    ...init,
-    headers: { 'Content-Type': 'application/json', 'X-Admin': '1', ...init.headers },
+  const request = () =>
+    fetch(path, {
+      ...init,
+      headers: { 'Content-Type': 'application/json', 'X-Admin': '1', ...init.headers },
+    })
+  // Чтение безопасно повторить: связь у провайдера иногда моргает
+  const res = await request().catch((e) => {
+    if (init.method && init.method !== 'GET') throw e
+    return new Promise((r) => setTimeout(r, 1200)).then(request)
   })
   if (res.status === 401) {
     location.href = '/login'
@@ -194,6 +200,7 @@ function refreshDirty() {
   const btn = $('save')
   btn.disabled = !n || state.saving
   btn.textContent = state.saving ? 'Сохраняю…' : n ? `Сохранить · ${n}` : 'Сохранить'
+  $('discard').hidden = !n || state.saving
   if (n && !state.saving && !state.watching) setStatus('dirty', 'есть несохранённые правки')
   else if (!n && !state.watching && $('status').dataset.state === 'dirty') setStatus('', '')
   renderSideFlags()
@@ -247,7 +254,53 @@ function validate() {
       }
     }
   }
+  cases.forEach((c) => previewProblems(c.preview, c.title || c.slug, errors))
+  for (const l of TRANSLATED) {
+    for (const [slug, t] of Object.entries(state.data[P.copy(l)])) {
+      previewProblems(t.preview, `${l.toUpperCase()} · ${slug}`, errors)
+    }
+    shapeProblems(
+      state.data[P.dict('ru')],
+      state.data[P.dict(l)],
+      `тексты ${l.toUpperCase()}`,
+      errors,
+    )
+  }
   return { errors, warnings }
+}
+
+/** Превью — то же, что проверяет сборка: иначе сохранится, но сайт не соберётся */
+function previewProblems(p, name, errors) {
+  if (!p) return
+  if (!PREVIEW_TEMPLATES[p.kind]) return errors.push(`${name}: неизвестный вид превью`)
+  if (p.kind === 'chat') {
+    if (!p.lines?.length) errors.push(`${name}: в переписке нет сообщений`)
+    p.lines?.forEach((l, i) => {
+      if (!['user', 'bot'].includes(l.from)) {
+        errors.push(`${name}: сообщение №${i + 1} — выбери, кто пишет (пользователь или бот)`)
+      }
+      if (!l.text?.trim() && !l.media) errors.push(`${name}: сообщение №${i + 1} пустое`)
+      if (l.media === 'products' && !l.items?.some((x) => x.trim())) {
+        errors.push(`${name}: сообщение №${i + 1} — добавь товары в карточки`)
+      }
+    })
+  }
+  if (p.kind === 'flow' && !p.steps?.some((x) => x.trim()))
+    errors.push(`${name}: в цепочке нет шагов`)
+}
+
+/** Словари других языков должны повторять форму русского — как в tools/check-content.mjs */
+function shapeProblems(ref, val, where, errors) {
+  const type = (v) => (Array.isArray(v) ? 'array' : v === null ? 'null' : typeof v)
+  if (type(ref) !== type(val)) return errors.push(`${where}: не тот тип значения`)
+  if (Array.isArray(ref)) {
+    if (ref.length) val.forEach((x, i) => shapeProblems(ref[0], x, `${where}[${i + 1}]`, errors))
+  } else if (type(ref) === 'object') {
+    for (const k of Object.keys(ref)) {
+      if (!(k in val)) errors.push(`${where}: нет поля ${k}`)
+      else shapeProblems(ref[k], val[k], `${where}.${k}`, errors)
+    }
+  }
 }
 
 function commitMessage(paths) {
@@ -315,11 +368,37 @@ async function save() {
     toast('Сохранено. Сайт пересобирается — обычно пара минут.')
     watchDeploy(res.commit)
   } catch (e) {
-    toast(e.message, true, 12000)
+    // Связь оборвалась: коммит мог дойти, а ответ — потеряться. Смотрим, что теперь в репозитории
+    if (e instanceof TypeError) await reconcile(paths)
+    else toast(e.message, true, 12000)
   } finally {
     state.saving = false
     refreshDirty()
   }
+}
+
+async function reconcile(paths) {
+  toast('Связь оборвалась — проверяю, дошло ли сохранение…', false, 0)
+  try {
+    const res = await api('/api/content')
+    const saved = paths.every((p) => res.files[p]?.text === serialize(state.data[p]))
+    if (!saved) {
+      return toast('Связь оборвалась, не сохранилось. Нажми «Сохранить» ещё раз.', true, 12000)
+    }
+    for (const p of paths) state.files[p] = res.files[p]
+    state.uploads = {}
+    toast('Сохранено (связь моргнула, но коммит дошёл). Сайт пересобирается.')
+    watchDeploy(res.head)
+  } catch {
+    toast('Нет связи с админкой. Проверь интернет и нажми «Сохранить» ещё раз.', true, 12000)
+  }
+}
+
+function discard() {
+  if (!confirm('Сбросить все несохранённые правки? Вернётся то, что сейчас в репозитории.')) return
+  for (const p of Object.keys(state.data)) state.data[p] = JSON.parse(state.files[p].text)
+  state.uploads = {}
+  rerender()
 }
 
 async function watchDeploy(sha) {
@@ -624,10 +703,11 @@ function valueEditor(parent, key, ref, label) {
  * Список коротких строк метками: Enter или запятая добавляет, × убирает,
  * перетаскивание меняет порядок, двойной клик — правка
  */
-function chipEditor(arr, label, refArr) {
+function chipEditor(arr, label, refArr, onChange) {
   const wrap = h('div', { class: 'chips' })
   const changed = () => {
     draw()
+    onChange?.()
     refreshDirty()
   }
   const add = () => {
@@ -1285,6 +1365,264 @@ function optionalWrap(obj, key, content) {
   )
 }
 
+/* ---------- переписка с ботом ---------- */
+
+const CHAT_MEDIA = [
+  ['', 'без вложения'],
+  ['photo', 'фото'],
+  ['products', 'карточки товаров'],
+  ['booking', 'календарь брони'],
+  ['drawing', 'рисунок с пометками'],
+]
+const WEEK = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su']
+
+/**
+ * Сценарий переписки: кто пишет, текст, вложение. Сообщений сколько угодно —
+ * на сайте переписка идёт по одному сообщению, старые уезжают вверх.
+ * Справа — как это будет выглядеть (без анимации)
+ */
+function chatEditor(p, ref) {
+  const preview = h('div', { class: 'chat-preview' })
+  const drawPreview = () => preview.replaceChildren(chatPreview(p, ref))
+  const touched = () => {
+    drawPreview()
+    refreshDirty()
+  }
+  const add = (line) => {
+    p.lines.push(line)
+    rerender()
+  }
+  const line = (l, i) => {
+    const r = ref?.lines?.[i]
+    const text = h('input', {
+      type: 'text',
+      value: l.text,
+      placeholder: l.from === 'user' ? 'Что пишет пользователь' : 'Что отвечает бот',
+      oninput: (e) => {
+        l.text = e.target.value
+        touched()
+      },
+    })
+    const who = h(
+      'div',
+      { class: 'seg', role: 'group', title: 'Кто пишет' },
+      [
+        ['user', 'Пользователь'],
+        ['bot', 'Бот'],
+      ].map(([v, t]) =>
+        h(
+          'button',
+          {
+            class: l.from === v ? 'on' : '',
+            onclick: () => {
+              l.from = v
+              rerender()
+            },
+          },
+          t,
+        ),
+      ),
+    )
+    const media = h(
+      'select',
+      {
+        class: 'media-select',
+        title: 'Вложение в сообщении',
+        onchange: (e) => {
+          const m = e.target.value
+          if (!m) {
+            delete l.media
+            delete l.items
+          } else {
+            l.media = m
+            if (m === 'products' && !l.items?.length) l.items = []
+            else if (m === 'booking' && !l.items?.length) l.items = ['cabin · free']
+            else if (m === 'photo' || m === 'drawing') delete l.items
+          }
+          rerender()
+        },
+      },
+      CHAT_MEDIA.map(([v, t]) => h('option', { value: v, selected: (l.media || '') === v }, t)),
+    )
+    const move = (d) => {
+      const [x] = p.lines.splice(i, 1)
+      p.lines.splice(i + d, 0, x)
+      rerender()
+    }
+    return h(
+      'div',
+      { class: `chat-line from-${l.from}` },
+      h(
+        'div',
+        { class: 'chat-line-top' },
+        h('span', { class: 'chat-n' }, String(i + 1).padStart(2, '0')),
+        who,
+        media,
+        h('span', { class: 'fill' }),
+        h(
+          'button',
+          { class: 'icon', title: 'Выше', disabled: i === 0, onclick: () => move(-1) },
+          '↑',
+        ),
+        h(
+          'button',
+          {
+            class: 'icon',
+            title: 'Ниже',
+            disabled: i === p.lines.length - 1,
+            onclick: () => move(1),
+          },
+          '↓',
+        ),
+        h(
+          'button',
+          {
+            class: 'icon',
+            title: 'Дублировать',
+            onclick: () => {
+              p.lines.splice(i + 1, 0, clone(l))
+              rerender()
+            },
+          },
+          '⧉',
+        ),
+        h(
+          'button',
+          {
+            class: 'icon',
+            title: 'Удалить сообщение',
+            disabled: p.lines.length <= 1,
+            onclick: () => {
+              p.lines.splice(i, 1)
+              rerender()
+            },
+          },
+          '✕',
+        ),
+      ),
+      text,
+      r?.text && r.text !== l.text && h('span', { class: 'ref' }, r.text),
+      l.media === 'products' &&
+        chipEditor(
+          l.items ?? (l.items = []),
+          'Товары в карточках — на сайте видно первые три',
+          r?.items,
+          drawPreview,
+        ),
+      l.media === 'booking' &&
+        textField(l.items ?? (l.items = ['']), 0, {
+          label: 'Подпись под календарём',
+          ref: r?.items?.[0],
+          onInput: drawPreview,
+        }),
+    )
+  }
+  drawPreview()
+  return h(
+    'div',
+    { class: 'chat-editor' },
+    h(
+      'div',
+      { class: 'chat-lines' },
+      !ref &&
+        textField(p, 'bot', {
+          label: 'Имя бота в шапке переписки — как в Telegram. Пусто — «bot»',
+          placeholder: 'bot',
+          onInput: (v) => {
+            if (!v.trim()) delete p.bot
+            drawPreview()
+          },
+        }),
+      p.lines.map(line),
+      h(
+        'div',
+        { class: 'optional' },
+        h(
+          'button',
+          { class: 'btn small', onclick: () => add({ from: 'user', text: '' }) },
+          '+ пишет пользователь',
+        ),
+        h(
+          'button',
+          { class: 'btn small', onclick: () => add({ from: 'bot', text: '' }) },
+          '+ отвечает бот',
+        ),
+        h(
+          'button',
+          { class: 'btn small', onclick: () => add({ from: 'bot', text: '', media: 'photo' }) },
+          '+ бот присылает фото',
+        ),
+      ),
+    ),
+    preview,
+  )
+}
+
+/** Как переписка будет выглядеть на сайте — те же пузыри и вложения, без анимации */
+function chatPreview(p, ref) {
+  const photo = `${state.site}/me/photo.jpg`
+  const media = (l) => {
+    if (l.media === 'photo') return h('img', { class: 'cp-photo', src: photo, alt: '' })
+    if (l.media === 'products') {
+      return h(
+        'div',
+        { class: 'cp-products' },
+        (l.items || [])
+          .slice(0, 3)
+          .map((t) =>
+            h(
+              'div',
+              { class: 'cp-product' },
+              h('div', { class: 'cp-thumb' }),
+              h('div', {}, t || '…'),
+              h('small', {}, 'in stock'),
+            ),
+          ),
+      )
+    }
+    if (l.media === 'booking') {
+      return h(
+        'div',
+        { class: 'cp-booking' },
+        h(
+          'div',
+          { class: 'cp-days' },
+          WEEK.map((d, i) => h('span', { class: i > 4 ? 'on' : '' }, d)),
+        ),
+        h('small', {}, `● ${l.items?.[0] || ''}`),
+      )
+    }
+    if (l.media === 'drawing') return h('div', { class: 'cp-drawing' }, '✎ рисунок с пометками')
+    return null
+  }
+  return h(
+    'div',
+    { class: 'cp' },
+    h(
+      'div',
+      { class: 'cp-head' },
+      h('span', { class: 'cp-avatar' }),
+      p.bot || ref?.bot || 'bot',
+      h('span', { class: 'cp-live' }),
+      'online',
+    ),
+    h(
+      'div',
+      { class: 'cp-thread' },
+      p.lines.map((l) =>
+        h(
+          'div',
+          {
+            class: `cp-bubble ${l.from === 'user' ? 'user' : 'bot'}${l.media === 'products' || l.media === 'booking' ? ' wide' : ''}`,
+          },
+          media(l),
+          l.text && h('span', {}, l.text),
+        ),
+      ),
+    ),
+  )
+}
+
 function previewEditor(c, ref) {
   const p = c.preview
   const kinds = [
@@ -1316,6 +1654,10 @@ function previewEditor(c, ref) {
             'select',
             {
               onchange: (e) => {
+                if (!confirm('Сменить вид превью? Текущее содержимое превью сотрётся.')) {
+                  e.target.value = p.kind
+                  return
+                }
                 c.preview = clone(PREVIEW_TEMPLATES[e.target.value])
                 rerender()
               },
@@ -1324,9 +1666,11 @@ function previewEditor(c, ref) {
           ),
         ),
       ),
-    Object.keys(p)
-      .filter((k) => k !== 'kind')
-      .map((k) => valueEditor(p, k, ref?.[k], k)),
+    p.kind === 'chat'
+      ? chatEditor(p, ref)
+      : Object.keys(p)
+          .filter((k) => k !== 'kind')
+          .map((k) => valueEditor(p, k, ref?.[k], k)),
     h(
       'button',
       {
@@ -1493,6 +1837,8 @@ function caseEditorTranslation(c, l) {
                 class: 'btn small',
                 onclick: () => {
                   t.preview = clone(c.preview)
+                  // имя бота одно на все языки — берётся из русской версии
+                  delete t.preview.bot
                   rerender()
                 },
               },
@@ -1670,6 +2016,7 @@ async function init() {
     /* нет сохранённого вида — начинаем с кейсов */
   }
   $('save').addEventListener('click', save)
+  $('discard').addEventListener('click', discard)
   addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
       e.preventDefault()

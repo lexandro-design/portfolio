@@ -41,7 +41,8 @@ export type ChatLine = {
 
 export type Preview =
   | { kind: 'flow'; steps: string[] }
-  | { kind: 'chat'; lines: ChatLine[] }
+  /** bot — имя бота в шапке переписки, как в Telegram: «Mimimi_bot». Нет — просто «bot» */
+  | { kind: 'chat'; bot?: string; lines: ChatLine[] }
   | { kind: 'inbox'; columns: string[]; mails: { text: string; to: number }[] }
   | { kind: 'search'; query: string; results: string[] }
 
