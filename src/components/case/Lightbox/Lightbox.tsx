@@ -4,12 +4,17 @@ import { useEffect, useRef, useState } from 'react'
 import { Arrow } from '@/components/ui/Arrow'
 import styles from './Lightbox.module.css'
 
-type Item = { src: string; alt: string }
+/** tall — страница целиком: показываем по ширине и листаем внутри, а не ужимаем в экран */
+type Item = { src: string; alt: string; tall: boolean }
+
+// Выше этого соотношения картинка в экран не влезает читаемой
+const TALL = 1.3
 
 /**
  * Просмотр скриншотов на весь экран. Картинки с data-zoom на странице
  * открываются по клику; листать стрелками, клавишами и свайпом.
  * Список собирается из DOM в порядке страницы: обложка, потом галерея.
+ * Скрытые картинки (второй вариант темы у скрина) в список не попадают.
  */
 type Labels = { viewer: string; close: string; prev: string; next: string }
 
@@ -23,8 +28,18 @@ export function Lightbox({ labels }: { labels: Labels }) {
     const onClick = (e: MouseEvent) => {
       const img = (e.target as HTMLElement).closest<HTMLImageElement>('img[data-zoom]')
       if (!img) return
-      const all = [...document.querySelectorAll<HTMLImageElement>('img[data-zoom]')]
-      setItems(all.map((i) => ({ src: i.currentSrc || i.src, alt: i.alt })))
+      const all = [...document.querySelectorAll<HTMLImageElement>('img[data-zoom]')].filter(
+        (i) => i.offsetParent !== null,
+      )
+      setItems(
+        all.map((i) => ({
+          src: i.currentSrc || i.src,
+          alt: i.alt,
+          // Размер файла из атрибутов: в галерее картинка обрезана кадром, её
+          // отрисованная высота про саму страницу ничего не говорит
+          tall: Number(i.getAttribute('height')) / Number(i.getAttribute('width')) > TALL,
+        })),
+      )
       setIndex(all.indexOf(img))
     }
     document.addEventListener('click', onClick)
@@ -81,8 +96,10 @@ export function Lightbox({ labels }: { labels: Labels }) {
               {labels.close}
             </button>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element -- уже загруженная картинка со страницы */}
-          <img key={current.src} className={styles.image} src={current.src} alt={current.alt} />
+          <div className={styles.stage} data-tall={current.tall || undefined}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- уже загруженная картинка со страницы */}
+            <img key={current.src} className={styles.image} src={current.src} alt={current.alt} />
+          </div>
           {items.length > 1 && (
             <div className={styles.nav}>
               <button type="button" aria-label={labels.prev} onClick={() => step(-1)}>

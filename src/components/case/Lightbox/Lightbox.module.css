@@ -52,14 +52,34 @@
   font-size: inherit;
 }
 
+/* Обычный скрин вписывается в экран целиком. Длинная страница идёт по
+   ширине (не шире 1200) и листается колесом внутри просмотра — ужатая
+   в высоту экрана она превращалась в нечитаемую полоску */
+.stage {
+  display: grid;
+  min-block-size: 0;
+  padding-inline: var(--bleed);
+}
+
+.stage[data-tall] {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 .image {
   place-self: center;
-  max-inline-size: calc(100% - var(--bleed) * 2);
+  max-inline-size: 100%;
   max-block-size: calc(100dvh - 160px);
   border: 1px solid var(--border-hair);
   object-fit: contain;
   box-shadow: 0 40px 120px rgb(0 0 0 / 0.5);
   animation: zoom var(--dur-slow) var(--ease-out-expo);
+}
+
+.stage[data-tall] .image {
+  place-self: start center;
+  inline-size: min(1200px, 100%);
+  max-block-size: none;
 }
 
 @keyframes zoom {

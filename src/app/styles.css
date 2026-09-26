@@ -1,5 +1,6 @@
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/unbounded';
 @import './tokens.css';
 
 *,
@@ -122,4 +123,15 @@ img[data-zoom] {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Скрин с тёмной парой (Shot + ShotTheme): по умолчанию светлый,
+   переключатель на странице кейса ставит data-shots="dark" */
+img[data-variant='dark'],
+[data-shots='dark'] img[data-variant='light'] {
+  display: none;
+}
+
+[data-shots='dark'] img[data-variant='dark'] {
+  display: block;
 }

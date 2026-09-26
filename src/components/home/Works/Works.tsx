@@ -19,9 +19,9 @@ type Props = {
 const pad = (n: number) => String(n).padStart(2, '0')
 
 /**
- * Кейсы с вкладками по направлениям. Кейсы с картинками идут крупными
- * строками, остальные компактным индексом ниже: пустые превью подряд
- * выглядят пусто. Появились скрины у кейса — он сам поднимается наверх.
+ * Кейсы с вкладками по направлениям. Кейсы с картинками или живым
+ * превью (автоматизации) идут крупными строками, мелкие проекты —
+ * компактным индексом ниже: пустые плашки подряд выглядят пусто.
  * Номер кейса — его место в общем списке.
  */
 export function Works({ items, t, base }: Props) {
@@ -43,7 +43,7 @@ export function Works({ items, t, base }: Props) {
   const shown = items
     .map((c, i) => ({ c, index: i + 1 }))
     .filter(({ c }) => filter === 'all' || c.directions.includes(filter))
-  const hasMedia = (c: Case) => Boolean(c.thumb || c.shots.length)
+  const hasMedia = (c: Case) => !c.minor && Boolean(c.thumb || c.shots.length || c.preview)
   const featured = shown.filter(({ c }) => hasMedia(c))
   const rest = shown.filter(({ c }) => !hasMedia(c))
 

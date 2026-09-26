@@ -42,6 +42,8 @@
 
 .galleryHead {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
   margin-block-end: var(--space-xl);
@@ -62,9 +64,20 @@
   grid-column: 1 / -1;
 }
 
+/* Кадр одной высоты для всех скринов: страницы целиком бывают в 3–4 экрана
+   высотой, в сетке они растягивали строку до бесконечности. В галерее
+   виден верх страницы, целиком она открывается в просмотре по клику */
 .image {
   inline-size: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  object-position: top;
   border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+}
+
+.figure:last-child:nth-child(odd) .image {
+  aspect-ratio: 16 / 8;
 }
 
 @media (max-width: 1023px) {

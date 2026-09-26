@@ -20,7 +20,12 @@ export function CaseRow({ item, index, total, href, read }: Props) {
           {media ? (
             <Shot shot={{ ...media, caption: item.title }} className={styles.image} />
           ) : (
-            <CasePreview index={index} year={item.year} stack={item.stack.slice(0, 4)} />
+            <CasePreview
+              index={index}
+              year={item.year}
+              stack={item.stack.slice(0, 4)}
+              preview={item.preview}
+            />
           )}
         </div>
 

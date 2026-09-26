@@ -2,6 +2,7 @@ import type { Case } from '@/content/cases'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
 import { Shot } from '@/components/ui/Shot'
+import { ShotTheme } from '../ShotTheme'
 import styles from './CaseBody.module.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -39,6 +40,7 @@ export function CaseBody({ item, t }: { item: Case; t: Dict['case'] }) {
                 {pad(item.sections.length + 1)} · {t.screens}
               </span>
               {item.note && <span className={styles.label}>{item.note}</span>}
+              {gallery.some((s) => s.dark) && <ShotTheme labels={t.shotTheme} />}
             </Reveal>
             <div className={styles.gallery}>
               {gallery.map((shot, i) => (

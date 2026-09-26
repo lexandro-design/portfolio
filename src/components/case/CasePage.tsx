@@ -18,7 +18,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   const next = items[(index + 1) % items.length]
 
   return (
-    <div lang={HTML_LANG[locale]}>
+    <div lang={HTML_LANG[locale]} data-case data-shots="light">
       <CaseHero
         item={item}
         index={index + 1}

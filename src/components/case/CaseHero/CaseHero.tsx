@@ -80,7 +80,13 @@ export function CaseHero({ item, index, total, t, directions, backHref }: Props)
               zoom={zoomable}
             />
           ) : (
-            <CasePreview index={index} year={item.year} stack={item.stack} size="cover" />
+            <CasePreview
+              index={index}
+              year={item.year}
+              stack={item.stack}
+              size="cover"
+              preview={item.preview}
+            />
           )}
           {zoomable && <figcaption className={styles.caption}>{cover.caption}</figcaption>}
         </figure>
