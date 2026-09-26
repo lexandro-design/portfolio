@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { asset } from '@/lib/asset'
 import type { Shot as ShotType } from '@/content/cases'
 
@@ -24,6 +25,7 @@ export function Shot({ shot, className, eager, zoom }: Props) {
       alt={shot.caption}
       width={shot.w}
       height={shot.h}
+      style={{ '--ratio': shot.w / shot.h } as CSSProperties}
       loading={eager ? 'eager' : 'lazy'}
       decoding="async"
       data-zoom={zoom || undefined}
