@@ -1,0 +1,19 @@
+{
+  // Админка сайта-портфолио. Деплой: npx wrangler deploy (из папки admin/)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-admin",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  // Воркер отвечает первым на всё, включая файлы из public/: без входа их не отдаём
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+  // Только свой адрес, без публичного *.workers.dev
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "admin.discode.group", "custom_domain": true }],
+  "vars": {
+    "GITHUB_REPO": "lexandro-design/portfolio",
+    "GITHUB_BRANCH": "main",
+    "SITE_URL": "https://lexandro-design.github.io/portfolio",
+  },
+  "observability": { "enabled": true },
+}

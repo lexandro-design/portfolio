@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="data:," />
+    <title>Админка · LEXANDRO</title>
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">LEXANDRO <span>админка</span></div>
+      <nav class="tabs" id="tabs"></nav>
+      <div class="locales" id="locales"></div>
+      <div class="spacer"></div>
+      <a class="status" id="status" target="_blank" rel="noreferrer"></a>
+      <button class="btn primary" id="save" disabled>Сохранить</button>
+      <form method="post" action="/logout">
+        <button class="btn ghost" title="Выйти">Выйти</button>
+      </form>
+    </header>
+    <main id="main"><p class="loading">Загружаю контент…</p></main>
+    <div class="toast" id="toast" hidden></div>
+  </body>
+</html>

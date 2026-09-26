@@ -1,0 +1,1517 @@
+/**
+ * Интерфейс админки. Без сборки и зависимостей: грузит JSON контента через
+ * воркер, правит его в памяти и отправляет изменённые файлы одним коммитом.
+ */
+
+const P = {
+  cases: 'src/content/data/cases.json',
+  site: 'src/content/data/site.json',
+  dict: (l) => `src/content/data/dict/${l}.json`,
+  copy: (l) => `src/content/data/cases-i18n/${l}.json`,
+}
+const LOCALES = [
+  ['ru', 'RU'],
+  ['en', 'EN'],
+  ['zh', '中文'],
+  ['ja', '日本語'],
+]
+const TRANSLATED = ['en', 'zh', 'ja']
+const TABS = [
+  ['cases', 'Кейсы'],
+  ['dict', 'Тексты сайта'],
+  ['site', 'Контакты'],
+]
+const DIRECTIONS = [
+  ['design', 'дизайн'],
+  ['web', 'сайты'],
+  ['ai', 'AI и автоматизация'],
+]
+const GROUPS = [
+  ['titan', 'ТИТАН-2'],
+  ['entersales', 'Интерсейлс'],
+  ['freelance', 'фриланс'],
+  ['own', 'свой продукт'],
+]
+const PREVIEW_TEMPLATES = {
+  flow: { kind: 'flow', steps: ['', ''] },
+  chat: {
+    kind: 'chat',
+    lines: [
+      { from: 'user', text: '' },
+      { from: 'bot', text: '' },
+    ],
+  },
+  inbox: { kind: 'inbox', columns: [''], mails: [{ text: '', to: 0 }] },
+  search: { kind: 'search', query: '', results: [''] },
+}
+/** Подписи разделов словаря — ключи те же, что в src/i18n/dict/types.ts */
+const DICT_LABELS = {
+  meta: 'SEO и заголовок вкладки',
+  nav: 'Меню',
+  hero: 'Первый экран',
+  sections: 'Заголовки секций',
+  services: 'Услуги',
+  servicesMore: 'Ссылка под услугами',
+  works: 'Кейсы на главной',
+  system: 'Блок «Система»',
+  process: 'Процесс',
+  about: 'Обо мне',
+  principles: 'Принципы',
+  contact: 'Контакты',
+  footer: 'Подвал',
+  case: 'Страница кейса',
+}
+/** Человеческие подписи частых ключей; ключ остаётся рядом, чтобы найти его в коде */
+const KEY_LABELS = {
+  title: 'заголовок',
+  text: 'текст',
+  body: 'текст',
+  lead: 'лид',
+  label: 'метка',
+  aside: 'пояснение справа',
+  description: 'описание',
+  tags: 'теги',
+  price: 'цена',
+  code: 'код',
+  filter: 'фильтр кейсов: design, web или ai',
+  steps: 'шаги',
+  timeline: 'хронология',
+  when: 'когда',
+  metaLeft: 'строки над заголовком',
+  accent: 'строки вторым цветом',
+  primary: 'главная кнопка',
+  secondary: 'вторая кнопка',
+  ticker: 'подпись бегущей строки',
+  tickerItems: 'бегущая строка',
+  photoAlt: 'alt фото',
+  photoCaption: 'подпись фото',
+  caseTitle: 'заголовок вкладки кейса',
+  status: 'статус',
+  query: 'запрос',
+  results: 'результаты',
+  lines: 'реплики',
+  columns: 'колонки',
+  mails: 'письма',
+  from: 'кто: user или bot',
+  media: 'вложение: photo, products, booking, drawing',
+  items: 'подписи вложения',
+  to: 'номер колонки',
+}
+const nice = (k) => (k == null ? k : KEY_LABELS[k] ? `${KEY_LABELS[k]} · ${k}` : String(k))
+
+/** Поля, которые лучше редактировать многострочно */
+const LONG = /^(lead|body|text|description|intro|aside|note|motionNote)$/
+
+const state = {
+  files: {}, // path → { sha, text } — как лежит в репозитории
+  data: {}, // path → разобранный JSON, который правим
+  uploads: {}, // 'public/cases/…' → { base64, url } — картинки, ждущие сохранения
+  fresh: {}, // '/cases/…' → blob-url загруженной картинки, пока сайт не пересобрался
+  site: '',
+  tab: 'cases',
+  locale: 'ru',
+  caseIdx: 0,
+  commit: null,
+  saving: false,
+}
+
+/* ---------- утилиты ---------- */
+
+function h(tag, attrs = {}, ...children) {
+  const el = document.createElement(tag)
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue
+    if (k.startsWith('on')) el.addEventListener(k.slice(2), v)
+    else if (k === 'class') el.className = v
+    else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v)
+    else if (k in el && typeof v !== 'string') el[k] = v
+    else el.setAttribute(k, v === true ? '' : v)
+  }
+  for (const c of children.flat(Infinity)) {
+    if (c == null || c === false) continue
+    el.append(c instanceof Node ? c : document.createTextNode(String(c)))
+  }
+  return el
+}
+
+const $ = (id) => document.getElementById(id)
+const clone = (v) => structuredClone(v)
+const serialize = (v) => JSON.stringify(v, null, 2) + '\n'
+const isShot = (v) => v && typeof v === 'object' && 'src' in v && 'w' in v && 'h' in v
+
+/** Ключи-переключатели: в пустой копии сохраняем значение, иначе ломается превью */
+const KEEP = new Set(['kind', 'from', 'media', 'filter'])
+
+/** Пустая копия по образцу: строки пустые, списки из одного пустого элемента */
+function blank(v) {
+  if (typeof v === 'string') return ''
+  if (typeof v === 'number') return 0
+  if (typeof v === 'boolean') return false
+  if (Array.isArray(v)) return v.length ? [blank(v[0])] : []
+  if (v && typeof v === 'object') {
+    if (isShot(v)) return null
+    return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, KEEP.has(k) ? x : blank(x)]))
+  }
+  return ''
+}
+
+function toast(text, error = false, ms = 4000) {
+  const t = $('toast')
+  t.textContent = text
+  t.className = `toast${error ? ' error' : ''}`
+  t.hidden = false
+  clearTimeout(toast.timer)
+  if (ms) toast.timer = setTimeout(() => (t.hidden = true), ms)
+}
+
+async function api(path, init = {}) {
+  const res = await fetch(path, {
+    ...init,
+    headers: { 'Content-Type': 'application/json', 'X-Admin': '1', ...init.headers },
+  })
+  if (res.status === 401) {
+    location.href = '/login'
+    throw new Error('Нужно войти заново')
+  }
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(data.error || `Ошибка ${res.status}`)
+  return data
+}
+
+const imgUrl = (src) => (src ? state.fresh[src] || state.site + src : '')
+
+/* ---------- изменения и сохранение ---------- */
+
+function dirtyPaths() {
+  return Object.keys(state.data).filter((p) => serialize(state.data[p]) !== state.files[p].text)
+}
+
+function refreshDirty() {
+  const n = dirtyPaths().length + Object.keys(state.uploads).length
+  const btn = $('save')
+  btn.disabled = !n || state.saving
+  btn.textContent = state.saving ? 'Сохраняю…' : n ? `Сохранить · ${n}` : 'Сохранить'
+  if (n && !state.saving && !state.watching) setStatus('dirty', 'есть несохранённые правки')
+  else if (!n && !state.watching && $('status').dataset.state === 'dirty') setStatus('', '')
+  renderSideFlags()
+}
+
+function setStatus(stateName, text, url) {
+  const s = $('status')
+  s.dataset.state = stateName
+  s.textContent = text
+  if (url) s.href = url
+  else s.removeAttribute('href')
+}
+
+/** Проверка перед сохранением — повторяет главное из tools/check-content.mjs */
+function validate() {
+  const errors = []
+  const warnings = []
+  const cases = state.data[P.cases]
+  const slugs = new Set()
+  cases.forEach((c, i) => {
+    const name = c.title || `кейс №${i + 1}`
+    for (const [k, label] of [
+      ['slug', 'адрес'],
+      ['title', 'название'],
+      ['tagline', 'подзаголовок'],
+      ['lead', 'лид'],
+      ['label', 'метка'],
+      ['client', 'клиент'],
+      ['year', 'год'],
+    ]) {
+      if (!String(c[k] ?? '').trim()) errors.push(`${name}: пустое поле «${label}»`)
+    }
+    if (c.slug && !/^[a-z0-9-]+$/.test(c.slug))
+      errors.push(`${name}: адрес — только a-z, 0-9 и дефис`)
+    if (slugs.has(c.slug)) errors.push(`${name}: адрес «${c.slug}» уже занят`)
+    slugs.add(c.slug)
+    if (!c.directions?.length) errors.push(`${name}: не выбрано направление`)
+    c.shots.forEach((s, j) => {
+      if (!s.src) errors.push(`${name}: у скриншота №${j + 1} нет картинки`)
+    })
+    c.sections.forEach((s, j) => {
+      if (!s.title.trim() && s.body.every((b) => !b.trim())) {
+        warnings.push(`${name}: пустой раздел №${j + 1}`)
+      }
+    })
+  })
+  for (const l of TRANSLATED) {
+    for (const [slug, t] of Object.entries(state.data[P.copy(l)])) {
+      for (const k of ['tagline', 'lead', 'client']) {
+        if (!t[k]?.trim()) warnings.push(`${l.toUpperCase()} · ${slug}: пустое поле ${k}`)
+      }
+    }
+  }
+  return { errors, warnings }
+}
+
+function commitMessage(paths) {
+  const parts = []
+  for (const p of paths) {
+    if (p === P.cases) {
+      const before = JSON.parse(state.files[p].text)
+      const byslug = Object.fromEntries(before.map((c) => [c.slug, JSON.stringify(c)]))
+      const changed = state.data[p]
+        .filter((c) => byslug[c.slug] !== JSON.stringify(c))
+        .map((c) => c.slug)
+      const removed = before
+        .filter((c) => !state.data[p].some((x) => x.slug === c.slug))
+        .map((c) => `−${c.slug}`)
+      const list = [...changed, ...removed]
+      parts.push(
+        list.length
+          ? `кейсы (${list.slice(0, 4).join(', ')}${list.length > 4 ? '…' : ''})`
+          : 'порядок кейсов',
+      )
+    } else if (p === P.site) parts.push('контакты')
+    else {
+      const [, kind, l] = p.match(/(cases-i18n|dict)\/(\w+)\.json$/)
+      parts.push(`${kind === 'dict' ? 'тексты' : 'переводы кейсов'} ${l}`)
+    }
+  }
+  if (Object.keys(state.uploads).length)
+    parts.push(`картинки: ${Object.keys(state.uploads).length}`)
+  return `content: ${parts.join(', ')}`
+}
+
+async function save() {
+  if (state.saving) return
+  const paths = dirtyPaths()
+  if (!paths.length && !Object.keys(state.uploads).length) return
+  const { errors, warnings } = validate()
+  if (errors.length)
+    return toast(`Не сохранил, поправь:\n• ${errors.slice(0, 8).join('\n• ')}`, true, 9000)
+  if (
+    warnings.length &&
+    !confirm(`Есть пустые места:\n• ${warnings.slice(0, 10).join('\n• ')}\n\nСохранить всё равно?`)
+  ) {
+    return
+  }
+
+  state.saving = true
+  refreshDirty()
+  try {
+    const files = [
+      ...paths.map((path) => ({ path, text: serialize(state.data[path]) })),
+      ...Object.entries(state.uploads).map(([path, u]) => ({ path, base64: u.base64 })),
+    ]
+    const base = Object.fromEntries(paths.map((p) => [p, state.files[p].sha]))
+    const res = await api('/api/save', {
+      method: 'POST',
+      body: JSON.stringify({ files, base, message: commitMessage(paths) }),
+    })
+    for (const p of paths) state.files[p] = { sha: res.shas[p], text: serialize(state.data[p]) }
+    state.uploads = {}
+    toast('Сохранено. Сайт пересобирается — обычно пара минут.')
+    watchDeploy(res.commit)
+  } catch (e) {
+    toast(e.message, true, 12000)
+  } finally {
+    state.saving = false
+    refreshDirty()
+  }
+}
+
+async function watchDeploy(sha) {
+  state.watching = sha
+  setStatus('waiting', 'ждём сборку…')
+  for (let i = 0; i < 90 && state.watching === sha; i++) {
+    await new Promise((r) => setTimeout(r, i ? 8000 : 4000))
+    try {
+      const s = await api(`/api/status?sha=${sha}`)
+      if (s.state === 'building') setStatus('building', 'сайт собирается…', s.url)
+      if (s.state === 'done') {
+        state.watching = null
+        return setStatus('done', 'выложено на сайт', state.site + '/')
+      }
+      if (s.state === 'failed') {
+        state.watching = null
+        toast(
+          'Сборка упала — открой лог по ссылке сверху. На сайте осталась прошлая версия.',
+          true,
+          0,
+        )
+        return setStatus('failed', 'сборка упала', s.url)
+      }
+    } catch {
+      /* временная ошибка сети — пробуем дальше */
+    }
+  }
+  if (state.watching === sha) {
+    state.watching = null
+    setStatus('', 'статус сборки не дождался')
+  }
+}
+
+/* ---------- картинки ---------- */
+
+/**
+ * Файл → JPEG не шире maxW (как режет tools/cards/shots.py). Возвращает base64
+ * для коммита и размеры для w/h. Прозрачность заливается фоном
+ */
+async function processImage(file, maxW) {
+  const url = URL.createObjectURL(file)
+  const img = await new Promise((resolve, reject) => {
+    const i = new Image()
+    i.onload = () => resolve(i)
+    i.onerror = () => reject(new Error('Не получилось открыть картинку'))
+    i.src = url
+  })
+  const scale = Math.min(1, maxW / img.naturalWidth)
+  const w = Math.round(img.naturalWidth * scale)
+  const hgt = Math.round(img.naturalHeight * scale)
+  const canvas = Object.assign(document.createElement('canvas'), { width: w, height: hgt })
+  const ctx = canvas.getContext('2d')
+  ctx.fillStyle = '#0a0a0a'
+  ctx.fillRect(0, 0, w, hgt)
+  ctx.drawImage(img, 0, 0, w, hgt)
+  URL.revokeObjectURL(url)
+  const blob = await new Promise((r) => canvas.toBlob(r, 'image/jpeg', 0.86))
+  const base64 = await new Promise((r) => {
+    const fr = new FileReader()
+    fr.onload = () => r(String(fr.result).split(',')[1])
+    fr.readAsDataURL(blob)
+  })
+  return { base64, w, h: hgt, url: URL.createObjectURL(blob) }
+}
+
+function pickFile() {
+  return new Promise((resolve) => {
+    const input = h('input', { type: 'file', accept: 'image/png,image/jpeg,image/webp' })
+    input.onchange = () => resolve(input.files[0] || null)
+    input.click()
+  })
+}
+
+/** Кладёт картинку в очередь на сохранение под путём src ('/cases/slug/01.jpg') */
+async function stageImage(src, maxW) {
+  const file = await pickFile()
+  if (!file) return null
+  try {
+    const img = await processImage(file, maxW)
+    state.uploads[`public${src}`] = { base64: img.base64 }
+    state.fresh[src] = img.url
+    return img
+  } catch (e) {
+    toast(e.message, true)
+    return null
+  }
+}
+
+/** Следующий свободный номер скрина в папке кейса: 01.jpg, 02.jpg… */
+function nextShotSrc(c) {
+  const nums = [c.thumb, c.cover, ...c.shots]
+    .filter(Boolean)
+    .map((s) => Number(s.src.match(/\/(\d+)(?:-dark)?\.\w+$/)?.[1] || 0))
+  const n = String(Math.max(0, ...nums) + 1).padStart(2, '0')
+  return `/cases/${c.slug}/${n}.jpg`
+}
+
+const withSuffix = (src, suffix) => src.replace(/(-dark)?\.\w+$/, `${suffix}.jpg`)
+
+/* ---------- поля ---------- */
+
+function textField(obj, key, { label, ref, long, placeholder, onInput } = {}) {
+  const value = obj[key] ?? ''
+  const isLong =
+    long ?? (LONG.test(key) || String(value).length > 70 || String(ref ?? '').length > 70)
+  const input = h(isLong ? 'textarea' : 'input', {
+    type: isLong ? null : 'text',
+    rows: isLong ? 2 : null,
+    placeholder: placeholder || '',
+    oninput: (e) => {
+      obj[key] = e.target.value
+      onInput?.(e.target.value)
+      refreshDirty()
+    },
+  })
+  input.value = value
+  return h(
+    'label',
+    { class: 'field' },
+    label != null && h('span', { class: 'label' }, label),
+    input,
+    ref != null && ref !== '' && ref !== value && h('span', { class: 'ref' }, ref),
+  )
+}
+
+function numberField(obj, key, label) {
+  const input = h('input', {
+    type: 'number',
+    value: obj[key],
+    oninput: (e) => {
+      obj[key] = Number(e.target.value)
+      refreshDirty()
+    },
+  })
+  return h('label', { class: 'field' }, h('span', { class: 'label' }, label), input)
+}
+
+function checkField(obj, key, label, onChange) {
+  return h(
+    'label',
+    {},
+    h('input', {
+      type: 'checkbox',
+      checked: !!obj[key],
+      onchange: (e) => {
+        if (e.target.checked) obj[key] = true
+        else delete obj[key]
+        onChange?.()
+        refreshDirty()
+      },
+    }),
+    label,
+  )
+}
+
+function selectField(obj, key, label, options) {
+  const sel = h(
+    'select',
+    {
+      onchange: (e) => {
+        obj[key] = e.target.value
+        refreshDirty()
+      },
+    },
+    options.map(([v, t]) => h('option', { value: v, selected: obj[key] === v }, t)),
+  )
+  return h('label', { class: 'field' }, h('span', { class: 'label' }, label), sel)
+}
+
+/**
+ * Список с кнопками ↑ ↓ ✕ и «добавить». renderItem(arr, i) рисует элемент,
+ * make() — новый элемент. После структурных правок перерисовывается панель
+ */
+function listEditor(
+  arr,
+  renderItem,
+  make,
+  { card = false, addLabel = '+ добавить', min = 0 } = {},
+) {
+  const move = (i, d) => {
+    const [x] = arr.splice(i, 1)
+    arr.splice(i + d, 0, x)
+    rerender()
+  }
+  return h(
+    'div',
+    { class: 'list' },
+    arr.map((_, i) =>
+      h(
+        'div',
+        { class: `list-item${card ? ' card' : ''}` },
+        h('div', { class: 'item-body' }, renderItem(arr, i)),
+        h(
+          'div',
+          { class: 'ctrl' },
+          h(
+            'button',
+            { class: 'icon', title: 'Выше', disabled: i === 0, onclick: () => move(i, -1) },
+            '↑',
+          ),
+          h(
+            'button',
+            {
+              class: 'icon',
+              title: 'Ниже',
+              disabled: i === arr.length - 1,
+              onclick: () => move(i, 1),
+            },
+            '↓',
+          ),
+          h(
+            'button',
+            {
+              class: 'icon',
+              title: 'Удалить',
+              disabled: arr.length <= min,
+              onclick: () => {
+                arr.splice(i, 1)
+                rerender()
+              },
+            },
+            '✕',
+          ),
+        ),
+      ),
+    ),
+    make &&
+      h(
+        'button',
+        {
+          class: 'btn small',
+          onclick: () => {
+            arr.push(make())
+            rerender()
+          },
+        },
+        addLabel,
+      ),
+  )
+}
+
+/**
+ * Универсальный редактор любого значения из JSON. ref — то же место в русской
+ * версии: показывается подсказкой под полем, чтобы было видно, что переводишь
+ */
+function valueEditor(parent, key, ref, label) {
+  const v = parent[key]
+  if (typeof v === 'string')
+    return textField(parent, key, {
+      label: nice(label),
+      ref: typeof ref === 'string' ? ref : undefined,
+    })
+  if (typeof v === 'number') return numberField(parent, key, nice(label))
+  if (typeof v === 'boolean')
+    return h('div', { class: 'checks field' }, checkField(parent, key, nice(label)))
+  if (Array.isArray(v)) {
+    const refArr = Array.isArray(ref) ? ref : []
+    const sample = v[0] ?? refArr[0] ?? ''
+    const card = sample && typeof sample === 'object'
+    return h(
+      'div',
+      { class: 'field' },
+      label != null &&
+        h(
+          'span',
+          { class: 'label' },
+          nice(label),
+          refArr.length > 0 &&
+            refArr.length !== v.length &&
+            h('em', {}, `в русской версии ${refArr.length}`),
+        ),
+      listEditor(
+        v,
+        (arr, i) => (card ? objectEditor(arr[i], refArr[i]) : valueEditor(arr, i, refArr[i], null)),
+        () => blank(refArr[v.length] ?? sample),
+        { card },
+      ),
+    )
+  }
+  if (v && typeof v === 'object') {
+    return h(
+      'div',
+      { class: 'field' },
+      label != null && h('span', { class: 'label' }, nice(label)),
+      h('div', { class: 'sub' }, objectEditor(v, ref)),
+    )
+  }
+  return null
+}
+
+function objectEditor(obj, ref) {
+  return Object.keys(obj).map((k) => valueEditor(obj, k, ref?.[k], k))
+}
+
+/* ---------- скриншоты ---------- */
+
+function shotCard(c, arr, i) {
+  const s = arr[i]
+  const replace = async (dark) => {
+    const src = dark
+      ? withSuffix(s.src || nextShotSrc(c), '-dark')
+      : s.src?.endsWith('.jpg')
+        ? s.src
+        : nextShotSrc(c)
+    const img = await stageImage(src, 1600)
+    if (!img) return
+    if (dark) s.dark = src
+    else Object.assign(s, { src, w: img.w, h: img.h })
+    rerender()
+  }
+  return h(
+    'div',
+    { class: 'shot' },
+    h(
+      'div',
+      { class: 'img', style: { backgroundImage: s.src ? `url("${imgUrl(s.src)}")` : 'none' } },
+      h('span', { class: 'size' }, `${String(i + 1).padStart(2, '0')} · ${s.w}×${s.h}`),
+      s.dark &&
+        h('div', {
+          class: 'dark',
+          title: 'Тёмная версия',
+          style: { backgroundImage: `url("${imgUrl(s.dark)}")` },
+        }),
+    ),
+    h(
+      'div',
+      { class: 'body' },
+      textField(s, 'caption', { placeholder: 'Подпись', long: true }),
+      h(
+        'div',
+        { class: 'row' },
+        h('button', { class: 'btn small', onclick: () => replace(false) }, 'Заменить'),
+        h(
+          'button',
+          {
+            class: 'btn small',
+            title: 'Тот же экран в тёмной теме — на сайте появится переключатель',
+            onclick: () => replace(true),
+          },
+          s.dark ? 'Тёмная ↻' : '+ тёмная',
+        ),
+        s.dark &&
+          h(
+            'button',
+            {
+              class: 'icon',
+              title: 'Убрать тёмную версию',
+              onclick: () => {
+                delete s.dark
+                rerender()
+              },
+            },
+            '◐✕',
+          ),
+        h('span', { class: 'fill' }),
+        h(
+          'button',
+          { class: 'icon', title: 'Раньше', disabled: i === 0, onclick: () => moveShot(c, i, -1) },
+          '←',
+        ),
+        h(
+          'button',
+          {
+            class: 'icon',
+            title: 'Позже',
+            disabled: i === arr.length - 1,
+            onclick: () => moveShot(c, i, 1),
+          },
+          '→',
+        ),
+        h(
+          'button',
+          { class: 'icon', title: 'Убрать скриншот', onclick: () => removeShot(c, i) },
+          '✕',
+        ),
+      ),
+    ),
+  )
+}
+
+/** Подписи в переводах идут по порядку скринов — двигаем их вместе */
+function moveShot(c, i, d) {
+  const mv = (arr) => {
+    if (!arr || i + d < 0 || i + d >= Math.max(arr.length, i + 1)) return
+    while (arr.length <= Math.max(i, i + d)) arr.push('')
+    const [x] = arr.splice(i, 1)
+    arr.splice(i + d, 0, x)
+  }
+  mv(c.shots)
+  for (const l of TRANSLATED) mv(state.data[P.copy(l)][c.slug]?.captions)
+  rerender()
+}
+
+function removeShot(c, i) {
+  if (!confirm('Убрать скриншот из кейса? Файл в репозитории останется.')) return
+  c.shots.splice(i, 1)
+  for (const l of TRANSLATED) state.data[P.copy(l)][c.slug]?.captions?.splice(i, 1)
+  rerender()
+}
+
+async function addShot(c) {
+  const src = nextShotSrc(c)
+  const img = await stageImage(src, 1600)
+  if (!img) return
+  c.shots.push({ src, caption: '', w: img.w, h: img.h })
+  rerender()
+}
+
+/** Обложка (thumb / cover): одна картинка с фиксированным путём */
+function coverField(c, key, label, maxW, hint) {
+  const s = c[key]
+  const upload = async () => {
+    const src = s?.src || `/cases/${c.slug}/${key}.jpg`
+    const img = await stageImage(src, maxW)
+    if (!img) return
+    c[key] = { src, caption: '', w: img.w, h: img.h }
+    rerender()
+  }
+  return h(
+    'div',
+    { class: 'single-image' },
+    h('div', { class: 'img', style: { backgroundImage: s ? `url("${imgUrl(s.src)}")` : 'none' } }),
+    h(
+      'div',
+      {},
+      h(
+        'div',
+        { class: 'label' },
+        h('strong', {}, label),
+        s && h('span', { class: 'hint' }, ` · ${s.w}×${s.h}`),
+      ),
+      h('p', { class: 'hint' }, hint),
+      h(
+        'div',
+        { class: 'optional' },
+        h('button', { class: 'btn small', onclick: upload }, s ? 'Заменить' : 'Загрузить'),
+        s &&
+          h(
+            'button',
+            {
+              class: 'btn small ghost',
+              onclick: () => {
+                delete c[key]
+                rerender()
+              },
+            },
+            'Убрать',
+          ),
+      ),
+    ),
+  )
+}
+
+/* ---------- вкладка «Кейсы» ---------- */
+
+function newCase() {
+  const cases = state.data[P.cases]
+  let slug = 'new-case'
+  for (let n = 2; cases.some((c) => c.slug === slug); n++) slug = `new-case-${n}`
+  return {
+    slug,
+    title: '',
+    tagline: '',
+    lead: '',
+    directions: ['design'],
+    label: 'design',
+    group: 'freelance',
+    client: '',
+    year: String(new Date().getFullYear()),
+    stack: [],
+    sections: [{ title: 'задача', body: [''] }],
+    shots: [],
+    minor: true,
+  }
+}
+
+function renderSide() {
+  const cases = state.data[P.cases]
+  return h(
+    'aside',
+    { class: 'side', id: 'side' },
+    state.locale === 'ru' &&
+      h(
+        'button',
+        {
+          class: 'btn add',
+          onclick: () => {
+            cases.push(newCase())
+            state.caseIdx = cases.length - 1
+            rerender()
+          },
+        },
+        '+ новый кейс',
+      ),
+    cases.map((c, i) =>
+      h(
+        'div',
+        {
+          class: `case-item${i === state.caseIdx ? ' on' : ''}`,
+          onclick: () => {
+            state.caseIdx = i
+            rerender(true)
+          },
+        },
+        h('span', { class: 'n' }, String(i + 1).padStart(2, '0')),
+        h('span', { class: 't' }, c.title || c.slug),
+        h('span', { class: 'flags', 'data-slug': c.slug }),
+      ),
+    ),
+  )
+}
+
+/** Метки справа в списке: маленький кейс и языки без перевода */
+function renderSideFlags() {
+  for (const el of document.querySelectorAll('.flags[data-slug]')) {
+    const slug = el.dataset.slug
+    const c = state.data[P.cases].find((x) => x.slug === slug)
+    const flags = []
+    if (c?.minor) flags.push(h('span', { class: 'flag', title: 'Небольшой проект' }, 'мал'))
+    for (const l of TRANSLATED) {
+      if (!state.data[P.copy(l)][slug])
+        flags.push(h('span', { class: 'flag miss', title: `Нет перевода ${l}` }, l))
+    }
+    el.replaceChildren(...flags)
+  }
+}
+
+function moveCase(d) {
+  const cases = state.data[P.cases]
+  const i = state.caseIdx
+  const [x] = cases.splice(i, 1)
+  cases.splice(i + d, 0, x)
+  state.caseIdx = i + d
+  rerender()
+}
+
+function deleteCase() {
+  const cases = state.data[P.cases]
+  const c = cases[state.caseIdx]
+  if (
+    !confirm(
+      `Удалить кейс «${c.title || c.slug}» со всеми переводами? Скриншоты в репозитории останутся.`,
+    )
+  )
+    return
+  cases.splice(state.caseIdx, 1)
+  for (const l of TRANSLATED) delete state.data[P.copy(l)][c.slug]
+  state.caseIdx = Math.max(0, state.caseIdx - 1)
+  rerender()
+}
+
+/** Смена адреса кейса — переводы привязаны к нему, переносим их следом */
+function renameSlug(c, next) {
+  const prev = c.slug
+  c.slug = next
+  for (const l of TRANSLATED) {
+    const copy = state.data[P.copy(l)]
+    if (copy[prev] && !copy[next]) {
+      copy[next] = copy[prev]
+      delete copy[prev]
+    }
+  }
+  const flags = document.querySelector(`.flags[data-slug="${CSS.escape(prev)}"]`)
+  if (flags) flags.dataset.slug = next
+}
+
+function slugField(c) {
+  const input = h('input', {
+    type: 'text',
+    value: c.slug,
+    oninput: (e) => {
+      renameSlug(c, e.target.value.trim())
+      input.classList.toggle('invalid', !/^[a-z0-9-]+$/.test(c.slug))
+      refreshDirty()
+    },
+  })
+  return h(
+    'label',
+    { class: 'field' },
+    h('span', { class: 'label' }, 'Адрес: /cases/…/ — a-z, 0-9, дефис'),
+    input,
+  )
+}
+
+function caseEditorRu(c) {
+  const cases = state.data[P.cases]
+  const optional = [
+    ['note', 'пометка к галерее', () => ''],
+    ['link', 'ссылка на сайт', () => ({ href: 'https://', label: '' })],
+    ['credit', 'соавтор', () => ({ href: 'https://github.com/', handle: '' })],
+    ['preview', 'превью без скринов', () => clone(PREVIEW_TEMPLATES.flow)],
+  ].filter(([k]) => c[k] === undefined)
+
+  return [
+    h(
+      'div',
+      { class: 'panel-head' },
+      h('h1', {}, c.title || 'Новый кейс'),
+      h(
+        'button',
+        {
+          class: 'icon',
+          title: 'Выше в списке',
+          disabled: state.caseIdx === 0,
+          onclick: () => moveCase(-1),
+        },
+        '↑',
+      ),
+      h(
+        'button',
+        {
+          class: 'icon',
+          title: 'Ниже в списке',
+          disabled: state.caseIdx === cases.length - 1,
+          onclick: () => moveCase(1),
+        },
+        '↓',
+      ),
+      h(
+        'a',
+        {
+          class: 'btn small ghost',
+          href: `${state.site}/cases/${c.slug}/`,
+          target: '_blank',
+          rel: 'noreferrer',
+        },
+        'на сайте ↗',
+      ),
+      h('button', { class: 'btn small danger', onclick: deleteCase }, 'Удалить'),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Основное'),
+      h(
+        'div',
+        { class: 'grid2' },
+        textField(c, 'title', {
+          label: 'Название',
+          onInput: () => {
+            document.querySelector('.case-item.on .t').textContent = c.title || c.slug
+            document.querySelector('.panel-head h1').textContent = c.title || 'Новый кейс'
+          },
+        }),
+        textField(c, 'tagline', { label: 'Подзаголовок в списке' }),
+      ),
+      textField(c, 'lead', { label: 'Лид — коротко для карточки и шапки', long: true }),
+      h(
+        'div',
+        { class: 'grid2' },
+        textField(c, 'client', { label: 'Клиент' }),
+        textField(c, 'year', { label: 'Год' }),
+        slugField(c),
+        textField(c, 'label', { label: 'Метка направлений: «design · web»' }),
+      ),
+      h(
+        'div',
+        { class: 'field' },
+        h('span', { class: 'label' }, 'Направления — по ним фильтр на главной'),
+        h(
+          'div',
+          { class: 'checks' },
+          DIRECTIONS.map(([v, t]) =>
+            h(
+              'label',
+              {},
+              h('input', {
+                type: 'checkbox',
+                checked: c.directions.includes(v),
+                onchange: (e) => {
+                  c.directions = DIRECTIONS.map(([d]) => d).filter((d) =>
+                    d === v ? e.target.checked : c.directions.includes(d),
+                  )
+                  refreshDirty()
+                },
+              }),
+              t,
+            ),
+          ),
+        ),
+      ),
+      h(
+        'div',
+        { class: 'grid2' },
+        selectField(c, 'group', 'Где сделан', GROUPS),
+        h(
+          'div',
+          { class: 'field checks', style: { alignSelf: 'end', paddingBottom: '10px' } },
+          checkField(c, 'minor', 'Небольшой проект — строкой в списке'),
+        ),
+      ),
+      valueEditor(c, 'stack', null, 'Стек'),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Разделы кейса'),
+      listEditor(
+        c.sections,
+        (arr, i) => [
+          textField(arr[i], 'title', { label: 'Заголовок раздела' }),
+          valueEditor(arr[i], 'body', null, 'Абзацы'),
+        ],
+        () => ({ title: '', body: [''] }),
+        { card: true, addLabel: '+ раздел' },
+      ),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, `Скриншоты · ${c.shots.length}`),
+      h(
+        'p',
+        { class: 'hint' },
+        'Картинка ужимается до 1600 px по ширине и сохраняется в JPEG. Высота любая — длинные страницы можно целиком.',
+      ),
+      h(
+        'div',
+        { class: 'shots' },
+        c.shots.map((_, i) => shotCard(c, c.shots, i)),
+      ),
+      h('button', { class: 'btn small', onclick: () => addShot(c) }, '+ скриншот'),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Обложки'),
+      h(
+        'p',
+        { class: 'hint' },
+        'Обычно их собирает node tools/cards/covers.mjs из скриншотов. Нет обложек и скринов — на главной рисуется превью.',
+      ),
+      coverField(c, 'thumb', 'Строка на главной', 1216, 'thumb.jpg, 1216×860'),
+      coverField(c, 'cover', 'Шапка кейса', 2624, 'cover.jpg, 2624×1280'),
+    ),
+    c.preview && previewEditor(c),
+    (c.note !== undefined || c.link || c.credit) &&
+      h(
+        'section',
+        { class: 'group' },
+        h('h2', {}, 'Дополнительно'),
+        c.note !== undefined &&
+          optionalWrap(c, 'note', textField(c, 'note', { label: 'Пометка к галерее' })),
+        c.link &&
+          optionalWrap(
+            c,
+            'link',
+            h(
+              'div',
+              { class: 'grid2' },
+              textField(c.link, 'href', { label: 'Ссылка на сайт' }),
+              textField(c.link, 'label', { label: 'Текст ссылки' }),
+            ),
+          ),
+        c.credit &&
+          optionalWrap(
+            c,
+            'credit',
+            h(
+              'div',
+              { class: 'grid2' },
+              textField(c.credit, 'href', { label: 'GitHub соавтора' }),
+              textField(c.credit, 'handle', { label: 'Ник' }),
+            ),
+          ),
+      ),
+    optional.length &&
+      h(
+        'div',
+        { class: 'optional' },
+        optional.map(([k, t, make]) =>
+          h(
+            'button',
+            {
+              class: 'btn small ghost',
+              onclick: () => {
+                c[k] = make()
+                rerender()
+              },
+            },
+            `+ ${t}`,
+          ),
+        ),
+      ),
+  ]
+}
+
+function optionalWrap(obj, key, content) {
+  return h(
+    'div',
+    { class: 'list-item' },
+    h('div', {}, content),
+    h(
+      'button',
+      {
+        class: 'icon',
+        title: 'Убрать поле',
+        onclick: () => {
+          delete obj[key]
+          rerender()
+        },
+      },
+      '✕',
+    ),
+  )
+}
+
+function previewEditor(c, ref) {
+  const p = c.preview
+  const kinds = [
+    ['flow', 'цепочка шагов'],
+    ['chat', 'переписка с ботом'],
+    ['inbox', 'разбор почты'],
+    ['search', 'поиск'],
+  ]
+  return h(
+    'section',
+    { class: 'group' },
+    h('h2', {}, 'Превью без скриншотов'),
+    h(
+      'p',
+      { class: 'hint' },
+      ref
+        ? 'Перевод текстов превью. Структура — как в русской версии.'
+        : 'Показывается вместо картинки, пока у кейса нет обложки.',
+    ),
+    !ref &&
+      h(
+        'div',
+        { class: 'grid2' },
+        h(
+          'label',
+          { class: 'field' },
+          h('span', { class: 'label' }, 'Вид'),
+          h(
+            'select',
+            {
+              onchange: (e) => {
+                c.preview = clone(PREVIEW_TEMPLATES[e.target.value])
+                rerender()
+              },
+            },
+            kinds.map(([v, t]) => h('option', { value: v, selected: p.kind === v }, t)),
+          ),
+        ),
+      ),
+    Object.keys(p)
+      .filter((k) => k !== 'kind')
+      .map((k) => valueEditor(p, k, ref?.[k], k)),
+    h(
+      'button',
+      {
+        class: 'btn small ghost danger',
+        onclick: () => {
+          delete c.preview
+          rerender()
+        },
+      },
+      ref ? 'Убрать перевод превью' : 'Убрать превью',
+    ),
+  )
+}
+
+/** Подпись по номеру скрина. Подписей бывает меньше, чем скринов, — добиваем пустыми только при вводе */
+function captionField(captions, i, ref) {
+  const input = h('input', {
+    type: 'text',
+    value: captions[i] ?? '',
+    oninput: (e) => {
+      while (captions.length < i) captions.push('')
+      captions[i] = e.target.value
+      refreshDirty()
+    },
+  })
+  return h('label', { class: 'field' }, input, ref && h('span', { class: 'ref' }, ref))
+}
+
+function caseEditorTranslation(c, l) {
+  const copy = state.data[P.copy(l)]
+  const t = copy[c.slug]
+  const head = h(
+    'div',
+    { class: 'panel-head' },
+    h('h1', {}, t?.title || c.title),
+    h(
+      'a',
+      {
+        class: 'btn small ghost',
+        href: `${state.site}/${l}/cases/${c.slug}/`,
+        target: '_blank',
+        rel: 'noreferrer',
+      },
+      'на сайте ↗',
+    ),
+    t &&
+      h(
+        'button',
+        {
+          class: 'btn small danger',
+          onclick: () => {
+            if (!confirm('Удалить перевод? На этом языке кейс покажется по-русски.')) return
+            delete copy[c.slug]
+            rerender()
+          },
+        },
+        'Удалить перевод',
+      ),
+  )
+  if (!t) {
+    return [
+      head,
+      h(
+        'section',
+        { class: 'group' },
+        h('p', {}, 'Перевода нет — на этом языке кейс показывается по-русски.'),
+        h(
+          'button',
+          {
+            class: 'btn primary',
+            onclick: () => {
+              copy[c.slug] = {
+                tagline: '',
+                lead: '',
+                client: '',
+                sections: c.sections.map((s) => ({ title: '', body: s.body.map(() => '') })),
+                captions: c.shots.map(() => ''),
+                ...(c.note !== undefined && { note: '' }),
+              }
+              rerender()
+            },
+          },
+          'Добавить перевод',
+        ),
+      ),
+    ]
+  }
+
+  return [
+    head,
+    h(
+      'p',
+      { class: 'hint' },
+      'Серым под полем — русский текст. Скриншоты, стек и год общие для всех языков, правятся в RU.',
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Основное'),
+      (() => {
+        const f = textField(t, 'title', {
+          label: 'Название — только если переводится',
+          ref: c.title,
+          placeholder: c.title,
+        })
+        f.querySelector('input').addEventListener('input', (e) => {
+          if (!e.target.value) delete t.title
+        })
+        return f
+      })(),
+      textField(t, 'tagline', { label: 'Подзаголовок', ref: c.tagline }),
+      textField(t, 'lead', { label: 'Лид', ref: c.lead, long: true }),
+      textField(t, 'client', { label: 'Клиент', ref: c.client }),
+      c.note !== undefined && textField(t, 'note', { label: 'Пометка к галерее', ref: c.note }),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Разделы'),
+      c.sections.length !== t.sections.length &&
+        h(
+          'p',
+          { class: 'hint' },
+          `В русской версии разделов: ${c.sections.length}, тут: ${t.sections.length}.`,
+        ),
+      listEditor(
+        t.sections,
+        (arr, i) => [
+          textField(arr[i], 'title', { label: 'Заголовок', ref: c.sections[i]?.title }),
+          valueEditor(arr[i], 'body', c.sections[i]?.body, 'Абзацы'),
+        ],
+        () => {
+          const ref = c.sections[t.sections.length]
+          return { title: '', body: ref ? ref.body.map(() => '') : [''] }
+        },
+        { card: true, addLabel: '+ раздел' },
+      ),
+    ),
+    c.shots.length > 0 &&
+      h(
+        'section',
+        { class: 'group' },
+        h('h2', {}, 'Подписи к скриншотам'),
+        c.shots.map((s, i) =>
+          h(
+            'div',
+            { class: 'caption-row' },
+            h('div', { class: 'thumb', style: { backgroundImage: `url("${imgUrl(s.src)}")` } }),
+            captionField(t.captions, i, s.caption),
+          ),
+        ),
+      ),
+    c.preview &&
+      (t.preview
+        ? previewEditor(t, c.preview)
+        : h(
+            'section',
+            { class: 'group' },
+            h('h2', {}, 'Превью без скриншотов'),
+            h('p', { class: 'hint' }, 'Тексты превью сейчас берутся из русской версии.'),
+            h(
+              'button',
+              {
+                class: 'btn small',
+                onclick: () => {
+                  t.preview = clone(c.preview)
+                  rerender()
+                },
+              },
+              'Перевести превью',
+            ),
+          )),
+  ]
+}
+
+function renderCases() {
+  const cases = state.data[P.cases]
+  state.caseIdx = Math.min(state.caseIdx, cases.length - 1)
+  const c = cases[state.caseIdx]
+  return h(
+    'div',
+    { class: 'layout' },
+    renderSide(),
+    h(
+      'div',
+      { class: 'panel' },
+      c
+        ? state.locale === 'ru'
+          ? caseEditorRu(c)
+          : caseEditorTranslation(c, state.locale)
+        : h('p', {}, 'Кейсов нет'),
+    ),
+  )
+}
+
+/* ---------- вкладка «Тексты сайта» ---------- */
+
+function renderDict() {
+  const l = state.locale
+  const d = state.data[P.dict(l)]
+  const ref = l === 'ru' ? null : state.data[P.dict('ru')]
+  return h(
+    'div',
+    { class: 'panel' },
+    h(
+      'div',
+      { class: 'panel-head' },
+      h('h1', {}, `Тексты сайта · ${LOCALES.find(([k]) => k === l)[1]}`),
+    ),
+    ref && h('p', { class: 'hint' }, 'Серым под полем — русский текст.'),
+    Object.keys(d).map((k) =>
+      h(
+        'details',
+        {
+          class: 'group',
+          open: state.openDict?.has(k),
+          ontoggle: (e) => toggleDict(k, e.target.open),
+        },
+        h('summary', {}, DICT_LABELS[k] || k),
+        valueEditor(d, k, ref?.[k], null),
+      ),
+    ),
+  )
+}
+
+function toggleDict(k, open) {
+  state.openDict ??= new Set()
+  if (open) state.openDict.add(k)
+  else state.openDict.delete(k)
+}
+
+/* ---------- вкладка «Контакты» ---------- */
+
+function renderSite() {
+  const s = state.data[P.site]
+  return h(
+    'div',
+    { class: 'panel' },
+    h('div', { class: 'panel-head' }, h('h1', {}, 'Контакты')),
+    h('p', { class: 'hint' }, 'Одни на все языки.'),
+    h(
+      'section',
+      { class: 'group' },
+      textField(s.contacts, 'email', { label: 'Email' }),
+      h(
+        'div',
+        { class: 'grid2' },
+        textField(s.contacts, 'telegram', { label: 'Telegram — ссылка' }),
+        textField(s.contacts, 'telegramHandle', { label: 'Telegram — ник' }),
+      ),
+      textField(s.contacts, 'github', { label: 'GitHub' }),
+      textField(s, 'coords', { label: 'Координаты на первом экране' }),
+    ),
+  )
+}
+
+/* ---------- каркас ---------- */
+
+function renderTop() {
+  $('tabs').replaceChildren(
+    ...TABS.map(([k, t]) =>
+      h(
+        'button',
+        {
+          class: state.tab === k ? 'on' : '',
+          onclick: () => {
+            state.tab = k
+            rerender(true)
+          },
+        },
+        t,
+      ),
+    ),
+  )
+  const loc = $('locales')
+  loc.hidden = state.tab === 'site'
+  loc.replaceChildren(
+    ...LOCALES.map(([k, t]) =>
+      h(
+        'button',
+        {
+          class: state.locale === k ? 'on' : '',
+          onclick: () => {
+            state.locale = k
+            rerender(true)
+          },
+        },
+        t,
+      ),
+    ),
+  )
+}
+
+/** Перерисовка. top — со сбросом прокрутки (переход на другой экран) */
+function rerender(top = false) {
+  const scroll = window.scrollY
+  const sideScroll = $('side')?.scrollTop
+  renderTop()
+  const view = { cases: renderCases, dict: renderDict, site: renderSite }[state.tab]()
+  $('main').replaceChildren(view)
+  if ($('side') && sideScroll != null) $('side').scrollTop = sideScroll
+  window.scrollTo(0, top ? 0 : scroll)
+  refreshDirty()
+  try {
+    localStorage.setItem(
+      'admin-view',
+      JSON.stringify({ tab: state.tab, locale: state.locale, caseIdx: state.caseIdx }),
+    )
+  } catch {
+    /* без localStorage просто не помним вкладку */
+  }
+}
+
+async function init() {
+  try {
+    Object.assign(state, JSON.parse(localStorage.getItem('admin-view') || '{}'))
+  } catch {
+    /* нет сохранённого вида — начинаем с кейсов */
+  }
+  $('save').addEventListener('click', save)
+  addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+      e.preventDefault()
+      save()
+    }
+  })
+  addEventListener('beforeunload', (e) => {
+    if (dirtyPaths().length || Object.keys(state.uploads).length) e.preventDefault()
+  })
+  try {
+    const res = await api('/api/content')
+    state.site = res.site
+    state.files = res.files
+    for (const [p, f] of Object.entries(res.files)) state.data[p] = JSON.parse(f.text)
+    rerender()
+    api('/api/status')
+      .then((s) => {
+        if (state.watching || dirtyPaths().length) return
+        const text = {
+          done: 'сайт актуален',
+          building: 'сайт собирается…',
+          failed: 'последняя сборка упала',
+          waiting: '',
+        }[s.state]
+        setStatus(s.state, text, s.url)
+        if (s.state === 'building') watchDeploy(s.sha)
+      })
+      .catch(() => {})
+  } catch (e) {
+    $('main').replaceChildren(h('p', { class: 'loading' }, `Не загрузилось: ${e.message}`))
+  }
+}
+
+init()
