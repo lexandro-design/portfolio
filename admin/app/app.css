@@ -696,6 +696,67 @@ select:focus {
   padding: 4px;
 }
 
+/* ---------- настройки ---------- */
+
+.feature {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-hair);
+  cursor: pointer;
+}
+
+.feature:last-child {
+  border-bottom: 0;
+}
+
+.feature input {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+}
+
+.feature strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.feature .hint {
+  margin: 0;
+}
+
+.accents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.accent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.accent input[type='color'] {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.accent input[type='text'] {
+  width: 96px;
+  font-family: ui-monospace, monospace;
+}
+
 /* ---------- переписка с ботом ---------- */
 
 .chat-editor {

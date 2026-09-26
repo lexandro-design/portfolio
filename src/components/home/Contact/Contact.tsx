@@ -1,12 +1,20 @@
-import { contacts, SECTION_COUNT } from '@/content/site'
+import { contacts, features, SECTION_COUNT } from '@/content/site'
 import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
+import { Brief } from './Brief'
 import styles from './Contact.module.css'
 
-/** Финальный экран: вопрос крупно, почта ссылкой, кнопки и статус */
-export function Contact({ t, label }: { t: Dict['contact']; label: string }) {
+type Props = {
+  t: Dict['contact']
+  label: string
+  services: Dict['services']
+  steps: Dict['process']['steps']
+}
+
+/** Финальный экран: вопрос крупно, конструктор заявки, почта ссылкой, кнопки и статус */
+export function Contact({ t, label, services, steps }: Props) {
   const n = String(SECTION_COUNT).padStart(2, '0')
   return (
     <Reveal className={styles.contact}>
@@ -14,6 +22,8 @@ export function Contact({ t, label }: { t: Dict['contact']; label: string }) {
         {n} / {n} · {label}
       </span>
       <h2 className={styles.title}>{t.title}</h2>
+
+      {features.brief && <Brief t={t.brief} services={services} steps={steps} />}
 
       <div className={styles.row}>
         <a href={`mailto:${contacts.email}`} className={styles.email}>

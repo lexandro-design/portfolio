@@ -1,22 +1,22 @@
 'use client'
 
 import { useSyncExternalStore } from 'react'
+import { DEFAULT_THEME, THEMES, type Theme } from '@/content/site'
 import styles from './ThemeSwitch.module.css'
-
-type Theme = 'dark' | 'warm' | 'light'
-const THEMES: Theme[] = ['dark', 'warm', 'light']
 
 /* Тема живёт в data-theme на <html> (его же ставит ThemeScript до
    отрисовки), компонент на него только подписан. Событие themechange
    слушает и блок «система», чтобы показать новые значения токенов */
 export const THEME_EVENT = 'themechange'
-const subscribe = (cb: () => void) => {
+export const subscribeTheme = (cb: () => void) => {
   window.addEventListener(THEME_EVENT, cb)
   return () => window.removeEventListener(THEME_EVENT, cb)
 }
-const read = () => (document.documentElement.dataset.theme as Theme | undefined) ?? 'dark'
+export const readTheme = () =>
+  (document.documentElement.dataset.theme as Theme | undefined) ?? DEFAULT_THEME
 
-function applyTheme(next: Theme) {
+/** Сменить тему сайта: шапка, блок «Система» и палитра команд подписаны на событие */
+export function applyTheme(next: Theme) {
   document.documentElement.dataset.theme = next
   try {
     localStorage.setItem('theme', next)
@@ -26,9 +26,9 @@ function applyTheme(next: Theme) {
 
 type Props = { label: string; labels: Record<Theme, string> }
 
-/** Переключатель трёх тем из макета: тёмная, тёплая, светлая. Выбор помнится */
+/** Переключатель трёх тем: тёмная, неон, светлая. Выбор помнится */
 export function ThemeSwitch({ label, labels }: Props) {
-  const theme = useSyncExternalStore(subscribe, read, () => 'dark' as Theme)
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
   return (
     <div className={styles.switch} role="radiogroup" aria-label={label}>
@@ -50,6 +50,10 @@ export function ThemeSwitch({ label, labels }: Props) {
   )
 }
 
+export function ThemeIcon({ id }: { id: Theme }) {
+  return <Icon id={id} />
+}
+
 function Icon({ id }: { id: Theme }) {
   if (id === 'dark')
     return (
@@ -57,11 +61,10 @@ function Icon({ id }: { id: Theme }) {
         <circle cx="7" cy="7" r="4" fill="currentColor" />
       </svg>
     )
-  if (id === 'warm')
+  if (id === 'neon')
     return (
       <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <circle cx="7" cy="7" r="4.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M7 2.75a4.25 4.25 0 0 1 0 8.5z" fill="currentColor" />
+        <path d="M8.2 1.2 3.2 8h3.3l-.9 4.8 5.2-7H7.4z" fill="currentColor" />
       </svg>
     )
   return (

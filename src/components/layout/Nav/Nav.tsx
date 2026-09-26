@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { useEffect } from 'react'
-import { contacts } from '@/content/site'
+import { contacts, features } from '@/content/site'
 import { HTML_LANG, localePath } from '@/i18n/config'
 import { Button } from '@/components/ui/Button'
+import { PaletteButton } from '../CommandPalette/CommandPalette'
 import { LangSwitch } from '../LangSwitch'
 import { Logo } from './Logo'
 import { MobileMenu } from '../MobileMenu'
@@ -51,6 +52,7 @@ export function Nav() {
             <span className={styles.dot} />
             {t.nav.status}
           </span>
+          {features.palette && <PaletteButton label={t.nav.search} />}
           <LangSwitch locale={locale} rest={rest} label={t.nav.language} />
           <ThemeSwitch labels={t.nav.themes} label={t.nav.theme} />
           <Button href={contacts.telegram} external className={styles.cta}>

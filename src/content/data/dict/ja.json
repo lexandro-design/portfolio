@@ -17,10 +17,11 @@
     "theme": "テーマ",
     "themes": {
       "dark": "ダークテーマ",
-      "warm": "ウォームテーマ",
+      "neon": "ネオンテーマ",
       "light": "ライトテーマ"
     },
-    "language": "言語"
+    "language": "言語",
+    "search": "検索とコマンド"
   },
   "hero": {
     "metaLeft": [
@@ -162,7 +163,35 @@
     },
     "specimen": "デザインシステム",
     "tryTheme": "テーマを試す",
-    "copied": "コピーしました"
+    "copied": "コピーしました",
+    "sandbox": {
+      "label": "サンドボックス",
+      "title": "システムを自分で動かす",
+      "lead": "コントロールが変えるのは要素ではなくトークンです。右の画面はトークンだけで組まれているので、全体がまとめて組み変わります。",
+      "radius": "角丸",
+      "density": "密度",
+      "densities": {
+        "compact": "詰める",
+        "normal": "標準",
+        "airy": "ゆったり"
+      },
+      "accent": "アクセント",
+      "font": "フォント",
+      "theme": "テーマ",
+      "reset": "リセット",
+      "copy": "トークンをコピー",
+      "ui": {
+        "search": "会議室を探す",
+        "room": "会議室 3",
+        "meta": "8 席 · 3 階",
+        "free": "空き",
+        "slots": "今日",
+        "equipment": "スクリーンとビデオ会議",
+        "book": "予約する",
+        "cancel": "キャンセル",
+        "booked": "予約しました"
+      }
+    }
   },
   "process": {
     "step": "ステップ",
@@ -236,7 +265,30 @@
     "github": "github",
     "telegram": "telegram で連絡",
     "location": "サンクトペテルブルク · utc+3",
-    "status": "案件受付中"
+    "status": "案件受付中",
+    "brief": {
+      "label": "1 分で依頼",
+      "title": "タスクをまとめる",
+      "pick": "必要なもの",
+      "route": "作業の流れ",
+      "deadline": "期間",
+      "deadlines": [
+        "急ぎ",
+        "1 か月以内",
+        "急がない"
+      ],
+      "about": "タスクについてひとこと",
+      "aboutPlaceholder": "例：ショップのサイトと注文を受けるボット",
+      "preview": "依頼文",
+      "telegram": "telegram で送る",
+      "email": "メールで",
+      "copied": "コピーしました。チャットに入らなかった場合は貼り付けてください",
+      "empty": "サービスを 1 つ以上選んでください",
+      "hello": "こんにちは。プロジェクトについてご相談したいです。",
+      "need": "必要なもの",
+      "when": "期間",
+      "task": "タスク"
+    }
   },
   "footer": {
     "line": "LEXANDRO · ux/ui、デザインシステム、開発",
@@ -263,5 +315,25 @@
       "dark": "ダーク"
     },
     "credit": "コーディング"
+  },
+  "palette": {
+    "open": "検索とコマンド",
+    "placeholder": "ケース、セクション、コマンド",
+    "empty": "見つかりません",
+    "groups": {
+      "sections": "セクション",
+      "cases": "ケース",
+      "actions": "操作",
+      "themes": "テーマ",
+      "languages": "言語"
+    },
+    "actions": {
+      "brief": "依頼をまとめる",
+      "email": "メールをコピー",
+      "telegram": "Telegram で連絡",
+      "github": "GitHub を開く"
+    },
+    "copied": "メールをコピーしました",
+    "hint": "↑↓ 選択 · enter 開く · esc 閉じる"
   }
 }

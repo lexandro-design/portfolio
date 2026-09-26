@@ -70,7 +70,12 @@ export function HomePage({ locale }: { locale: Locale }) {
 
       <section id="contact" className={styles.section}>
         <div className="container">
-          <Contact t={t.contact} label={t.sections.contact.label} />
+          <Contact
+            t={t.contact}
+            label={t.sections.contact.label}
+            services={t.services}
+            steps={t.process.steps}
+          />
         </div>
       </section>
     </div>

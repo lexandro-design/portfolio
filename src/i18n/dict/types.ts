@@ -22,8 +22,10 @@ export type Dict = {
     menuOpen: string
     menuClose: string
     theme: string
-    themes: { dark: string; warm: string; light: string }
+    themes: { dark: string; neon: string; light: string }
     language: string
+    /** Кнопка палитры команд (Ctrl+K) */
+    search: string
   }
 
   hero: {
@@ -88,6 +90,31 @@ export type Dict = {
     specimen: string
     tryTheme: string
     copied: string
+    /** Песочница: ручки меняют токены мини-интерфейса */
+    sandbox: {
+      label: string
+      title: string
+      lead: string
+      radius: string
+      density: string
+      densities: { compact: string; normal: string; airy: string }
+      accent: string
+      font: string
+      theme: string
+      reset: string
+      copy: string
+      ui: {
+        search: string
+        room: string
+        meta: string
+        free: string
+        slots: string
+        equipment: string
+        book: string
+        cancel: string
+        booked: string
+      }
+    }
   }
 
   process: { steps: { title: string; text: string }[]; step: string }
@@ -100,7 +127,45 @@ export type Dict = {
 
   principles: { title: string; text: string }[]
 
-  contact: { title: string; github: string; telegram: string; location: string; status: string }
+  contact: {
+    title: string
+    github: string
+    telegram: string
+    location: string
+    status: string
+    /** Конструктор заявки: услуги берутся из services, этапы — из process */
+    brief: {
+      label: string
+      title: string
+      pick: string
+      route: string
+      deadline: string
+      deadlines: string[]
+      about: string
+      aboutPlaceholder: string
+      preview: string
+      telegram: string
+      email: string
+      copied: string
+      empty: string
+      /** Строки самого сообщения */
+      hello: string
+      need: string
+      when: string
+      task: string
+    }
+  }
+
+  /** Палитра команд по Ctrl+K / ⌘K */
+  palette: {
+    open: string
+    placeholder: string
+    empty: string
+    groups: { sections: string; cases: string; actions: string; themes: string; languages: string }
+    actions: { brief: string; email: string; telegram: string; github: string }
+    copied: string
+    hint: string
+  }
 
   footer: { line: string; place: string }
 

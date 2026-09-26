@@ -1,6 +1,6 @@
 /* ============================================================
    Дизайн-токены — 1:1 из переменных макета (коллекции Colors,
-   Spacing, Motion). Три темы: dark по умолчанию, light и warm.
+   Spacing, Motion). Три темы: dark по умолчанию, light и neon.
    Тема ставится атрибутом data-theme на <html> до первой отрисовки
    (см. ThemeScript), поэтому при загрузке ничего не моргает.
    ============================================================ */
@@ -20,6 +20,7 @@
   --bg-scrim: rgb(10 10 10 / 0.8);
   --overlay-tag: rgb(0 0 0 / 0.55);
   --fg-inverse: #0a0a0a;
+  --accent: #dddec7;
   color-scheme: dark;
 }
 
@@ -37,30 +38,32 @@
   --bg-scrim: rgb(20 20 15 / 0.5);
   --overlay-tag: rgb(0 0 0 / 0.35);
   --fg-inverse: #f5f4ef;
+  --accent: #dddec7;
   color-scheme: light;
 }
 
-[data-theme='warm'] {
-  --bg-base: #1f1a14;
-  --bg-elevated: #2a231b;
-  --bg-subtle: #352b21;
-  --fg-primary: #f2e8d5;
-  --fg-secondary: #b8a88c;
-  --fg-tertiary: #7e6e55;
-  --border-hair: rgb(242 232 213 / 0.1);
-  --border-hover: rgb(242 232 213 / 0.26);
-  --signal-live: #c8b36a;
-  --border-focus: #e8b86b;
-  --bg-scrim: rgb(31 27 20 / 0.8);
-  --overlay-tag: rgb(0 0 0 / 0.45);
-  --fg-inverse: #1f1b14;
+/* Неон: чернильно-фиолетовый фон, кислотный лайм в акцентах и статусах,
+   фиолетовый фокус. Заменила тёплую тему (2026-09-27) */
+[data-theme='neon'] {
+  --bg-base: #0a0817;
+  --bg-elevated: #120f26;
+  --bg-subtle: #1b1735;
+  --fg-primary: #f3f0ff;
+  --fg-secondary: #aba4d6;
+  --fg-tertiary: #716a9c;
+  --border-hair: rgb(243 240 255 / 0.1);
+  --border-hover: rgb(243 240 255 / 0.28);
+  --signal-live: #c6ff3d;
+  --border-focus: #9d8cff;
+  --bg-scrim: rgb(10 8 23 / 0.8);
+  --overlay-tag: rgb(0 0 0 / 0.5);
+  --fg-inverse: #0a0817;
+  --accent: #c6ff3d;
   color-scheme: dark;
 }
 
+/* Акцент (кнопки, активные фильтры) задан в каждой теме: в неоне он свой */
 :root {
-  --accent: #dddec7;
-  --accent-warm: #e8b86b;
-
   /* ---------- Отступы ---------- */
   --space-2xs: 4px;
   --space-xs: 8px;

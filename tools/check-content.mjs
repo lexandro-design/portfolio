@@ -127,6 +127,20 @@ for (const k of ['email', 'telegram', 'telegramHandle', 'github']) {
   if (!str(site.contacts?.[k])) fail('site.contacts', `нет поля ${k}`)
 }
 if (!str(site.coords)) fail('site', 'нет поля coords')
+for (const k of ['brief', 'palette', 'sandbox']) {
+  if (typeof site.features?.[k] !== 'boolean') fail('site.features', `${k} — true или false`)
+}
+if (!['dark', 'neon', 'light'].includes(site.defaultTheme)) {
+  fail('site', 'defaultTheme — dark, neon или light')
+}
+const accents = site.sandbox?.accents
+if (
+  !Array.isArray(accents) ||
+  !accents.length ||
+  !accents.every((c) => /^#[0-9a-f]{6}$/i.test(c))
+) {
+  fail('site.sandbox', 'accents — непустой список цветов вида #aabbcc')
+}
 
 if (errors.length) {
   console.error(`Контент не прошёл проверку (${errors.length}):\n- ${errors.join('\n- ')}`)

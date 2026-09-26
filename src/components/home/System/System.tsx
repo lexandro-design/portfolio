@@ -5,6 +5,8 @@ import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
 import { ThemeSwitch } from '@/components/layout/ThemeSwitch'
 import { THEME_EVENT } from '@/components/layout/ThemeSwitch/ThemeSwitch'
+import { features } from '@/content/site'
+import { Sandbox } from './Sandbox'
 import styles from './System.module.css'
 
 const SWATCHES = [
@@ -152,6 +154,8 @@ export function System({ t, themes }: Props) {
           </div>
         </Reveal>
       </div>
+
+      {features.sandbox && <Sandbox t={t.sandbox} themeLabels={themes.labels} copied={t.copied} />}
     </>
   )
 }

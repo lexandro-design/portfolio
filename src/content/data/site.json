@@ -5,5 +5,20 @@
     "telegramHandle": "@lexandr0",
     "github": "https://github.com/lexandro-design"
   },
-  "coords": "59.9311° N · 30.3609° E"
+  "coords": "59.9311° N · 30.3609° E",
+  "features": {
+    "brief": true,
+    "palette": true,
+    "sandbox": true
+  },
+  "defaultTheme": "dark",
+  "sandbox": {
+    "accents": [
+      "#c6ff3d",
+      "#9d8cff",
+      "#ff6b4a",
+      "#38bdf8",
+      "#f5f5f2"
+    ]
+  }
 }

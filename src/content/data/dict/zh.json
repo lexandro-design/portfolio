@@ -17,10 +17,11 @@
     "theme": "主题",
     "themes": {
       "dark": "深色主题",
-      "warm": "暖色主题",
+      "neon": "霓虹主题",
       "light": "浅色主题"
     },
-    "language": "语言"
+    "language": "语言",
+    "search": "搜索与命令"
   },
   "hero": {
     "metaLeft": [
@@ -162,7 +163,35 @@
     },
     "specimen": "设计系统",
     "tryTheme": "试试主题",
-    "copied": "已复制"
+    "copied": "已复制",
+    "sandbox": {
+      "label": "沙盒",
+      "title": "亲手调整这套系统",
+      "lead": "控件改变的是令牌，而不是元素。右侧界面只由令牌构成，所以会整体重排。",
+      "radius": "圆角",
+      "density": "密度",
+      "densities": {
+        "compact": "紧凑",
+        "normal": "标准",
+        "airy": "宽松"
+      },
+      "accent": "强调色",
+      "font": "字体",
+      "theme": "主题",
+      "reset": "重置",
+      "copy": "复制令牌",
+      "ui": {
+        "search": "查找会议室",
+        "room": "3 号会议室",
+        "meta": "8 个座位 · 3 楼",
+        "free": "空闲",
+        "slots": "今天",
+        "equipment": "屏幕与视频会议",
+        "book": "预订",
+        "cancel": "取消",
+        "booked": "已预订"
+      }
+    }
   },
   "process": {
     "step": "步骤",
@@ -236,7 +265,30 @@
     "github": "github",
     "telegram": "在 telegram 联系",
     "location": "圣彼得堡 · utc+3",
-    "status": "可接项目"
+    "status": "可接项目",
+    "brief": {
+      "label": "一分钟需求",
+      "title": "整理你的任务",
+      "pick": "需要什么",
+      "route": "工作流程",
+      "deadline": "时间",
+      "deadlines": [
+        "紧急",
+        "一个月内",
+        "不着急"
+      ],
+      "about": "简单描述任务",
+      "aboutPlaceholder": "例如：商店网站和接单机器人",
+      "preview": "需求内容",
+      "telegram": "通过 telegram 发送",
+      "email": "发邮件",
+      "copied": "内容已复制。如果没有自动填入聊天，请粘贴",
+      "empty": "请至少选择一项服务",
+      "hello": "您好！想和您讨论一个项目。",
+      "need": "需要",
+      "when": "时间",
+      "task": "任务"
+    }
   },
   "footer": {
     "line": "LEXANDRO · ux/ui、设计系统、开发",
@@ -263,5 +315,25 @@
       "dark": "深色"
     },
     "credit": "前端"
+  },
+  "palette": {
+    "open": "搜索与命令",
+    "placeholder": "案例、板块或命令",
+    "empty": "没有找到",
+    "groups": {
+      "sections": "板块",
+      "cases": "案例",
+      "actions": "操作",
+      "themes": "主题",
+      "languages": "语言"
+    },
+    "actions": {
+      "brief": "整理需求",
+      "email": "复制邮箱",
+      "telegram": "Telegram 联系",
+      "github": "打开 GitHub"
+    },
+    "copied": "邮箱已复制",
+    "hint": "↑↓ 选择 · enter 打开 · esc 关闭"
   }
 }

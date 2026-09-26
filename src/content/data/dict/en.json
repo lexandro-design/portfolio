@@ -17,10 +17,11 @@
     "theme": "Theme",
     "themes": {
       "dark": "Dark theme",
-      "warm": "Warm theme",
+      "neon": "Neon theme",
       "light": "Light theme"
     },
-    "language": "Language"
+    "language": "Language",
+    "search": "Search and commands"
   },
   "hero": {
     "metaLeft": [
@@ -163,7 +164,35 @@
     },
     "specimen": "Design system",
     "tryTheme": "try a theme",
-    "copied": "copied"
+    "copied": "copied",
+    "sandbox": {
+      "label": "sandbox",
+      "title": "Tune the system yourself",
+      "lead": "The controls change tokens, not elements. The screen on the right is built only from them, so it rebuilds as a whole.",
+      "radius": "radius",
+      "density": "density",
+      "densities": {
+        "compact": "compact",
+        "normal": "normal",
+        "airy": "airy"
+      },
+      "accent": "accent",
+      "font": "font",
+      "theme": "theme",
+      "reset": "reset",
+      "copy": "copy tokens",
+      "ui": {
+        "search": "Find a meeting room",
+        "room": "Meeting room 3",
+        "meta": "8 seats · 3rd floor",
+        "free": "free",
+        "slots": "today",
+        "equipment": "Screen and video call",
+        "book": "Book",
+        "cancel": "Cancel",
+        "booked": "Done, booked"
+      }
+    }
   },
   "process": {
     "step": "step",
@@ -237,7 +266,30 @@
     "github": "github",
     "telegram": "message on telegram",
     "location": "saint petersburg, utc+3",
-    "status": "open to projects"
+    "status": "open to projects",
+    "brief": {
+      "label": "brief in a minute",
+      "title": "Put the task together",
+      "pick": "what you need",
+      "route": "how the work goes",
+      "deadline": "timeline",
+      "deadlines": [
+        "urgent",
+        "within a month",
+        "no rush"
+      ],
+      "about": "a few words about the task",
+      "aboutPlaceholder": "For example: a store website and a bot that takes orders",
+      "preview": "your message",
+      "telegram": "send via telegram",
+      "email": "by email",
+      "copied": "Message copied. If it did not appear in the chat, paste it",
+      "empty": "Pick at least one service",
+      "hello": "Hi! I would like to discuss a project.",
+      "need": "Need",
+      "when": "Timeline",
+      "task": "Task"
+    }
   },
   "footer": {
     "line": "LEXANDRO · ux/ui, design systems, development",
@@ -264,5 +316,25 @@
       "dark": "dark"
     },
     "credit": "front end by"
+  },
+  "palette": {
+    "open": "Search and commands",
+    "placeholder": "Case, section or command",
+    "empty": "Nothing found",
+    "groups": {
+      "sections": "sections",
+      "cases": "cases",
+      "actions": "actions",
+      "themes": "theme",
+      "languages": "language"
+    },
+    "actions": {
+      "brief": "Put a brief together",
+      "email": "Copy email",
+      "telegram": "Message on Telegram",
+      "github": "Open GitHub"
+    },
+    "copied": "Email copied",
+    "hint": "↑↓ select · enter open · esc close"
   }
 }

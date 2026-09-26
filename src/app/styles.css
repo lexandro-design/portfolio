@@ -135,3 +135,11 @@ img[data-variant='dark'],
 [data-shots='dark'] img[data-variant='dark'] {
   display: block;
 }
+
+/* Неон: едва заметное свечение по краям фона, чтобы тёмный фиолетовый не был плоским */
+[data-theme='neon'] body {
+  background-image:
+    radial-gradient(1100px 620px at 88% -8%, rgb(157 140 255 / 0.13), transparent 62%),
+    radial-gradient(900px 520px at -8% 108%, rgb(198 255 61 / 0.05), transparent 60%);
+  background-attachment: fixed;
+}

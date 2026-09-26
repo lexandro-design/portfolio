@@ -20,6 +20,29 @@ const TABS = [
   ['cases', 'Кейсы'],
   ['dict', 'Тексты сайта'],
   ['site', 'Контакты'],
+  ['settings', 'Настройки'],
+]
+const FEATURES = [
+  [
+    'brief',
+    'Конструктор заявки',
+    'В «Контактах»: посетитель отмечает услуги и сроки, получает готовое сообщение в Telegram или письмом.',
+  ],
+  [
+    'palette',
+    'Поиск Ctrl+K',
+    'Окно поиска по кейсам, разделам, темам и языкам. В шапке появляется кнопка с лупой.',
+  ],
+  [
+    'sandbox',
+    'Песочница дизайн-системы',
+    'В разделе «Система»: ручки скругления, плотности, акцента, шрифта и темы над мини-интерфейсом.',
+  ],
+]
+const SITE_THEMES = [
+  ['dark', 'Тёмная'],
+  ['neon', 'Неон'],
+  ['light', 'Светлая'],
 ]
 const DIRECTIONS = [
   ['design', 'дизайн'],
@@ -60,6 +83,7 @@ const DICT_LABELS = {
   contact: 'Контакты',
   footer: 'Подвал',
   case: 'Страница кейса',
+  palette: 'Поиск Ctrl+K',
 }
 /** Человеческие подписи частых ключей; ключ остаётся рядом, чтобы найти его в коде */
 const KEY_LABELS = {
@@ -255,6 +279,10 @@ function validate() {
     }
   }
   cases.forEach((c) => previewProblems(c.preview, c.title || c.slug, errors))
+  const site = state.data[P.site]
+  site.sandbox?.accents?.forEach((c, i) => {
+    if (!/^#[0-9a-f]{6}$/i.test(c)) errors.push(`Настройки: цвет №${i + 1} — формат #aabbcc`)
+  })
   for (const l of TRANSLATED) {
     for (const [slug, t] of Object.entries(state.data[P.copy(l)])) {
       previewProblems(t.preview, `${l.toUpperCase()} · ${slug}`, errors)
@@ -321,7 +349,7 @@ function commitMessage(paths) {
           ? `кейсы (${list.slice(0, 4).join(', ')}${list.length > 4 ? '…' : ''})`
           : 'порядок кейсов',
       )
-    } else if (p === P.site) parts.push('контакты')
+    } else if (p === P.site) parts.push('контакты и настройки')
     else {
       const [, kind, l] = p.match(/(cases-i18n|dict)\/(\w+)\.json$/)
       parts.push(`${kind === 'dict' ? 'тексты' : 'переводы кейсов'} ${l}`)
@@ -1928,6 +1956,137 @@ function toggleDict(k, open) {
 
 /* ---------- вкладка «Контакты» ---------- */
 
+/* ---------- вкладка «Настройки» ---------- */
+
+function renderSettings() {
+  const s = state.data[P.site]
+  s.features ??= { brief: true, palette: true, sandbox: true }
+  s.sandbox ??= { accents: ['#c6ff3d'] }
+  const accents = s.sandbox.accents
+  return h(
+    'div',
+    { class: 'panel' },
+    h('div', { class: 'panel-head' }, h('h1', {}, 'Настройки сайта')),
+    h('p', { class: 'hint' }, 'Одни на все языки. Тексты этих блоков — во вкладке «Тексты сайта».'),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Что показывать'),
+      FEATURES.map(([key, title, text]) =>
+        h(
+          'label',
+          { class: 'feature' },
+          h('input', {
+            type: 'checkbox',
+            checked: s.features[key] !== false,
+            onchange: (e) => {
+              s.features[key] = e.target.checked
+              refreshDirty()
+            },
+          }),
+          h('span', {}, h('strong', {}, title), h('span', { class: 'hint' }, text)),
+        ),
+      ),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Тема по умолчанию'),
+      h(
+        'p',
+        { class: 'hint' },
+        'Для тех, кто открыл сайт впервые. Кто уже выбирал тему сам, увидит свою.',
+      ),
+      h(
+        'div',
+        { class: 'seg' },
+        SITE_THEMES.map(([id, t]) =>
+          h(
+            'button',
+            {
+              class: (s.defaultTheme || 'dark') === id ? 'on' : '',
+              onclick: () => {
+                s.defaultTheme = id
+                rerender()
+              },
+            },
+            t,
+          ),
+        ),
+      ),
+    ),
+    h(
+      'section',
+      { class: 'group' },
+      h('h2', {}, 'Цвета акцента в песочнице'),
+      h(
+        'p',
+        { class: 'hint' },
+        'Кружки, из которых посетитель выбирает акцент. Первый включён сразу.',
+      ),
+      h(
+        'div',
+        { class: 'accents' },
+        accents.map((color, i) => {
+          const hex = h('input', {
+            type: 'text',
+            value: color,
+            maxLength: 7,
+            oninput: (e) => {
+              const v = e.target.value.trim()
+              hex.classList.toggle('invalid', !/^#[0-9a-f]{6}$/i.test(v))
+              accents[i] = v
+              if (/^#[0-9a-f]{6}$/i.test(v)) picker.value = v
+              refreshDirty()
+            },
+          })
+          const picker = h('input', {
+            type: 'color',
+            value: /^#[0-9a-f]{6}$/i.test(color) ? color : '#000000',
+            oninput: (e) => {
+              accents[i] = e.target.value
+              hex.value = e.target.value
+              hex.classList.remove('invalid')
+              refreshDirty()
+            },
+          })
+          return h(
+            'div',
+            { class: 'accent' },
+            picker,
+            hex,
+            h(
+              'button',
+              {
+                class: 'icon',
+                title: 'Убрать',
+                disabled: accents.length <= 1,
+                onclick: () => {
+                  accents.splice(i, 1)
+                  rerender()
+                },
+              },
+              '✕',
+            ),
+          )
+        }),
+      ),
+      accents.length < 8 &&
+        h(
+          'button',
+          {
+            class: 'btn small',
+            onclick: () => {
+              accents.push('#ffffff')
+              rerender()
+            },
+          },
+          '+ цвет',
+        ),
+    ),
+  )
+}
+
 function renderSite() {
   const s = state.data[P.site]
   return h(
@@ -1970,7 +2129,7 @@ function renderTop() {
     ),
   )
   const loc = $('locales')
-  loc.hidden = state.tab === 'site'
+  loc.hidden = state.tab === 'site' || state.tab === 'settings'
   loc.replaceChildren(
     ...LOCALES.map(([k, t]) =>
       h(
@@ -1993,7 +2152,9 @@ function rerender(top = false) {
   const scroll = window.scrollY
   const sideScroll = $('side')?.scrollTop
   renderTop()
-  const view = { cases: renderCases, dict: renderDict, site: renderSite }[state.tab]()
+  const view = { cases: renderCases, dict: renderDict, site: renderSite, settings: renderSettings }[
+    state.tab
+  ]()
   $('main').replaceChildren(view)
   if ($('side') && sideScroll != null) $('side').scrollTop = sideScroll
   filterSide()

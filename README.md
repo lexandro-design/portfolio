@@ -3,7 +3,7 @@
 Сайт-портфолио: [lexandro-design.github.io/portfolio](https://lexandro-design.github.io/portfolio/)
 
 Next.js (App Router) + TypeScript + CSS Modules, статическая выгрузка на GitHub Pages.
-Три темы: тёмная, тёплая, светлая. Дизайн в Figma.
+Три темы: тёмная, неон, светлая. Песочница дизайн-системы, конструктор заявки, поиск Ctrl+K. Дизайн в Figma.
 
 ```
 pnpm install
