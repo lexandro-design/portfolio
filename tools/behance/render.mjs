@@ -168,29 +168,34 @@ for (const slug of process.argv.slice(2)) {
   await mkdir(out, { recursive: true })
   const [a, b = a, ...more] = desktop(c)
 
-  // 1. Обложка проекта 808×632: окна веером в перспективе и телефон крупно. Для сетки
-  // Behance нужна плотная картинка, одно окно на пустом фоне теряется
+  // 1. Обложка проекта 808×632: название и подпись сверху, окно сайта и телефон ровно,
+  // без перспективы (в перекосе выглядело ненатурально). Низ слева Behance сам
+  // затемняет под название проекта, там ничего важного
   const ph0 = phone(c)
+  const k = 250 / 455
   const phoneScreen = ph0
-    ? `<div class="phone"><div class="scr"><img src="/public${ph0.src}" style="position:absolute;width:${(1600 * 0.4835).toFixed(1)}px;left:-35.3px;top:-35.3px"></div></div>`
+    ? `<div class="phone"><div class="scr"><img src="/public${ph0.src}" style="position:absolute;width:${(1600 * k).toFixed(1)}px;left:${(-73 * k).toFixed(1)}px;top:${(44 - 73 * k).toFixed(1)}px"><b class="status">9:41</b></div><i class="island"></i></div>`
     : ''
+  const kind = { design: 'UX/UI · Design system', web: 'Website', ai: 'Automation' }[
+    c.directions[0]
+  ]
+  const tag = (await read('cases-i18n/en.json'))[slug]?.tagline ?? c.tagline
+  const enLead = tag.charAt(0).toUpperCase() + tag.slice(1)
   await shot(
     shell(
       tone,
       808,
       632,
-      `<div class="stage">
-        <div class="win w1" style="width:560px;height:900px">${bar}<img src="/public${b.src}"></div>
-        <div class="win w2" style="width:600px;height:900px">${bar}<img src="/public${a.src}"></div>
-      </div>
+      `<div class="m" style="position:absolute;left:48px;top:48px;font-size:12px">${kind} · ${c.year}</div>
+      <div style="position:absolute;left:48px;top:74px;font-size:46px;font-weight:500;letter-spacing:-.04em;line-height:1">${c.title}</div>
+      <div style="position:absolute;left:48px;top:132px;width:420px;font-size:16px;line-height:1.45;color:${tone.sub}">${enLead}</div>
+      <div class="win" style="left:48px;top:228px;width:620px;height:520px">${bar}<img src="/public${a.src}"></div>
       ${phoneScreen}`,
-      `body{background:radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, ${tone.bg}, #fff 35%), ${tone.bg} 55%, color-mix(in srgb, ${tone.bg}, #000 14%))}
-       .stage{position:absolute;inset:0;perspective:1600px}
-       .win{border-radius:12px}
-       .w1{left:270px;top:26px;transform:rotateY(-18deg) rotateX(6deg) rotateZ(2deg);opacity:.96}
-       .w2{left:60px;top:96px;transform:rotateY(-18deg) rotateX(6deg) rotateZ(2deg)}
-       .phone{position:absolute;left:500px;top:190px;width:236px;height:474px;border-radius:38px;background:#111;padding:8px;box-shadow:0 40px 90px rgb(0 0 0 / .35);transform:rotateZ(4deg)}
-       .scr{position:relative;width:220px;height:458px;border-radius:30px;overflow:hidden;background:#fff}`,
+      `.win{border-radius:12px}
+       .phone{position:absolute;left:512px;top:150px;width:266px;height:560px;border-radius:46px;background:#1b1b1d;padding:8px;box-shadow:0 30px 70px rgb(0 0 0 / .28),inset 0 0 0 1.5px #3a3a3e}
+       .scr{position:relative;width:250px;height:544px;border-radius:38px;overflow:hidden;background:#fff}
+       .status{position:absolute;inset:0 0 auto;height:44px;background:#fff;font:600 14px Inter;padding:15px 0 0 30px}
+       .island{position:absolute;left:50%;top:18px;width:78px;height:22px;margin-left:-39px;border-radius:12px;background:#000}`,
     ),
     808,
     632,
