@@ -88,21 +88,21 @@ const TOTAL = cases.length
 const OG_HOME = {
   ru: {
     meta: 'LEXANDRO · санкт-петербург',
-    title: 'Дизайн-системы,<br>которые работают<br>на вас, <span>а не против.</span>',
-    who: 'Алексей Свешников · ux/ui и разработка',
+    title: 'Дизайн, код<br>и AI-агенты —<br>под ключ<br><span>в одних руках.</span>',
+    who: 'Алексей Свешников · дизайн, код и ai',
     status: 'открыт к проектам',
-    size: 96,
+    size: 84,
   },
   en: {
     meta: 'LEXANDRO · saint petersburg',
-    title: 'Design systems<br>that work for you,<br><span>not against you.</span>',
-    who: 'Alexey Sveshnikov · ux/ui and development',
+    title: 'Design, code<br>and AI agents,<br>end to end,<br><span>in one pair of hands.</span>',
+    who: 'Alexey Sveshnikov · design, code and ai',
     status: 'open to projects',
-    size: 104,
+    size: 80,
   },
   zh: {
     meta: 'LEXANDRO · 圣彼得堡',
-    title: '为你所用的<br>设计系统，<br><span>一直落地到代码。</span>',
+    title: '设计、代码<br>与 AI 智能体，<br><span>一人全包。</span>',
     who: 'Alexey Sveshnikov · ux/ui 与开发',
     status: '可接项目',
     size: 96,
@@ -110,7 +110,7 @@ const OG_HOME = {
   },
   ja: {
     meta: 'LEXANDRO · サンクトペテルブルク',
-    title: '味方になる<br>デザインシステムを、<br><span>コードまで。</span>',
+    title: 'デザイン、コード、<br>AI エージェントまで、<br><span>ひとりで一貫して。</span>',
     who: 'Alexey Sveshnikov · ux/ui と開発',
     status: '案件受付中',
     size: 92,
@@ -167,7 +167,7 @@ const hero = (t) =>
     <div class="row m"><span>LEXANDRO · saint petersburg</span><span style="color:${t.fg}"><i class="dot"></i>open to projects</span></div>
     <div class="h" style="align-self:end;font-size:66px">Design systems<br>that work for you,<br><span style="color:${t.fg2}">not against you.</span></div>
     <div class="row" style="margin-top:30px;align-items:end">
-      <p class="p" style="font-size:15px;max-width:470px">Alexey Sveshnikov, UX/UI designer and developer. I build interfaces on systems where every token, component and state is decided up front, then take them all the way to production code.</p>
+      <p class="p" style="font-size:15px;max-width:470px">Alexey Sveshnikov, UX/UI designer and developer. One person end to end: analysis, a design system and interfaces, a website built on that design, then automation and AI agents on top.</p>
       <div class="m" style="text-align:right;line-height:1.9">now<br><span style="color:${t.fg}">TITAN-2 holding</span></div>
     </div>
   </div>`,
@@ -225,10 +225,10 @@ const half = (t, c) => {
 }
 
 const STACK = [
-  ['design', ['UX/UI', 'Design systems', 'Design tokens', 'Figma, Plugin API']],
-  ['development', ['Next.js, React', 'TypeScript', 'CSS Modules', 'Node.js']],
+  ['design', ['UX/UI', 'Design systems', 'Design tokens', 'Figma, Auto Layout']],
+  ['web', ['Tilda, Zero Block', 'JavaScript', 'React, Next.js', 'Responsive']],
   ['data', ['PostgreSQL', 'Supabase', 'SQLite', 'REST APIs']],
-  ['ai', ['RAG', 'MCP', 'AI agents', 'Prompt design']],
+  ['ai', ['Telegram bots', 'RAG', 'AI agents', 'CRM integrations']],
 ]
 const APPROACH = [
   [
@@ -298,6 +298,18 @@ const shot = async (markup, w, h, out, scale = 1) => {
   await p.close()
 }
 
+export const PROFILE_CASES = [
+  'parfumeria',
+  'meeting-rooms',
+  'mimimibot',
+  'otrx',
+  'food-assistants',
+  'meg-site',
+  'osq',
+  'svarnoy52',
+  'ai-translator',
+]
+
 const mode = process.argv[2]
 if (!mode || mode === 'og') {
   await mkdir(join(ROOT, 'public/og'), { recursive: true })
@@ -313,7 +325,9 @@ if (!mode || mode === 'og') {
 }
 if (!mode || mode === 'profile') {
   await mkdir(PROFILE, { recursive: true })
-  const [first, ...rest] = casesEn
+  // В профиле не все кейсы, а витрина: главный крупно и пары карточек под ним.
+  // Список и порядок — те же, что в README репозитория lexandro-design
+  const [first, ...rest] = PROFILE_CASES.map((slug) => casesEn.find((c) => c.slug === slug))
   for (const [name, t] of Object.entries(THEMES)) {
     await shot(hero(t), W, 480, join(PROFILE, `hero-${name}.png`), 2)
     await shot(

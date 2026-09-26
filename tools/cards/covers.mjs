@@ -1,4 +1,4 @@
-// Обложки кейсов: скриншоты в рамках браузера и телефона на спокойном фоне.
+// Обложки кейсов: скриншоты в рамках браузера на спокойном фоне.
 // Скрин целиком помещается в окно, поэтому на обложке нет случайно обрезанных
 // кусков интерфейса. Две версии на кейс:
 //   public/cases/<slug>/thumb.jpg  — строка на главной, 608×430
@@ -41,47 +41,44 @@ body{background:${BG};background-image:radial-gradient(120% 90% at 30% 0%,#efede
 .bar b{margin:0 auto;height:16px;min-width:34%;padding:0 12px;border-radius:5px;background:#e9e7e1;
   font:500 9px/16px Mono,monospace;color:#8b897f;text-align:center;letter-spacing:.04em}
 .win img{display:block;width:100%}
-.phone{position:absolute;border-radius:30px;padding:6px;background:#111;
-  box-shadow:0 0 0 1px rgb(0 0 0 / .4),0 30px 60px -14px rgb(20 20 15 / .45)}
-.phone img{display:block;width:100%;border-radius:24px}
 `
 
 const win = (src, style, url = '') =>
   `<div class="win" style="${style}"><div class="bar"><i></i><i></i><i></i><b>${url}</b></div><img src="${src}"></div>`
-const phone = (src, style) => `<div class="phone" style="${style}"><img src="${src}"></div>`
 
-const pf = (n) => `/public/cases/parfumeria/0${n}.jpg`
-const pm = (n) => `/tools/cards/src/parfumeria-m${n}.jpg`
-const mr = (n) => `/public/cases/meeting-rooms/0${n}.jpg`
+// Кейсы и скрины берём из того же источника, что сайт
+const { cases } = await import('../../src/content/cases.ts')
 
-// Раскладки в CSS-пикселях макета обложки; окна уходят за нижний край
-const LAYOUTS = {
-  parfumeria: {
+const host = (c) => (c.link ? new URL(c.link.href).host.replace(/^www\./, '') : '')
+const src = (shot) => `/public${shot.src}`
+
+/**
+ * Раскладка по умолчанию: два окна браузера внахлёст — второй экран
+ * сзади справа, главный спереди. Окна уходят за нижний край, поэтому
+ * длинные страницы видны сверху, как в браузере.
+ * full — обложка уже собрана в макете (мокап), кладём её целиком.
+ */
+const layout = (c) => {
+  const [first, second = first] = c.shots
+  if (c.slug === 'lotus') {
+    const full = `<img src="${src(first)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`
+    return { thumb: [full], cover: [full] }
+  }
+  return {
     thumb: [
-      win(pf(1), 'left:36px;top:44px;width:470px', 'parfumeria.by'),
-      phone(pm(2), 'left:438px;top:92px;width:136px'),
+      win(src(second), 'left:150px;top:30px;width:420px'),
+      win(src(first), 'left:36px;top:78px;width:470px', host(c)),
     ],
     cover: [
-      win(pf(1), 'left:96px;top:72px;width:760px', 'parfumeria.by'),
-      phone(pm(2), 'left:820px;top:120px;width:190px'),
-      phone(pm(3), 'left:1040px;top:64px;width:190px'),
+      win(src(second), 'left:560px;top:52px;width:660px'),
+      win(src(first), 'left:96px;top:104px;width:720px', host(c)),
     ],
-  },
-  'meeting-rooms': {
-    thumb: [
-      win(mr(5), 'left:150px;top:30px;width:420px'),
-      win(mr(1), 'left:36px;top:78px;width:470px'),
-    ],
-    cover: [
-      win(mr(6), 'left:560px;top:52px;width:660px'),
-      win(mr(1), 'left:96px;top:104px;width:720px'),
-    ],
-  },
-  'pix-bi': {
-    thumb: [win('/public/cases/pix-bi/01.jpg', 'left:52px;top:52px;width:504px')],
-    cover: [win('/public/cases/pix-bi/01.jpg', 'left:256px;top:64px;width:800px')],
-  },
+  }
 }
+
+const LAYOUTS = Object.fromEntries(
+  cases.filter((c) => c.shots.length).map((c) => [c.slug, layout(c)]),
+)
 
 const browser = await chromium.launch()
 const shoot = async (slug, kind, w, h) => {

@@ -22,6 +22,7 @@ export function getCases(locale: Locale): Case[] {
       client: t.client,
       sections: t.sections,
       note: t.note,
+      preview: t.preview ?? c.preview,
       shots: c.shots.map((s, i) => ({ ...s, caption: t.captions[i] ?? s.caption })),
     }
   })

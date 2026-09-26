@@ -25,8 +25,21 @@ export const SECTIONS = [
 export const SECTION_COUNT = SECTIONS.length
 export const sectionIndex = (id: (typeof SECTIONS)[number]) => SECTIONS.indexOf(id) + 1
 
-/** Проекты в бегущей строке первого экрана — берутся из кейсов по slug */
-export const TICKER = ['parfumeria', 'otrx', 'meeting-rooms', 'ai-translator', 'pix-bi']
-
-/** Фото на первом экране. Файл 460×460 — заменить на крупнее, как будет */
-export const PHOTO = { src: '/me.jpg', w: 460, h: 460 }
+/**
+ * Фото на первом экране в шести форматах — нарезаны из одного снимка,
+ * кроп 4:5 с Лахтой за плечом. mask — монохромный формат: файл хранит
+ * только рисунок, цвет даёт тема сайта (см. HeroPhoto). id — подпись
+ * формата под фото, на всех языках одинаковая
+ */
+export const PHOTO = {
+  w: 720,
+  h: 900,
+  formats: [
+    { id: 'photo', src: '/me/photo.jpg', mask: false },
+    { id: 'scales', src: '/me/scales.png', mask: true },
+    { id: 'dither', src: '/me/dots.png', mask: true },
+    { id: 'ascii', src: '/me/ascii.png', mask: true },
+    { id: 'halftone', src: '/me/halftone.png', mask: true },
+    { id: 'pixels', src: '/me/pixels.jpg', mask: false },
+  ],
+}
