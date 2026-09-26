@@ -21,8 +21,10 @@ export async function asset(name) {
 async function run(request) {
   const url = new URL(request.url)
   const original = url.searchParams.get('__p')
-  if (original !== null) {
-    url.pathname = original
+  // Без __p: либо Vercel сохранил исходный адрес сам, либо это прямой заход на /api — тогда это главная
+  if (original === null && url.pathname === '/api') url.searchParams.set('__p', '/')
+  if (url.searchParams.has('__p')) {
+    url.pathname = url.searchParams.get('__p')
     url.searchParams.delete('__p')
     request = new Request(url, {
       method: request.method,

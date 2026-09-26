@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "outputDirectory": "public",
-  "rewrites": [{ "source": "/:path*", "destination": "/api?__p=/:path*" }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/api?__p=/$1" }],
   "functions": { "api/index.js": { "includeFiles": "app/**" } }
 }
