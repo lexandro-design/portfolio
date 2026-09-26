@@ -99,6 +99,9 @@ const KEY_LABELS = {
 }
 const nice = (k) => (k == null ? k : KEY_LABELS[k] ? `${KEY_LABELS[k]} · ${k}` : String(k))
 
+/** Короткие списки, которые удобнее править метками: стек, теги, бегущая строка */
+const CHIP_KEYS = new Set(['stack', 'tags', 'tickerItems'])
+
 /** Поля, которые лучше редактировать многострочно */
 const LONG = /^(lead|body|text|description|intro|aside|note|motionNote)$/
 
@@ -579,6 +582,9 @@ function valueEditor(parent, key, ref, label) {
   if (typeof v === 'number') return numberField(parent, key, nice(label))
   if (typeof v === 'boolean')
     return h('div', { class: 'checks field' }, checkField(parent, key, nice(label)))
+  if (Array.isArray(v) && CHIP_KEYS.has(key) && v.every((x) => typeof x === 'string')) {
+    return chipEditor(v, nice(label), Array.isArray(ref) ? ref : null)
+  }
   if (Array.isArray(v)) {
     const refArr = Array.isArray(ref) ? ref : []
     const sample = v[0] ?? refArr[0] ?? ''
@@ -614,6 +620,96 @@ function valueEditor(parent, key, ref, label) {
   return null
 }
 
+/**
+ * Список коротких строк метками: Enter или запятая добавляет, × убирает,
+ * перетаскивание меняет порядок, двойной клик — правка
+ */
+function chipEditor(arr, label, refArr) {
+  const wrap = h('div', { class: 'chips' })
+  const changed = () => {
+    draw()
+    refreshDirty()
+  }
+  const add = () => {
+    const v = input.value.trim().replace(/,$/, '')
+    if (!v) return
+    arr.push(v)
+    input.value = ''
+    changed()
+    input.focus()
+  }
+  const input = h('input', {
+    type: 'text',
+    class: 'chip-input',
+    placeholder: '+ добавить',
+    onkeydown: (e) => {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault()
+        add()
+      }
+    },
+    onblur: add,
+  })
+  function draw() {
+    wrap.replaceChildren(
+      ...arr.map((t, i) => {
+        const chip = h(
+          'span',
+          {
+            class: 'chip',
+            draggable: 'true',
+            title: 'Перетащи, чтобы поменять порядок. Двойной клик — изменить',
+            ondragstart: (e) => {
+              e.dataTransfer.setData('text/plain', String(i))
+              chip.classList.add('dragging')
+            },
+            ondragend: () => chip.classList.remove('dragging'),
+            ondragover: (e) => e.preventDefault(),
+            ondrop: (e) => {
+              e.preventDefault()
+              const from = Number(e.dataTransfer.getData('text/plain'))
+              if (Number.isNaN(from) || from === i) return
+              const [x] = arr.splice(from, 1)
+              arr.splice(i, 0, x)
+              changed()
+            },
+            ondblclick: () => {
+              const v = prompt('Изменить', t)
+              if (v?.trim()) {
+                arr[i] = v.trim()
+                changed()
+              }
+            },
+          },
+          t,
+          h(
+            'button',
+            {
+              class: 'chip-x',
+              title: 'Убрать',
+              onclick: () => {
+                arr.splice(i, 1)
+                changed()
+              },
+            },
+            '×',
+          ),
+        )
+        return chip
+      }),
+      input,
+    )
+  }
+  draw()
+  return h(
+    'div',
+    { class: 'field' },
+    label != null && h('span', { class: 'label' }, label),
+    wrap,
+    refArr?.length > 0 && h('span', { class: 'ref' }, refArr.join(' · ')),
+  )
+}
+
 function objectEditor(obj, ref) {
   return Object.keys(obj).map((k) => valueEditor(obj, k, ref?.[k], k))
 }
@@ -641,6 +737,30 @@ function shotCard(c, arr, i) {
       'div',
       { class: 'img', style: { backgroundImage: s.src ? `url("${imgUrl(s.src)}")` : 'none' } },
       h('span', { class: 'size' }, `${String(i + 1).padStart(2, '0')} · ${s.w}×${s.h}`),
+      h(
+        'div',
+        { class: 'img-ctrl' },
+        h(
+          'button',
+          { class: 'icon', title: 'Раньше', disabled: i === 0, onclick: () => moveShot(c, i, -1) },
+          '←',
+        ),
+        h(
+          'button',
+          {
+            class: 'icon',
+            title: 'Позже',
+            disabled: i === arr.length - 1,
+            onclick: () => moveShot(c, i, 1),
+          },
+          '→',
+        ),
+        h(
+          'button',
+          { class: 'icon', title: 'Убрать скриншот', onclick: () => removeShot(c, i) },
+          '✕',
+        ),
+      ),
       s.dark &&
         h('div', {
           class: 'dark',
@@ -678,27 +798,6 @@ function shotCard(c, arr, i) {
             },
             '◐✕',
           ),
-        h('span', { class: 'fill' }),
-        h(
-          'button',
-          { class: 'icon', title: 'Раньше', disabled: i === 0, onclick: () => moveShot(c, i, -1) },
-          '←',
-        ),
-        h(
-          'button',
-          {
-            class: 'icon',
-            title: 'Позже',
-            disabled: i === arr.length - 1,
-            onclick: () => moveShot(c, i, 1),
-          },
-          '→',
-        ),
-        h(
-          'button',
-          { class: 'icon', title: 'Убрать скриншот', onclick: () => removeShot(c, i) },
-          '✕',
-        ),
       ),
     ),
   )
@@ -802,9 +901,34 @@ function newCase() {
 
 function renderSide() {
   const cases = state.data[P.cases]
+  const pick = (i) => {
+    state.caseIdx = i
+    rerender(true)
+  }
   return h(
     'aside',
     { class: 'side', id: 'side' },
+    h(
+      'select',
+      { class: 'case-select', onchange: (e) => pick(Number(e.target.value)) },
+      cases.map((c, i) =>
+        h(
+          'option',
+          { value: i, selected: i === state.caseIdx },
+          `${String(i + 1).padStart(2, '0')} · ${c.title || c.slug}`,
+        ),
+      ),
+    ),
+    h('input', {
+      type: 'search',
+      class: 'case-search',
+      placeholder: 'Найти кейс',
+      value: state.filter || '',
+      oninput: (e) => {
+        state.filter = e.target.value
+        filterSide()
+      },
+    }),
     state.locale === 'ru' &&
       h(
         'button',
@@ -823,10 +947,8 @@ function renderSide() {
         'div',
         {
           class: `case-item${i === state.caseIdx ? ' on' : ''}`,
-          onclick: () => {
-            state.caseIdx = i
-            rerender(true)
-          },
+          'data-find': `${c.title} ${c.slug} ${c.client}`.toLowerCase(),
+          onclick: () => pick(i),
         },
         h('span', { class: 'n' }, String(i + 1).padStart(2, '0')),
         h('span', { class: 't' }, c.title || c.slug),
@@ -836,12 +958,44 @@ function renderSide() {
   )
 }
 
-/** Метки справа в списке: маленький кейс и языки без перевода */
+function filterSide() {
+  const q = (state.filter || '').trim().toLowerCase()
+  for (const el of document.querySelectorAll('.case-item')) {
+    el.hidden = !!q && !el.dataset.find.includes(q)
+  }
+}
+
+/** Как лежит в репозитории — по slug, для точки «есть правки» в списке */
+function savedBySlug(path) {
+  const cache = (savedBySlug.cache ??= {})
+  const text = state.files[path].text
+  if (cache[path]?.text !== text) {
+    const data = JSON.parse(text)
+    const entries = Array.isArray(data) ? data.map((c) => [c.slug, c]) : Object.entries(data)
+    cache[path] = {
+      text,
+      map: Object.fromEntries(entries.map(([k, v]) => [k, JSON.stringify(v)])),
+    }
+  }
+  return cache[path].map
+}
+
+function caseDirty(slug) {
+  const c = state.data[P.cases].find((x) => x.slug === slug)
+  if (JSON.stringify(c) !== savedBySlug(P.cases)[slug]) return true
+  return TRANSLATED.some((l) => {
+    const t = state.data[P.copy(l)][slug]
+    return (t ? JSON.stringify(t) : undefined) !== savedBySlug(P.copy(l))[slug]
+  })
+}
+
+/** Метки справа в списке: несохранённые правки, маленький кейс и языки без перевода */
 function renderSideFlags() {
   for (const el of document.querySelectorAll('.flags[data-slug]')) {
     const slug = el.dataset.slug
     const c = state.data[P.cases].find((x) => x.slug === slug)
     const flags = []
+    if (caseDirty(slug)) flags.push(h('span', { class: 'dot', title: 'Есть несохранённые правки' }))
     if (c?.minor) flags.push(h('span', { class: 'flag', title: 'Небольшой проект' }, 'мал'))
     for (const l of TRANSLATED) {
       if (!state.data[P.copy(l)][slug])
@@ -1348,6 +1502,24 @@ function caseEditorTranslation(c, l) {
   ]
 }
 
+/**
+ * На широком экране кейс в две колонки: слева тексты, справа картинки и остальное.
+ * split — сколько первых блоков (включая шапку) идёт до правой колонки
+ */
+function columns(blocks, split) {
+  const list = blocks.filter(Boolean)
+  if (list.length <= split) return list
+  return [
+    list[0],
+    h(
+      'div',
+      { class: 'cols' },
+      h('div', { class: 'col' }, list.slice(1, split)),
+      h('div', { class: 'col' }, list.slice(split)),
+    ),
+  ]
+}
+
 function renderCases() {
   const cases = state.data[P.cases]
   state.caseIdx = Math.min(state.caseIdx, cases.length - 1)
@@ -1358,11 +1530,11 @@ function renderCases() {
     renderSide(),
     h(
       'div',
-      { class: 'panel' },
+      { class: 'panel wide' },
       c
         ? state.locale === 'ru'
-          ? caseEditorRu(c)
-          : caseEditorTranslation(c, state.locale)
+          ? columns(caseEditorRu(c), 3)
+          : columns(caseEditorTranslation(c, state.locale), 4)
         : h('p', {}, 'Кейсов нет'),
     ),
   )
@@ -1376,23 +1548,27 @@ function renderDict() {
   const ref = l === 'ru' ? null : state.data[P.dict('ru')]
   return h(
     'div',
-    { class: 'panel' },
+    { class: 'panel wide' },
     h(
       'div',
       { class: 'panel-head' },
       h('h1', {}, `Тексты сайта · ${LOCALES.find(([k]) => k === l)[1]}`),
     ),
     ref && h('p', { class: 'hint' }, 'Серым под полем — русский текст.'),
-    Object.keys(d).map((k) =>
-      h(
-        'details',
-        {
-          class: 'group',
-          open: state.openDict?.has(k),
-          ontoggle: (e) => toggleDict(k, e.target.open),
-        },
-        h('summary', {}, DICT_LABELS[k] || k),
-        valueEditor(d, k, ref?.[k], null),
+    h(
+      'div',
+      { class: 'masonry' },
+      Object.keys(d).map((k) =>
+        h(
+          'details',
+          {
+            class: 'group',
+            open: state.openDict?.has(k),
+            ontoggle: (e) => toggleDict(k, e.target.open),
+          },
+          h('summary', {}, DICT_LABELS[k] || k),
+          valueEditor(d, k, ref?.[k], null),
+        ),
       ),
     ),
   )
@@ -1474,6 +1650,7 @@ function rerender(top = false) {
   const view = { cases: renderCases, dict: renderDict, site: renderSite }[state.tab]()
   $('main').replaceChildren(view)
   if ($('side') && sideScroll != null) $('side').scrollTop = sideScroll
+  filterSide()
   window.scrollTo(0, top ? 0 : scroll)
   refreshDirty()
   try {

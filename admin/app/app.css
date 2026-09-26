@@ -520,6 +520,21 @@ select:focus {
   color: var(--fg-secondary);
 }
 
+.shot .img-ctrl {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  display: flex;
+  gap: 2px;
+  background: rgb(0 0 0 / 0.65);
+  border-radius: 6px;
+  padding: 1px;
+}
+
+.shot .img-ctrl .icon {
+  color: var(--fg-secondary);
+}
+
 .shot .body {
   padding: 10px;
   display: grid;
@@ -593,6 +608,145 @@ select:focus {
   border-color: var(--danger);
 }
 
+/* ---------- поиск и список кейсов ---------- */
+
+.case-search {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-hair);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  outline: none;
+}
+
+.case-search:focus {
+  border-color: var(--border-focus);
+}
+
+.case-select {
+  display: none;
+}
+
+.case-item[hidden] {
+  display: none;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--warn);
+  align-self: center;
+}
+
+/* ---------- метки (стек, теги) ---------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  background: var(--bg-base);
+  border: 1px solid var(--border-hair);
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.chips:focus-within {
+  border-color: var(--border-focus);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-hair);
+  border-radius: 6px;
+  padding: 3px 4px 3px 9px;
+  cursor: grab;
+  user-select: none;
+}
+
+.chip.dragging {
+  opacity: 0.4;
+}
+
+.chip-x {
+  border: 0;
+  background: none;
+  color: var(--fg-tertiary);
+  cursor: pointer;
+  padding: 0 4px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.chip-x:hover {
+  color: var(--danger);
+}
+
+.chip-input {
+  flex: 1;
+  min-width: 120px;
+  border: 0;
+  background: none;
+  outline: none;
+  padding: 4px;
+}
+
+/* ---------- широкий экран ---------- */
+
+.panel.wide {
+  max-width: none;
+}
+
+.cols {
+  display: grid;
+  gap: 0 16px;
+  align-items: start;
+}
+
+@media (min-width: 1440px) {
+  .layout {
+    grid-template-columns: 300px minmax(0, 1fr);
+  }
+
+  .cols {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
+
+  .masonry {
+    columns: 2 560px;
+    column-gap: 16px;
+  }
+
+  .masonry > .group {
+    break-inside: avoid;
+    display: block;
+  }
+}
+
+/* 4K и шире: интерфейс крупнее целиком, иначе он теряется на экране */
+@media (min-width: 2200px) {
+  body {
+    zoom: 1.2;
+  }
+}
+
+@media (min-width: 2900px) {
+  body {
+    zoom: 1.45;
+  }
+}
+
+@media (min-width: 3800px) {
+  body {
+    zoom: 1.75;
+  }
+}
+
 @media (max-width: 860px) {
   .top {
     padding: 10px 16px;
@@ -606,13 +760,112 @@ select:focus {
     grid-template-columns: 1fr;
   }
 
+  /* На телефоне список кейсов — выпадающий, чтобы не листать 27 строк до формы */
   .side {
     position: static;
-    max-height: 260px;
+    max-height: none;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+
+  .side .case-item,
+  .side .case-search {
+    display: none;
+  }
+
+  .case-select {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-hair);
+    border-radius: 10px;
+    padding: 12px;
   }
 
   .grid2,
   .single-image {
     grid-template-columns: 1fr;
+  }
+
+  /* 16px — меньше iOS увеличивает страницу при фокусе */
+  input[type='text'],
+  input[type='number'],
+  input[type='search'],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .top {
+    gap: 8px 10px;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .tabs,
+  .locales {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .tabs button,
+  .locales button {
+    padding: 6px 11px;
+  }
+
+  /* backdrop-filter делает шапку рамкой для fixed-потомков — кнопка «Сохранить» прилипла бы к ней */
+  .top {
+    position: static;
+    backdrop-filter: none;
+    background: var(--bg-base);
+  }
+
+  /* Сохранить — внизу под большим пальцем */
+  #save {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 15;
+    padding: 14px;
+    font-size: 16px;
+    box-shadow: 0 8px 30px rgb(0 0 0 / 0.6);
+  }
+
+  #save:disabled {
+    opacity: 1;
+    background: var(--bg-subtle);
+    color: var(--fg-tertiary);
+    border-color: var(--border-hair);
+  }
+
+  main {
+    padding-bottom: 96px;
+  }
+
+  .toast {
+    bottom: 88px;
+  }
+
+  .shots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .caption-row {
+    grid-template-columns: 64px 1fr;
+  }
+
+  .group {
+    padding: 16px;
+  }
+
+  .panel-head h1 {
+    font-size: 19px;
+    flex-basis: 100%;
   }
 }
