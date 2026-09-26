@@ -168,18 +168,35 @@ for (const slug of process.argv.slice(2)) {
   await mkdir(out, { recursive: true })
   const [a, b = a, ...more] = desktop(c)
 
-  // 1. Обложка проекта 808×632 — одно окно крупно, без текста: название Behance пишет под обложкой сам
+  // 1. Обложка проекта 808×632: окна веером в перспективе и телефон крупно. Для сетки
+  // Behance нужна плотная картинка, одно окно на пустом фоне теряется
+  const ph0 = phone(c)
+  const phoneScreen = ph0
+    ? `<div class="phone"><div class="scr"><img src="/public${ph0.src}" style="position:absolute;width:${(1600 * 0.4835).toFixed(1)}px;left:-35.3px;top:-35.3px"></div></div>`
+    : ''
   await shot(
     shell(
       tone,
       808,
       632,
-      `<div class="win" style="left:64px;top:84px;width:680px;height:${Math.round((680 * a.h) / a.w) + 44}px">${bar}<img src="/public${a.src}"></div>`,
+      `<div class="stage">
+        <div class="win w1" style="width:560px;height:900px">${bar}<img src="/public${b.src}"></div>
+        <div class="win w2" style="width:600px;height:900px">${bar}<img src="/public${a.src}"></div>
+      </div>
+      ${phoneScreen}`,
+      `body{background:radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, ${tone.bg}, #fff 35%), ${tone.bg} 55%, color-mix(in srgb, ${tone.bg}, #000 14%))}
+       .stage{position:absolute;inset:0;perspective:1600px}
+       .win{border-radius:12px}
+       .w1{left:270px;top:26px;transform:rotateY(-18deg) rotateX(6deg) rotateZ(2deg);opacity:.96}
+       .w2{left:60px;top:96px;transform:rotateY(-18deg) rotateX(6deg) rotateZ(2deg)}
+       .phone{position:absolute;left:500px;top:190px;width:236px;height:474px;border-radius:38px;background:#111;padding:8px;box-shadow:0 40px 90px rgb(0 0 0 / .35);transform:rotateZ(4deg)}
+       .scr{position:relative;width:220px;height:458px;border-radius:30px;overflow:hidden;background:#fff}`,
     ),
     808,
     632,
     join(out, '01-cover.jpg'),
   )
+  if (process.env.COVER_ONLY) continue
 
   // 2. Первый экран проекта: название и две страницы
   await shot(
