@@ -103,16 +103,26 @@ export type Dict = {
       theme: string
       reset: string
       copy: string
+      /** Мини-сайт бронирования переговорок, который перестраивается от ручек */
       ui: {
+        url: string
+        brand: string
+        nav: string[]
+        cta: string
+        badge: string
+        title: string
+        text: string
+        primary: string
+        secondary: string
         search: string
-        room: string
-        meta: string
+        features: { title: string; text: string }[]
+        roomsTitle: string
+        rooms: { name: string; meta: string }[]
         free: string
-        slots: string
         equipment: string
         book: string
-        cancel: string
         booked: string
+        footer: string
       }
     }
   }

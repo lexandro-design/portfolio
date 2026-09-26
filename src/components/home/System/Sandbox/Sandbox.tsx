@@ -205,64 +205,136 @@ export function Sandbox({ t, themeLabels, copied }: Props) {
           </div>
         </div>
 
-        {/* Мини-экран: всё внутри берёт размеры, цвет и шрифт только из токенов --sb-* и темы */}
+        {/* Мини-сайт: размеры, цвет и шрифт внутри берутся только из токенов --sb-* и темы */}
         <div className={styles.stage}>
-          <div className={styles.screen} data-theme={theme} style={vars}>
-            <div className={styles.search}>
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                <circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.4" />
-                <path d="M9.5 9.5 13 13" stroke="currentColor" strokeWidth="1.4" />
-              </svg>
-              <input placeholder={t.ui.search} aria-label={t.ui.search} />
+          <div className={styles.browser}>
+            <div className={styles.chrome} aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <span>{t.ui.url}</span>
             </div>
+            <div className={styles.site} data-theme={theme} style={vars}>
+              <header className={styles.nav}>
+                <span className={styles.brand}>
+                  <span className={styles.mark} />
+                  {t.ui.brand}
+                </span>
+                <nav className={styles.links}>
+                  {t.ui.nav.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </nav>
+                <button type="button" className={styles.primary} onClick={book}>
+                  {t.ui.cta}
+                </button>
+              </header>
 
-            <div className={styles.card}>
-              <div className={styles.cardHead}>
-                <div>
-                  <div className={styles.room}>{t.ui.room}</div>
-                  <div className={styles.meta}>{t.ui.meta}</div>
-                </div>
+              <section className={styles.hero}>
                 <span className={styles.badge}>
                   <span className={styles.live} />
-                  {t.ui.free}
+                  {t.ui.badge}
                 </span>
-              </div>
-
-              <div className={styles.meta}>{t.ui.slots}</div>
-              <div className={styles.slots}>
-                {SLOTS.map((time, i) => (
-                  <button
-                    key={time}
-                    type="button"
-                    className={styles.slot}
-                    disabled={BUSY.includes(i)}
-                    aria-pressed={slot === i}
-                    onClick={() => setSlot(i)}
-                  >
-                    {time}
+                <h4 className={styles.heroTitle}>{t.ui.title}</h4>
+                <p className={styles.heroText}>{t.ui.text}</p>
+                <div className={styles.search}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                    <circle
+                      cx="6"
+                      cy="6"
+                      r="4.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                    />
+                    <path d="M9.5 9.5 13 13" stroke="currentColor" strokeWidth="1.4" />
+                  </svg>
+                  <input placeholder={t.ui.search} aria-label={t.ui.search} />
+                  <button type="button" className={styles.primary}>
+                    {t.ui.primary}
                   </button>
+                </div>
+              </section>
+
+              <section className={styles.features}>
+                {t.ui.features.map((f, i) => (
+                  <div key={f.title} className={styles.feature}>
+                    <span className={styles.icon} aria-hidden="true">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <strong>{f.title}</strong>
+                    <span>{f.text}</span>
+                  </div>
                 ))}
-              </div>
+              </section>
 
-              <button
-                type="button"
-                role="switch"
-                aria-checked={equipment}
-                className={styles.toggle}
-                onClick={() => setEquipment((v) => !v)}
-              >
-                <span className={styles.knob} />
-                {t.ui.equipment}
-              </button>
+              <section className={styles.rooms}>
+                <div className={styles.roomsTitle}>{t.ui.roomsTitle}</div>
+                <div className={styles.roomGrid}>
+                  {t.ui.rooms.map((room, r) => (
+                    <div key={room.name} className={styles.card}>
+                      <div className={styles.cardHead}>
+                        <div>
+                          <div className={styles.room}>{room.name}</div>
+                          <div className={styles.meta}>{room.meta}</div>
+                        </div>
+                        <span className={styles.badge}>
+                          <span className={styles.live} />
+                          {t.ui.free}
+                        </span>
+                      </div>
+                      <div className={styles.slots}>
+                        {SLOTS.slice(r * 3, r * 3 + 3).map((time, k) => {
+                          const i = r * 3 + k
+                          return (
+                            <button
+                              key={time}
+                              type="button"
+                              className={styles.slot}
+                              disabled={BUSY.includes(i)}
+                              aria-pressed={slot === i}
+                              onClick={() => setSlot(i)}
+                            >
+                              {time}
+                            </button>
+                          )
+                        })}
+                      </div>
+                      {r === 0 && (
+                        <button
+                          type="button"
+                          role="switch"
+                          aria-checked={equipment}
+                          className={styles.toggle}
+                          onClick={() => setEquipment((v) => !v)}
+                        >
+                          <span className={styles.knob} />
+                          {t.ui.equipment}
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        className={r === 0 ? styles.primary : styles.secondary}
+                        onClick={book}
+                      >
+                        {booked && Math.floor(slot / 3) === r
+                          ? t.ui.booked
+                          : Math.floor(slot / 3) === r
+                            ? `${t.ui.book} · ${SLOTS[slot]}`
+                            : t.ui.book}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
-              <div className={styles.actions}>
-                <button type="button" className={styles.primary} onClick={book}>
-                  {booked ? t.ui.booked : `${t.ui.book} · ${SLOTS[slot]}`}
-                </button>
-                <button type="button" className={styles.secondary}>
-                  {t.ui.cancel}
-                </button>
-              </div>
+              <footer className={styles.footer}>
+                <span className={styles.brand}>
+                  <span className={styles.mark} />
+                  {t.ui.brand}
+                </span>
+                <span>{t.ui.footer}</span>
+              </footer>
             </div>
           </div>
         </div>

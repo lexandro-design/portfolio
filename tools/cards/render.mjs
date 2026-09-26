@@ -275,39 +275,13 @@ const services = (t) =>
   </div>`,
   )
 
-const APPROACH = [
-  [
-    'design',
-    'UX/UI and design systems: tokens, components with every state, screens built from ready parts.',
-  ],
-  ['web', 'Websites and back end on my own design, checked against it at every width.'],
-  ['automation', 'Telegram bots and AI assistants, CRM and payment integrations, RAG search.'],
-]
-
 // Две карточки-приглашения на сайт: песочница дизайн-системы и конструктор заявки
 const LIME = '#c6ff3d'
 const tryCard = (t, kind) => {
+  // Живой скриншот мини-сайта из песочницы (снимается с собранного сайта в _shots/profile)
   const sandbox = `
-    <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;display:grid;grid-template-columns:118px 1fr">
-      <div style="padding:16px 14px;border-right:1px solid ${t.hair};display:grid;gap:12px;align-content:start">
-        ${['radius', 'density', 'accent', 'font']
-          .map(
-            (k, i) => `<div><div class="m" style="font-size:8px">${k}</div>
-          ${
-            i === 2
-              ? `<div style="display:flex;gap:4px;margin-top:6px">${[LIME, '#9d8cff', '#ff6b4a', '#38bdf8'].map((c, j) => `<i style="width:14px;height:14px;background:${c};${j ? '' : `outline:1px solid ${t.fg};outline-offset:2px`}"></i>`).join('')}</div>`
-              : `<div style="height:3px;margin-top:9px;background:${t.hair};position:relative"><i style="position:absolute;left:0;top:0;height:3px;width:${[70, 50, 0, 35][i]}%;background:${t.fg}"></i></div>`
-          }</div>`,
-          )
-          .join('')}
-      </div>
-      <div style="display:grid;place-items:center">
-        <div style="width:190px;padding:14px;border:1px solid ${t.hair};border-radius:14px;background:${t.bg};display:grid;gap:9px">
-          <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:13px;font-weight:550">Meeting room 3</b><span style="font-size:9px;padding:2px 7px;border-radius:9px;background:rgb(198 255 61 / .14);border:1px solid rgb(198 255 61 / .5)">free</span></div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">${['09:00', '10:00', '11:00'].map((x, i) => `<span style="font-size:9px;text-align:center;padding:5px 0;border-radius:8px;border:1px solid ${i === 2 ? LIME : t.hair};${i === 2 ? `background:${LIME};color:#0a0a0a` : ''}${i === 1 ? `;color:${t.fg3};text-decoration:line-through` : ''}">${x}</span>`).join('')}</div>
-          <span style="font-size:10px;font-weight:550;text-align:center;padding:7px;border-radius:10px;background:${LIME};color:#0a0a0a">Book · 11:00</span>
-        </div>
-      </div>
+    <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden">
+      <img class="shot" style="object-position:top center" src="/_shots/profile/sandbox-${t.bg === THEMES.dark.bg ? 'dark' : 'light'}.png">
     </div>`
   const brief = `
     <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -332,7 +306,7 @@ const tryCard = (t, kind) => {
     </div>`
   const [title, sub] =
     kind === 'sandbox'
-      ? ['Design-system sandbox', 'tune the tokens live on the site']
+      ? ['Design-system sandbox', 'a whole site rebuilds from a few tokens']
       : ['Brief in a minute', 'pick services, get a ready message']
   return page(
     t,
@@ -346,21 +320,6 @@ const tryCard = (t, kind) => {
   </div>`,
   )
 }
-const approach = (t) =>
-  page(
-    t,
-    W,
-    210,
-    `
-  <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr)">
-    ${APPROACH.map(
-      ([k, v], i) => `<div style="padding:28px 24px;${i ? `border-left:1px solid ${t.hair}` : ''}">
-      <div class="m">0${i + 1} / ${k}</div>
-      <p style="margin-top:20px;font-size:17px;line-height:1.4;letter-spacing:-.01em">${v}</p>
-    </div>`,
-    ).join('')}
-  </div>`,
-  )
 const stack = (t) =>
   page(
     t,
@@ -494,21 +453,22 @@ const pickShots = (c) =>
 const figmaCover = (c) => {
   const tone = c.group === 'titan' ? TONES.titan : TONES.base
   const [front, back = front] = pickShots(c)
-  const win = (shot, style) => `
-    <div style="position:absolute;${style};background:${tone.bar};border-radius:14px 14px 0 0;overflow:hidden;box-shadow:0 40px 120px rgb(0 0 0 / .28),0 0 0 1px rgb(0 0 0 / .06)">
+  // Высота окна — по пропорциям скрина: по ширине он влезает целиком, лишнее уходит за нижний край
+  const win = (shot, x, y, w) => `
+    <div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${Math.round((w * shot.h) / shot.w) + 46}px;background:${tone.bar};border-radius:14px 14px 0 0;overflow:hidden;box-shadow:0 40px 120px rgb(0 0 0 / .28),0 0 0 1px rgb(0 0 0 / .06)">
       <div style="height:46px;display:flex;align-items:center;gap:9px;padding:0 20px">
         <i style="width:12px;height:12px;border-radius:50%;background:rgb(0 0 0 / .13)"></i><i style="width:12px;height:12px;border-radius:50%;background:rgb(0 0 0 / .13)"></i><i style="width:12px;height:12px;border-radius:50%;background:rgb(0 0 0 / .13)"></i>
         <span style="margin:0 auto;width:34%;height:22px;border-radius:11px;background:rgb(0 0 0 / .06)"></span>
       </div>
-      <img src="/public${shot.src}" style="display:block;width:100%;height:calc(100% - 46px);object-fit:cover;object-position:top center">
+      <img src="/public${shot.src}" style="display:block;width:100%;height:auto">
     </div>`
   return page(
     { ...THEMES.light, bg: tone.bg, hair: 'transparent' },
     1920,
     1080,
     `
-  ${win(back, 'left:820px;top:170px;width:1000px;bottom:-40px')}
-  ${win(front, 'left:190px;top:300px;width:1080px;bottom:-40px')}
+  ${win(back, 820, 170, 1000)}
+  ${win(front, 190, 300, 1080)}
   <div style="position:absolute;left:96px;top:78px;right:96px;display:flex;justify-content:space-between;align-items:baseline">
     <span class="h" style="font-size:54px;letter-spacing:-.03em;line-height:1;color:${tone.fg}">${SHORT[c.slug] ?? c.title}</span>
   </div>`,

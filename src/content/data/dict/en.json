@@ -168,7 +168,7 @@
     "sandbox": {
       "label": "sandbox",
       "title": "Tune the system yourself",
-      "lead": "The controls change tokens, not elements. The screen on the right is built only from them, so it rebuilds as a whole.",
+      "lead": "The controls change tokens, not elements. The site on the right is built only from them, so it rebuilds as a whole, from buttons to cards.",
       "radius": "radius",
       "density": "density",
       "densities": {
@@ -182,15 +182,50 @@
       "reset": "reset",
       "copy": "copy tokens",
       "ui": {
+        "url": "rooms.demo",
+        "brand": "Rooms",
+        "nav": [
+          "Rooms",
+          "How it works",
+          "Sign in"
+        ],
+        "cta": "Book",
+        "badge": "free right now",
+        "title": "Book meeting rooms without the back-and-forth",
+        "text": "Free rooms nearby, schedules and booking in a couple of clicks.",
+        "primary": "Find a room",
+        "secondary": "How it works",
         "search": "Find a meeting room",
-        "room": "Meeting room 3",
-        "meta": "8 seats · 3rd floor",
+        "features": [
+          {
+            "title": "Free now",
+            "text": "Rooms you can take right away"
+          },
+          {
+            "title": "Schedule",
+            "text": "Busy slots are visible before you book"
+          },
+          {
+            "title": "Reminders",
+            "text": "A notification before the meeting"
+          }
+        ],
+        "roomsTitle": "Free today",
+        "rooms": [
+          {
+            "name": "Meeting room 3",
+            "meta": "8 seats · 3rd floor"
+          },
+          {
+            "name": "Meeting room 5",
+            "meta": "4 seats · 5th floor"
+          }
+        ],
         "free": "free",
-        "slots": "today",
         "equipment": "Screen and video call",
         "book": "Book",
-        "cancel": "Cancel",
-        "booked": "Done, booked"
+        "booked": "Done, booked",
+        "footer": "demo interface from the sandbox"
       }
     }
   },
