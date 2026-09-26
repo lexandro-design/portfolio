@@ -192,7 +192,12 @@ export const en: Record<string, CaseCopy> = {
       kind: 'chat',
       lines: [
         { from: 'user', text: 'do you have hot dog buns?' },
-        { from: 'bot', text: 'Found matching products, here are cards with prices and SKUs' },
+        {
+          from: 'bot',
+          text: 'Found in the catalog:',
+          media: 'products',
+          items: ['Hot dog bun', 'Brioche', 'Sesame bun'],
+        },
         { from: 'user', text: 'I want to place an order' },
         { from: 'bot', text: 'Passing you to a manager, they already see the chat' },
       ],
@@ -341,8 +346,17 @@ export const en: Record<string, CaseCopy> = {
     ],
     captions: [],
     preview: {
-      kind: 'flow',
-      steps: ['client request', 'product type', 'match in base', 'lead in CRM'],
+      kind: 'chat',
+      lines: [
+        { from: 'user', text: 'Need takeaway packaging for sushi' },
+        {
+          from: 'bot',
+          text: 'Matched from the range:',
+          media: 'products',
+          items: ['Roll container', 'Lid', 'Bag'],
+        },
+        { from: 'bot', text: 'Lead created in the CRM, a manager will call' },
+      ],
     },
   },
   'pix-bi': {
@@ -427,7 +441,12 @@ export const en: Record<string, CaseCopy> = {
       kind: 'chat',
       lines: [
         { from: 'user', text: 'We want a cabin for the weekend, four of us' },
-        { from: 'bot', text: 'Checking free cabins for those dates and calculating the price' },
+        {
+          from: 'bot',
+          text: 'A cabin is free on those dates',
+          media: 'booking',
+          items: ['cabin · free'],
+        },
         { from: 'user', text: 'Book it' },
         { from: 'bot', text: 'Booked, a manager will call to confirm' },
       ],
@@ -505,7 +524,16 @@ export const en: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['email', 'request type', 'funnel', 'owner'] },
+    preview: {
+      kind: 'inbox',
+      columns: ['customer', 'supplier', 'spam'],
+      mails: [
+        { text: 'Price request for boxes', to: 0 },
+        { text: 'Invoice for film delivery', to: 1 },
+        { text: 'You won a prize', to: 2 },
+        { text: 'Need bags with our logo', to: 0 },
+      ],
+    },
   },
   tetrasis: {
     tagline: 'bundle product page',
@@ -617,10 +645,11 @@ export const en: Record<string, CaseCopy> = {
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'user', text: 'Photo of my drawing' },
+        { from: 'user', text: 'Check my drawing' },
         {
           from: 'bot',
-          text: 'Compared with the reference: fix the head proportions and the shadow direction',
+          text: 'Fix what is marked: head proportions and the shadow direction',
+          media: 'drawing',
         },
         { from: 'user', text: 'Fixed it' },
         { from: 'bot', text: 'Now you can send it to your teacher' },
@@ -641,7 +670,15 @@ export const en: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['question', 'vectors + BM25', 'RRF merge', 'fragments'] },
+    preview: {
+      kind: 'search',
+      query: 'what did we decide on the catalog?',
+      results: [
+        'decisions.md · catalog and filters',
+        'chat · sort by price',
+        'session · product page',
+      ],
+    },
   },
   'salon-booking': {
     title: 'Online booking for salons and clinics',

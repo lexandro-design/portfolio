@@ -125,6 +125,136 @@
   }
 }
 
+/* Вложения на всю ширину пузыря: карточки и календарь */
+.bubble[data-wide] {
+  inline-size: 78%;
+}
+
+/* ---------- Карточки товаров ---------- */
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.product {
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--border-hair);
+  border-radius: 6px;
+  background: var(--bg-base);
+  animation: arrive var(--dur-base) var(--ease-out-quart) both;
+}
+
+/* Заглушка фото товара: штриховка вместо выдуманной картинки */
+.thumb {
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background: repeating-linear-gradient(135deg, var(--bg-subtle) 0 4px, var(--bg-elevated) 4px 8px);
+}
+
+.productName {
+  overflow: hidden;
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.stock {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--signal-live);
+}
+
+/* ---------- Календарь брони ---------- */
+
+.booking {
+  display: grid;
+  gap: 8px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.day {
+  padding-block: 6px;
+  border: 1px solid var(--border-hair);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.day[data-picked] {
+  border-color: transparent;
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+  animation: pick 0.4s var(--ease-out-expo) 0.3s both;
+}
+
+.free {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--fg-secondary);
+}
+
+.dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--signal-live);
+}
+
+@keyframes pick {
+  from {
+    background: transparent;
+    color: var(--fg-tertiary);
+  }
+}
+
+/* ---------- Рисунок с пометками ---------- */
+
+.drawing {
+  inline-size: 132px;
+  border-radius: 6px;
+  background: var(--bg-base);
+}
+
+.sketch {
+  fill: none;
+  stroke: var(--fg-secondary);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* Пометки бота обводятся, как ручкой преподавателя */
+.note {
+  fill: none;
+  stroke: var(--signal-live);
+  stroke-width: 1.5;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: circle 0.8s var(--ease-out-quart) 0.2s forwards;
+}
+
+@keyframes circle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .thread {
     font-size: 12px;
@@ -133,13 +263,24 @@
   .photo {
     inline-size: 72px;
   }
+
+  .bubble[data-wide] {
+    inline-size: 90%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .bubble,
   .photo img,
   .photo::after,
-  .typing span {
+  .typing span,
+  .product,
+  .day[data-picked] {
     animation: none;
+  }
+
+  .note {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }

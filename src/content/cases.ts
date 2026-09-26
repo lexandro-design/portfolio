@@ -27,13 +27,20 @@ export type CaseSection = {
  * Превью кейса без скриншотов. Автоматизации нечего показать картинкой,
  * поэтому рисуем, как она работает: цепочку шагов или кусок переписки
  */
+/** Реплика в превью-переписке. media — вложение, по которому видна суть бота */
+export type ChatLine = {
+  from: 'user' | 'bot'
+  text: string
+  media?: 'photo' | 'products' | 'booking' | 'drawing'
+  /** Подписи вложения: названия товаров, статус брони */
+  items?: string[]
+}
+
 export type Preview =
   | { kind: 'flow'; steps: string[] }
-  | {
-      kind: 'chat'
-      /** media: 'photo' — бот присылает сгенерированный кадр */
-      lines: { from: 'user' | 'bot'; text: string; media?: 'photo' }[]
-    }
+  | { kind: 'chat'; lines: ChatLine[] }
+  | { kind: 'inbox'; columns: string[]; mails: { text: string; to: number }[] }
+  | { kind: 'search'; query: string; results: string[] }
 
 export type Case = {
   slug: string
@@ -315,9 +322,14 @@ export const cases: Case[] = [
       kind: 'chat',
       lines: [
         { from: 'user', text: 'есть булочки для хот-догов?' },
-        { from: 'bot', text: 'Нашёл подходящие товары, вот карточки с ценами и артикулами' },
+        {
+          from: 'bot',
+          text: 'Нашёл в каталоге:',
+          media: 'products',
+          items: ['Булочка для хот-дога', 'Бриошь', 'С кунжутом'],
+        },
         { from: 'user', text: 'хочу оформить заказ' },
-        { from: 'bot', text: 'Передаю вас менеджеру, он уже видит переписку' },
+        { from: 'bot', text: 'Передаю менеджеру, он уже видит переписку' },
       ],
     },
   },
@@ -505,8 +517,17 @@ export const cases: Case[] = [
     ],
     shots: [],
     preview: {
-      kind: 'flow',
-      steps: ['заявка клиента', 'тип продукции', 'подбор по базе', 'лид в CRM'],
+      kind: 'chat',
+      lines: [
+        { from: 'user', text: 'Нужна упаковка для суши навынос' },
+        {
+          from: 'bot',
+          text: 'Подобрал по базе:',
+          media: 'products',
+          items: ['Контейнер для роллов', 'Крышка', 'Пакет'],
+        },
+        { from: 'bot', text: 'Заявку завёл в CRM, менеджер свяжется' },
+      ],
     },
   },
   {
@@ -610,7 +631,12 @@ export const cases: Case[] = [
       kind: 'chat',
       lines: [
         { from: 'user', text: 'Хотим домик на выходные, нас четверо' },
-        { from: 'bot', text: 'Проверяю свободные домики на эти даты и считаю стоимость' },
+        {
+          from: 'bot',
+          text: 'На эти даты есть свободный домик',
+          media: 'booking',
+          items: ['cabin · free'],
+        },
         { from: 'user', text: 'Бронируем' },
         { from: 'bot', text: 'Бронь создана, менеджер свяжется для подтверждения' },
       ],
@@ -711,8 +737,14 @@ export const cases: Case[] = [
     ],
     shots: [],
     preview: {
-      kind: 'flow',
-      steps: ['письмо', 'тип обращения', 'воронка', 'ответственный'],
+      kind: 'inbox',
+      columns: ['клиент', 'поставщик', 'спам'],
+      mails: [
+        { text: 'Запрос цены на коробки', to: 0 },
+        { text: 'Счёт за поставку плёнки', to: 1 },
+        { text: 'Вы выиграли приз', to: 2 },
+        { text: 'Нужны пакеты с логотипом', to: 0 },
+      ],
     },
   },
   {
@@ -869,8 +901,12 @@ export const cases: Case[] = [
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'user', text: 'Фото рисунка' },
-        { from: 'bot', text: 'Сравнил с эталоном: поправь пропорции головы и направление тени' },
+        { from: 'user', text: 'Проверь мой рисунок' },
+        {
+          from: 'bot',
+          text: 'Поправь отмеченное: пропорции головы и направление тени',
+          media: 'drawing',
+        },
         { from: 'user', text: 'Исправил' },
         { from: 'bot', text: 'Теперь можно отправлять преподавателю' },
       ],
@@ -898,8 +934,13 @@ export const cases: Case[] = [
     ],
     shots: [],
     preview: {
-      kind: 'flow',
-      steps: ['вопрос', 'векторы + BM25', 'слияние RRF', 'фрагменты'],
+      kind: 'search',
+      query: 'что решили по каталогу?',
+      results: [
+        'decisions.md · каталог и фильтры',
+        'чат · сортировка по цене',
+        'сессия · карточка товара',
+      ],
     },
   },
   {

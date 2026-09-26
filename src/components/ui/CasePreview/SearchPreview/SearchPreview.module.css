@@ -1,0 +1,104 @@
+.search {
+  position: absolute;
+  inset: 52px 40px 32px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-block-size: 40px;
+  padding-inline: 14px;
+  border: 1px solid var(--border-hover);
+  background: var(--bg-base);
+  color: var(--fg-primary);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.prompt {
+  color: var(--signal-live);
+}
+
+.caret {
+  inline-size: 7px;
+  block-size: 14px;
+  background: var(--fg-primary);
+  animation: blink 1s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.results {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.result {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-hair);
+  animation: arrive var(--dur-base) var(--ease-out-quart) both;
+}
+
+.rank {
+  grid-row: span 2;
+  color: var(--fg-tertiary);
+}
+
+.text {
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--fg-primary);
+}
+
+/* Полоса релевантности вырастает до своей длины */
+.bar {
+  block-size: 2px;
+  inline-size: var(--w);
+  background: var(--signal-live);
+  transform-origin: left;
+  animation: grow var(--dur-slow) var(--ease-out-expo) both;
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .search {
+    inset: 48px 20px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret,
+  .result,
+  .bar {
+    animation: none;
+  }
+}

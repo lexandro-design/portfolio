@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react'
 import type { Preview } from '@/content/cases'
 import { ChatPreview } from './ChatPreview'
+import { InboxPreview } from './InboxPreview'
+import { SearchPreview } from './SearchPreview'
 import styles from './CasePreview.module.css'
 
 type Props = {
@@ -65,6 +67,14 @@ export function CasePreview({ index, year, stack, size = 'row', preview }: Props
             <span className={styles.caret} />
           </span>
         </span>
+      )}
+
+      {preview?.kind === 'inbox' && (
+        <InboxPreview columns={preview.columns} mails={preview.mails} />
+      )}
+
+      {preview?.kind === 'search' && (
+        <SearchPreview query={preview.query} results={preview.results} />
       )}
 
       {!preview && (

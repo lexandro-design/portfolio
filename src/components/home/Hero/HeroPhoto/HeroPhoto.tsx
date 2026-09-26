@@ -10,7 +10,7 @@ type Props = { alt: string; caption: string }
 // Сколько кадр держится и сколько длится сбой при смене формата.
 // Длительность сбоя уходит в CSS переменной --glitch
 const HOLD = 2600
-const GLITCH = 620
+const GLITCH = 820
 
 /**
  * Фото на первом экране меняет «формат» через короткий сбой, как у
@@ -83,7 +83,11 @@ export function HeroPhoto({ alt, caption }: Props) {
             />
           )
         })}
-        {next !== null && <span key={next} className={styles.noise} aria-hidden="true" />}
+        {next !== null && (
+          <span key={next} className={styles.noise} aria-hidden="true">
+            <span className={styles.tag}>» {PHOTO.formats[next].id}</span>
+          </span>
+        )}
       </div>
 
       <figcaption className={styles.caption}>

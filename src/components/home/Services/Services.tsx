@@ -20,6 +20,7 @@ export function Services({ items, more }: { items: Dict['services']; more: strin
           </div>
           <h3 className={styles.title}>{s.title}</h3>
           <p className={styles.text}>{s.text}</p>
+          <p className={styles.price}>{s.price}</p>
           <ul className={styles.tags}>
             {s.tags.map((tag) => (
               <li key={tag}>{tag}</li>

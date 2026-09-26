@@ -192,7 +192,12 @@ export const ja: Record<string, CaseCopy> = {
       kind: 'chat',
       lines: [
         { from: 'user', text: 'ホットドッグ用のパンはありますか？' },
-        { from: 'bot', text: '該当する商品が見つかりました。価格と品番付きのカードです' },
+        {
+          from: 'bot',
+          text: 'カタログで見つかりました：',
+          media: 'products',
+          items: ['ホットドッグバンズ', 'ブリオッシュ', 'ごまバンズ'],
+        },
         { from: 'user', text: '注文したいです' },
         { from: 'bot', text: '担当者におつなぎします。チャットの内容はもう見えています' },
       ],
@@ -341,8 +346,17 @@ export const ja: Record<string, CaseCopy> = {
     ],
     captions: [],
     preview: {
-      kind: 'flow',
-      steps: ['顧客の依頼', '製品の種類', 'データベースで照合', 'CRM のリード'],
+      kind: 'chat',
+      lines: [
+        { from: 'user', text: '持ち帰り寿司用のパッケージが必要です' },
+        {
+          from: 'bot',
+          text: '品揃えから選びました：',
+          media: 'products',
+          items: ['巻き寿司容器', 'フタ', '袋'],
+        },
+        { from: 'bot', text: 'CRM にリードを登録しました。担当者からご連絡します' },
+      ],
     },
   },
   'pix-bi': {
@@ -425,7 +439,12 @@ export const ja: Record<string, CaseCopy> = {
       kind: 'chat',
       lines: [
         { from: 'user', text: '週末にコテージを借りたいです。4 人です' },
-        { from: 'bot', text: 'その日程の空きコテージを確認して料金を計算します' },
+        {
+          from: 'bot',
+          text: 'その日程で空いているコテージがあります',
+          media: 'booking',
+          items: ['cabin · free'],
+        },
         { from: 'user', text: '予約します' },
         { from: 'bot', text: '予約しました。確認のため担当者からご連絡します' },
       ],
@@ -503,7 +522,16 @@ export const ja: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['メール', '問い合わせの種類', 'ファネル', '担当者'] },
+    preview: {
+      kind: 'inbox',
+      columns: ['顧客', 'サプライヤー', 'スパム'],
+      mails: [
+        { text: '箱の見積り依頼', to: 0 },
+        { text: 'フィルム納品の請求書', to: 1 },
+        { text: '当選のお知らせ', to: 2 },
+        { text: 'ロゴ入りの袋がほしい', to: 0 },
+      ],
+    },
   },
   tetrasis: {
     title: 'Tetrasis',
@@ -622,8 +650,12 @@ export const ja: Record<string, CaseCopy> = {
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'user', text: '絵の写真' },
-        { from: 'bot', text: '手本と比べました：頭のプロポーションと影の向きを直しましょう' },
+        { from: 'user', text: '絵を見てください' },
+        {
+          from: 'bot',
+          text: '印のところを直しましょう：頭のプロポーションと影の向き',
+          media: 'drawing',
+        },
         { from: 'user', text: '直しました' },
         { from: 'bot', text: '先生に送って大丈夫です' },
       ],
@@ -643,7 +675,15 @@ export const ja: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['質問', 'ベクトル + BM25', 'RRF で統合', '断片'] },
+    preview: {
+      kind: 'search',
+      query: 'カタログについて何を決めた？',
+      results: [
+        'decisions.md · カタログと絞り込み',
+        'チャット · 価格順の並び替え',
+        'セッション · 商品ページ',
+      ],
+    },
   },
   'salon-booking': {
     title: 'サロンとクリニックのオンライン予約',

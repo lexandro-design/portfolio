@@ -42,6 +42,13 @@
   color: var(--fg-secondary);
 }
 
+.price {
+  font-size: var(--type-h4);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary);
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

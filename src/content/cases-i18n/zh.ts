@@ -192,7 +192,12 @@ export const zh: Record<string, CaseCopy> = {
       kind: 'chat',
       lines: [
         { from: 'user', text: '有热狗面包吗？' },
-        { from: 'bot', text: '找到了合适的商品，这是带价格和货号的卡片' },
+        {
+          from: 'bot',
+          text: '在目录里找到了：',
+          media: 'products',
+          items: ['热狗面包', '布里欧修', '芝麻面包'],
+        },
         { from: 'user', text: '我想下单' },
         { from: 'bot', text: '正在转给经理，他已经能看到聊天记录' },
       ],
@@ -332,7 +337,19 @@ export const zh: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['客户请求', '产品类型', '库中匹配', 'CRM 线索'] },
+    preview: {
+      kind: 'chat',
+      lines: [
+        { from: 'user', text: '需要外卖寿司的包装' },
+        {
+          from: 'bot',
+          text: '从库中匹配到：',
+          media: 'products',
+          items: ['寿司盒', '盒盖', '袋子'],
+        },
+        { from: 'bot', text: '已在 CRM 创建线索，经理会联系您' },
+      ],
+    },
   },
   'pix-bi': {
     tagline: '报表仪表盘',
@@ -403,7 +420,7 @@ export const zh: Record<string, CaseCopy> = {
       kind: 'chat',
       lines: [
         { from: 'user', text: '周末想订一间木屋，我们四个人' },
-        { from: 'bot', text: '正在查看这些日期的空闲木屋并计算价格' },
+        { from: 'bot', text: '这些日期有空闲木屋', media: 'booking', items: ['cabin · free'] },
         { from: 'user', text: '就订这个' },
         { from: 'bot', text: '已预订，经理会联系您确认' },
       ],
@@ -479,7 +496,16 @@ export const zh: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['邮件', '请求类型', '漏斗', '负责人'] },
+    preview: {
+      kind: 'inbox',
+      columns: ['客户', '供应商', '垃圾邮件'],
+      mails: [
+        { text: '纸箱询价', to: 0 },
+        { text: '薄膜供货发票', to: 1 },
+        { text: '恭喜您中奖', to: 2 },
+        { text: '需要印 logo 的袋子', to: 0 },
+      ],
+    },
   },
   tetrasis: {
     title: 'Tetrasis',
@@ -582,8 +608,8 @@ export const zh: Record<string, CaseCopy> = {
     preview: {
       kind: 'chat',
       lines: [
-        { from: 'user', text: '画作照片' },
-        { from: 'bot', text: '已对照范画：请调整头部比例和阴影方向' },
+        { from: 'user', text: '帮我看看这幅画' },
+        { from: 'bot', text: '请修改标出的地方：头部比例和阴影方向', media: 'drawing' },
         { from: 'user', text: '改好了' },
         { from: 'bot', text: '现在可以发给老师了' },
       ],
@@ -603,7 +629,11 @@ export const zh: Record<string, CaseCopy> = {
       },
     ],
     captions: [],
-    preview: { kind: 'flow', steps: ['问题', '向量 + BM25', 'RRF 合并', '片段'] },
+    preview: {
+      kind: 'search',
+      query: '目录方面我们定了什么？',
+      results: ['decisions.md · 目录与筛选', '聊天 · 按价格排序', '会话 · 商品页'],
+    },
   },
   'salon-booking': {
     title: '美容院和诊所的在线预约',

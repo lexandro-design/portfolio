@@ -1,0 +1,91 @@
+.board {
+  position: absolute;
+  inset: 52px 40px 32px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 14px;
+}
+
+.label {
+  color: var(--fg-tertiary);
+  text-transform: lowercase;
+  letter-spacing: 0.06em;
+}
+
+.inbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-block-size: 34px;
+  padding: 0 12px;
+  border: 1px dashed var(--border-hover);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  min-block-size: 0;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-block-size: 0;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-base);
+}
+
+.mail {
+  padding: 7px 9px;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-subtle);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--fg-primary);
+  animation: land var(--dur-slow) var(--ease-out-expo) both;
+}
+
+/* Новое письмо во входящих подсвечено, пока его не разобрали */
+.mail[data-incoming] {
+  border-color: var(--fg-primary);
+  animation: arrive var(--dur-base) var(--ease-out-quart) both;
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+
+@media (max-width: 767px) {
+  .board {
+    inset: 48px 20px 20px;
+  }
+
+  .mail {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mail {
+    animation: none;
+  }
+}

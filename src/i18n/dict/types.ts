@@ -52,7 +52,15 @@ export type Dict = {
     contact: { label: string }
   }
 
-  services: { code: string; title: string; text: string; tags: string[]; filter: Direction }[]
+  services: {
+    code: string
+    title: string
+    text: string
+    /** Стартовая цена направления: «от 50 000 ₽» */
+    price: string
+    tags: string[]
+    filter: Direction
+  }[]
   servicesMore: string
 
   works: {
