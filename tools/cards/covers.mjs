@@ -47,7 +47,9 @@ const win = (src, style, url = '') =>
   `<div class="win" style="${style}"><div class="bar"><i></i><i></i><i></i><b>${url}</b></div><img src="${src}"></div>`
 
 // Кейсы и скрины берём из того же источника, что сайт
-const { cases } = await import('../../src/content/cases.ts')
+const cases = JSON.parse(
+  await readFile(new URL('../../src/content/data/cases.json', import.meta.url), 'utf8'),
+)
 
 const host = (c) => (c.link ? new URL(c.link.href).host.replace(/^www\./, '') : '')
 const src = (shot) => `/public${shot.src}`

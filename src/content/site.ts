@@ -1,15 +1,13 @@
+import data from './data/site.json'
+
 /**
- * Контакты и то, что не зависит от языка. Тексты сайта — в src/i18n/dict.
+ * Контакты и то, что не зависит от языка. Контакты и координаты — в
+ * data/site.json (их правит админка), тексты сайта — в data/dict.
  */
 
-export const contacts = {
-  email: 'alexssveshnikov@gmail.com',
-  telegram: 'https://t.me/lexandr0',
-  telegramHandle: '@lexandr0',
-  github: 'https://github.com/lexandro-design',
-} as const
+export const contacts = data.contacts
 
-export const COORDS = '59.9311° N · 30.3609° E'
+export const COORDS = data.coords
 
 /** Разделы главной по порядку — для меток «02 / 08» */
 export const SECTIONS = [

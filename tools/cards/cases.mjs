@@ -1,7 +1,11 @@
 // Кейсы для картинок — из того же источника, что сайт. Номер — место в общем списке.
 // Профиль GitHub на английском: названия, подзаголовки и лиды берём из перевода сайта
-import { cases as all } from '../../src/content/cases.ts'
-import { en } from '../../src/content/cases-i18n/en.ts'
+import { readFileSync } from 'node:fs'
+
+const read = (p) =>
+  JSON.parse(readFileSync(new URL(`../../src/content/data/${p}`, import.meta.url)))
+const all = read('cases.json')
+const en = read('cases-i18n/en.json')
 
 // Стек в кейсах записан по-русски там, где это не название технологии
 const STACK_EN = {
