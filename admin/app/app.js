@@ -293,10 +293,15 @@ async function save() {
   state.saving = true
   refreshDirty()
   try {
-    const files = [
-      ...paths.map((path) => ({ path, text: serialize(state.data[path]) })),
-      ...Object.entries(state.uploads).map(([path, u]) => ({ path, base64: u.base64 })),
-    ]
+    // Картинки — по одной отдельными запросами (у функции потолок 4,5 МБ на запрос), в коммит идут их sha
+    const images = []
+    for (const [path, u] of Object.entries(state.uploads)) {
+      u.blob ??= (
+        await api('/api/blob', { method: 'POST', body: JSON.stringify({ base64: u.base64 }) })
+      ).sha
+      images.push({ path, blob: u.blob })
+    }
+    const files = [...paths.map((path) => ({ path, text: serialize(state.data[path]) })), ...images]
     const base = Object.fromEntries(paths.map((p) => [p, state.files[p].sha]))
     const res = await api('/api/save', {
       method: 'POST',
@@ -368,7 +373,14 @@ async function processImage(file, maxW) {
   ctx.fillRect(0, 0, w, hgt)
   ctx.drawImage(img, 0, 0, w, hgt)
   URL.revokeObjectURL(url)
-  const blob = await new Promise((r) => canvas.toBlob(r, 'image/jpeg', 0.86))
+  // Одна картинка — не больше 3 МБ: иначе не пролезет в запрос. Длинные страницы жмём сильнее
+  let blob
+  for (const q of [0.86, 0.78, 0.68, 0.58, 0.48]) {
+    blob = await new Promise((r) => canvas.toBlob(r, 'image/jpeg', q))
+    if (blob.size < 2.9 * 1024 * 1024) break
+  }
+  if (blob.size >= 2.9 * 1024 * 1024)
+    throw new Error('Картинка слишком большая даже после сжатия — разрежь её на части')
   const base64 = await new Promise((r) => {
     const fr = new FileReader()
     fr.onload = () => r(String(fr.result).split(',')[1])

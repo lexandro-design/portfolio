@@ -4,6 +4,3 @@ _legacy
 pnpm-lock.yaml
 # JSON контента пишет админка через JSON.stringify(…, null, 2) — prettier его не трогает, иначе каждый коммит из админки переформатирует файл
 src/content/data
-admin/node_modules
-admin/package-lock.json
-admin/.wrangler

@@ -2,12 +2,11 @@
   "name": "portfolio-admin",
   "private": true,
   "type": "module",
-  "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "hash": "node scripts/hash-password.mjs"
+  "engines": {
+    "node": ">=22"
   },
-  "devDependencies": {
-    "wrangler": "^4.40.0"
+  "scripts": {
+    "dev": "node --env-file=.env.local scripts/dev.mjs",
+    "hash": "node scripts/hash-password.mjs"
   }
 }

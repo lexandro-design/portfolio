@@ -1,11 +1,20 @@
 /**
- * Админка сайта-портфолио. Cloudflare Worker: пускает по логину и паролю,
- * читает контент из репозитория и сохраняет правки коммитом в main —
- * дальше сайт пересобирает обычный деплой GitHub Actions.
+ * Админка сайта-портфолио: пускает по логину и паролю, читает контент из
+ * репозитория и сохраняет правки коммитом в main — дальше сайт пересобирает
+ * обычный деплой GitHub Actions. Только веб-API (fetch, Request, crypto.subtle),
+ * поэтому одинаково работает в функции Vercel (api/index.js) и локально (scripts/dev.mjs).
  *
- * Токен GitHub живёт только здесь, в секретах воркера, до браузера он не доходит.
- * Секреты (wrangler secret put): ADMIN_USER, ADMIN_PASS_HASH, SESSION_SECRET, GITHUB_TOKEN.
+ * Токен GitHub живёт только здесь, в переменных окружения, до браузера он не доходит.
+ * Обязательные: ADMIN_USER, ADMIN_PASS_HASH, SESSION_SECRET, GITHUB_TOKEN.
+ * Необязательные: GITHUB_REPO, GITHUB_BRANCH, SITE_URL, GITHUB_API (для заглушки в тестах).
  */
+
+const DEFAULTS = {
+  GITHUB_REPO: 'lexandro-design/portfolio',
+  GITHUB_BRANCH: 'main',
+  SITE_URL: 'https://lexandro-design.github.io/portfolio',
+  GITHUB_API: 'https://api.github.com',
+}
 
 /** Файлы контента, которые админка читает и может перезаписать */
 const CONTENT = [
@@ -22,7 +31,9 @@ const CONTENT = [
 
 /** Картинки можно класть только в папки кейсов */
 const IMAGE_PATH = /^public\/cases\/[a-z0-9-]+\/[a-z0-9-]+\.(jpg|png|webp)$/
-const MAX_IMAGE = 15 * 1024 * 1024
+/** Потолок тела запроса у функций Vercel — 4,5 МБ, картинка идёт отдельным запросом в base64 */
+const MAX_IMAGE_B64 = 4 * 1024 * 1024
+const SHA = /^[0-9a-f]{40}$/
 const SESSION_DAYS = 7
 const COOKIE = 'admin_session'
 
@@ -33,20 +44,25 @@ class HttpError extends Error {
   }
 }
 
-export default {
-  async fetch(request, env) {
-    try {
-      const res = await route(request, env)
-      return secure(res)
-    } catch (e) {
-      const status = e instanceof HttpError ? e.status : 500
-      if (status === 500) console.error(e)
-      return secure(json({ error: e.message || 'Ошибка' }, status))
-    }
-  },
+/**
+ * Обработка запроса. asset(name) отдаёт файл интерфейса из app/ —
+ * его зовём только после проверки входа
+ */
+export async function handle(request, rawEnv, asset) {
+  const env = { ...DEFAULTS, ...Object.fromEntries(Object.entries(rawEnv).filter(([, v]) => v)) }
+  try {
+    return secure(await route(request, env, asset))
+  } catch (e) {
+    const status = e instanceof HttpError ? e.status : 500
+    if (status === 500) console.error(e)
+    return secure(json({ error: e.message || 'Ошибка' }, status))
+  }
 }
 
-async function route(request, env) {
+/** Файлы интерфейса: всё остальное — 404 */
+const ASSETS = { '/': 'index.html', '/app.js': 'app.js', '/app.css': 'app.css' }
+
+async function route(request, env, asset) {
   const url = new URL(request.url)
   const { pathname } = url
   const method = request.method
@@ -65,21 +81,26 @@ async function route(request, env) {
   const authed = await readSession(request, env)
   if (!authed) {
     if (pathname.startsWith('/api/')) throw new HttpError(401, 'Нужно войти заново')
-    return Response.redirect(new URL('/login', url), 302)
+    return new Response(null, { status: 302, headers: { Location: '/login' } })
   }
 
   if (pathname.startsWith('/api/')) {
     if (method !== 'GET') checkSameOrigin(request, url)
     if (pathname === '/api/content' && method === 'GET') return json(await loadContent(env))
-    if (pathname === '/api/save' && method === 'POST')
+    if (pathname === '/api/blob' && method === 'POST') {
+      return json(await uploadBlob(await request.json(), env))
+    }
+    if (pathname === '/api/save' && method === 'POST') {
       return json(await save(await request.json(), env))
+    }
     if (pathname === '/api/status' && method === 'GET') {
       return json(await deployStatus(env, url.searchParams.get('sha')))
     }
     throw new HttpError(404, 'Нет такого метода')
   }
 
-  return env.ASSETS.fetch(request)
+  if (ASSETS[pathname] && method === 'GET') return asset(ASSETS[pathname])
+  throw new HttpError(404, 'Не найдено')
 }
 
 /* ---------- вход ---------- */
@@ -141,11 +162,16 @@ async function verifyPassword(pass, stored) {
   return safeEqual(b64(bits), hash)
 }
 
+/** Сравнение без утечки по времени: сравниваем хэши одинаковой длины целиком */
 async function safeEqual(a, b) {
   const [x, y] = await Promise.all(
-    [a, String(b ?? '')].map((s) => crypto.subtle.digest('SHA-256', enc(s))),
+    [String(a ?? ''), String(b ?? '')].map((s) => crypto.subtle.digest('SHA-256', enc(s))),
   )
-  return crypto.subtle.timingSafeEqual(x, y)
+  const u = new Uint8Array(x)
+  const v = new Uint8Array(y)
+  let diff = 0
+  for (let i = 0; i < u.length; i++) diff |= u[i] ^ v[i]
+  return diff === 0
 }
 
 /** Запросы, которые что-то меняют, принимаются только со страницы самой админки */
@@ -159,8 +185,7 @@ function checkSameOrigin(request, url) {
 /* ---------- GitHub ---------- */
 
 async function gh(env, path, init = {}) {
-  const api = env.GITHUB_API || 'https://api.github.com'
-  const res = await fetch(`${api}/repos/${env.GITHUB_REPO}${path}`, {
+  const res = await fetch(`${env.GITHUB_API}/repos/${env.GITHUB_REPO}${path}`, {
     ...init,
     headers: {
       Authorization: `Bearer ${env.GITHUB_TOKEN}`,
@@ -180,7 +205,7 @@ async function gh(env, path, init = {}) {
   return res.status === 204 ? null : res.json()
 }
 
-const branch = (env) => env.GITHUB_BRANCH || 'main'
+const branch = (env) => env.GITHUB_BRANCH
 
 async function head(env) {
   const ref = await gh(env, `/git/ref/heads/${branch(env)}`)
@@ -222,6 +247,19 @@ async function loadContent(env) {
   }
 }
 
+/** Картинка загружается заранее отдельным запросом, в коммит потом идёт её sha */
+async function uploadBlob(body, env) {
+  const data = body?.base64
+  if (typeof data !== 'string' || !data || data.length > MAX_IMAGE_B64) {
+    throw new HttpError(400, 'Нет картинки или она больше 3 МБ')
+  }
+  const blob = await gh(env, '/git/blobs', {
+    method: 'POST',
+    body: JSON.stringify({ content: data, encoding: 'base64' }),
+  })
+  return { sha: blob.sha }
+}
+
 /**
  * Сохранение одним коммитом. base — sha файлов, с которых начиналась правка:
  * если кто-то успел поменять тот же файл (например, пуш с компа), коммит не делаем,
@@ -241,9 +279,7 @@ async function save(body, env) {
         throw new HttpError(400, `${f.path}: сломанный JSON`)
       }
     } else if (IMAGE_PATH.test(f.path)) {
-      if (typeof f.base64 !== 'string' || f.base64.length * 0.75 > MAX_IMAGE) {
-        throw new HttpError(400, `${f.path}: нет картинки или она больше 15 МБ`)
-      }
+      if (!SHA.test(String(f.blob))) throw new HttpError(400, `${f.path}: картинка не загружена`)
     } else {
       throw new HttpError(400, `${f.path}: сюда админке писать нельзя`)
     }
@@ -264,15 +300,15 @@ async function save(body, env) {
 
     const tree = await Promise.all(
       files.map(async (f) => {
-        const blob = await gh(env, '/git/blobs', {
-          method: 'POST',
-          body: JSON.stringify(
-            f.base64
-              ? { content: f.base64, encoding: 'base64' }
-              : { content: f.text, encoding: 'utf-8' },
-          ),
-        })
-        return { path: f.path, mode: '100644', type: 'blob', sha: blob.sha }
+        const sha = IMAGE_PATH.test(f.path)
+          ? f.blob
+          : (
+              await gh(env, '/git/blobs', {
+                method: 'POST',
+                body: JSON.stringify({ content: f.text, encoding: 'utf-8' }),
+              })
+            ).sha
+        return { path: f.path, mode: '100644', type: 'blob', sha }
       }),
     )
     const newTree = await gh(env, '/git/trees', {
