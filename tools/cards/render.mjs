@@ -23,9 +23,11 @@ const server = createServer(async (req, res) => {
   const path = decodeURIComponent(new URL(req.url, 'http://x').pathname)
   if (path === '/card') return res.writeHead(200, { 'content-type': TYPES['.html'] }).end(html)
   try {
+    const body = await readFile(join(ROOT, path))
     res.writeHead(200, { 'content-type': TYPES[extname(path)] ?? 'application/octet-stream' })
-    res.end(await readFile(join(ROOT, path)))
+    res.end(body)
   } catch {
+    console.warn('нет файла:', path)
     res.writeHead(404).end()
   }
 })
@@ -165,9 +167,9 @@ const hero = (t) =>
     `
   <div style="position:absolute;inset:36px 40px;display:grid;grid-template-rows:auto 1fr auto">
     <div class="row m"><span>LEXANDRO · saint petersburg</span><span style="color:${t.fg}"><i class="dot"></i>open to projects</span></div>
-    <div class="h" style="align-self:end;font-size:66px">Design systems<br>that work for you,<br><span style="color:${t.fg2}">not against you.</span></div>
+    <div class="h" style="align-self:end;font-size:62px">Design, code<br>and AI agents, end to end,<br><span style="color:${t.fg2}">in one pair of hands.</span></div>
     <div class="row" style="margin-top:30px;align-items:end">
-      <p class="p" style="font-size:15px;max-width:470px">Alexey Sveshnikov, UX/UI designer and developer. One person end to end: analysis, a design system and interfaces, a website built on that design, then automation and AI agents on top.</p>
+      <p class="p" style="font-size:15px;max-width:480px">Alexey Sveshnikov, designer and developer. I design the product and its design system, build the front end, write the back end, set up the database and server and wire in AI agents. From idea to launch.</p>
       <div class="m" style="text-align:right;line-height:1.9">now<br><span style="color:${t.fg}">TITAN-2 holding</span></div>
     </div>
   </div>`,
@@ -224,20 +226,84 @@ const half = (t, c) => {
   )
 }
 
+// Те же три направления и теги, что в блоке «Услуги» на сайте
 const STACK = [
   ['design', ['UX/UI', 'Design systems', 'Design tokens', 'Figma, Auto Layout']],
-  ['web', ['Tilda, Zero Block', 'JavaScript', 'React, Next.js', 'Responsive']],
-  ['data', ['PostgreSQL', 'Supabase', 'SQLite', 'REST APIs']],
-  ['ai', ['Telegram bots', 'RAG', 'AI agents', 'CRM integrations']],
+  ['web', ['React, Next.js', 'Node.js', 'Tilda', 'Responsive']],
+  ['data', ['PostgreSQL', 'Supabase', 'REST APIs', 'SQL functions']],
+  ['ai', ['Telegram bots', 'AI agents', 'RAG', 'CRM integrations']],
 ]
 const APPROACH = [
   [
-    'tokens first',
-    'Colour, type, spacing and motion live in tokens. One change reaches every screen.',
+    'design',
+    'UX/UI and design systems: tokens, components with every state, screens built from ready parts.',
   ],
-  ['every state', 'Empty, loading, error, out of stock. Designed before anyone has to ask.'],
-  ['built to ship', 'Components map one to one to code. Developers build, they do not guess.'],
+  ['web', 'Websites and back end on my own design, checked against it at every width.'],
+  ['automation', 'Telegram bots and AI assistants, CRM and payment integrations, RAG search.'],
 ]
+
+// Две карточки-приглашения на сайт: песочница дизайн-системы и конструктор заявки
+const LIME = '#c6ff3d'
+const tryCard = (t, kind) => {
+  const sandbox = `
+    <div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;display:grid;grid-template-columns:118px 1fr">
+      <div style="padding:16px 14px;border-right:1px solid ${t.hair};display:grid;gap:12px;align-content:start">
+        ${['radius', 'density', 'accent', 'font']
+          .map(
+            (k, i) => `<div><div class="m" style="font-size:8px">${k}</div>
+          ${
+            i === 2
+              ? `<div style="display:flex;gap:4px;margin-top:6px">${[LIME, '#9d8cff', '#ff6b4a', '#38bdf8'].map((c, j) => `<i style="width:14px;height:14px;background:${c};${j ? '' : `outline:1px solid ${t.fg};outline-offset:2px`}"></i>`).join('')}</div>`
+              : `<div style="height:3px;margin-top:9px;background:${t.hair};position:relative"><i style="position:absolute;left:0;top:0;height:3px;width:${[70, 50, 0, 35][i]}%;background:${t.fg}"></i></div>`
+          }</div>`,
+          )
+          .join('')}
+      </div>
+      <div style="display:grid;place-items:center">
+        <div style="width:190px;padding:14px;border:1px solid ${t.hair};border-radius:14px;background:${t.bg};display:grid;gap:9px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:13px;font-weight:550">Meeting room 3</b><span style="font-size:9px;padding:2px 7px;border-radius:9px;background:rgb(198 255 61 / .14);border:1px solid rgb(198 255 61 / .5)">free</span></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px">${['09:00', '10:00', '11:00'].map((x, i) => `<span style="font-size:9px;text-align:center;padding:5px 0;border-radius:8px;border:1px solid ${i === 2 ? LIME : t.hair};${i === 2 ? `background:${LIME};color:#0a0a0a` : ''}${i === 1 ? `;color:${t.fg3};text-decoration:line-through` : ''}">${x}</span>`).join('')}</div>
+          <span style="font-size:10px;font-weight:550;text-align:center;padding:7px;border-radius:10px;background:${LIME};color:#0a0a0a">Book · 11:00</span>
+        </div>
+      </div>
+    </div>`
+  const brief = `
+    <div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="display:grid;gap:6px;align-content:start">
+        <div class="m" style="font-size:8px;margin-bottom:4px">what you need</div>
+        ${[
+          ['Design systems', true],
+          ['Websites', false],
+          ['Automation', true],
+        ]
+          .map(
+            ([x, on]) =>
+              `<div style="display:flex;gap:7px;align-items:center;font-size:10px;padding:7px 8px;border:1px solid ${on ? t.fg : t.hair}"><i style="width:9px;height:9px;border:1px solid ${t.hover};${on ? `background:${LIME};border-color:${LIME}` : ''}"></i>${x}</div>`,
+          )
+          .join('')}
+      </div>
+      <div style="display:grid;gap:7px;align-content:start">
+        <div class="m" style="font-size:8px;margin-bottom:4px">how the work goes</div>
+        ${['Analysis', 'Design', 'Automation', 'Handover'].map((x, i) => `<div style="display:flex;gap:8px;font-size:10px;padding-bottom:5px;border-bottom:1px solid ${t.hair}"><span class="m" style="font-size:8px;color:${t.live}">0${i + 1}</span>${x}</div>`).join('')}
+        <span style="margin-top:4px;font-family:Mono,monospace;font-size:8px;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:7px;background:${LIME};color:#0a0a0a">send via telegram</span>
+      </div>
+    </div>`
+  const [title, sub] =
+    kind === 'sandbox'
+      ? ['Design-system sandbox', 'tune the tokens live on the site']
+      : ['Brief in a minute', 'pick services, get a ready message']
+  return page(
+    t,
+    405,
+    340,
+    `${kind === 'sandbox' ? sandbox : brief}
+  <div style="position:absolute;left:18px;right:18px;bottom:22px">
+    <div class="row m" style="font-size:10px"><span>try it · ${kind === 'sandbox' ? 'system' : 'contact'}</span><span>↗</span></div>
+    <div class="h" style="font-size:26px;margin-top:12px;letter-spacing:-.03em;line-height:1.08">${title}</div>
+    <div style="font-size:14px;color:${t.fg2};margin-top:4px">${sub}</div>
+  </div>`,
+  )
+}
 const approach = (t) =>
   page(
     t,
@@ -278,6 +344,7 @@ const contact = (t) =>
   <div style="position:absolute;inset:36px 40px;display:grid;grid-template-rows:auto 1fr auto">
     <div class="m">contact</div>
     <div class="h" style="align-self:center;font-size:60px">Have a project<br>in mind?</div>
+    <div class="m m2" style="position:absolute;top:0;right:0">brief in a minute on the site ↗</div>
     <div class="row" style="align-items:end">
       <span style="font-size:22px;letter-spacing:-.02em;padding-bottom:6px;border-bottom:1px solid ${t.hover}">alexssveshnikov@gmail.com</span>
       <span class="m m2" style="text-align:right;line-height:1.9">telegram<br><span style="color:${t.fg}">@lexandr0</span></span>
@@ -287,7 +354,10 @@ const contact = (t) =>
 
 // ---------- съёмка ----------
 
-const browser = await chromium.launch()
+// CHROME_PATH — если браузер Playwright лежит не там, где он его ищет (например, в облачной среде)
+const browser = await chromium.launch(
+  process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {},
+)
 const shot = async (markup, w, h, out, scale = 1) => {
   const clear = markup.includes('body{background:transparent}')
   html = markup
@@ -331,7 +401,7 @@ if (!mode || mode === 'profile') {
   for (const [name, t] of Object.entries(THEMES)) {
     await shot(hero(t), W, 480, join(PROFILE, `hero-${name}.png`), 2)
     await shot(
-      label(t, 'approach', 'design systems that scale'),
+      label(t, 'what I do', 'end to end · one person'),
       W,
       64,
       join(PROFILE, `label-approach-${name}.png`),
@@ -346,6 +416,15 @@ if (!mode || mode === 'profile') {
       2,
     )
     await shot(label(t, 'stack'), W, 64, join(PROFILE, `label-stack-${name}.png`), 2)
+    await shot(
+      label(t, 'try it', 'live on the site'),
+      W,
+      64,
+      join(PROFILE, `label-try-${name}.png`),
+      2,
+    )
+    await shot(tryCard(t, 'sandbox'), 405, 340, join(PROFILE, `try-sandbox-${name}.png`), 2)
+    await shot(tryCard(t, 'brief'), 405, 340, join(PROFILE, `try-brief-${name}.png`), 2)
     await shot(stack(t), W, 200, join(PROFILE, `stack-${name}.png`), 2)
     await shot(contact(t), W, 300, join(PROFILE, `contact-${name}.png`), 2)
     await shot(featured(t, first), W, 548, join(PROFILE, `case-${first.slug}-${name}.png`), 2)
