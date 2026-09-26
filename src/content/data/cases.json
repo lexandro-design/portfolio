@@ -293,21 +293,21 @@
       "kind": "chat",
       "lines": [
         {
-          "from": "user",
+          "from": "lexandro",
           "text": "Хочу фотосессию «Отпуск»"
         },
         {
-          "from": "bot",
+          "from": "Mimimi_bot",
           "text": "Твой кадр готов",
           "media": "photo"
         },
         {
-          "from": "bot",
-          "text": "Сгенерировать всю фотосессию?"
+          "from": "Mimimi_bot",
+          "text": "Понравился результат?"
         },
         {
-          "from": "user",
-          "text": "Да"
+          "from": "lexandro",
+          "text": "Да!"
         }
       ]
     }
