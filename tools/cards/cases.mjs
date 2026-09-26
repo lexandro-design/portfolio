@@ -31,6 +31,8 @@ export const casesEn = cases.map((c) => {
     title: t?.title ?? c.title,
     tagline: t?.tagline ?? c.tagline,
     lead: t?.lead ?? c.lead,
+    // Переписка: английский текст, имя бота и прочее — из русской версии
+    preview: t?.preview && c.preview ? { ...c.preview, ...t.preview } : c.preview,
     stack: c.stack.filter((s) => s !== 'Taiga UI').map((s) => STACK_EN[s] ?? s),
   }
 })

@@ -8,7 +8,7 @@
   "coords": "59.9311° N · 30.3609° E",
   "features": {
     "brief": true,
-    "palette": true,
+    "palette": false,
     "sandbox": true
   },
   "defaultTheme": "dark",

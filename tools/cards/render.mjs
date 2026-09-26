@@ -4,7 +4,7 @@
 // node tools/cards/render.mjs [og|profile]
 import { chromium } from '@playwright/test'
 import { createServer } from 'node:http'
-import { mkdir, readFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { cases, casesEn } from './cases.mjs'
@@ -204,8 +204,8 @@ const half = (t, c) => {
   // Превью строки с сайта (окна браузера на фоне), а не голый скрин
   const cover = c.thumb ?? c.shots[0]
   const media = cover
-    ? `<div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:${c.thumb ? 'center' : 'top left'}" src="/public${cover.src}"></div>`
-    : `<div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden">
+    ? `<div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:${c.thumb ? 'center' : 'top left'}" src="/public${cover.src}"></div>`
+    : `<div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden">
          <i class="corner tl"></i><i class="corner br"></i>
          <div class="row m" style="position:absolute;top:14px;left:34px;right:34px;font-size:10px"><span>case ${pad(c.index)}</span><span>${c.year}</span></div>
          <div class="m" style="position:absolute;left:34px;bottom:24px;display:grid;gap:3px;text-transform:lowercase;letter-spacing:.02em;font-size:10px">${c.stack
@@ -217,7 +217,7 @@ const half = (t, c) => {
   return page(
     t,
     405,
-    340,
+    391,
     `${media}
   <div style="position:absolute;left:18px;right:18px;bottom:22px">
     <div class="row m" style="font-size:10px"><span>${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</span><span>${c.year}</span></div>
@@ -234,6 +234,47 @@ const STACK = [
   ['data', ['PostgreSQL', 'Supabase', 'REST APIs', 'SQL functions']],
   ['ai', ['Telegram bots', 'AI agents', 'RAG', 'CRM integrations']],
 ]
+const SERVICES = [
+  [
+    'design',
+    'UX/UI and design systems',
+    'Tokens, components with every state and grid rules. New screens are assembled from ready parts.',
+    ['ux/ui', 'design systems', 'figma'],
+  ],
+  [
+    'web',
+    'Websites and back end',
+    'Sites and web apps on my own design: React and Next.js or Tilda, back end, database, server.',
+    ['react', 'next.js', 'postgresql'],
+  ],
+  [
+    'automation',
+    'Automation and AI',
+    'Telegram bots and AI assistants, CRM and payment integrations, RAG search over documents.',
+    ['javascript', 'rag', 'ai agents'],
+  ],
+]
+const services = (t) =>
+  page(
+    t,
+    W,
+    268,
+    `
+  <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr)">
+    ${SERVICES.map(
+      (
+        [k, title, text, tags],
+        i,
+      ) => `<div style="padding:28px 24px;display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;${i ? `border-left:1px solid ${t.hair}` : ''}">
+      <div class="m">0${i + 1} / ${k}</div>
+      <div style="font-size:22px;letter-spacing:-.02em;line-height:1.15">${title}</div>
+      <p class="p" style="font-size:14px">${text}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${tags.map((x) => `<span class="m" style="font-size:10px;padding:4px 8px;border:1px solid ${t.hair};text-transform:lowercase;letter-spacing:.02em">${x}</span>`).join('')}</div>
+    </div>`,
+    ).join('')}
+  </div>`,
+  )
+
 const APPROACH = [
   [
     'design',
@@ -247,7 +288,7 @@ const APPROACH = [
 const LIME = '#c6ff3d'
 const tryCard = (t, kind) => {
   const sandbox = `
-    <div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;display:grid;grid-template-columns:118px 1fr">
+    <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;display:grid;grid-template-columns:118px 1fr">
       <div style="padding:16px 14px;border-right:1px solid ${t.hair};display:grid;gap:12px;align-content:start">
         ${['radius', 'density', 'accent', 'font']
           .map(
@@ -269,7 +310,7 @@ const tryCard = (t, kind) => {
       </div>
     </div>`
   const brief = `
-    <div style="position:absolute;left:18px;top:18px;right:18px;height:210px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div style="display:grid;gap:6px;align-content:start">
         <div class="m" style="font-size:8px;margin-bottom:4px">what you need</div>
         ${[
@@ -296,7 +337,7 @@ const tryCard = (t, kind) => {
   return page(
     t,
     405,
-    340,
+    391,
     `${kind === 'sandbox' ? sandbox : brief}
   <div style="position:absolute;left:18px;right:18px;bottom:22px">
     <div class="row m" style="font-size:10px"><span>try it · ${kind === 'sandbox' ? 'system' : 'contact'}</span><span>↗</span></div>
@@ -353,25 +394,126 @@ const contact = (t) =>
   </div>`,
   )
 
-// ---------- обложки файлов Figma: строка кейса как на главной сайта, 1920×1080 ----------
+// ---------- анимированная переписка для карточек автоматизаций (SVG, играет прямо в README) ----------
 
-const figmaCover = (t, c) =>
-  page(
-    t,
+const esc = (x) => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const STEP = 1.1 // секунда на сообщение
+const TYPING = 0.9 // бот «печатает» перед ответом
+const HOLD = 3 // вся переписка висит перед новым кругом
+
+const chatSvg = (t, c, photo) => {
+  const lines = c.preview.lines
+  // Когда появляется каждое сообщение и когда перед ним начинает «печатать» бот
+  let time = 0.6
+  const at = lines.map((l) => {
+    const typing = l.from === 'bot' ? time : null
+    if (l.from === 'bot') time += TYPING
+    const show = time
+    time += STEP
+    return { typing, show }
+  })
+  const total = time + HOLD
+  const pct = (sec) => ((sec / total) * 100).toFixed(2)
+  const keys = at
+    .map(
+      ({ typing, show }, i) => `
+@keyframes m${i}{0%,${pct(show)}%{opacity:0;transform:translateY(8px)}${pct(show + 0.35)}%,94%{opacity:1;transform:none}100%{opacity:0}}
+${typing !== null ? `@keyframes d${i}{0%,${pct(typing)}%{opacity:0}${pct(typing + 0.15)}%,${pct(show)}%{opacity:1}${pct(show + 0.05)}%,100%{opacity:0}}` : ''}`,
+    )
+    .join('')
+  const media = (l) => {
+    if (l.media === 'photo')
+      return `<img src="${photo}" style="display:block;width:50px;height:62px;object-fit:cover;border-radius:6px;margin-bottom:5px"/>`
+    if (l.media === 'products')
+      return `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:6px">${(
+        l.items || []
+      )
+        .slice(0, 3)
+        .map(
+          (x) =>
+            `<div style="border:1px solid ${t.hair};background:${t.bg};padding:4px;font-size:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><div style="height:22px;margin-bottom:3px;background:repeating-linear-gradient(135deg,${t.el} 0 3px,${t.hair} 3px 6px)"></div>${esc(x)}<div style="color:${t.live};font-size:7px;letter-spacing:.06em">IN STOCK</div></div>`,
+        )
+        .join('')}</div>`
+    return ''
+  }
+  const bubbles = lines
+    .map((l, i) => {
+      const user = l.from === 'user'
+      const wide = l.media === 'products'
+      const bubble = `<div style="align-self:${user ? 'flex-end' : 'flex-start'};max-width:78%;${wide ? 'width:78%;' : ''}padding:6px 10px;border-radius:${user ? '12px 12px 3px 12px' : '12px 12px 12px 3px'};background:${user ? t.fg : t.bg};color:${user ? t.bg : t.fg};border:1px solid ${user ? 'transparent' : t.hair};font-size:11px;line-height:1.3;animation:m${i} ${total}s infinite both">${media(l)}${esc(l.text)}</div>`
+      const dots =
+        at[i].typing !== null
+          ? `<div style="position:absolute;left:0;top:0;display:flex;gap:3px;padding:9px 10px;border-radius:12px 12px 12px 3px;background:${t.bg};border:1px solid ${t.hair};animation:d${i} ${total}s infinite both">${[
+              0, 1, 2,
+            ]
+              .map(
+                (k) =>
+                  `<i style="width:4px;height:4px;border-radius:50%;background:${t.fg3};animation:dot .9s ${k * 0.15}s infinite"></i>`,
+              )
+              .join('')}</div>`
+          : ''
+      return `<div style="position:relative;display:flex;flex-direction:column">${dots}${bubble}</div>`
+    })
+    .join('')
+  const bot = c.preview.bot || 'bot'
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="405" height="391" viewBox="0 0 405 391">
+<foreignObject x="0" y="0" width="405" height="391"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:405px;height:391px;box-sizing:border-box;background:${t.bg};border:1px solid ${t.hair};color:${t.fg};font-family:Inter,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased">
+<style>${keys}
+@keyframes dot{50%{transform:translateY(-2px);background:${t.fg}}}
+.m{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:${t.fg3}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;opacity:1!important}}</style>
+<div style="position:absolute;left:18px;top:18px;right:18px;height:261px;box-sizing:border-box;border:1px solid ${t.hair};background:${t.el};display:flex;flex-direction:column">
+  <div class="m" style="display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid ${t.hair};text-transform:none;letter-spacing:.02em"><i style="width:12px;height:12px;border-radius:50%;border:1px solid ${t.hover}"></i>${esc(bot)}<i style="width:5px;height:5px;border-radius:50%;background:${t.live};margin-left:4px"></i>online</div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:5px;padding:9px 12px;overflow:hidden">${bubbles}</div>
+</div>
+<div style="position:absolute;left:18px;right:18px;bottom:22px">
+  <div class="m" style="display:flex;justify-content:space-between"><span>${pad(c.index)} / ${pad(TOTAL)} · ${esc(c.label)}</span><span>${esc(c.year)}</span></div>
+  <div style="font-size:26px;font-weight:450;letter-spacing:-.03em;line-height:1.08;margin-top:12px">${esc(c.title)}</div>
+  <div style="font-size:14px;color:${t.fg2};margin-top:4px">${esc(c.tagline)}</div>
+</div>
+</div></foreignObject></svg>`
+}
+
+// ---------- обложки файлов Figma: две лучшие страницы в окнах на ровном тоне ----------
+
+// Короткое имя в углу обложки. Нет в списке — название кейса
+const SHORT = {
+  'meeting-rooms': 'Бронирование',
+  'meg-site': 'MEG',
+  'prof-study': 'Профориентация',
+}
+// Тон фона: проекты ТИТАН-2 — их фирменный синий (снят с их же макетов), остальные — тёплый светлый
+const TONES = {
+  titan: { bg: '#0a4a9a', fg: '#ffffff', sub: 'rgb(255 255 255 / .6)', bar: '#f4f6fa' },
+  base: { bg: '#e9e6df', fg: '#14140f', sub: 'rgb(20 20 15 / .5)', bar: '#f6f5f1' },
+}
+// Для окон берём экраны сайта целиком: без телефонных коллажей, обложек и «файла в Figma»
+const pickShots = (c) =>
+  c.shots.filter((s) => !/^(телефон|файл в figma|обложка)/i.test(s.caption)).slice(0, 2)
+
+const figmaCover = (c) => {
+  const tone = c.group === 'titan' ? TONES.titan : TONES.base
+  const [front, back = front] = pickShots(c)
+  const win = (shot, style) => `
+    <div style="position:absolute;${style};background:${tone.bar};border-radius:14px 14px 0 0;overflow:hidden;box-shadow:0 40px 120px rgb(0 0 0 / .28),0 0 0 1px rgb(0 0 0 / .06)">
+      <div style="height:46px;display:flex;align-items:center;gap:9px;padding:0 20px">
+        <i style="width:12px;height:12px;border-radius:50%;background:rgb(0 0 0 / .13)"></i><i style="width:12px;height:12px;border-radius:50%;background:rgb(0 0 0 / .13)"></i><i style="width:12px;height:12px;border-radius:50%;background:rgb(0 0 0 / .13)"></i>
+        <span style="margin:0 auto;width:34%;height:22px;border-radius:11px;background:rgb(0 0 0 / .06)"></span>
+      </div>
+      <img src="/public${shot.src}" style="display:block;width:100%;height:calc(100% - 46px);object-fit:cover;object-position:top center">
+    </div>`
+  return page(
+    { ...THEMES.light, bg: tone.bg, hair: 'transparent' },
     1920,
     1080,
     `
-  <div style="position:absolute;inset:96px;display:grid;grid-template-columns:1040px 1fr;gap:88px;align-items:center">
-    <div style="height:736px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:center" src="/public${(c.thumb ?? c.shots[0]).src}"></div>
-    <div style="display:grid;gap:36px;align-content:center">
-      <div class="row m" style="font-size:18px"><span>${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</span><span>${c.year}</span></div>
-      <div class="h" style="font-size:78px;letter-spacing:-.04em;line-height:1.02">${c.title} <span style="color:${t.fg2}">· ${c.tagline}</span></div>
-      <p class="p" style="font-size:24px">${c.lead}</p>
-      <div class="m" style="font-size:16px;display:flex;flex-wrap:wrap;gap:10px 28px;text-transform:lowercase;letter-spacing:.02em">${c.stack.map((s) => `<span>· ${s}</span>`).join('')}</div>
-    </div>
-  </div>
-  <div class="row m" style="position:absolute;left:96px;right:96px;top:40px;font-size:16px"><span>LEXANDRO</span><span>${c.client}</span></div>`,
+  ${win(back, 'left:820px;top:170px;width:1000px;bottom:-40px')}
+  ${win(front, 'left:190px;top:300px;width:1080px;bottom:-40px')}
+  <div style="position:absolute;left:96px;top:78px;right:96px;display:flex;justify-content:space-between;align-items:baseline">
+    <span class="h" style="font-size:54px;letter-spacing:-.03em;line-height:1;color:${tone.fg}">${SHORT[c.slug] ?? c.title}</span>
+  </div>`,
   )
+}
 
 // ---------- съёмка ----------
 
@@ -401,6 +543,22 @@ export const PROFILE_CASES = [
   'ai-translator',
 ]
 
+// Уменьшенное фото для вложения «photo» в переписке — прямо внутри SVG
+let photoData = null
+const photo = async () => {
+  if (photoData) return photoData
+  const p = await browser.newPage()
+  await p.goto('http://localhost:8798/public/me/photo.jpg')
+  photoData = await p.evaluate(() => {
+    const i = document.querySelector('img')
+    const c = Object.assign(document.createElement('canvas'), { width: 128, height: 160 })
+    c.getContext('2d').drawImage(i, 0, 0, 128, 160)
+    return c.toDataURL('image/jpeg', 0.8)
+  })
+  await p.close()
+  return photoData
+}
+
 const mode = process.argv[2]
 if (!mode || mode === 'og') {
   await mkdir(join(ROOT, 'public/og'), { recursive: true })
@@ -428,7 +586,7 @@ if (!mode || mode === 'profile') {
       join(PROFILE, `label-approach-${name}.png`),
       2,
     )
-    await shot(approach(t), W, 210, join(PROFILE, `approach-${name}.png`), 2)
+    await shot(services(t), W, 268, join(PROFILE, `approach-${name}.png`), 2)
     await shot(
       label(t, 'selected work', `${TOTAL} projects`),
       W,
@@ -444,20 +602,24 @@ if (!mode || mode === 'profile') {
       join(PROFILE, `label-try-${name}.png`),
       2,
     )
-    await shot(tryCard(t, 'sandbox'), 405, 340, join(PROFILE, `try-sandbox-${name}.png`), 2)
-    await shot(tryCard(t, 'brief'), 405, 340, join(PROFILE, `try-brief-${name}.png`), 2)
+    await shot(tryCard(t, 'sandbox'), 405, 391, join(PROFILE, `try-sandbox-${name}.png`), 2)
+    await shot(tryCard(t, 'brief'), 405, 391, join(PROFILE, `try-brief-${name}.png`), 2)
     await shot(stack(t), W, 200, join(PROFILE, `stack-${name}.png`), 2)
     await shot(contact(t), W, 300, join(PROFILE, `contact-${name}.png`), 2)
     await shot(featured(t, first), W, 598, join(PROFILE, `case-${first.slug}-${name}.png`), 2)
-    for (const c of rest)
-      await shot(half(t, c), 405, 340, join(PROFILE, `case-${c.slug}-${name}.png`), 2)
+    for (const c of rest) {
+      // Кейсы с перепиской — живой чат в SVG, остальные — картинка
+      if (c.preview?.kind === 'chat')
+        await writeFile(join(PROFILE, `case-${c.slug}-${name}.svg`), chatSvg(t, c, await photo()))
+      else await shot(half(t, c), 405, 391, join(PROFILE, `case-${c.slug}-${name}.png`), 2)
+    }
   }
 }
 if (mode === 'figma') {
   const out = join(ROOT, '_shots/figma-covers')
   await mkdir(out, { recursive: true })
-  for (const c of cases.filter((c) => c.thumb || c.shots.length))
-    await shot(figmaCover(THEMES.dark, c), 1920, 1080, join(out, `${c.slug}.png`))
+  for (const c of cases.filter((c) => pickShots(c).length))
+    await shot(figmaCover(c), 1920, 1080, join(out, `${c.slug}.png`))
 }
 await browser.close()
 server.close()
