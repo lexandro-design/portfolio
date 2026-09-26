@@ -249,6 +249,21 @@
   color: #14140f;
 }
 
+/* В светлой теме бежевый акцент сливается с фоном — кнопка и галочки тёмные, как главная кнопка сайта */
+:global([data-theme='light']) .primary {
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+}
+
+:global([data-theme='light']) .service[aria-pressed='true'] .check {
+  border-color: var(--fg-primary);
+  background: var(--fg-primary);
+}
+
+:global([data-theme='light']) .service[aria-pressed='true'] .check::after {
+  border-color: var(--fg-inverse);
+}
+
 .primary[aria-disabled='true'],
 .secondary:not([href]) {
   opacity: 0.45;
