@@ -129,8 +129,9 @@ html,body{width:${w}px;height:${h}px;overflow:hidden;background:${t.bg};color:${
 ${css}</style>${body}`
 
 const bar = '<div class="bar"><i></i><i></i><i></i><span></span></div>'
+// Высота — потолок: широкий экран не оставляет пустое окно под собой
 const win = (s, x, y, w, h, attrs = '') =>
-  `<div class="win" ${attrs} style="left:${x}px;top:${y}px;width:${w}px;height:${h}px">${bar}<img src="/public${s.src}"></div>`
+  `<div class="win" ${attrs} style="left:${x}px;top:${y}px;width:${w}px;height:${Math.min(h, Math.round((w * s.h) / s.w) + 40)}px">${bar}<img src="/public${s.src}"></div>`
 
 const isPhone = (s) => /^телефон/i.test(s.caption)
 const isFigma = (s) => /^файл в figma/i.test(s.caption)
@@ -364,7 +365,7 @@ const heroes = [
         <div style="margin-top:22px;font-size:22px;line-height:1.45;color:${t.sub}">${tag}</div>
         <div class="m" style="margin-top:48px;font-size:12px;line-height:2">${stack.join('<br>')}</div>
       </div>
-      ${win(a, 600, 80, 720, 740)}`,
+      ${win(a, 600, Math.max(80, Math.round((900 - Math.min(740, (720 * a.h) / a.w + 40)) / 2)), 720, 740)}`,
     ),
 ]
 
@@ -593,7 +594,8 @@ for (const slug of slugs) {
       ? THEMES.titan
       : [THEMES.sand, THEMES.ink, THEMES.tint(accent)][own.indexOf(raw) % 3]
   const out = join(ROOT, '_shots/behance', slug)
-  await rm(out, { recursive: true, force: true })
+  // NO_VIDEO пересобирает только картинки, видео остаются на месте
+  if (!process.env.NO_VIDEO) await rm(out, { recursive: true, force: true })
   await mkdir(out, { recursive: true })
 
   const en = i18n[slug]
@@ -634,17 +636,24 @@ for (const slug of slugs) {
 
   const tall = a.h / a.w > 1.2
   // Первое видео: длинная страница листается, широкие экраны едут каруселью
-  if (!process.env.NO_VIDEO) {
-    if (tall) await scrollVideo(t, a, file('scroll'), v === 2 ? ph : null, scr)
-    else if (list.length > 1) await slideVideo(t, list.slice(0, 5), file('slides'))
+  const vid = !process.env.NO_VIDEO
+  if (tall) {
+    const f = file('scroll')
+    if (vid) await scrollVideo(t, a, f, v === 2 ? ph : null, scr)
+  } else if (list.length > 1) {
+    const f = file('slides')
+    if (vid) await slideVideo(t, list.slice(0, 5), f)
   }
   if (secs[1]) await block(1)
 
   // Второе видео: колонки экранов или смена экранов в окне
-  if (!process.env.NO_VIDEO) {
-    const pool = [...list, ...c.shots.filter(isTablet)]
-    if (pool.length >= 4 && (idx % 2 === 0 || !tall)) await marqueeVideo(t, pool, file('screens'))
-    else if (list.length > 1) await fadeVideo(t, list.slice(0, 5), file('screens'))
+  const pool = [...list, ...c.shots.filter(isTablet)]
+  if (pool.length >= 4 && (idx % 2 === 0 || !tall)) {
+    const f = file('screens')
+    if (vid) await marqueeVideo(t, pool, f)
+  } else if (list.length > 1) {
+    const f = file('screens')
+    if (vid) await fadeVideo(t, list.slice(0, 5), f)
   }
   if (secs[2]) await block(2)
 
