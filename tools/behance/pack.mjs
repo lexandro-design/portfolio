@@ -42,7 +42,7 @@ const bgOf = (file) => {
   ])
   const rgb = [...buf.subarray(0, 3)]
   // JPEG сдвигает цвет на единицу-две: цвета тем из render.mjs подставляем точно
-  const exact = ['#e9e6df', '#111113', '#0a4a9a'].find((hex) =>
+  const exact = ['#e9e6df', '#111113', '#edf1f7'].find((hex) =>
     [1, 3, 5].every((k, i) => Math.abs(parseInt(hex.slice(k, k + 2), 16) - rgb[i]) <= 3),
   )
   return exact ?? `#${rgb.map((v) => v.toString(16).padStart(2, '0')).join('')}`
