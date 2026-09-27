@@ -1,0 +1,114 @@
+{
+  "parfumeria": {
+    "title": "Parfumeria.by: E-commerce Design System & Website",
+    "description": "A design system from scratch and 450+ screens at three widths for a perfume and cosmetics store in Belarus.",
+    "tags": ["e-commerce", "design system", "ui/ux", "web design", "online store", "beauty", "perfume", "figma", "responsive", "mobile"],
+    "fields": ["UI/UX", "Web Design", "Interaction Design"],
+    "tools": ["Figma"]
+  },
+  "meeting-rooms": {
+    "title": "Meeting Rooms: Booking Service for a Holding",
+    "description": "An internal service for booking meeting rooms across a holding: two roles and 60+ screens with every state.",
+    "tags": ["ui/ux", "saas", "booking", "dashboard", "admin panel", "enterprise", "design system", "taiga ui", "figma", "product design"],
+    "fields": ["UI/UX", "Interaction Design", "Web Design"],
+    "tools": ["Figma"]
+  },
+  "otrx": {
+    "title": "OTRX: Cost Estimate Control Admin Panel",
+    "description": "An admin panel for a module that validates cost estimate files for nuclear power plant construction: registry, check cards, rules and roles.",
+    "tags": ["ui/ux", "admin panel", "enterprise", "dashboard", "data table", "b2b", "design system", "taiga ui", "figma", "product design"],
+    "fields": ["UI/UX", "Interaction Design", "Web Design"],
+    "tools": ["Figma"]
+  },
+  "meg-site": {
+    "title": "MEG: Corporate Website for an Engineering Company",
+    "description": "A corporate website for an engineering company in the TITAN-2 holding: ten pages at 1440, 834 and 393.",
+    "tags": ["corporate website", "web design", "ui/ux", "engineering", "industrial", "responsive", "design system", "b2b", "figma", "landing page"],
+    "fields": ["Web Design", "UI/UX"],
+    "tools": ["Figma"]
+  },
+  "osq": {
+    "title": "OSQ Group: Website & Client Portal for Food Packaging",
+    "description": "A home page with a live news feed, a scroll-animated promo page and a portal for wholesale clients of a food packaging maker.",
+    "tags": ["web design", "ui/ux", "b2b", "client portal", "packaging", "promo page", "scroll animation", "responsive", "ui kit", "figma"],
+    "fields": ["Web Design", "UI/UX", "Interaction Design"],
+    "tools": ["Figma"]
+  },
+  "ai-translator": {
+    "title": "AI Translator: Legal Translation Tool",
+    "description": "An AI translator for a legal team: documents, glossaries and refining a translation in plain words in a chat. Light and dark themes.",
+    "tags": ["ai", "ui/ux", "chat interface", "saas", "legal tech", "dark mode", "light mode", "design system", "figma", "product design"],
+    "fields": ["UI/UX", "Interaction Design"],
+    "tools": ["Figma"]
+  },
+  "svarnoy52": {
+    "title": "Svarnoy 52: Welding Equipment Store",
+    "description": "An online store for welding equipment: design, a Tilda build with custom code and the whole catalog moved onto the site.",
+    "tags": ["e-commerce", "online store", "web design", "tilda", "industrial", "catalog", "responsive", "ui/ux", "figma", "photoshop"],
+    "fields": ["Web Design", "UI/UX"],
+    "tools": ["Figma", "Adobe Photoshop", "Tilda"]
+  },
+  "pix-bi": {
+    "title": "PIX BI: Reporting Dashboards",
+    "description": "Reporting dashboards for the nuclear industry: a contract security report with five urgency levels and project KPI.",
+    "tags": ["dashboard", "data visualization", "bi", "analytics", "ui/ux", "enterprise", "charts", "data table", "figma", "product design"],
+    "fields": ["UI/UX", "Information Architecture", "Interaction Design"],
+    "tools": ["Figma"]
+  },
+  "ubiray-rf": {
+    "title": "Ubiray.rf: Community Profile for a Cleaning Marketplace",
+    "description": "A new community section for a cleaning marketplace: a user profile with feed, career, photos and videos at three widths.",
+    "tags": ["ui/ux", "web design", "marketplace", "social", "profile", "community", "responsive", "auto layout", "figma", "product design"],
+    "fields": ["UI/UX", "Web Design"],
+    "tools": ["Figma"]
+  },
+  "vacation-plan": {
+    "title": "Vacation Planner: Corporate HR Service",
+    "description": "A corporate vacation planning service: a vacation table, settings and three roles, checked on widths up to 3440.",
+    "tags": ["hr tech", "ui/ux", "enterprise", "admin panel", "data table", "calendar", "saas", "taiga ui", "figma", "product design"],
+    "fields": ["UI/UX", "Interaction Design"],
+    "tools": ["Figma"]
+  },
+  "lotus": {
+    "title": "Lotus: Asian Restaurant Website Concept",
+    "description": "A concept website for an Asian restaurant in five breakpoints: dark palette with burgundy, large dish photos and table booking.",
+    "tags": ["restaurant", "web design", "ui/ux", "dark ui", "food", "concept", "responsive", "landing page", "figma", "hospitality"],
+    "fields": ["Web Design", "UI/UX"],
+    "tools": ["Figma"]
+  },
+  "tetrasis": {
+    "title": "Tetrasis: Bundle Product Page for an Appliance Store",
+    "description": "A reworked product page for appliance bundles: the whole bundle, what is in it and the price, on desktop and phone.",
+    "tags": ["e-commerce", "product page", "ui/ux", "web design", "home appliances", "online store", "responsive", "ui kit", "figma", "ux"],
+    "fields": ["UI/UX", "Web Design"],
+    "tools": ["Figma"]
+  },
+  "reckon": {
+    "title": "RECKON: Streetwear Brand Store",
+    "description": "An online store for a streetwear brand: monochrome, a monospaced typeface, a lookbook and a Tilda cart extended with JavaScript.",
+    "tags": ["fashion", "streetwear", "e-commerce", "web design", "minimal", "monochrome", "tilda", "online store", "ui/ux", "figma"],
+    "fields": ["Web Design", "UI/UX", "Fashion"],
+    "tools": ["Figma", "Tilda"]
+  },
+  "prof-study": {
+    "title": "TITAN-2 Career Days: Event Landing Page",
+    "description": "A landing page for a holding's career guidance event for school and university students: steps, education, professions and FAQ.",
+    "tags": ["landing page", "web design", "event", "education", "career", "corporate", "responsive", "ui/ux", "figma", "hr"],
+    "fields": ["Web Design", "UI/UX"],
+    "tools": ["Figma"]
+  },
+  "svarprom-nn": {
+    "title": "Svarprom NN: Welding Equipment Store",
+    "description": "A second store for the owners of Svarnoy 52: its own visual key and the same approach to a large catalog.",
+    "tags": ["e-commerce", "online store", "web design", "tilda", "industrial", "catalog", "dark ui", "responsive", "figma", "photoshop"],
+    "fields": ["Web Design", "UI/UX"],
+    "tools": ["Figma", "Adobe Photoshop", "Tilda"]
+  },
+  "portfolio-site": {
+    "title": "LEXANDRO: Portfolio Website & Design System",
+    "description": "My portfolio: one design system with dark, neon and light themes, a live sandbox and a brief builder, in four languages.",
+    "tags": ["portfolio", "design system", "design tokens", "web design", "ui/ux", "dark mode", "next.js", "interaction design", "personal website", "figma"],
+    "fields": ["Web Design", "UI/UX", "Interaction Design"],
+    "tools": ["Figma"]
+  }
+}

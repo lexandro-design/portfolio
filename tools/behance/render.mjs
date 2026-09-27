@@ -8,7 +8,7 @@
 import { chromium } from '@playwright/test'
 import { execFileSync } from 'node:child_process'
 import { createServer } from 'node:http'
-import { mkdir, readFile, rm } from 'node:fs/promises'
+import { mkdir, readdir, readFile, rm } from 'node:fs/promises'
 import { extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -18,6 +18,18 @@ const read = async (p) => JSON.parse(await readFile(join(ROOT, 'src/content/data
 const cases = await read('cases.json')
 const i18n = await read('cases-i18n/en.json')
 const site = await read('site.json')
+
+// Дополнительные проекты, которых нет на сайте: tools/behance/extra/<slug>/case.json —
+// та же форма, что у кейса в cases.json, плюс поле en с английскими текстами.
+// Пути картинок в нём вида /tools/behance/extra/<slug>/01.jpg
+const EXTRA = join(ROOT, 'tools/behance/extra')
+for (const dir of await readdir(EXTRA).catch(() => [])) {
+  const raw = await readFile(join(EXTRA, dir, 'case.json'), 'utf8').catch(() => null)
+  if (!raw) continue
+  const { en, ...c } = JSON.parse(raw)
+  cases.push(c)
+  if (en) i18n[c.slug] = en
+}
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -128,10 +140,12 @@ html,body{width:${w}px;height:${h}px;overflow:hidden;background:${t.bg};color:${
 .card img{display:block;width:100%}
 ${css}</style>${body}`
 
+// Картинки кейсов лежат в public/, у дополнительных проектов — рядом с их case.json
+const u = (s) => (s.src.startsWith('/tools/') ? s.src : `/public${s.src}`)
 const bar = '<div class="bar"><i></i><i></i><i></i><span></span></div>'
 // Высота — потолок: широкий экран не оставляет пустое окно под собой
 const win = (s, x, y, w, h, attrs = '') =>
-  `<div class="win" ${attrs} style="left:${x}px;top:${y}px;width:${w}px;height:${Math.min(h, Math.round((w * s.h) / s.w) + 40)}px">${bar}<img src="/public${s.src}"></div>`
+  `<div class="win" ${attrs} style="left:${x}px;top:${y}px;width:${w}px;height:${Math.min(h, Math.round((w * s.h) / s.w) + 40)}px">${bar}<img src="${u(s)}"></div>`
 
 const isPhone = (s) => /^телефон/i.test(s.caption)
 const isFigma = (s) => /^файл в figma/i.test(s.caption)
@@ -140,7 +154,11 @@ const desktop = (c) =>
   c.shots.filter((s) => !isPhone(s) && !isFigma(s) && !isTablet(s) && !/^обложка/i.test(s.caption))
 
 // В английском тексте кейсов встречается тире, в клиентских текстах его не ставим
-const clean = (t) => t.replaceAll(' — ', ': ').replaceAll('—', '-')
+const clean = (t) =>
+  t
+    .replaceAll(' — ', ': ')
+    .replaceAll('—', '-')
+    .replaceAll('TITAN-2', '<span style="white-space:nowrap">TITAN-2</span>')
 const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1)
 const STACK_EN = {
   'Дизайн-система': 'Design system',
@@ -236,10 +254,57 @@ const probe = async (c) => {
       while (y1 > 0 && !diff(px(cx, y1))) y1--
       return { accent, screen: { x: x0, y: y0, w: x1 - x0, h: y1 - y0 + 1, W: IW } }
     },
-    [`/public${desktop(c)[0].src}`, ph && `/public${ph.src}`],
+    [u(desktop(c)[0]), ph && !ph.screen && u(ph)],
   )
   await p.close()
+  // Телефон снят отдельным экраном (screen: true), а не композицией: экран — вся картинка
+  if (ph?.screen) res.screen = { x: 0, y: 0, w: ph.w, h: ph.h, W: ph.w }
   return res
+}
+
+/** Рамка содержимого на холсте Figma: вокруг макетов много пустого поля */
+const contentBox = async (s) => {
+  const p = await open('<body></body>', 100, 100)
+  const box = await p.evaluate(async (src) => {
+    const i = new Image()
+    await new Promise((ok) => {
+      i.onload = ok
+      i.src = src
+    })
+    const cv = document.createElement('canvas')
+    cv.width = i.naturalWidth
+    cv.height = i.naturalHeight
+    const x = cv.getContext('2d')
+    x.drawImage(i, 0, 0)
+    const d = x.getImageData(0, 0, cv.width, cv.height).data
+    const bg = [d[0], d[1], d[2]]
+    let x0 = cv.width
+    let y0 = cv.height
+    let x1 = 0
+    let y1 = 0
+    for (let y = 0; y < cv.height; y += 3)
+      for (let X = 0; X < cv.width; X += 3) {
+        const k = (y * cv.width + X) * 4
+        if (Math.max(...[0, 1, 2].map((j) => Math.abs(d[k + j] - bg[j]))) > 14) {
+          if (X < x0) x0 = X
+          if (X > x1) x1 = X
+          if (y < y0) y0 = y
+          if (y > y1) y1 = y
+        }
+      }
+    return { x0, y0, x1, y1, W: cv.width, H: cv.height }
+  }, u(s))
+  await p.close()
+  const pad = Math.round(Math.max(box.x1 - box.x0, box.y1 - box.y0) * 0.04)
+  const x = Math.max(0, box.x0 - pad)
+  const y = Math.max(0, box.y0 - pad)
+  return {
+    x,
+    y,
+    w: Math.min(box.W, box.x1 + pad) - x,
+    h: Math.min(box.H, box.y1 + pad) - y,
+    W: box.W,
+  }
 }
 
 /** Телефон с первым экраном из композиции «Телефон: …» */
@@ -247,7 +312,7 @@ const phoneEl = (ph, scr, x, y, w) => {
   if (!ph || !scr || scr.w < 80) return ''
   const k = (w - 16) / scr.w
   const h = Math.min(Math.round(scr.h * k) + 44, Math.round((w - 16) * 2.17)) + 16
-  return `<div class="phone" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><div class="scr"><img src="/public${ph.src}" style="position:absolute;width:${(scr.W * k).toFixed(1)}px;left:${(-scr.x * k).toFixed(1)}px;top:${(44 - scr.y * k).toFixed(1)}px"><b class="status">9:41</b></div><i class="island"></i></div>`
+  return `<div class="phone" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><div class="scr"><img src="${u(ph)}" style="position:absolute;width:${(scr.W * k).toFixed(1)}px;left:${(-scr.x * k).toFixed(1)}px;top:${(44 - scr.y * k).toFixed(1)}px"><b class="status">9:41</b></div><i class="island"></i></div>`
 }
 
 /** Видео: страница с CSS-анимацией, кадр за кадром по времени, потом MP4 и GIF */
@@ -402,20 +467,48 @@ const textShot = async (t, variant, label, title, body, out, foot = '') => {
 }
 
 /** Картинка композиции (телефоны, файл Figma) карточкой на фоне темы */
-const framed = async (t, s, out) => {
-  const iw = W - 160
-  const h = Math.round((iw * s.h) / s.w) + 160
+const framed = async (t, s, out, crop) => {
+  // crop — часть картинки в её пикселях; без него картинка целиком
+  const cw = crop?.w ?? s.w
+  const ch = crop?.h ?? s.h
+  // Высокая картинка (один телефон) не шире, чем влезает в 1100 по высоте
+  const iw = Math.min(W - 160, Math.round((1100 * cw) / ch))
+  const k = iw / cw
+  const ih = Math.round(ch * k)
+  const h = ih + 160
+  const img = crop
+    ? `<img src="${u(s)}" style="position:absolute;width:${(crop.W * k).toFixed(1)}px;max-width:none;left:${(-crop.x * k).toFixed(1)}px;top:${(-crop.y * k).toFixed(1)}px">`
+    : `<img src="${u(s)}">`
   await shot(
     shell(
       t,
       W,
       h,
-      `<div class="card" style="position:absolute;left:80px;top:80px;width:${iw}px"><img src="/public${s.src}"></div>`,
+      `<div class="card" style="position:absolute;left:${(W - iw) / 2}px;top:80px;width:${iw}px;height:${ih}px;${crop ? 'background:#1e1e1e' : ''}">${img}</div>`,
     ),
     W,
     h,
     out,
   )
+}
+
+/** Телефоны, снятые отдельными экранами, в рамках рядом */
+const phonesShot = async (t, list, out) => {
+  const pw = 300
+  const gap = 60
+  const x0 = (W - list.length * pw - (list.length - 1) * gap) / 2
+  const els = list
+    .map((s, i) =>
+      phoneEl(
+        s,
+        { x: 0, y: 0, w: s.w, h: s.h, W: s.w },
+        x0 + i * (pw + gap),
+        90 + (i % 2) * 40,
+        pw,
+      ),
+    )
+    .join('')
+  await shot(shell(t, W, 900, els), W, 900, out)
 }
 
 const thanks = async (t, variant, out) => {
@@ -459,7 +552,7 @@ const scrollVideo = (t, a, out, ph, scr) => {
       t,
       W,
       900,
-      `<div class="win" style="left:${x}px;top:70px;width:${ww}px;height:${viewH + 40}px">${bar}<div style="height:${viewH}px;overflow:hidden"><img class="sc" src="/public${a.src}"></div></div>
+      `<div class="win" style="left:${x}px;top:70px;width:${ww}px;height:${viewH + 40}px">${bar}<div style="height:${viewH}px;overflow:hidden"><img class="sc" src="${u(a)}"></div></div>
       ${withPhone ? phoneEl(ph, scr, 1040, 190, 250) : ''}`,
       `@keyframes sc{0%,8%{transform:translateY(0)}46%,56%{transform:translateY(-${dist}px)}94%,100%{transform:translateY(0)}}
        .sc{animation:sc 12s cubic-bezier(.65,0,.35,1) infinite}`,
@@ -537,6 +630,34 @@ const slideVideo = (t, list, out) => {
   )
 }
 
+/** Наезд на экран приложения: окно во всю ширину, внутри экран крупно плывёт по деталям */
+const detailVideo = (t, s, out) => {
+  const ww = 1240
+  const vh = 780
+  const zoom = 1.7
+  const iw = Math.round(ww * zoom)
+  const ih = Math.round((iw * s.h) / s.w)
+  const dx = iw - ww
+  const dy = Math.max(0, Math.min(ih - vh, 700))
+  // Начало и конец: экран целиком по ширине окна
+  const k = (1 / zoom).toFixed(4)
+  return video(
+    shell(
+      t,
+      W,
+      900,
+      `<div class="win" style="left:80px;top:40px;width:${ww}px;height:${vh + 40}px">${bar}<div style="position:relative;height:${vh}px;overflow:hidden"><img class="zm" src="${u(s)}" style="position:absolute;left:0;top:0;width:${iw}px"></div></div>`,
+      `@keyframes zm{0%,6%{transform:translate(0,0) scale(${k})}24%,40%{transform:translate(0,0) scale(1)}64%,76%{transform:translate(-${dx}px,-${dy}px) scale(1)}94%,100%{transform:translate(0,0) scale(${k})}}
+       .zm{transform-origin:0 0;animation:zm 12s cubic-bezier(.65,0,.35,1) infinite}`,
+      true,
+    ),
+    W,
+    900,
+    12,
+    out,
+  )
+}
+
 /** Три колонки экранов едут навстречу друг другу, бесшовно по кругу */
 const marqueeVideo = (t, list, out) => {
   const colW = 380
@@ -554,7 +675,7 @@ const marqueeVideo = (t, list, out) => {
       const items = [...one, ...one]
         .map(
           (s) =>
-            `<div class="card" style="height:${hOf(s)}px;margin-bottom:${gap}px"><img src="/public${s.src}"></div>`,
+            `<div class="card" style="height:${hOf(s)}px;margin-bottom:${gap}px"><img src="${u(s)}"></div>`,
         )
         .join('')
       const dir =
@@ -566,7 +687,21 @@ const marqueeVideo = (t, list, out) => {
     })
     .join('')
   // Колонки меняют каждый пиксель кадра, GIF во всю ширину весил 50 МБ
-  return video(shell(t, W, 900, html, '', true), W, 900, seconds, out, 1000)
+  return video(
+    shell(
+      t,
+      W,
+      900,
+      `<div style="position:absolute;inset:0;-webkit-mask:linear-gradient(transparent,#000 90px,#000 810px,transparent)">${html}</div>`,
+      '',
+      true,
+    ),
+    W,
+    900,
+    seconds,
+    out,
+    1000,
+  )
 }
 
 // ——— Сборка ———
@@ -580,7 +715,7 @@ const EN_TITLE = { tetrasis: 'Tetrasis' }
 for (const slug of slugs) {
   const raw = cases.find((x) => x.slug === slug)
   if (!raw) throw new Error(`нет кейса ${slug}`)
-  const c = { ...raw, title: i18n[slug]?.title ?? EN_TITLE[slug] ?? raw.title }
+  const c = { ...raw, title: clean(i18n[slug]?.title ?? EN_TITLE[slug] ?? raw.title) }
   const list = desktop(c)
   if (!list.length) {
     console.log('пропуск, нет скринов:', slug)
@@ -612,7 +747,10 @@ for (const slug of slugs) {
   // Обложке и первому экрану с телефоном он нужен, иначе берём вариант без него
   await shot(covers[v === 0 && !hasPhone ? 1 : v](ctx), 808, 632, file('cover.jpg'))
   if (process.env.COVER_ONLY) continue
-  await shot(heroes[v === 1 && !hasPhone ? 2 : v](ctx), W, 900, file('hero.jpg'))
+  // Широкий экран приложения в колонке справа выходит мелким, ему нужен вариант по центру
+  const tall = a.h / a.w > 1.2
+  const hv = v === 1 && !hasPhone ? 2 : v
+  await shot(heroes[hv === 2 && !tall ? 1 : hv](ctx), W, 900, file('hero.jpg'))
 
   const secs = (en?.sections ?? c.sections).map((s) => ({
     title: clean(s.title),
@@ -634,7 +772,6 @@ for (const slug of slugs) {
     )
   if (secs[0]) await block(0, clean(en?.lead ?? c.lead))
 
-  const tall = a.h / a.w > 1.2
   // Первое видео: длинная страница листается, широкие экраны едут каруселью
   const vid = !process.env.NO_VIDEO
   if (tall) {
@@ -646,9 +783,13 @@ for (const slug of slugs) {
   }
   if (secs[1]) await block(1)
 
-  // Второе видео: колонки экранов или смена экранов в окне
+  // Второе видео. Экраны приложений: наезд на детали, в колонках их таблицы не читаются.
+  // Страницы сайтов: колонки экранов или смена экранов в окне
   const pool = [...list, ...c.shots.filter(isTablet)]
-  if (pool.length >= 4 && (idx % 2 === 0 || !tall)) {
+  if (!tall) {
+    const f = file('detail')
+    if (vid) await detailVideo(t, list[1] ?? a, f)
+  } else if (pool.length >= 4 && idx % 2 === 0) {
     const f = file('screens')
     if (vid) await marqueeVideo(t, pool, f)
   } else if (list.length > 1) {
@@ -657,8 +798,10 @@ for (const slug of slugs) {
   }
   if (secs[2]) await block(2)
 
-  if (ph) await framed(t, ph, file('phone.jpg'))
-  if (fig) await framed(t, fig, file('figma.jpg'))
+  const phones = c.shots.filter((x) => isPhone(x) && x.screen)
+  if (phones.length) await phonesShot(t, phones, file('phone.jpg'))
+  else if (ph) await framed(t, ph, file('phone.jpg'))
+  if (fig) await framed(t, fig, file('figma.jpg'), await contentBox(fig))
   await thanks(t, tv, file('thanks.jpg'))
   console.log('готово:', slug)
 }

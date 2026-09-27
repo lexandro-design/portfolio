@@ -655,7 +655,7 @@
         "src": "/cases/osq/03.jpg",
         "caption": "Кабинет: рабочий стол.",
         "w": 1600,
-        "h": 1382
+        "h": 1359
       },
       {
         "src": "/cases/osq/04.jpg",
@@ -1275,8 +1275,8 @@
       {
         "src": "/cases/lotus/02.jpg",
         "caption": "Главная.",
-        "w": 1600,
-        "h": 3368
+        "w": 1463,
+        "h": 3316
       },
       {
         "src": "/cases/lotus/03.jpg",

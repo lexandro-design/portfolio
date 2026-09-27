@@ -1,0 +1,109 @@
+{
+  "slug": "portfolio-site",
+  "title": "LEXANDRO Portfolio",
+  "tagline": "сайт-портфолио и дизайн-система",
+  "lead": "Мой сайт-портфолио.",
+  "label": "Portfolio",
+  "client": "own",
+  "year": "2026",
+  "directions": [
+    "design",
+    "web"
+  ],
+  "group": "own",
+  "stack": [
+    "Figma",
+    "Next.js",
+    "TypeScript",
+    "CSS Modules",
+    "Design tokens"
+  ],
+  "sections": [],
+  "shots": [
+    {
+      "src": "/tools/behance/extra/portfolio/01.jpg",
+      "caption": "Главная, тёмная тема.",
+      "w": 1440,
+      "h": 5200
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/02.jpg",
+      "caption": "Первый экран, неон.",
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/03.jpg",
+      "caption": "Первый экран, светлая тема.",
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/05.jpg",
+      "caption": "Песочница дизайн-системы.",
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/06.jpg",
+      "caption": "Конструктор заявки.",
+      "w": 1440,
+      "h": 900
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/04.jpg",
+      "caption": "Страница кейса.",
+      "w": 1440,
+      "h": 5200
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/07.jpg",
+      "caption": "Телефон: первый экран.",
+      "w": 780,
+      "h": 1688,
+      "screen": true
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/08.jpg",
+      "caption": "Телефон: кейсы.",
+      "w": 780,
+      "h": 1688,
+      "screen": true
+    },
+    {
+      "src": "/tools/behance/extra/portfolio/09.jpg",
+      "caption": "Телефон: песочница.",
+      "w": 780,
+      "h": 1688,
+      "screen": true
+    }
+  ],
+  "en": {
+    "title": "LEXANDRO Portfolio",
+    "tagline": "portfolio website & design system",
+    "lead": "My own portfolio: one design system with three themes, a live sandbox and a brief builder, in four languages.",
+    "sections": [
+      {
+        "title": "the idea",
+        "body": [
+          "One site that shows the whole way I work: design, code and automation, end to end.",
+          "Case pages are built from content files, so a new project goes live without touching the code."
+        ]
+      },
+      {
+        "title": "design system",
+        "body": [
+          "Colour, type, spacing and motion are tokens. The dark, neon and light themes change only token values, the components stay the same.",
+          "In the sandbox a visitor changes radius, density, accent, font and theme and watches a small booking site rebuild itself."
+        ]
+      },
+      {
+        "title": "build",
+        "body": [
+          "Next.js with a static export on GitHub Pages, English, Russian, Chinese and Japanese versions, and a brief builder that prepares a message for Telegram or email.",
+          "A private admin panel edits cases, screenshots and translations and publishes them with one commit."
+        ]
+      }
+    ]
+  }
+}
