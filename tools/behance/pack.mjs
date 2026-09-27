@@ -37,10 +37,15 @@ const ORDER = [
 /** Цвет фона проекта: пиксель в углу текстового блока */
 const bgOf = (file) => {
   const buf = execFileSync(FFMPEG, [
-    ...['-loglevel', 'error', '-i', file, '-vf', 'crop=1:1:4:4', '-f', 'rawvideo'],
+    ...['-loglevel', 'error', '-i', file, '-vf', 'crop=2:2:4:4', '-f', 'rawvideo'],
     ...['-pix_fmt', 'rgb24', '-'],
   ])
-  return `#${[...buf.subarray(0, 3)].map((v) => v.toString(16).padStart(2, '0')).join('')}`
+  const rgb = [...buf.subarray(0, 3)]
+  // JPEG сдвигает цвет на единицу-две: цвета тем из render.mjs подставляем точно
+  const exact = ['#e9e6df', '#111113', '#0a4a9a'].find((hex) =>
+    [1, 3, 5].every((k, i) => Math.abs(parseInt(hex.slice(k, k + 2), 16) - rgb[i]) <= 3),
+  )
+  return exact ?? `#${rgb.map((v) => v.toString(16).padStart(2, '0')).join('')}`
 }
 
 await rm(OUT, { recursive: true, force: true })

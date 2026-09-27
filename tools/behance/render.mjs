@@ -150,8 +150,11 @@ const win = (s, x, y, w, h, attrs = '') =>
 const isPhone = (s) => /^телефон/i.test(s.caption)
 const isFigma = (s) => /^файл в figma/i.test(s.caption)
 const isTablet = (s) => /^планшет/i.test(s.caption)
+// Тёмная версия экрана идёт отдельным кадром сразу за светлой
 const desktop = (c) =>
-  c.shots.filter((s) => !isPhone(s) && !isFigma(s) && !isTablet(s) && !/^обложка/i.test(s.caption))
+  c.shots
+    .filter((s) => !isPhone(s) && !isFigma(s) && !isTablet(s) && !/^обложка/i.test(s.caption))
+    .flatMap((s) => (s.dark ? [s, { ...s, src: s.dark }] : [s]))
 
 // В английском тексте кейсов встречается тире, в клиентских текстах его не ставим
 const clean = (t) =>
@@ -748,7 +751,8 @@ for (const slug of slugs) {
   await shot(covers[v === 0 && !hasPhone ? 1 : v](ctx), 808, 632, file('cover.jpg'))
   if (process.env.COVER_ONLY) continue
   // Широкий экран приложения в колонке справа выходит мелким, ему нужен вариант по центру
-  const tall = a.h / a.w > 1.2
+  // Страница сайта выше ширины, экран приложения шире высоты
+  const tall = a.h / a.w > 1
   const hv = v === 1 && !hasPhone ? 2 : v
   await shot(heroes[hv === 2 && !tall ? 1 : hv](ctx), W, 900, file('hero.jpg'))
 
