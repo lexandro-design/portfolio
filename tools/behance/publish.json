@@ -56,7 +56,7 @@
     "tools": ["Figma"]
   },
   "ubiray-rf": {
-    "title": "Ubiray.rf: Community Profile for a Cleaning Marketplace",
+    "title": "Убирай.рф: Community Profile for a Cleaning Marketplace",
     "description": "A new community section for a cleaning marketplace: a user profile with feed, career, photos and videos at three widths.",
     "tags": ["ui/ux", "web design", "marketplace", "social", "profile", "community", "responsive", "auto layout", "figma", "product design"],
     "fields": ["UI/UX", "Web Design"],

@@ -57,16 +57,19 @@ const W = 1400
 // Темы. ТИТАН-2 всегда в их синем, остальные по кругу: песок, графит, светлый тон
 // из цвета самого сайта. Шрифт заголовков тоже меняется
 const THEMES = {
+  // ТИТАН-2: их сайты и приложения сами синие, на синем фоне сливались. Фон светлый,
+  // фирменный синий — плашкой за устройствами и финальным слайдом
   titan: {
-    bg: '#0a4a9a',
-    fg: '#ffffff',
-    sub: 'rgb(255 255 255 / .64)',
-    bar: '#f4f6fa',
-    dot: 'rgb(0 0 0 / .13)',
-    ring: 'rgb(255 255 255 / .16)',
-    shade: 'rgb(0 12 40 / .45)',
+    bg: '#edf1f7',
+    fg: '#0b2a5c',
+    sub: 'rgb(11 42 92 / .6)',
+    bar: '#ffffff',
+    dot: 'rgb(11 42 92 / .16)',
+    ring: 'rgb(11 42 92 / .1)',
+    shade: 'rgb(10 40 90 / .3)',
     head: 'Inter',
-    weight: 560,
+    weight: 600,
+    brand: '#0a4a9a',
   },
   sand: {
     bg: '#e9e6df',
@@ -130,7 +133,7 @@ html,body{width:${w}px;height:${h}px;overflow:hidden;background:${t.bg};color:${
 .win{position:absolute;background:${t.bar};border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px ${t.ring},${video ? `0 18px 36px -18px ${t.shade}` : `0 2px 6px -2px ${t.shade},0 36px 80px -28px ${t.shade}`}}
 .bar{height:40px;display:flex;align-items:center;gap:8px;padding:0 18px}
 .bar i{width:11px;height:11px;border-radius:50%;background:${t.dot}}
-.bar span{margin:0 auto;width:34%;height:20px;border-radius:10px;background:${t.dot};opacity:.5}
+.bar span{margin:0 auto;width:34%;height:20px;border-radius:10px;background:color-mix(in srgb, ${t.dot} 50%, transparent);font:500 11px/20px Mono,monospace;letter-spacing:.02em;text-align:center;color:${t.sub};overflow:hidden;white-space:nowrap}
 .win img{display:block;width:100%;height:auto}
 .phone{position:absolute;border-radius:46px;background:#1b1b1d;padding:8px;box-shadow:inset 0 0 0 1.5px #3a3a3e,${video ? `0 18px 36px -18px ${t.shade}` : `0 30px 70px -20px ${t.shade}`}}
 .scr{position:relative;width:100%;height:100%;border-radius:38px;overflow:hidden;background:#fff}
@@ -138,14 +141,20 @@ html,body{width:${w}px;height:${h}px;overflow:hidden;background:${t.bg};color:${
 .island{position:absolute;left:50%;top:18px;width:78px;height:22px;margin-left:-39px;border-radius:12px;background:#000}
 .card{border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px ${t.ring},0 14px 30px -16px ${t.shade}}
 .card img{display:block;width:100%}
+.dev{position:absolute;filter:drop-shadow(0 30px 40px ${t.shade})}
+.zoom{position:absolute;overflow:hidden;border-radius:14px;background:#fff;box-shadow:0 0 0 1px ${t.ring},0 28px 60px -20px ${t.shade},0 0 0 6px color-mix(in srgb, ${t.bg} 70%, #fff)}
+.mini{height:18px;background:#f1f1f3;border-bottom:1px solid #e3e3e6;font:500 9px/18px Mono,monospace;color:#777;text-align:center}
+.brand{position:absolute;border-radius:28px;background:${t.brand ?? 'transparent'}}
 ${css}</style>${body}`
 
 // Картинки кейсов лежат в public/, у дополнительных проектов — рядом с их case.json
 const u = (s) => (s.src.startsWith('/tools/') ? s.src : `/public${s.src}`)
-const bar = '<div class="bar"><i></i><i></i><i></i><span></span></div>'
+// Адрес живого сайта в строке браузера, у внутренних систем строка пустая
+let URL_TEXT = ''
+const barHtml = () => `<div class="bar"><i></i><i></i><i></i><span>${URL_TEXT}</span></div>`
 // Высота — потолок: широкий экран не оставляет пустое окно под собой
 const win = (s, x, y, w, h, attrs = '') =>
-  `<div class="win" ${attrs} style="left:${x}px;top:${y}px;width:${w}px;height:${Math.min(h, Math.round((w * s.h) / s.w) + 40)}px">${bar}<img src="${u(s)}"></div>`
+  `<div class="win" ${attrs} style="left:${x}px;top:${y}px;width:${w}px;height:${Math.min(h, Math.round((w * s.h) / s.w) + 40)}px">${barHtml()}<img src="${u(s)}"></div>`
 
 const isPhone = (s) => /^телефон/i.test(s.caption)
 const isFigma = (s) => /^файл в figma/i.test(s.caption)
@@ -318,6 +327,38 @@ const phoneEl = (ph, scr, x, y, w) => {
   return `<div class="phone" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><div class="scr"><img src="${u(ph)}" style="position:absolute;width:${(scr.W * k).toFixed(1)}px;left:${(-scr.x * k).toFixed(1)}px;top:${(44 - scr.y * k).toFixed(1)}px"><b class="status">9:41</b></div><i class="island"></i></div>`
 }
 
+/** Экран устройства: картинка сверху по ширине, у сайта с адресом — тонкая строка браузера */
+const screen = (s, fit = 'cover') =>
+  `${URL_TEXT ? `<div class="mini">${URL_TEXT}</div>` : ''}<img src="${u(s)}" style="display:block;width:100%;height:${URL_TEXT ? 'calc(100% - 18px)' : '100%'};object-fit:${fit};object-position:top center">`
+
+/** Ноутбук: крышка с тёмной рамкой и светлое основание */
+const laptop = (s, x, y, w) => {
+  const h = Math.round(w * 0.63)
+  return `<div class="dev" style="left:${x}px;top:${y}px;width:${w}px">
+    <div style="height:${h}px;border-radius:${Math.round(w * 0.028)}px ${Math.round(w * 0.028)}px 4px 4px;background:#1c1c1e;padding:${Math.round(w * 0.022)}px ${Math.round(w * 0.022)}px ${Math.round(w * 0.03)}px;box-shadow:inset 0 0 0 1.5px #3a3a3e">
+      <div style="height:100%;overflow:hidden;border-radius:3px;background:#fff">${screen(s)}</div>
+    </div>
+    <div style="position:relative;height:${Math.round(w * 0.032)}px;margin:0 -${Math.round(w * 0.075)}px;border-radius:0 0 ${Math.round(w * 0.05)}px ${Math.round(w * 0.05)}px;background:linear-gradient(#e4e5e8,#a9abb1)"><i style="position:absolute;left:50%;top:0;width:${Math.round(w * 0.16)}px;margin-left:-${Math.round(w * 0.08)}px;height:${Math.round(w * 0.012)}px;border-radius:0 0 8px 8px;background:#b9bbc0"></i></div>
+  </div>`
+}
+
+/** Монитор на подставке; ratio — пропорция экрана (для таблиц бывает ультраширокий) */
+const monitor = (s, x, y, w, ratio = 1.6) => {
+  const h = Math.round(w / ratio)
+  const neck = Math.round(w * 0.11)
+  return `<div class="dev" style="left:${x}px;top:${y}px;width:${w}px">
+    <div style="height:${h}px;border-radius:12px;background:#151517;padding:10px;box-shadow:inset 0 0 0 1.5px #333">
+      <div style="height:100%;overflow:hidden;border-radius:3px;background:#fff">${screen(s)}</div>
+    </div>
+    <div style="width:${Math.round(w * 0.12)}px;height:${neck}px;margin:0 auto;background:linear-gradient(90deg,#b7b9be,#e1e2e5,#b7b9be)"></div>
+    <div style="width:${Math.round(w * 0.32)}px;height:10px;margin:0 auto;border-radius:6px 6px 3px 3px;background:linear-gradient(#e6e7ea,#b3b5ba)"></div>
+  </div>`
+}
+
+/** Лупа: кусок экрана в натуральном размере карточкой поверх устройства */
+const zoomCard = (s, x, y, w, h, fx = 0.3, fy = 0.14) =>
+  `<div class="zoom" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><img src="${u(s)}" style="position:absolute;width:${s.w}px;left:${-Math.round(s.w * fx)}px;top:${-Math.round(s.h * fy)}px;max-width:none"></div>`
+
 /** Видео: страница с CSS-анимацией, кадр за кадром по времени, потом MP4 и GIF */
 const video = async (markup, w, h, seconds, out, gifW = w, fps = 30) => {
   const dir = `${out}-frames`
@@ -357,21 +398,22 @@ const kindOf = (c) =>
       ? 'Product design'
       : 'UX/UI · Design system'
 
-const covers = [
-  // 0. Заголовок сверху, окно сайта и телефон ровно
-  ({ t, c, a, ph, scr, tag }) =>
-    shell(
-      t,
-      808,
-      632,
-      `<div class="m" style="position:absolute;left:48px;top:48px;font-size:12px">${kindOf(c)} · ${c.year}</div>
+const COVERS = {
+  phoneWin:
+    // 0. Заголовок сверху, окно сайта и телефон ровно
+    ({ t, c, a, ph, scr, tag }) =>
+      shell(
+        t,
+        808,
+        632,
+        `<div class="m" style="position:absolute;left:48px;top:48px;font-size:12px">${kindOf(c)} · ${c.year}</div>
       <div class="h" style="position:absolute;left:48px;top:74px;font-size:46px">${c.title}</div>
       <div style="position:absolute;left:48px;top:134px;width:430px;font-size:16px;line-height:1.45;color:${t.sub}">${tag}</div>
       ${win(a, 48, 228, 620, 520)}
       ${phoneEl(ph, scr, 512, 150, 266)}`,
-    ),
-  // 1. Три окна лесенкой
-  ({ t, c, a, b, d, tag }) =>
+      ),
+  // Три окна лесенкой
+  stack: ({ t, c, a, b, d, tag }) =>
     shell(
       t,
       808,
@@ -381,8 +423,8 @@ const covers = [
       <div class="h" style="position:absolute;left:48px;top:74px;font-size:44px">${c.title}</div>
       <div style="position:absolute;left:48px;top:132px;width:520px;font-size:16px;line-height:1.45;color:${t.sub}">${tag}</div>`,
     ),
-  // 2. Название по центру, одно большое окно
-  ({ t, c, a, tag }) =>
+  // Название по центру, одно большое окно
+  center: ({ t, c, a, tag }) =>
     shell(
       t,
       808,
@@ -394,21 +436,102 @@ const covers = [
       </div>
       ${win(a, 84, 222, 640, 470)}`,
     ),
-]
 
-const heroes = [
-  // 0. Название слева сверху, два окна внахлёст
-  ({ t, c, a, b }) =>
+  // Ноутбук и телефон
+  laptopPhone: ({ t, c, a, ph, scr, tag }) =>
     shell(
       t,
-      W,
-      900,
-      `${win(b, 600, 150, 720, 560)}${win(a, 80, 290, 800, 540)}
+      808,
+      632,
+      `${head(t, c, tag)}${laptop(a, 60, 214, 540)}${phoneEl(ph, scr, 548, 170, 226)}`,
+    ),
+  // ТИТАН-2: ноутбук на фирменной плашке и лупа с куском экрана
+  laptopZoom: ({ t, c, a, tag, zoom }) =>
+    shell(
+      t,
+      808,
+      632,
+      `${head(t, c, tag)}<div class="brand" style="left:300px;top:250px;width:560px;height:420px"></div>
+      ${laptop(a, 70, 232, 560)}${zoomCard(a, 470, 380, 300, 196, ...zoom)}`,
+    ),
+  // ТИТАН-2: монитор на плашке и лупа
+  monitorZoom: ({ t, c, a, tag, zoom }) =>
+    shell(
+      t,
+      808,
+      632,
+      `${head(t, c, tag)}<div class="brand" style="left:-40px;top:300px;width:620px;height:400px"></div>
+      ${monitor(a, 150, 206, 560)}${zoomCard(a, 36, 404, 300, 190, ...zoom)}`,
+    ),
+  // Ультраширокий монитор под таблицу
+  ultrawide: ({ t, c, a, wide, tag, zoom }) =>
+    shell(
+      t,
+      808,
+      632,
+      `${head(t, c, tag)}<div class="brand" style="left:120px;top:330px;width:760px;height:360px"></div>
+      ${monitor(wide, 34, 250, 740, wide.w / wide.h)}${zoomCard(a, 330, 360, 430, 250, ...zoom)}`,
+    ),
+  // Светлая и тёмная тема одним экраном, разрез посередине
+  themeSplit: ({ t, c, a, b, tag }) =>
+    shell(t, 808, 632, `${head(t, c, tag, true)}${split(a, b, 74, 222, 660)}`),
+  // Фон из самого сайта под ноутбуком и телефоном
+  bleed: ({ t, c, a, ph, scr, tag }) =>
+    shell(
+      t,
+      808,
+      632,
+      `${bleedBg(t, a)}${head(t, c, tag)}${laptop(a, 60, 220, 530)}${phoneEl(ph, scr, 540, 176, 226)}`,
+    ),
+  // Семейство устройств: монитор, ноутбук, телефон
+  family: ({ t, c, a, b, ph, scr, tag }) =>
+    shell(
+      t,
+      808,
+      632,
+      `${head(t, c, tag)}${monitor(b, 250, 180, 500)}${laptop(a, 40, 318, 420)}${phoneEl(ph, scr, 620, 290, 160)}`,
+    ),
+}
+
+/** Шапка обложки: тип и год, название, подпись */
+const head = (t, c, tag, center = false) =>
+  `<div style="position:absolute;left:48px;right:48px;top:44px;${center ? 'text-align:center' : ''}">
+    <div class="m" style="font-size:12px">${kindOf(c)} · ${c.year}</div>
+    <div class="h" style="margin-top:12px;font-size:46px">${c.title}</div>
+    <div style="margin-top:10px;font-size:16px;line-height:1.45;color:${t.sub}">${tag}</div>
+  </div>`
+
+/** Окно, где слева светлая тема, справа тёмная, и ручка разреза */
+const split = (light, dark, x, y, w) => {
+  const h = Math.round((w * light.h) / light.w) + 40
+  return `<div class="win" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px">${barHtml()}<div style="position:relative">
+    <img src="${u(light)}"><img src="${u(dark)}" style="position:absolute;inset:0;clip-path:inset(0 0 0 50%)">
+    <i style="position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 12px rgb(0 0 0 / .3)"></i>
+    <b style="position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgb(0 0 0 / .3)"></b>
+    <span class="m" style="position:absolute;left:calc(50% - 76px);top:12px;padding:3px 8px;border-radius:4px;background:#fff;color:#333;font-size:10px">Light</span>
+    <span class="m" style="position:absolute;left:calc(50% + 12px);top:12px;padding:3px 8px;border-radius:4px;background:#1c2233;color:#dfe6ff;font-size:10px">Dark</span>
+  </div></div>`
+}
+
+/** Фон из скриншота, притушенный цветом темы */
+const bleedBg = (t, a) =>
+  `<div style="position:absolute;inset:-20px;background:url(${u(a)}) top center/cover;filter:blur(8px) saturate(1.2)"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb, ${t.bg} 97%, transparent) 0%,color-mix(in srgb, ${t.bg} 90%, transparent) 30%,color-mix(in srgb, ${t.bg} 55%, transparent) 60%,color-mix(in srgb, ${t.bg} 90%, transparent) 100%)"></div>`
+
+const HEROES = {
+  pair:
+    // 0. Название слева сверху, два окна внахлёст
+    ({ t, c, a, b }) =>
+      shell(
+        t,
+        W,
+        900,
+        `${win(b, 600, 150, 720, 560)}${win(a, 80, 290, 800, 540)}
       <div class="h" style="position:absolute;left:80px;top:72px;font-size:60px">${c.title}</div>
       <div class="m" style="position:absolute;right:80px;top:94px;font-size:14px">${c.year}</div>`,
-    ),
-  // 1. По центру: название, подпись, широкое окно и телефон
-  ({ t, c, a, ph, scr, tag }) =>
+      ),
+  // По центру: название, подпись, широкое окно и телефон
+  center: ({ t, c, a, ph, scr, tag }) =>
     shell(
       t,
       W,
@@ -421,8 +544,8 @@ const heroes = [
       ${win(a, 150, 300, 1000, 540)}
       ${phoneEl(ph, scr, 1030, 360, 230)}`,
     ),
-  // 2. Слева текст колонкой, справа высокое окно
-  ({ t, c, a, tag, stack }) =>
+  // Слева текст колонкой, справа высокое окно
+  column: ({ t, c, a, tag, stack }) =>
     shell(
       t,
       W,
@@ -435,7 +558,64 @@ const heroes = [
       </div>
       ${win(a, 600, Math.max(80, Math.round((900 - Math.min(740, (720 * a.h) / a.w + 40)) / 2)), 720, 740)}`,
     ),
-]
+
+  // Слева текст колонкой, справа ноутбук и телефон
+  laptop: ({ t, c, a, ph, scr, tag, stack }) =>
+    shell(
+      t,
+      W,
+      900,
+      `${heroText(t, c, tag, stack)}${laptop(a, 560, 190, 740)}${phoneEl(ph, scr, 1150, 360, 200)}`,
+    ),
+  // ТИТАН-2: монитор на фирменной плашке и лупа
+  monitor: ({ t, c, a, b, tag, zoom }) =>
+    shell(
+      t,
+      W,
+      900,
+      `<div class="brand" style="left:520px;top:150px;width:960px;height:820px"></div>
+      <div style="position:absolute;left:80px;top:80px;width:420px">
+        <div class="m" style="font-size:13px">${kindOf(c)} · ${c.year}</div>
+        <div class="h" style="margin-top:20px;font-size:60px">${c.title}</div>
+        <div style="margin-top:18px;font-size:22px;line-height:1.45;color:${t.sub}">${tag}</div>
+      </div>
+      ${monitor(a, 440, 110, 860)}${zoomCard(b, 80, 470, 440, 290, ...zoom)}`,
+    ),
+  // Ультраширокий монитор во всю ширину
+  ultra: ({ t, c, a, wide, tag, zoom }) =>
+    shell(
+      t,
+      W,
+      900,
+      `<div class="brand" style="left:200px;top:420px;width:1300px;height:600px"></div>
+      <div style="position:absolute;left:80px;top:72px">
+        <div class="m" style="font-size:13px">${kindOf(c)} · ${c.year}</div>
+        <div class="h" style="margin-top:18px;font-size:60px">${c.title}</div>
+        <div style="margin-top:14px;font-size:22px;color:${t.sub}">${tag}</div>
+      </div>
+      ${monitor(wide, 80, 250, 1240, wide.w / wide.h)}${zoomCard(a, 700, 470, 620, 360, ...zoom)}`,
+    ),
+  // Светлая и тёмная тема крупно
+  split: ({ t, c, a, b, tag }) =>
+    shell(
+      t,
+      W,
+      900,
+      `<div style="position:absolute;inset:64px 0 auto;text-align:center">
+        <div class="m" style="font-size:13px">${kindOf(c)} · ${c.year}</div>
+        <div class="h" style="margin-top:16px;font-size:64px">${c.title}</div>
+        <div style="margin-top:12px;font-size:22px;color:${t.sub}">${tag}</div>
+      </div>${split(a, b, 250, 290, 900)}`,
+    ),
+}
+
+const heroText = (t, c, tag, stack) =>
+  `<div style="position:absolute;left:80px;top:100px;width:430px">
+    <div class="m" style="font-size:13px">${kindOf(c)} · ${c.year}</div>
+    <div class="h" style="margin-top:22px;font-size:60px">${c.title}</div>
+    <div style="margin-top:22px;font-size:22px;line-height:1.45;color:${t.sub}">${tag}</div>
+    <div class="m" style="margin-top:48px;font-size:12px;line-height:2">${stack.join('<br>')}</div>
+  </div>`
 
 /** Текстовый блок картинкой: в редакторе Behance текст не оформить. Высота по содержимому */
 const textShot = async (t, variant, label, title, body, out, foot = '') => {
@@ -514,7 +694,17 @@ const phonesShot = async (t, list, out) => {
   await shot(shell(t, W, 900, els), W, 900, out)
 }
 
-const thanks = async (t, variant, out) => {
+const thanks = async (theme, variant, out) => {
+  // У ТИТАН-2 финальный слайд в их синем
+  const t = theme.brand
+    ? {
+        ...theme,
+        bg: theme.brand,
+        fg: '#fff',
+        sub: 'rgb(255 255 255 / .66)',
+        ring: 'rgb(255 255 255 / .22)',
+      }
+    : theme
   const rows = [
     ['Telegram', site.contacts.telegramHandle],
     ['GitHub', site.contacts.github.replace('https://', '')],
@@ -555,7 +745,7 @@ const scrollVideo = (t, a, out, ph, scr) => {
       t,
       W,
       900,
-      `<div class="win" style="left:${x}px;top:70px;width:${ww}px;height:${viewH + 40}px">${bar}<div style="height:${viewH}px;overflow:hidden"><img class="sc" src="${u(a)}"></div></div>
+      `<div class="win" style="left:${x}px;top:70px;width:${ww}px;height:${viewH + 40}px">${barHtml()}<div style="height:${viewH}px;overflow:hidden"><img class="sc" src="${u(a)}"></div></div>
       ${withPhone ? phoneEl(ph, scr, 1040, 190, 250) : ''}`,
       `@keyframes sc{0%,8%{transform:translateY(0)}46%,56%{transform:translateY(-${dist}px)}94%,100%{transform:translateY(0)}}
        .sc{animation:sc 12s cubic-bezier(.65,0,.35,1) infinite}`,
@@ -649,7 +839,7 @@ const detailVideo = (t, s, out) => {
       t,
       W,
       900,
-      `<div class="win" style="left:80px;top:40px;width:${ww}px;height:${vh + 40}px">${bar}<div style="position:relative;height:${vh}px;overflow:hidden"><img class="zm" src="${u(s)}" style="position:absolute;left:0;top:0;width:${iw}px"></div></div>`,
+      `<div class="win" style="left:80px;top:40px;width:${ww}px;height:${vh + 40}px">${barHtml()}<div style="position:relative;height:${vh}px;overflow:hidden"><img class="zm" src="${u(s)}" style="position:absolute;left:0;top:0;width:${iw}px"></div></div>`,
       `@keyframes zm{0%,6%{transform:translate(0,0) scale(${k})}24%,40%{transform:translate(0,0) scale(1)}64%,76%{transform:translate(-${dx}px,-${dy}px) scale(1)}94%,100%{transform:translate(0,0) scale(${k})}}
        .zm{transform-origin:0 0;animation:zm 12s cubic-bezier(.65,0,.35,1) infinite}`,
       true,
@@ -713,12 +903,51 @@ const rendered = cases.filter((c) => desktop(c).length)
 const own = rendered.filter((c) => c.group !== 'titan')
 const slugs = process.argv.slice(2).length ? process.argv.slice(2) : rendered.map((c) => c.slug)
 
-// Профиль Behance английский: название из перевода, у кого его нет, латиницей тут
-const EN_TITLE = { tetrasis: 'Tetrasis' }
+// Профиль Behance английский: название из перевода, у кого его нет, латиницей тут.
+// Убирай.рф Lexandro хочет видеть по-русски
+const EN_TITLE = { tetrasis: 'Tetrasis', 'ubiray-rf': 'Убирай.рф' }
+
+// Адреса живых сайтов для строки браузера. Внутренним системам ТИТАН-2 и Parfumeria
+// (демо пока не публичное) адрес не ставим
+const URLS = {
+  reckon: 'reckon.su',
+  svarnoy52: 'svarnoy52.ru',
+  'svarprom-nn': 'svarprom-nn.ru',
+  'ubiray-rf': 'убирай.рф',
+  'prof-study': 'titan2.ru/studprofi',
+}
+
+// Обложка и первый экран по проекту: разные устройства и раскладки, чтобы сетка
+// профиля не была одним шаблоном. Кого нет в списке — по кругу
+const RECIPES = {
+  parfumeria: ['phoneWin', 'pair'],
+  'meeting-rooms': ['laptopZoom', 'monitor'],
+  otrx: ['monitorZoom', 'monitor'],
+  'pix-bi': ['monitorZoom', 'laptop'],
+  'vacation-plan': ['ultrawide', 'ultra'],
+  'ai-translator': ['themeSplit', 'split'],
+  'meg-site': ['family', 'pair'],
+  'prof-study': ['laptopPhone', 'center'],
+  osq: ['bleed', 'center'],
+  lotus: ['bleed', 'center'],
+  tetrasis: ['laptopPhone', 'laptop'],
+  'ubiray-rf': ['family', 'column'],
+  svarnoy52: ['phoneWin', 'pair'],
+  'svarprom-nn': ['center', 'column'],
+  reckon: ['phoneWin', 'pair'],
+  'portfolio-site': ['phoneWin', 'pair'],
+}
+// Где у экрана лупа: доли ширины и высоты от левого верхнего угла
+const ZOOM = {
+  'meeting-rooms': [0.2, 0.3],
+  otrx: [0.03, 0.14],
+  'pix-bi': [0.2, 0.44],
+  'vacation-plan': [0.12, 0.36],
+}
 for (const slug of slugs) {
   const raw = cases.find((x) => x.slug === slug)
   if (!raw) throw new Error(`нет кейса ${slug}`)
-  const c = { ...raw, title: clean(i18n[slug]?.title ?? EN_TITLE[slug] ?? raw.title) }
+  const c = { ...raw, title: clean(EN_TITLE[slug] ?? i18n[slug]?.title ?? raw.title) }
   const list = desktop(c)
   if (!list.length) {
     console.log('пропуск, нет скринов:', slug)
@@ -733,7 +962,8 @@ for (const slug of slugs) {
       : [THEMES.sand, THEMES.ink, THEMES.tint(accent)][own.indexOf(raw) % 3]
   const out = join(ROOT, '_shots/behance', slug)
   // NO_VIDEO пересобирает только картинки, видео остаются на месте
-  if (!process.env.NO_VIDEO) await rm(out, { recursive: true, force: true })
+  if (!process.env.NO_VIDEO && !process.env.COVER_ONLY)
+    await rm(out, { recursive: true, force: true })
   await mkdir(out, { recursive: true })
 
   const en = i18n[slug]
@@ -741,20 +971,28 @@ for (const slug of slugs) {
   const ph = c.shots.find(isPhone)
   const fig = c.shots.find(isFigma)
   const hasPhone = Boolean(ph && scr && scr.w >= 80)
+  URL_TEXT = URLS[slug] ?? ''
+  const wide = list.find((x) => /монитор/i.test(x.caption)) ?? a
+  const zoom = ZOOM[slug] ?? [0.25, 0.14]
   const tag = clean(cap(en?.tagline ?? c.tagline))
   const stack = c.stack.map((x) => STACK_EN[x] ?? x)
-  const ctx = { t, c, a, b, d, ph, scr, tag, stack }
+  const ctx = { t, c, a, b, d, ph, scr, tag, stack, wide, zoom }
   let n = 0
   const file = (name) => join(out, `${String(++n).padStart(2, '0')}-${name}`)
 
   // Обложке и первому экрану с телефоном он нужен, иначе берём вариант без него
-  await shot(covers[v === 0 && !hasPhone ? 1 : v](ctx), 808, 632, file('cover.jpg'))
+  const [cv, hv0] = RECIPES[slug] ?? [
+    ['phoneWin', 'stack', 'center'][v === 0 && !hasPhone ? 1 : v],
+    ['pair', 'center', 'column'][v],
+  ]
+  await shot(COVERS[cv](ctx), 808, 632, file('cover.jpg'))
   if (process.env.COVER_ONLY) continue
   // Широкий экран приложения в колонке справа выходит мелким, ему нужен вариант по центру
   // Страница сайта выше ширины, экран приложения шире высоты
   const tall = a.h / a.w > 1
-  const hv = v === 1 && !hasPhone ? 2 : v
-  await shot(heroes[hv === 2 && !tall ? 1 : hv](ctx), W, 900, file('hero.jpg'))
+  // Колонке справа нужен высокий экран, широкий выходит мелким — тогда окно по центру
+  const hv = hv0 === 'column' && !tall ? 'center' : hv0
+  await shot(HEROES[hv](ctx), W, 900, file('hero.jpg'))
 
   const secs = (en?.sections ?? c.sections).map((s) => ({
     title: clean(s.title),
