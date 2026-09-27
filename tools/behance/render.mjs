@@ -573,13 +573,13 @@ const HEROES = {
       t,
       W,
       900,
-      `<div class="brand" style="left:520px;top:150px;width:960px;height:820px"></div>
+      `<div class="brand" style="left:640px;top:170px;width:860px;height:800px"></div>
       <div style="position:absolute;left:80px;top:80px;width:420px">
         <div class="m" style="font-size:13px">${kindOf(c)} · ${c.year}</div>
         <div class="h" style="margin-top:20px;font-size:60px">${c.title}</div>
         <div style="margin-top:18px;font-size:22px;line-height:1.45;color:${t.sub}">${tag}</div>
       </div>
-      ${monitor(a, 440, 110, 860)}${zoomCard(b, 80, 470, 440, 290, ...zoom)}`,
+      ${monitor(a, 560, 130, 760)}${zoomCard(b, 80, 470, 440, 290, ...zoom)}`,
     ),
   // Ультраширокий монитор во всю ширину
   ultra: ({ t, c, a, wide, tag, zoom }) =>
