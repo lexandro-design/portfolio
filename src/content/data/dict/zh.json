@@ -298,6 +298,7 @@
   "contact": {
     "title": "有项目想聊聊吗？",
     "github": "github",
+    "behance": "behance",
     "telegram": "在 telegram 联系",
     "location": "圣彼得堡 · utc+3",
     "status": "可接项目",
@@ -366,7 +367,8 @@
       "brief": "整理需求",
       "email": "复制邮箱",
       "telegram": "Telegram 联系",
-      "github": "打开 GitHub"
+      "github": "打开 GitHub",
+      "behance": "打开 Behance"
     },
     "copied": "邮箱已复制",
     "hint": "↑↓ 选择 · enter 打开 · esc 关闭"

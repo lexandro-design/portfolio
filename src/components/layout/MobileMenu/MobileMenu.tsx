@@ -103,6 +103,9 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
             telegram {contacts.telegramHandle}
           </a>
           <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
+          <a href={contacts.behance} target="_blank" rel="noreferrer">
+            behance
+          </a>
           <a href={contacts.github} target="_blank" rel="noreferrer">
             github
           </a>

@@ -159,6 +159,13 @@ export function CommandPalette({ index }: Props) {
         run: () => (close(), window.open(contacts.telegram, '_blank', 'noopener')),
       },
       {
+        id: 'a-be',
+        group: 'actions',
+        label: p.actions.behance,
+        find: `${p.actions.behance} behance`,
+        run: () => (close(), window.open(contacts.behance, '_blank', 'noopener')),
+      },
+      {
         id: 'a-gh',
         group: 'actions',
         label: p.actions.github,

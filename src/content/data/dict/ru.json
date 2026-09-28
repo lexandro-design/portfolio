@@ -299,6 +299,7 @@
   "contact": {
     "title": "готов обсудить проект?",
     "github": "github",
+    "behance": "behance",
     "telegram": "написать в telegram",
     "location": "санкт-петербург, мск",
     "status": "открыт к проектам",
@@ -367,7 +368,8 @@
       "brief": "Собрать заявку",
       "email": "Скопировать почту",
       "telegram": "Написать в Telegram",
-      "github": "Открыть GitHub"
+      "github": "Открыть GitHub",
+      "behance": "Открыть Behance"
     },
     "copied": "Почта скопирована",
     "hint": "↑↓ выбрать · enter открыть · esc закрыть"

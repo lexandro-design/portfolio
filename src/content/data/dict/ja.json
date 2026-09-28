@@ -298,6 +298,7 @@
   "contact": {
     "title": "プロジェクトのご相談はこちら",
     "github": "github",
+    "behance": "behance",
     "telegram": "telegram で連絡",
     "location": "サンクトペテルブルク · utc+3",
     "status": "案件受付中",
@@ -366,7 +367,8 @@
       "brief": "依頼をまとめる",
       "email": "メールをコピー",
       "telegram": "Telegram で連絡",
-      "github": "GitHub を開く"
+      "github": "GitHub を開く",
+      "behance": "Behance を開く"
     },
     "copied": "メールをコピーしました",
     "hint": "↑↓ 選択 · enter 開く · esc 閉じる"

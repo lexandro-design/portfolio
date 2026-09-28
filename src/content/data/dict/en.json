@@ -299,6 +299,7 @@
   "contact": {
     "title": "have a project in mind?",
     "github": "github",
+    "behance": "behance",
     "telegram": "message on telegram",
     "location": "saint petersburg, utc+3",
     "status": "open to projects",
@@ -367,7 +368,8 @@
       "brief": "Put a brief together",
       "email": "Copy email",
       "telegram": "Message on Telegram",
-      "github": "Open GitHub"
+      "github": "Open GitHub",
+      "behance": "Open Behance"
     },
     "copied": "Email copied",
     "hint": "↑↓ select · enter open · esc close"

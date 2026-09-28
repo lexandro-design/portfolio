@@ -2105,6 +2105,7 @@ function renderSite() {
         textField(s.contacts, 'telegramHandle', { label: 'Telegram — ник' }),
       ),
       textField(s.contacts, 'github', { label: 'GitHub' }),
+      textField(s.contacts, 'behance', { label: 'Behance' }),
       textField(s, 'coords', { label: 'Координаты на первом экране' }),
     ),
   )

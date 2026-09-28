@@ -7,6 +7,7 @@ import styles from './Footer.module.css'
 const links = [
   { href: `mailto:${contacts.email}`, label: 'email' },
   { href: contacts.telegram, label: 'telegram' },
+  { href: contacts.behance, label: 'behance' },
   { href: contacts.github, label: 'github' },
 ]
 

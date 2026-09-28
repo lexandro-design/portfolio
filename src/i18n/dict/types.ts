@@ -140,6 +140,7 @@ export type Dict = {
   contact: {
     title: string
     github: string
+    behance: string
     telegram: string
     location: string
     status: string
@@ -172,7 +173,7 @@ export type Dict = {
     placeholder: string
     empty: string
     groups: { sections: string; cases: string; actions: string; themes: string; languages: string }
-    actions: { brief: string; email: string; telegram: string; github: string }
+    actions: { brief: string; email: string; telegram: string; github: string; behance: string }
     copied: string
     hint: string
   }

@@ -123,7 +123,7 @@ for (const l of LOCALES) {
 
 // Контакты
 const site = read('site.json')
-for (const k of ['email', 'telegram', 'telegramHandle', 'github']) {
+for (const k of ['email', 'telegram', 'telegramHandle', 'github', 'behance']) {
   if (!str(site.contacts?.[k])) fail('site.contacts', `нет поля ${k}`)
 }
 if (!str(site.coords)) fail('site', 'нет поля coords')

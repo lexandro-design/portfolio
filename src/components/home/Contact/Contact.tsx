@@ -33,6 +33,9 @@ export function Contact({ t, label, services, steps }: Props) {
           </span>
         </a>
         <div className={styles.actions}>
+          <Button href={contacts.behance} external variant="ghost">
+            {t.behance}
+          </Button>
           <Button href={contacts.github} external variant="ghost">
             {t.github}
           </Button>
