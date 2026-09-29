@@ -10,7 +10,7 @@
   "features": {
     "brief": true,
     "palette": false,
-    "sandbox": true
+    "sandbox": false
   },
   "defaultTheme": "dark",
   "sandbox": {
