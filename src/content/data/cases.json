@@ -435,12 +435,14 @@
     ],
     "thumb": {
       "src": "/cases/meeting-rooms/thumb.jpg",
+      "video": "/cases/meeting-rooms/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/meeting-rooms/cover.jpg",
+      "video": "/cases/meeting-rooms/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -717,12 +719,14 @@
     ],
     "thumb": {
       "src": "/cases/otrx/thumb.jpg",
+      "video": "/cases/otrx/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/otrx/cover.jpg",
+      "video": "/cases/otrx/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -990,12 +994,14 @@
     ],
     "thumb": {
       "src": "/cases/meg-site/thumb.jpg",
+      "video": "/cases/meg-site/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/meg-site/cover.jpg",
+      "video": "/cases/meg-site/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1092,12 +1098,14 @@
     ],
     "thumb": {
       "src": "/cases/osq/thumb.jpg",
+      "video": "/cases/osq/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/osq/cover.jpg",
+      "video": "/cases/osq/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1247,12 +1255,14 @@
     ],
     "thumb": {
       "src": "/cases/svarnoy52/thumb.jpg",
+      "video": "/cases/svarnoy52/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/svarnoy52/cover.jpg",
+      "video": "/cases/svarnoy52/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1396,12 +1406,14 @@
     ],
     "thumb": {
       "src": "/cases/pix-bi/thumb.jpg",
+      "video": "/cases/pix-bi/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/pix-bi/cover.jpg",
+      "video": "/cases/pix-bi/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1479,12 +1491,14 @@
     ],
     "thumb": {
       "src": "/cases/ubiray-rf/thumb.jpg",
+      "video": "/cases/ubiray-rf/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/ubiray-rf/cover.jpg",
+      "video": "/cases/ubiray-rf/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1618,12 +1632,14 @@
     ],
     "thumb": {
       "src": "/cases/vacation-plan/thumb.jpg",
+      "video": "/cases/vacation-plan/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/vacation-plan/cover.jpg",
+      "video": "/cases/vacation-plan/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1848,12 +1864,14 @@
     ],
     "thumb": {
       "src": "/cases/tetrasis/thumb.jpg",
+      "video": "/cases/tetrasis/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/tetrasis/cover.jpg",
+      "video": "/cases/tetrasis/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -1927,12 +1945,14 @@
     ],
     "thumb": {
       "src": "/cases/reckon/thumb.jpg",
+      "video": "/cases/reckon/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/reckon/cover.jpg",
+      "video": "/cases/reckon/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280
@@ -2084,12 +2104,14 @@
     ],
     "thumb": {
       "src": "/cases/svarprom-nn/thumb.jpg",
+      "video": "/cases/svarprom-nn/thumb.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
       "src": "/cases/svarprom-nn/cover.jpg",
+      "video": "/cases/svarprom-nn/cover.mp4",
       "caption": "",
       "w": 2624,
       "h": 1280

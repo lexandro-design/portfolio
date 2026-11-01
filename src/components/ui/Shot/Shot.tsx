@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { asset } from '@/lib/asset'
 import type { Shot as ShotType } from '@/content/cases'
+import { LoopVideo } from './LoopVideo'
 
 type Props = {
   shot: ShotType
@@ -41,20 +42,16 @@ function Single({ shot, className, eager, zoom, screen }: Props & { screen?: 'wi
 
   if (shot.video) {
     return (
-      <video
+      <LoopVideo
         className={className}
         src={asset(shot.video)}
         poster={asset(shot.src)}
         width={shot.w}
         height={shot.h}
         style={style}
-        aria-label={shot.caption}
-        data-screen={screen}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload={eager ? 'auto' : 'metadata'}
+        label={shot.caption}
+        screen={screen}
+        eager={eager}
       />
     )
   }
