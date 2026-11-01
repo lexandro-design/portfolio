@@ -26,8 +26,8 @@
       {
         "title": "3D banners",
         "body": [
-          "For the home page I built video banners in Blender with bottles from the catalog: a 10-second loop at 60 frames per second, playing on every screen. Glass, liquid, cap and label follow the real product, and the background is pastel so the bottle never gets lost on the storefront.",
-          "The frame is wider than the banner, so on a wide monitor and on a phone the bottle stays on the left and never slides under the header or the text. The first banner is Amouage Love Hibiscus with an embossed monogram on the medallion, then a drop of Issey Miyake and a banner for the HELLO promo code."
+          "For the home page I built video banners in Blender: products from the catalog and a promo code banner, 8–10 second loops at 60 fps that play on every screen. Glass, liquid, cap and label follow the real product, and product banners sit on pastel backgrounds so the product never gets lost.",
+          "The frame is wider than the banner, so on an ultrawide monitor and on a phone the product stays on the left and never slides under the header or the text. The first banner is Amouage Love Hibiscus with an embossed monogram on the medallion, followed by an Issey Miyake cream and the HELLO promo code banner."
         ]
       },
       {
@@ -44,23 +44,27 @@
       }
     ],
     "captions": [
-      "3D banner for the home page: Issey Miyake, animated.",
-      "3D banner for the HELLO promo code, animated.",
+      "3D banner for the HELLO promo code: glass letters on water, animated.",
+      "3D banner: Love Hibiscus, podium, camera orbit, petals.",
+      "3D banner: Issey Miyake, sunset, stars falling onto water.",
+      "3D render of a Hermès bottle for the product page.",
+      "Design system: 54 color tokens.",
+      "Design system: 121 text styles across three widths.",
       "Home.",
       "Perfume catalog.",
       "Product page.",
-      "Phone: home, catalog, cart.",
-      "Phone: product page, filters, payment methods.",
-      "Phone: stories, gift card design, stores on the map.",
+      "Brand page.",
       "Search with suggestions.",
       "Cart.",
       "Gift card: choosing a design.",
-      "Brand page.",
       "Checkout.",
       "Account: orders.",
       "Tablet: home.",
-      "The whole Figma file.",
-      "3D banner: Love Hibiscus, animated."
+      "Phone: home, catalog, cart.",
+      "Phone: product page, filters, payment methods.",
+      "Phone: stories, gift card design, stores on the map.",
+      "Phone: perfume, makeup and skincare catalogs.",
+      "The whole Figma file."
     ]
   },
   "meeting-rooms": {

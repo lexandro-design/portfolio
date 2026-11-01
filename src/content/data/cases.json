@@ -45,8 +45,8 @@
       {
         "title": "3D-баннеры",
         "body": [
-          "Для главной собрал в Blender видеобаннеры с флаконами из каталога: петля 10 секунд, 60 кадров в секунду, ролик идёт на всех экранах. Стекло, жидкость, колпачок и этикетка повторяют реальный товар, фон пастельный, чтобы флакон не терялся на витрине.",
-          "Кадр сделан шире баннера: на широком мониторе и на телефоне флакон остаётся слева и не заходит под шапку и текст. Первый баннер: Amouage Love Hibiscus с рельефной монограммой на медальоне, ещё капля Issey Miyake и баннер промокода HELLO."
+          "Для главной собрал в Blender видеобаннеры: товары из каталога и баннер промокода, петли по 8–10 секунд, 60 кадров в секунду, ролик идёт на всех экранах. Стекло, жидкость, колпачок и этикетка повторяют реальный товар, у товарных баннеров фон пастельный, чтобы товар не терялся на витрине.",
+          "Кадр сделан шире баннера: на широком мониторе и на телефоне товар остаётся слева и не заходит под шапку и текст. Первый баннер: Amouage Love Hibiscus с рельефной монограммой на медальоне, ещё крем Issey Miyake и баннер промокода HELLO."
         ]
       },
       {
@@ -64,18 +64,44 @@
     ],
     "shots": [
       {
-        "src": "/cases/parfumeria/3d-issey.jpg",
-        "video": "/cases/parfumeria/3d-issey.mp4",
-        "caption": "3D-баннер Issey Miyake для главной, анимация.",
-        "w": 1600,
-        "h": 800
-      },
-      {
         "src": "/cases/parfumeria/3d-hello.jpg",
         "video": "/cases/parfumeria/3d-hello.mp4",
-        "caption": "3D-баннер промокода HELLO, анимация.",
+        "caption": "3D-баннер промокода HELLO: стеклянные буквы на воде, анимация.",
         "w": 1600,
-        "h": 800
+        "h": 900
+      },
+      {
+        "src": "/cases/parfumeria/3d-hibiscus.jpg",
+        "video": "/cases/parfumeria/3d-hibiscus.mp4",
+        "caption": "3D-баннер Love Hibiscus: подиум, облёт камеры, лепестки.",
+        "w": 1600,
+        "h": 900
+      },
+      {
+        "src": "/cases/parfumeria/3d-issey.jpg",
+        "video": "/cases/parfumeria/3d-issey.mp4",
+        "caption": "3D-баннер Issey Miyake: закат, звёзды падают на воду.",
+        "w": 1600,
+        "h": 900
+      },
+      {
+        "src": "/cases/parfumeria/3d-hermes.jpg",
+        "video": "/cases/parfumeria/3d-hermes.mp4",
+        "caption": "3D-рендер флакона Hermès для карточки товара.",
+        "w": 1080,
+        "h": 742
+      },
+      {
+        "src": "/cases/parfumeria/ds-colors.jpg",
+        "caption": "Дизайн-система: 54 цветовых токена.",
+        "w": 1600,
+        "h": 1128
+      },
+      {
+        "src": "/cases/parfumeria/ds-type.jpg",
+        "caption": "Дизайн-система: 121 текстовый стиль на три ширины.",
+        "w": 1600,
+        "h": 1968
       },
       {
         "src": "/cases/parfumeria/01.jpg",
@@ -93,6 +119,48 @@
         "src": "/cases/parfumeria/03.jpg",
         "caption": "Карточка товара.",
         "w": 1600,
+        "h": 5200
+      },
+      {
+        "src": "/cases/parfumeria/08.jpg",
+        "caption": "Страница бренда.",
+        "w": 1600,
+        "h": 4446
+      },
+      {
+        "src": "/cases/parfumeria/05.jpg",
+        "caption": "Поиск с подсказками.",
+        "w": 1600,
+        "h": 1138
+      },
+      {
+        "src": "/cases/parfumeria/06.jpg",
+        "caption": "Корзина.",
+        "w": 1600,
+        "h": 1614
+      },
+      {
+        "src": "/cases/parfumeria/07.jpg",
+        "caption": "Подарочная карта: выбор дизайна.",
+        "w": 1600,
+        "h": 1381
+      },
+      {
+        "src": "/cases/parfumeria/09.jpg",
+        "caption": "Оформление заказа.",
+        "w": 1600,
+        "h": 1138
+      },
+      {
+        "src": "/cases/parfumeria/10.jpg",
+        "caption": "Личный кабинет: заказы.",
+        "w": 1600,
+        "h": 2047
+      },
+      {
+        "src": "/cases/parfumeria/11.jpg",
+        "caption": "Планшет: главная.",
+        "w": 1536,
         "h": 5200
       },
       {
@@ -114,72 +182,37 @@
         "h": 1100
       },
       {
-        "src": "/cases/parfumeria/05.jpg",
-        "caption": "Поиск с подсказками.",
+        "src": "/cases/parfumeria/mobile-catalog.jpg",
+        "caption": "Телефон: каталоги парфюмерии, макияжа и ухода.",
         "w": 1600,
-        "h": 1138
-      },
-      {
-        "src": "/cases/parfumeria/06.jpg",
-        "caption": "Корзина.",
-        "w": 1600,
-        "h": 1614
-      },
-      {
-        "src": "/cases/parfumeria/07.jpg",
-        "caption": "Подарочная карта: выбор дизайна.",
-        "w": 1600,
-        "h": 1381
-      },
-      {
-        "src": "/cases/parfumeria/08.jpg",
-        "caption": "Страница бренда.",
-        "w": 1600,
-        "h": 4446
-      },
-      {
-        "src": "/cases/parfumeria/09.jpg",
-        "caption": "Оформление заказа.",
-        "w": 1600,
-        "h": 1138
-      },
-      {
-        "src": "/cases/parfumeria/10.jpg",
-        "caption": "Личный кабинет: заказы.",
-        "w": 1600,
-        "h": 2047
-      },
-      {
-        "src": "/cases/parfumeria/11.jpg",
-        "caption": "Планшет: главная.",
-        "w": 1536,
-        "h": 5200
+        "h": 1100
       },
       {
         "src": "/cases/parfumeria/12.jpg",
         "caption": "Файл в Figma целиком.",
         "w": 1600,
         "h": 754
-      },
-      {
-        "src": "/cases/parfumeria/3d-hibiscus.jpg",
-        "video": "/cases/parfumeria/3d-hibiscus.mp4",
-        "caption": "3D-баннер Love Hibiscus, анимация.",
-        "w": 1600,
-        "h": 666
       }
     ],
     "thumb": {
-      "src": "/cases/parfumeria/thumb.jpg",
+      "src": "/cases/parfumeria/card.jpg",
+      "video": "/cases/parfumeria/card.mp4",
       "caption": "",
       "w": 1216,
       "h": 860
     },
     "cover": {
-      "src": "/cases/parfumeria/cover.jpg",
+      "src": "/cases/parfumeria/hero.jpg",
+      "video": "/cases/parfumeria/hero.mp4",
       "caption": "",
-      "w": 2624,
-      "h": 1280
+      "w": 1600,
+      "h": 780,
+      "mobile": {
+        "src": "/cases/parfumeria/hero-mobile.jpg",
+        "video": "/cases/parfumeria/hero-mobile.mp4",
+        "w": 750,
+        "h": 1180
+      }
     }
   },
   {

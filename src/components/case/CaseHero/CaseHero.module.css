@@ -165,4 +165,9 @@
   .cover > [data-size='cover'] {
     aspect-ratio: 4 / 3;
   }
+
+  /* Своя версия для телефона (Shot, поле mobile) — по своей пропорции, вертикальная не режется */
+  .cover > [data-screen='narrow'] {
+    aspect-ratio: var(--ratio);
+  }
 }

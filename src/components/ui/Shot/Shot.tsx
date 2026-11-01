@@ -15,9 +15,28 @@ type Props = {
  * У скрина с тёмной парой рендерятся обе картинки, видимую выбирает
  * переключатель темы на странице кейса (ShotTheme) через CSS.
  * Анимированный кадр — беззвучная петля, первый кадр служит постером;
- * в полноэкранный просмотр видео не попадает, оно и так крутится в галерее
+ * в полноэкранный просмотр видео не попадает, оно и так крутится в галерее.
+ * Кадр со своей версией для телефона (mobile) рендерится дважды, видимый
+ * выбирает CSS по ширине экрана (data-screen в styles.css)
  */
 export function Shot({ shot, className, eager, zoom }: Props) {
+  if (!shot.mobile) return <Single shot={shot} className={className} eager={eager} zoom={zoom} />
+  const { mobile, ...wide } = shot
+  return (
+    <>
+      <Single shot={wide} className={className} eager={eager} zoom={zoom} screen="wide" />
+      <Single
+        shot={{ ...mobile, caption: shot.caption }}
+        className={className}
+        eager={eager}
+        zoom={zoom}
+        screen="narrow"
+      />
+    </>
+  )
+}
+
+function Single({ shot, className, eager, zoom, screen }: Props & { screen?: 'wide' | 'narrow' }) {
   const style = { '--ratio': shot.w / shot.h } as CSSProperties
 
   if (shot.video) {
@@ -30,6 +49,7 @@ export function Shot({ shot, className, eager, zoom }: Props) {
         height={shot.h}
         style={style}
         aria-label={shot.caption}
+        data-screen={screen}
         autoPlay
         muted
         loop
@@ -53,6 +73,7 @@ export function Shot({ shot, className, eager, zoom }: Props) {
       decoding="async"
       data-zoom={zoom || undefined}
       data-variant={variant}
+      data-screen={screen}
     />
   )
 

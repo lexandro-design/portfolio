@@ -43,6 +43,7 @@ function checkShot(s, where) {
   for (const src of [s.src, s.dark, s.video].filter(Boolean)) {
     if (!existsSync(new URL(`public${src}`, root))) fail(where, `нет файла public${src}`)
   }
+  if (s.mobile) checkShot({ caption: '', ...s.mobile }, `${where}.mobile`)
 }
 
 function checkSections(sections, where) {

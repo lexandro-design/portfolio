@@ -88,7 +88,8 @@ const layout = (c) => {
 const only = process.argv.slice(2)
 const LAYOUTS = Object.fromEntries(
   cases
-    .filter((c) => c.shots.some((s) => !s.video) && (!only.length || only.includes(c.slug)))
+    // Обложка-петля (thumb.video, как у Parfumeria) собрана заранее — не перезаписываем
+    .filter((c) => !c.thumb?.video && c.shots.some((s) => !s.video) && (!only.length || only.includes(c.slug)))
     .map((c) => [c.slug, layout(c)]),
 )
 

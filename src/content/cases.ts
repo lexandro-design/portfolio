@@ -24,6 +24,11 @@ export type Shot = {
    * первым кадром — он виден до загрузки видео
    */
   video?: string
+  /**
+   * Свой кадр для телефона (до 767px), например вертикальный рендер
+   * в шапке кейса. Подпись берётся у основного кадра
+   */
+  mobile?: Omit<Shot, 'caption' | 'mobile' | 'dark'>
 }
 
 export type CaseSection = {

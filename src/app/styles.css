@@ -126,6 +126,21 @@ img[data-zoom] {
   }
 }
 
+/* Кадр со своей версией для телефона (Shot, поле mobile) */
+[data-screen='narrow'] {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  [data-screen='wide'] {
+    display: none;
+  }
+
+  [data-screen='narrow'] {
+    display: block;
+  }
+}
+
 /* Скрин с тёмной парой (Shot + ShotTheme): по умолчанию светлый,
    переключатель на странице кейса ставит data-shots="dark" */
 img[data-variant='dark'],
