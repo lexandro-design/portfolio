@@ -36,7 +36,7 @@ export function CaseBody({ item, t }: { item: Case; t: Dict['case'] }) {
       {item.scheme && (
         <section className={styles.section}>
           <Reveal className="container">
-            <div className={styles.galleryHead}>
+            <div className={styles.schemeHead}>
               <span className={styles.label}>
                 {pad(item.sections.length + 1)} · {t.scheme}
               </span>

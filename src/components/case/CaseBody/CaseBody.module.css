@@ -49,6 +49,10 @@
   margin-block-end: var(--space-xl);
 }
 
+.schemeHead {
+  margin-block-end: var(--space-xl);
+}
+
 .gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;
