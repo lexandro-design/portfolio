@@ -1,4 +1,4 @@
-import type { CaseSection, Preview } from '../cases'
+import type { CaseSection, Preview, Scheme } from '../cases'
 
 /** Перевод кейса: только текст. Скриншоты, стек, годы и ссылки берутся из основного cases.ts */
 export type CaseCopy = {
@@ -13,4 +13,6 @@ export type CaseCopy = {
   note?: string
   /** Шаги цепочки или реплики превью — тот же порядок, что в cases.ts */
   preview?: Preview
+  /** Схема «как работает» целиком на языке перевода, той же формы */
+  scheme?: Scheme
 }

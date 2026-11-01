@@ -1,0 +1,398 @@
+/* Плашка в стиле превью кейсов: уголки, моно-подписи, тёмный фон */
+.scheme {
+  --gap: 28px;
+  --step: 1.2s;
+  position: relative;
+  display: grid;
+  gap: var(--space-lg);
+  padding: 44px 40px 40px;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  color: var(--fg-tertiary);
+}
+
+.corner {
+  position: absolute;
+  inline-size: 14px;
+  block-size: 14px;
+  border: 1px solid var(--border-hover);
+}
+
+.corner[data-pos='tl'] {
+  inset: 14px auto auto 14px;
+  border-inline-end: 0;
+  border-block-end: 0;
+}
+
+.corner[data-pos='br'] {
+  inset: auto 14px 14px auto;
+  border-inline-start: 0;
+  border-block-start: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-secondary);
+  text-transform: lowercase;
+}
+
+.live {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--signal-live);
+  animation: pulse 2s var(--ease-out-quart) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal-live) 60%, transparent);
+  }
+
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+/* ---------- Шаг: карточка с номером, названием и пояснением ---------- */
+
+.node {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-inline-size: 0;
+  padding: 18px 18px 20px;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-base);
+  animation: lit var(--cycle, 7.2s) var(--ease-out-quart) infinite;
+  animation-delay: calc(var(--i) * var(--step));
+}
+
+.index {
+  color: var(--fg-tertiary);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 450;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary);
+}
+
+.note {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-sm);
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--fg-secondary);
+}
+
+/* Шаг загорается, когда до него доходит запрос, и гаснет к следующему */
+@keyframes lit {
+  0% {
+    border-color: var(--signal-live);
+    background: color-mix(in srgb, var(--signal-live) 9%, var(--bg-base));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal-live) 10%, transparent);
+  }
+
+  12% {
+    border-color: var(--signal-live);
+    background: color-mix(in srgb, var(--signal-live) 9%, var(--bg-base));
+  }
+
+  24%,
+  100% {
+    border-color: var(--border-hair);
+    background: var(--bg-base);
+    box-shadow: none;
+  }
+}
+
+/* ---------- Цепочка ---------- */
+
+.pipeline {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: var(--gap);
+  padding: 0;
+  list-style: none;
+}
+
+/* Линия к следующему шагу и пакет, который по ней бежит */
+.row > .node:not(:last-child)::after,
+.row > .node:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 31px;
+  inset-inline-start: 100%;
+}
+
+.row > .node:not(:last-child)::after {
+  inline-size: var(--gap);
+  block-size: 1px;
+  background: var(--border-hover);
+}
+
+.row > .node:not(:last-child)::before {
+  z-index: 1;
+  inline-size: 7px;
+  block-size: 7px;
+  margin-block-start: -3px;
+  border-radius: 50%;
+  background: var(--signal-live);
+  box-shadow: 0 0 10px var(--signal-live);
+  opacity: 0;
+  animation: hop var(--cycle, 7.2s) linear infinite;
+  animation-delay: calc(var(--i) * var(--step) + var(--step) * 0.55);
+}
+
+@keyframes hop {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  7% {
+    opacity: 1;
+    transform: translateX(calc(var(--gap) - 7px));
+  }
+
+  8%,
+  100% {
+    opacity: 0;
+    transform: translateX(calc(var(--gap) - 7px));
+  }
+}
+
+/* Обратная дорожка: то, что возвращается в систему */
+.loop {
+  display: grid;
+  gap: var(--space-md);
+  padding: 18px;
+  border: 1px dashed var(--border-hover);
+}
+
+.loopTitle {
+  color: var(--fg-secondary);
+  text-transform: lowercase;
+}
+
+.row[data-loop] .node {
+  background: transparent;
+}
+
+/* ---------- Табло ---------- */
+
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--space-lg) var(--space-xl);
+}
+
+.lane {
+  display: grid;
+  align-content: start;
+  gap: var(--gap);
+  padding: 0;
+  list-style: none;
+  --cycle: 6s;
+}
+
+.lane > .node:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 32px;
+  inline-size: 1px;
+  block-size: var(--gap);
+  background: var(--border-hover);
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.group {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-base);
+}
+
+.groupLabel {
+  margin-block-end: 4px;
+  color: var(--fg-secondary);
+  text-transform: lowercase;
+}
+
+.desk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-hair);
+}
+
+.deskName {
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  letter-spacing: 0;
+  color: var(--fg-primary);
+}
+
+/* Статус стола меняется по кругу: работает → вопрос → готово, у каждого стола со своим сдвигом */
+.states {
+  display: grid;
+  justify-items: end;
+}
+
+.state {
+  grid-area: 1 / 1;
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+  text-transform: lowercase;
+  white-space: nowrap;
+  opacity: 0;
+  animation: state 7.5s steps(1, end) infinite;
+  animation-delay: calc(var(--j) * 2.5s - var(--i) * 1.9s);
+}
+
+.state:nth-child(1) {
+  color: var(--signal-live);
+  opacity: 1;
+}
+
+.state:nth-child(2) {
+  color: var(--accent);
+}
+
+.state:nth-child(3) {
+  color: var(--fg-secondary);
+}
+
+@keyframes state {
+  0% {
+    opacity: 1;
+  }
+
+  33.3%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.rules {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  padding: 0;
+  list-style: none;
+  text-transform: lowercase;
+}
+
+.rules > li {
+  padding: 6px 10px;
+  border: 1px solid var(--border-hair);
+  color: var(--fg-secondary);
+}
+
+.rules > li::before {
+  content: '→ ';
+  color: var(--fg-tertiary);
+}
+
+/* ---------- Телефон: всё в столбик, линии вниз ---------- */
+
+@media (max-width: 767px) {
+  .scheme {
+    padding: 40px 18px 24px;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    --gap: 22px;
+  }
+
+  .row > .node:not(:last-child)::after,
+  .row > .node:not(:last-child)::before {
+    inset-block-start: 100%;
+    inset-inline-start: 32px;
+  }
+
+  .row > .node:not(:last-child)::after {
+    inline-size: 1px;
+    block-size: var(--gap);
+  }
+
+  .row > .node:not(:last-child)::before {
+    margin-block-start: 0;
+    margin-inline-start: -3px;
+    animation-name: hop-down;
+  }
+
+  .label {
+    font-size: 19px;
+  }
+
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@keyframes hop-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  7% {
+    opacity: 1;
+    transform: translateY(calc(var(--gap) - 7px));
+  }
+
+  8%,
+  100% {
+    opacity: 0;
+    transform: translateY(calc(var(--gap) - 7px));
+  }
+}
+
+/* Без движения схема стоит целиком: шаги подсвечены, статусы — первый */
+@media (prefers-reduced-motion: reduce) {
+  .node {
+    animation: none;
+  }
+
+  .row > .node:not(:last-child)::before,
+  .live {
+    animation: none;
+  }
+
+  .state {
+    animation: none;
+  }
+}

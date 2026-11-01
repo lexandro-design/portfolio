@@ -113,6 +113,8 @@ for (const slug of todo) {
       cover: old?.cover ?? { src: `/cases/${slug}/cover.jpg`, caption: '', w: 2624, h: 1280 },
     } : {}),
     ...(t.ru.preview ? { preview: t.ru.preview } : {}),
+    // Схема «как работает» собирается на сайте, в текстах её нет — при пересборке не теряем
+    ...(old?.scheme ? { scheme: old.scheme } : {}),
     ...(t.minor ? { minor: true } : {}),
     ...(t.ru.note ? { note: t.ru.note } : {}),
     ...((t.link ?? old?.link) ? { link: t.link ?? old.link } : {}),
@@ -140,6 +142,7 @@ for (const slug of todo) {
         : (t.shots ?? []).map((s) => s.captions?.[l] ?? s.caption),
       ...(c.note ? { note: c.note } : {}),
       ...(c.preview ? { preview: c.preview } : {}),
+      ...(i18n[l][slug]?.scheme ? { scheme: i18n[l][slug].scheme } : {}),
     }
   }
   console.log(`${slug}: ${at >= 0 ? 'обновлён' : 'добавлен'}, скринов ${shots.length}${shots.some((s) => s.video) ? ' (есть анимация)' : ''}`)

@@ -56,6 +56,32 @@ export type Preview =
   | { kind: 'inbox'; columns: string[]; mails: { text: string; to: number }[] }
   | { kind: 'search'; query: string; results: string[] }
 
+/**
+ * Схема «как работает» на странице кейса — для AI-продуктов, у которых
+ * нет экранов. Только то, что есть в тексте кейса, без устройства до
+ * деталей. pipeline — цепочка шагов, по которой бежит запрос, и обратная
+ * дорожка (loop); board — табло: задача → распределитель → столы по группам
+ */
+export type SchemeStep = { label: string; note?: string }
+
+export type Scheme =
+  | {
+      kind: 'pipeline'
+      title: string
+      steps: SchemeStep[]
+      loop?: { title: string; steps: SchemeStep[] }
+    }
+  | {
+      kind: 'board'
+      title: string
+      input: SchemeStep
+      hub: SchemeStep
+      groups: { label: string; items: string[] }[]
+      /** Чем стол сдаёт работу: «готово», «вопрос»… */
+      results: string[]
+      rules: string[]
+    }
+
 export type Case = {
   slug: string
   title: string
@@ -80,6 +106,7 @@ export type Case = {
   thumb?: Shot
   cover?: Shot
   preview?: Preview
+  scheme?: Scheme
   /** Небольшой проект: на главной идёт строкой списка, а не крупной карточкой */
   minor?: boolean
   /** Пометка к галерее, например про демо-данные */

@@ -184,6 +184,7 @@ export type Dict = {
     back: string
     facts: { client: string; year: string; direction: string; stack: string; site: string }
     screens: string
+    scheme: string
     next: string
     viewer: string
     close: string

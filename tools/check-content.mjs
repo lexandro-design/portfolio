@@ -53,6 +53,20 @@ function checkSections(sections, where) {
   })
 }
 
+function checkScheme(s, where) {
+  if (s === undefined) return
+  const steps = (list) => Array.isArray(list) && list.length > 0 && list.every((x) => str(x?.label))
+  if (!str(s?.title)) return fail(where, 'нет title')
+  if (s.kind === 'pipeline') {
+    if (!steps(s.steps)) fail(where, 'steps — список шагов с label')
+    if (s.loop && (!str(s.loop.title) || !steps(s.loop.steps))) fail(where, 'у loop нужны title и steps')
+  } else if (s.kind === 'board') {
+    if (!str(s.input?.label) || !str(s.hub?.label)) fail(where, 'у board нужны input и hub')
+    if (!Array.isArray(s.groups) || !s.groups.every((g) => str(g.label) && strs(g.items))) fail(where, 'groups — {label, items}')
+    if (!strs(s.results) || !strs(s.rules)) fail(where, 'results и rules — списки строк')
+  } else fail(where, 'kind — pipeline или board')
+}
+
 function checkPreview(p, where) {
   if (p === undefined) return
   if (!PREVIEWS.includes(p?.kind)) return fail(where, `kind должен быть одним из ${PREVIEWS}`)
@@ -108,6 +122,7 @@ cases.forEach((c, i) => {
   if (c.thumb) checkShot(c.thumb, `${at}.thumb`)
   if (c.cover) checkShot(c.cover, `${at}.cover`)
   checkPreview(c.preview, `${at}.preview`)
+  checkScheme(c.scheme, `${at}.scheme`)
   if (c.link && (!str(c.link.href) || !str(c.link.label))) fail(at, 'у link нужны href и label')
   if (c.credit && (!str(c.credit.href) || !str(c.credit.handle)))
     fail(at, 'у credit нужны href и handle')
@@ -122,6 +137,9 @@ for (const l of LOCALES) {
     checkSections(t.sections, `${at}.sections`)
     if (!strs(t.captions)) fail(at, 'captions — список строк')
     checkPreview(t.preview, `${at}.preview`)
+    checkScheme(t.scheme, `${at}.scheme`)
+    // Схема в переводе обязательна: иначе на чужом языке осталась бы русская
+    if (cases.find((c) => c.slug === slug)?.scheme && !t.scheme) fail(at, 'нет перевода scheme')
   }
 }
 

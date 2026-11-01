@@ -32,6 +32,7 @@ export function getCases(locale: Locale): Case[] {
         t.preview && c.preview?.kind === t.preview.kind
           ? ({ ...c.preview, ...t.preview } as Case['preview'])
           : (t.preview ?? c.preview),
+      scheme: t.scheme ?? c.scheme,
       shots: c.shots.map((s, i) => ({ ...s, caption: t.captions[i] ?? s.caption })),
     }
   })

@@ -976,6 +976,58 @@
         "department desk",
         "result: done"
       ]
+    },
+    "scheme": {
+      "kind": "board",
+      "title": "I set the goal, the dispatcher hands it to desks",
+      "input": {
+        "label": "task in plain words",
+        "note": "a goal from me"
+      },
+      "hub": {
+        "label": "dispatcher",
+        "note": "picks the desk and sets the task with a done criterion"
+      },
+      "groups": [
+        {
+          "label": "studio",
+          "items": [
+            "design",
+            "websites"
+          ]
+        },
+        {
+          "label": "game",
+          "items": [
+            "game code",
+            "game art"
+          ]
+        },
+        {
+          "label": "content",
+          "items": [
+            "texts",
+            "motion"
+          ]
+        },
+        {
+          "label": "personal",
+          "items": [
+            "study",
+            "family"
+          ]
+        }
+      ],
+      "results": [
+        "working",
+        "question",
+        "done"
+      ],
+      "rules": [
+        "board: who is working, who waits for me, limits left",
+        "supervision nudges about a silent desk",
+        "publishing, money and anything irreversible: a question to my phone"
+      ]
     }
   },
   "call-recorder": {
@@ -1095,6 +1147,49 @@
         "answer with memory",
         "voice on the speaker"
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "voice → answer, all on the home computer",
+      "steps": [
+        {
+          "label": "“Haiku”",
+          "note": "waits for its name"
+        },
+        {
+          "label": "speech to text",
+          "note": "recognized on the GPU"
+        },
+        {
+          "label": "who is speaking",
+          "note": "voice matched to a sample"
+        },
+        {
+          "label": "answer",
+          "note": "shaped by the person and memory"
+        },
+        {
+          "label": "voice",
+          "note": "the Station as a speaker, no cloud"
+        }
+      ],
+      "loop": {
+        "title": "memory",
+        "steps": [
+          {
+            "label": "conversations",
+            "note": "go into memory"
+          },
+          {
+            "label": "what we discussed",
+            "note": "can be asked later"
+          },
+          {
+            "label": "meeting",
+            "note": "shows up in the phone calendar"
+          }
+        ]
+      }
     }
   },
   "lead-agent": {
@@ -1186,6 +1281,41 @@
           "text": "Per the returns policy: three steps [1]"
         }
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "a newcomer’s question → an answer from the company base",
+      "steps": [
+        {
+          "label": "question",
+          "note": "in the chat or in Telegram"
+        },
+        {
+          "label": "search",
+          "note": "by meaning and by words, aware of the role"
+        },
+        {
+          "label": "answer",
+          "note": "with links to documents"
+        }
+      ],
+      "loop": {
+        "title": "no answer in the base",
+        "steps": [
+          {
+            "label": "training specialist",
+            "note": "sees the question in the panel"
+          },
+          {
+            "label": "answer in the base",
+            "note": "becomes part of the knowledge base"
+          },
+          {
+            "label": "bot follows up",
+            "note": "with everyone who asked"
+          }
+        ]
+      }
     }
   },
   "saldo": {
