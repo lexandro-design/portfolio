@@ -37,7 +37,10 @@ function checkShot(s, where) {
   if (!s || !str(s.src) || typeof s.w !== 'number' || typeof s.h !== 'number') {
     return fail(where, 'у скриншота нужны src, w и h')
   }
-  for (const src of [s.src, s.dark].filter(Boolean)) {
+  if (s.video !== undefined && (!str(s.video) || !s.video.endsWith('.mp4'))) {
+    fail(where, 'video — путь к .mp4')
+  }
+  for (const src of [s.src, s.dark, s.video].filter(Boolean)) {
     if (!existsSync(new URL(`public${src}`, root))) fail(where, `нет файла public${src}`)
   }
 }

@@ -41,6 +41,20 @@
     ],
     "shots": [
       {
+        "src": "/cases/parfumeria/3d-issey.jpg",
+        "video": "/cases/parfumeria/3d-issey.mp4",
+        "caption": "3D-баннер Issey Miyake для главной, анимация.",
+        "w": 1600,
+        "h": 800
+      },
+      {
+        "src": "/cases/parfumeria/3d-hello.jpg",
+        "video": "/cases/parfumeria/3d-hello.mp4",
+        "caption": "3D-баннер промокода HELLO, анимация.",
+        "w": 1600,
+        "h": 800
+      },
+      {
         "src": "/cases/parfumeria/01.jpg",
         "caption": "Главная.",
         "w": 1600,
@@ -111,6 +125,13 @@
         "caption": "Файл в Figma целиком.",
         "w": 1600,
         "h": 754
+      },
+      {
+        "src": "/cases/parfumeria/3d-hibiscus.jpg",
+        "video": "/cases/parfumeria/3d-hibiscus.mp4",
+        "caption": "3D-баннер Love Hibiscus, анимация.",
+        "w": 1600,
+        "h": 666
       }
     ],
     "thumb": {
