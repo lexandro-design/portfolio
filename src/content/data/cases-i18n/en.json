@@ -939,6 +939,28 @@
         "on / off",
         "office and spending"
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "the computer’s whole AI setup in one window",
+      "steps": [
+        {
+          "label": "Ctrl+Alt+P",
+          "note": "the console opens from the tray"
+        },
+        {
+          "label": "services",
+          "note": "each with a status and an on / off button"
+        },
+        {
+          "label": "office",
+          "note": "agents as characters: who works, who waits"
+        },
+        {
+          "label": "limits",
+          "note": "usage and the calendar next to it"
+        }
+      ]
     }
   },
   "ai-office": {
@@ -1064,6 +1086,41 @@
         "transcript",
         "tasks in the base"
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "a call → tasks in the knowledge base a minute later",
+      "steps": [
+        {
+          "label": "hotkey",
+          "note": "recording on two tracks"
+        },
+        {
+          "label": "transcript",
+          "note": "on the GPU, by speaker"
+        },
+        {
+          "label": "breakdown",
+          "note": "summary, agreements, tasks"
+        },
+        {
+          "label": "knowledge base",
+          "note": "a note in the project, tasks in the to-do list"
+        }
+      ],
+      "loop": {
+        "title": "meetings under NDA",
+        "steps": [
+          {
+            "label": "local model",
+            "note": "nothing goes to the cloud"
+          },
+          {
+            "label": "kept apart",
+            "note": "the result stays outside the shared base"
+          }
+        ]
+      }
     }
   },
   "channel-pipeline": {
@@ -1110,6 +1167,45 @@
           "text": "Goes out at 15:00, I’ll remind you 15 minutes before"
         }
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "a draft → approval with a button → a post on schedule",
+      "steps": [
+        {
+          "label": "draft",
+          "note": "written, cleaned of clichés, put together"
+        },
+        {
+          "label": "bot",
+          "note": "sends the post with buttons"
+        },
+        {
+          "label": "decision",
+          "note": "approve or edit"
+        },
+        {
+          "label": "publishing",
+          "note": "in its slot, with a reminder"
+        }
+      ],
+      "loop": {
+        "title": "learning",
+        "steps": [
+          {
+            "label": "before → after",
+            "note": "every edit is saved as a pair"
+          },
+          {
+            "label": "next drafts",
+            "note": "take the edits into account"
+          },
+          {
+            "label": "autopilot",
+            "note": "after ten posts in a row with no edits"
+          }
+        ]
+      }
     }
   },
   "haiku": {
@@ -1234,6 +1330,45 @@
           "text": "Send"
         }
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "an order in a channel → a reply once a person decides",
+      "steps": [
+        {
+          "label": "channels and the exchange",
+          "note": "only the chosen folder"
+        },
+        {
+          "label": "scoring",
+          "note": "against our skills"
+        },
+        {
+          "label": "card",
+          "note": "advice on price and timing"
+        },
+        {
+          "label": "reply",
+          "note": "send, edit or answer yourself"
+        }
+      ],
+      "loop": {
+        "title": "rules",
+        "steps": [
+          {
+            "label": "price list",
+            "note": "approved prices only"
+          },
+          {
+            "label": "up to ten a day",
+            "note": "cold messages"
+          },
+          {
+            "label": "“is this a bot?”",
+            "note": "no lying, hands over to a person"
+          }
+        ]
+      }
     }
   },
   "rag-mentor": {
@@ -1404,6 +1539,45 @@
           "text": "Passed it on, the work continues"
         }
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "an agent needs a decision → an answer from the phone",
+      "steps": [
+        {
+          "label": "agent’s question",
+          "note": "work stopped without my decision"
+        },
+        {
+          "label": "Telegram",
+          "note": "answer options on buttons"
+        },
+        {
+          "label": "answer",
+          "note": "a button, text, voice or a photo"
+        },
+        {
+          "label": "work goes on",
+          "note": "the answer goes straight to the agent"
+        }
+      ],
+      "loop": {
+        "title": "no noise",
+        "steps": [
+          {
+            "label": "only when needed",
+            "note": "writes when it can’t go on without me"
+          },
+          {
+            "label": "no repeats",
+            "note": "the same question at most once in half an hour"
+          },
+          {
+            "label": "“Allow” / “No”",
+            "note": "for steps the agent doesn’t take without me"
+          }
+        ]
+      }
     }
   },
   "uni-bot": {
@@ -1444,6 +1618,45 @@
           "text": "Due in a day: practical assignment"
         }
       ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "the study portal → only what matters right now",
+      "steps": [
+        {
+          "label": "portal",
+          "note": "classes, webinars, assignments, deadlines"
+        },
+        {
+          "label": "check",
+          "note": "every 15 minutes"
+        },
+        {
+          "label": "filter",
+          "note": "the main requirement: no spam"
+        },
+        {
+          "label": "Telegram",
+          "note": "class cards and buttons"
+        }
+      ],
+      "loop": {
+        "title": "what arrives",
+        "steps": [
+          {
+            "label": "in the evening",
+            "note": "tomorrow’s classes"
+          },
+          {
+            "label": "before a webinar",
+            "note": "the link"
+          },
+          {
+            "label": "three days and one day before",
+            "note": "about unsubmitted work"
+          }
+        ]
+      }
     }
   }
 }

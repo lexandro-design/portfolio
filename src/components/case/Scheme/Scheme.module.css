@@ -38,7 +38,6 @@
   align-items: center;
   gap: 8px;
   color: var(--fg-secondary);
-  text-transform: lowercase;
 }
 
 .live {
@@ -187,7 +186,6 @@
 
 .loopTitle {
   color: var(--fg-secondary);
-  text-transform: lowercase;
 }
 
 .row[data-loop] .node {
@@ -239,7 +237,6 @@
 .groupLabel {
   margin-block-end: 4px;
   color: var(--fg-secondary);
-  text-transform: lowercase;
 }
 
 .desk {
@@ -268,7 +265,6 @@
   grid-area: 1 / 1;
   padding: 3px 8px;
   border: 1px solid currentColor;
-  text-transform: lowercase;
   white-space: nowrap;
   opacity: 0;
   animation: state 7.5s steps(1, end) infinite;
@@ -306,7 +302,6 @@
   gap: 8px 10px;
   padding: 0;
   list-style: none;
-  text-transform: lowercase;
 }
 
 .rules > li {
