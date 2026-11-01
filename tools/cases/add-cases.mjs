@@ -147,4 +147,5 @@ for (const slug of todo) {
 
 writeJson(join(DATA, 'cases.json'), cases)
 for (const l of LOCALES) writeJson(join(DATA, `cases-i18n/${l}.json`), i18n[l])
-console.log('Дальше: node tools/cards/covers.mjs (если у новых кейсов есть скрины), node tools/check-content.mjs')
+const withShots = todo.filter((s) => !readJson(join(textsDir, `${s}.json`)).keepShots && cases.find((c) => c.slug === s)?.shots.length)
+console.log(`Дальше: ${withShots.length ? `node tools/cards/covers.mjs ${withShots.join(' ')}, ` : ''}node tools/check-content.mjs`)

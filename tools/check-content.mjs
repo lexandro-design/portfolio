@@ -124,6 +124,13 @@ for (const l of LOCALES) {
   }
 }
 
+// Русские слова в стеке переводятся словарём cases-i18n/stack.json
+const stackCopy = read('cases-i18n/stack.json')
+for (const s of new Set(cases.flatMap((c) => c.stack))) {
+  if (!/[а-яё]/i.test(s)) continue
+  for (const l of LOCALES) if (!str(stackCopy[s]?.[l])) fail('cases-i18n/stack', `нет перевода «${s}» на ${l}`)
+}
+
 // Контакты
 const site = read('site.json')
 for (const k of ['email', 'telegram', 'telegramHandle', 'github', 'behance']) {
