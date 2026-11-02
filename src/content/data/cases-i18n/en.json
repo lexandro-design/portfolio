@@ -365,14 +365,25 @@
           "The full cycle: structure, a Figma layout, graphics in Photoshop, the Tilda build. Where standard blocks fell short, I built with Zero Block and added code.",
           "I exported the client’s product base and moved it onto the site, so the catalog holds all the thousands of items with filters and product pages. Responsive layout, basic SEO, request forms."
         ]
+      },
+      {
+        "title": "2026 redesign",
+        "body": [
+          "A new site layout in Figma: home, catalog, product page, about and contacts, for desktop and phone. It is a concept and has not been moved onto the site yet.",
+          "The gallery shows the new layouts first, then the 2025 site."
+        ]
       }
     ],
     "captions": [
-      "Home.",
-      "Catalog with filters.",
-      "Phone: home, catalog, product.",
-      "Product page.",
-      "About."
+      "2026 redesign: home.",
+      "2026 redesign: catalog.",
+      "2026 redesign: product page.",
+      "2026 redesign, phone: home, catalog, product.",
+      "2025 site: home.",
+      "2025 site: catalog with filters.",
+      "2025 site: phone: home, catalog, product.",
+      "2025 site: product page.",
+      "2025 site: about."
     ]
   },
   "packaging-bots": {
@@ -713,14 +724,25 @@
           "A site fully on Tilda: standard blocks, Zero Block and custom code. A dark blue palette with orange, so it does not repeat Svarnoy 52.",
           "Moved the product catalog, wrote the About texts, collected reviews and reworked the first screen. Responsive for phones."
         ]
+      },
+      {
+        "title": "2026 redesign",
+        "body": [
+          "A new site layout in Figma: home, catalog, product page, about and contacts, for desktop and phone. It is a concept and has not been moved onto the site yet.",
+          "The gallery shows the new layouts first, then the 2025 site."
+        ]
       }
     ],
     "captions": [
-      "Home.",
-      "Catalog.",
-      "Phone: home, catalog, about.",
-      "Product page.",
-      "About."
+      "2026 redesign: home.",
+      "2026 redesign: catalog.",
+      "2026 redesign: product page.",
+      "2026 redesign, phone: home, catalog, product.",
+      "2025 site: home.",
+      "2025 site: catalog.",
+      "2025 site: phone: home, catalog, about.",
+      "2025 site: product page.",
+      "2025 site: about."
     ]
   },
   "art-school": {

@@ -116,9 +116,37 @@
     font-size: var(--type-body);
   }
 
+  /* На телефоне галерея — лента вбок со свайпом, а не столбик из десятка
+     кадров: следующий кадр выглядывает справа, лента выходит к краям экрана */
   .gallery {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 86%;
+    gap: var(--space-md);
+    margin-inline: calc(-1 * var(--bleed));
+    padding-inline: var(--bleed);
+    scroll-padding-inline: var(--bleed);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .figure {
+    scroll-snap-align: start;
+  }
+
+  .figure:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .figure:last-child:nth-child(odd) .image {
+    aspect-ratio: 16 / 11;
+    aspect-ratio: max(16 / 11, var(--ratio, 0));
   }
 
   .galleryHead {
