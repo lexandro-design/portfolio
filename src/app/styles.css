@@ -60,7 +60,8 @@ button {
   cursor: pointer;
 }
 
-img {
+img,
+video {
   display: block;
   max-inline-size: 100%;
   block-size: auto;
@@ -122,6 +123,21 @@ img[data-zoom] {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Кадр со своей версией для телефона (Shot, поле mobile) */
+[data-screen='narrow'] {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  [data-screen='wide'] {
+    display: none;
+  }
+
+  [data-screen='narrow'] {
+    display: block;
   }
 }
 

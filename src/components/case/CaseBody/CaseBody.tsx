@@ -2,6 +2,7 @@ import type { Case } from '@/content/cases'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
 import { Shot } from '@/components/ui/Shot'
+import { Scheme } from '../Scheme'
 import { ShotTheme } from '../ShotTheme'
 import styles from './CaseBody.module.css'
 
@@ -32,12 +33,25 @@ export function CaseBody({ item, t }: { item: Case; t: Dict['case'] }) {
         </section>
       ))}
 
+      {item.scheme && (
+        <section className={styles.section}>
+          <Reveal className="container">
+            <div className={styles.schemeHead}>
+              <span className={styles.label}>
+                {pad(item.sections.length + 1)} · {t.scheme}
+              </span>
+            </div>
+            <Scheme scheme={item.scheme} />
+          </Reveal>
+        </section>
+      )}
+
       {gallery.length > 0 && (
         <section className={styles.section}>
           <div className="container">
             <Reveal className={styles.galleryHead}>
               <span className={styles.label}>
-                {pad(item.sections.length + 1)} · {t.screens}
+                {pad(item.sections.length + (item.scheme ? 2 : 1))} · {t.screens}
               </span>
               {item.note && <span className={styles.label}>{item.note}</span>}
               {gallery.some((s) => s.dark) && <ShotTheme labels={t.shotTheme} />}

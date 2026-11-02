@@ -37,9 +37,13 @@ function checkShot(s, where) {
   if (!s || !str(s.src) || typeof s.w !== 'number' || typeof s.h !== 'number') {
     return fail(where, 'у скриншота нужны src, w и h')
   }
-  for (const src of [s.src, s.dark].filter(Boolean)) {
+  if (s.video !== undefined && (!str(s.video) || !s.video.endsWith('.mp4'))) {
+    fail(where, 'video — путь к .mp4')
+  }
+  for (const src of [s.src, s.dark, s.video].filter(Boolean)) {
     if (!existsSync(new URL(`public${src}`, root))) fail(where, `нет файла public${src}`)
   }
+  if (s.mobile) checkShot({ caption: '', ...s.mobile }, `${where}.mobile`)
 }
 
 function checkSections(sections, where) {
@@ -47,6 +51,20 @@ function checkSections(sections, where) {
   sections.forEach((s, i) => {
     if (!str(s?.title) || !strs(s?.body)) fail(`${where}[${i}]`, 'у раздела нужны title и body')
   })
+}
+
+function checkScheme(s, where) {
+  if (s === undefined) return
+  const steps = (list) => Array.isArray(list) && list.length > 0 && list.every((x) => str(x?.label))
+  if (!str(s?.title)) return fail(where, 'нет title')
+  if (s.kind === 'pipeline') {
+    if (!steps(s.steps)) fail(where, 'steps — список шагов с label')
+    if (s.loop && (!str(s.loop.title) || !steps(s.loop.steps))) fail(where, 'у loop нужны title и steps')
+  } else if (s.kind === 'board') {
+    if (!str(s.input?.label) || !str(s.hub?.label)) fail(where, 'у board нужны input и hub')
+    if (!Array.isArray(s.groups) || !s.groups.every((g) => str(g.label) && strs(g.items))) fail(where, 'groups — {label, items}')
+    if (!strs(s.results) || !strs(s.rules)) fail(where, 'results и rules — списки строк')
+  } else fail(where, 'kind — pipeline или board')
 }
 
 function checkPreview(p, where) {
@@ -104,6 +122,7 @@ cases.forEach((c, i) => {
   if (c.thumb) checkShot(c.thumb, `${at}.thumb`)
   if (c.cover) checkShot(c.cover, `${at}.cover`)
   checkPreview(c.preview, `${at}.preview`)
+  checkScheme(c.scheme, `${at}.scheme`)
   if (c.link && (!str(c.link.href) || !str(c.link.label))) fail(at, 'у link нужны href и label')
   if (c.credit && (!str(c.credit.href) || !str(c.credit.handle)))
     fail(at, 'у credit нужны href и handle')
@@ -118,7 +137,17 @@ for (const l of LOCALES) {
     checkSections(t.sections, `${at}.sections`)
     if (!strs(t.captions)) fail(at, 'captions — список строк')
     checkPreview(t.preview, `${at}.preview`)
+    checkScheme(t.scheme, `${at}.scheme`)
+    // Схема в переводе обязательна: иначе на чужом языке осталась бы русская
+    if (cases.find((c) => c.slug === slug)?.scheme && !t.scheme) fail(at, 'нет перевода scheme')
   }
+}
+
+// Русские слова в стеке переводятся словарём cases-i18n/stack.json
+const stackCopy = read('cases-i18n/stack.json')
+for (const s of new Set(cases.flatMap((c) => c.stack))) {
+  if (!/[а-яё]/i.test(s)) continue
+  for (const l of LOCALES) if (!str(stackCopy[s]?.[l])) fail('cases-i18n/stack', `нет перевода «${s}» на ${l}`)
 }
 
 // Контакты

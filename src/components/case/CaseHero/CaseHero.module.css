@@ -136,6 +136,19 @@
   aspect-ratio: 1312 / 400;
 }
 
+/* Шапка с петлёй: меньше воздуха над заголовком, петля сразу под ним, лид и факты ниже */
+.hero[data-motion] .meta {
+  margin-block: var(--space-xl) var(--space-md);
+}
+
+.hero[data-motion] .cover {
+  margin-block: var(--space-lg) 0;
+}
+
+.hero[data-motion] .facts {
+  margin-block-end: 0;
+}
+
 .image {
   inline-size: 100%;
   block-size: 100%;
@@ -164,5 +177,10 @@
 
   .cover > [data-size='cover'] {
     aspect-ratio: 4 / 3;
+  }
+
+  /* Своя версия для телефона (Shot, поле mobile) — по своей пропорции, вертикальная не режется */
+  .cover > [data-screen='narrow'] {
+    aspect-ratio: var(--ratio);
   }
 }

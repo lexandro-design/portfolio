@@ -1,11 +1,14 @@
 import type { Locale } from '@/i18n/config'
 import { cases, type Case } from '../cases'
+import stack from '../data/cases-i18n/stack.json'
 import { en } from './en'
 import { ja } from './ja'
 import type { CaseCopy } from './types'
 import { zh } from './zh'
 
 const COPY: Partial<Record<Locale, Record<string, CaseCopy>>> = { en, zh, ja }
+/** Русские слова в стеке («Дизайн-система», «Прототип»); названия технологий не переводятся */
+const STACK = stack as Record<string, Partial<Record<Locale, string>>>
 
 /** Кейсы на нужном языке. Русский — исходник, остальные накладывают переводы текста */
 export function getCases(locale: Locale): Case[] {
@@ -13,9 +16,11 @@ export function getCases(locale: Locale): Case[] {
   if (!copy) return cases
   return cases.map((c) => {
     const t = copy[c.slug]
-    if (!t) return c
+    const tech = c.stack.map((s) => STACK[s]?.[locale] ?? s)
+    if (!t) return { ...c, stack: tech }
     return {
       ...c,
+      stack: tech,
       title: t.title ?? c.title,
       tagline: t.tagline,
       lead: t.lead,
@@ -27,6 +32,7 @@ export function getCases(locale: Locale): Case[] {
         t.preview && c.preview?.kind === t.preview.kind
           ? ({ ...c.preview, ...t.preview } as Case['preview'])
           : (t.preview ?? c.preview),
+      scheme: t.scheme ?? c.scheme,
       shots: c.shots.map((s, i) => ({ ...s, caption: t.captions[i] ?? s.caption })),
     }
   })

@@ -1,7 +1,7 @@
 {
   "parfumeria": {
-    "tagline": "design system & the whole site",
-    "lead": "A perfume and cosmetics store in Belarus: a design system from scratch and 450+ screens at three widths with every state.",
+    "tagline": "design system, 3D and the site",
+    "lead": "A perfume and cosmetics store in Belarus: a design system, 450+ screens at three widths, 3D video banners for the home page and a site built from the design.",
     "client": "Parfumeria.by · e-commerce, Belarus",
     "sections": [
       {
@@ -22,20 +22,48 @@
           "450+ screens at 1440, 768 and 375: catalog by category with filters and sorting, a product page with reviews and back-in-stock alerts, search with suggestions, cart, checkout with courier and pickup, SMS sign-in, account, gift cards, brands, promotions and stores on a map.",
           "Every flow has empty, error, loading and out-of-stock states, so developers never have to invent them."
         ]
+      },
+      {
+        "title": "3D banners",
+        "body": [
+          "For the home page I built video banners in Blender: products from the catalog and a promo code banner, 8–10 second loops at 60 fps that play on every screen. Glass, liquid, cap and label follow the real product, and product banners sit on pastel backgrounds so the product never gets lost.",
+          "The frame is wider than the banner, so on an ultrawide monitor and on a phone the product stays on the left and never slides under the header or the text. The first banner is Amouage Love Hibiscus with an embossed monogram on the medallion, followed by an Issey Miyake cream and the HELLO promo code banner."
+        ]
+      },
+      {
+        "title": "the site from the layout",
+        "body": [
+          "To check the design in a browser, I built the site from my own layout: home, catalog with filters, product page with volume options, cart, sign-in, account and checkout. Every screen is checked against the layout at 1440, 768 and 375."
+        ]
+      },
+      {
+        "title": "a real catalog",
+        "body": [
+          "The layout and the site are filled with a real assortment, not placeholders. I put together a catalog export from the store’s test site: 951 products, 56 brands, photos, prices and volumes. Products are arranged sensibly: perfumes in perfumery, only that brand on a brand page, a discount only where the catalog has one."
+        ]
       }
     ],
     "captions": [
+      "3D banner for the HELLO promo code: glass letters on water, animated.",
+      "3D banner: Love Hibiscus, podium, camera orbit, petals.",
+      "3D banner: Issey Miyake, sunset, stars falling onto water.",
+      "3D render of a Hermès bottle for the product page.",
+      "Design system: 54 color tokens.",
+      "Design system: 121 text styles across three widths.",
       "Home.",
       "Perfume catalog.",
       "Product page.",
-      "Phone: home, catalog, cart.",
+      "Brand page.",
       "Search with suggestions.",
       "Cart.",
       "Gift card: choosing a design.",
-      "Brand page.",
       "Checkout.",
       "Account: orders.",
       "Tablet: home.",
+      "Phone: home, catalog, cart.",
+      "Phone: product page, filters, payment methods.",
+      "Phone: stories, gift card design, stores on the map.",
+      "Phone: perfume, makeup and skincare catalogs.",
       "The whole Figma file."
     ]
   },
@@ -337,14 +365,25 @@
           "The full cycle: structure, a Figma layout, graphics in Photoshop, the Tilda build. Where standard blocks fell short, I built with Zero Block and added code.",
           "I exported the client’s product base and moved it onto the site, so the catalog holds all the thousands of items with filters and product pages. Responsive layout, basic SEO, request forms."
         ]
+      },
+      {
+        "title": "2026 redesign",
+        "body": [
+          "A new site layout in Figma: home, catalog, product page, about and contacts, for desktop and phone. It is a concept and has not been moved onto the site yet.",
+          "The gallery shows the new layouts first, then the 2025 site."
+        ]
       }
     ],
     "captions": [
-      "Home.",
-      "Catalog with filters.",
-      "Phone: home, catalog, product.",
-      "Product page.",
-      "About."
+      "2026 redesign: home.",
+      "2026 redesign: catalog.",
+      "2026 redesign: product page.",
+      "2026 redesign, phone: home, catalog, product.",
+      "2025 site: home.",
+      "2025 site: catalog with filters.",
+      "2025 site: phone: home, catalog, product.",
+      "2025 site: product page.",
+      "2025 site: about."
     ]
   },
   "packaging-bots": {
@@ -597,6 +636,7 @@
     }
   },
   "tetrasis": {
+    "title": "Tetrasis",
     "tagline": "bundle product page",
     "lead": "An appliance store added bundles. I reworked the product page so you see the whole bundle and what is in it, on desktop and phone.",
     "client": "EnterSales · Tetrasis, home appliances",
@@ -684,14 +724,25 @@
           "A site fully on Tilda: standard blocks, Zero Block and custom code. A dark blue palette with orange, so it does not repeat Svarnoy 52.",
           "Moved the product catalog, wrote the About texts, collected reviews and reworked the first screen. Responsive for phones."
         ]
+      },
+      {
+        "title": "2026 redesign",
+        "body": [
+          "A new site layout in Figma: home, catalog, product page, about and contacts, for desktop and phone. It is a concept and has not been moved onto the site yet.",
+          "The gallery shows the new layouts first, then the 2025 site."
+        ]
       }
     ],
     "captions": [
-      "Home.",
-      "Catalog.",
-      "Phone: home, catalog, about.",
-      "Product page.",
-      "About."
+      "2026 redesign: home.",
+      "2026 redesign: catalog.",
+      "2026 redesign: product page.",
+      "2026 redesign, phone: home, catalog, product.",
+      "2025 site: home.",
+      "2025 site: catalog.",
+      "2025 site: phone: home, catalog, about.",
+      "2025 site: product page.",
+      "2025 site: about."
     ]
   },
   "art-school": {
@@ -874,6 +925,762 @@
         "embeddings",
         "knowledge base"
       ]
+    }
+  },
+  "ai-console": {
+    "title": "AI Console",
+    "tagline": "all AI services in one window",
+    "lead": "A Windows app that gathers all the computer’s AI setup into one window: the voice assistant, call recording, agents, bots and local models.",
+    "client": "personal tool",
+    "sections": [
+      {
+        "title": "why",
+        "body": [
+          "The services were scattered across hotkeys, scheduler tasks and scripts. To turn something off before a game or to see what was running, I had to remember where it lived."
+        ]
+      },
+      {
+        "title": "what’s inside",
+        "body": [
+          "Every service has a status and an on/off button. The office tab shows the agents as characters: who is working, who is waiting for an answer. From here you can also write to an agent, see how much of the limits is used, and open the calendar."
+        ]
+      },
+      {
+        "title": "how it’s built",
+        "body": [
+          "The console lives in the tray and opens with Ctrl+Alt+P. The interface comes in dark and light themes. It works only on this computer and doesn’t accept commands from other web pages."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "flow",
+      "steps": [
+        "Ctrl+Alt+P",
+        "service status",
+        "on / off",
+        "office and spending"
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "the computer’s whole AI setup in one window",
+      "steps": [
+        {
+          "label": "Ctrl+Alt+P",
+          "note": "the console opens from the tray"
+        },
+        {
+          "label": "services",
+          "note": "each with a status and an on / off button"
+        },
+        {
+          "label": "office",
+          "note": "agents as characters: who works, who waits"
+        },
+        {
+          "label": "limits",
+          "note": "usage and the calendar next to it"
+        }
+      ]
+    }
+  },
+  "ai-office": {
+    "title": "AI Agent Office",
+    "tagline": "a team of agents with a dispatcher",
+    "lead": "A working system where a dispatcher hands out tasks between AI agents, and I work as the director: I set the goal, answer questions and accept the result.",
+    "client": "personal tool",
+    "sections": [
+      {
+        "title": "the idea",
+        "body": [
+          "The agents multiplied: design, sites, a game, content, study. When each lives in its own chat, the overall picture is lost: who is doing what, who is waiting for an answer, how much of the limits is spent. The office gathers them into one structure with clear roles."
+        ]
+      },
+      {
+        "title": "how it’s organised",
+        "body": [
+          "The dispatcher takes a task in plain words, decides whose desk it is and issues an assignment with a done criterion. The desks are grouped into departments: studio, game, content, personal. Each has its own zone and rules, and each hands in its work as a one-line result: done, question or failed.",
+          "Large assignments run as programs: the dispatcher runs them for weeks and hands the next step to the desk that has freed up."
+        ]
+      },
+      {
+        "title": "control",
+        "body": [
+          "A board shows who is working, who is waiting for me and how much of the limits is left. A supervisor reminds the dispatcher about a desk that stays silent with an open task. Publishing, money and anything irreversible the agents never do themselves: such steps come to me as a question, including on my phone."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "flow",
+      "steps": [
+        "task in words",
+        "dispatcher",
+        "department desk",
+        "result: done"
+      ]
+    },
+    "scheme": {
+      "kind": "board",
+      "title": "I set the goal, the dispatcher hands it to desks",
+      "input": {
+        "label": "task in plain words",
+        "note": "a goal from me"
+      },
+      "hub": {
+        "label": "dispatcher",
+        "note": "picks the desk and sets the task with a done criterion"
+      },
+      "groups": [
+        {
+          "label": "studio",
+          "items": [
+            "design",
+            "websites"
+          ]
+        },
+        {
+          "label": "game",
+          "items": [
+            "game code",
+            "game art"
+          ]
+        },
+        {
+          "label": "content",
+          "items": [
+            "texts",
+            "motion"
+          ]
+        },
+        {
+          "label": "personal",
+          "items": [
+            "study",
+            "family"
+          ]
+        }
+      ],
+      "results": [
+        "working",
+        "question",
+        "done"
+      ],
+      "rules": [
+        "board: who is working, who waits for me, limits left",
+        "supervision nudges about a silent desk",
+        "publishing, money and anything irreversible: a question to my phone"
+      ]
+    }
+  },
+  "call-recorder": {
+    "title": "Call Recorder",
+    "tagline": "transcript and meeting summary",
+    "lead": "I record a call with one hotkey. A minute after it ends I have a transcript by speaker, the gist of the meeting and the tasks in my knowledge base. Speech recognition runs on my own computer.",
+    "client": "personal tool",
+    "sections": [
+      {
+        "title": "how it works",
+        "body": [
+          "Recording goes on two tracks: my microphone and the other person’s sound, so the text shows who said what. Transcription runs on the graphics card: 15 seconds of recording are processed in about a second, a twelve-minute call in half a minute."
+        ]
+      },
+      {
+        "title": "the breakdown",
+        "body": [
+          "After transcription the meeting is broken down: the gist, agreements, tasks. The note goes into the project folder, tasks into the to-do list, and the meeting is marked in the diary. Empty pieces and recording breaks don’t get into the knowledge base."
+        ]
+      },
+      {
+        "title": "confidentiality",
+        "body": [
+          "For meetings under NDA there is a separate mode: a local model does the breakdown, nothing goes to the cloud, and the result is stored apart from the general knowledge base."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "flow",
+      "steps": [
+        "Ctrl+Alt+R",
+        "two tracks",
+        "transcript",
+        "tasks in the base"
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "a call → tasks in the knowledge base a minute later",
+      "steps": [
+        {
+          "label": "hotkey",
+          "note": "recording on two tracks"
+        },
+        {
+          "label": "transcript",
+          "note": "on the GPU, by speaker"
+        },
+        {
+          "label": "breakdown",
+          "note": "summary, agreements, tasks"
+        },
+        {
+          "label": "knowledge base",
+          "note": "a note in the project, tasks in the to-do list"
+        }
+      ],
+      "loop": {
+        "title": "meetings under NDA",
+        "steps": [
+          {
+            "label": "local model",
+            "note": "nothing goes to the cloud"
+          },
+          {
+            "label": "kept apart",
+            "note": "the result stays outside the shared base"
+          }
+        ]
+      }
+    }
+  },
+  "channel-pipeline": {
+    "title": "Telegram Channel Pipeline",
+    "tagline": "posts approved in one tap",
+    "lead": "A system for running my channel: post drafts prepare themselves, I approve or edit them with buttons in a bot, and publishing goes out on schedule. My edits teach the system to write closer to my voice.",
+    "client": "channel @lexandro_design",
+    "sections": [
+      {
+        "title": "rubrics",
+        "body": [
+          "Three posts a day: news from design and AI, a practical tip, and “A Day Later” about what I did the day before. News only with a primary source, and posts about work come with real screenshots."
+        ]
+      },
+      {
+        "title": "how it’s organised",
+        "body": [
+          "The control bot runs in the cloud and doesn’t depend on a computer: it sends a draft with buttons, publishes the approved one in its slot, reminds an hour and 15 minutes before it goes out, and sends a summary in the evening.",
+          "Drafts are put together in several passes: one writes, a second looks for clichés and stiff officialese, a third merges. GIFs for posts are made from templates in the channel’s style, so the feed looks consistent."
+        ]
+      },
+      {
+        "title": "learning",
+        "body": [
+          "Every edit is saved as a “was → became” pair, and the next drafts take it into account. A rubric in which ten posts in a row went out without edits can switch to automatic mode."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "chat",
+      "bot": "lexandro_design_bot",
+      "lines": [
+        {
+          "from": "bot",
+          "text": "Draft of a “Tip” for 15:00"
+        },
+        {
+          "from": "user",
+          "text": "Publish"
+        },
+        {
+          "from": "bot",
+          "text": "Goes out at 15:00, I’ll remind you 15 minutes before"
+        }
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "a draft → approval with a button → a post on schedule",
+      "steps": [
+        {
+          "label": "draft",
+          "note": "written, cleaned of clichés, put together"
+        },
+        {
+          "label": "bot",
+          "note": "sends the post with buttons"
+        },
+        {
+          "label": "decision",
+          "note": "approve or edit"
+        },
+        {
+          "label": "publishing",
+          "note": "in its slot, with a reminder"
+        }
+      ],
+      "loop": {
+        "title": "learning",
+        "steps": [
+          {
+            "label": "before → after",
+            "note": "every edit is saved as a pair"
+          },
+          {
+            "label": "next drafts",
+            "note": "take the edits into account"
+          },
+          {
+            "label": "autopilot",
+            "note": "after ten posts in a row with no edits"
+          }
+        ]
+      }
+    }
+  },
+  "haiku": {
+    "title": "Haiku",
+    "tagline": "voice assistant for the home",
+    "lead": "My own voice assistant instead of Alice. It lives on my home computer, answers by voice within a couple of seconds, remembers conversations and recognises which of us is speaking.",
+    "client": "personal project",
+    "sections": [
+      {
+        "title": "why",
+        "body": [
+          "We had Alice at home, and her answers weren’t enough: she doesn’t remember what we talked about yesterday and knows nothing about our affairs. I wanted an assistant that answers fast, doesn’t cost money every month and knows the family’s context."
+        ]
+      },
+      {
+        "title": "how it works",
+        "body": [
+          "The assistant waits for its name, recognises speech on the graphics card, answers and speaks the answer aloud. It recognises a voice from a sample, so it knows who asked and answers with that person in mind.",
+          "Conversations are saved to memory. You can ask what was discussed, ask it to pass something on or set a meeting, and the meeting appears in the calendar on the phone."
+        ]
+      },
+      {
+        "title": "a speaker without the cloud",
+        "body": [
+          "A separate stage: Yandex Station became the microphone and speaker of Haiku. All the logic stayed on the computer and Yandex’s cloud is not involved: the speaker listens to the room and talks in its voice."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "flow",
+      "steps": [
+        "“Haiku”",
+        "speech to text",
+        "answer with memory",
+        "voice on the speaker"
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "voice → answer, all on the home computer",
+      "steps": [
+        {
+          "label": "“Haiku”",
+          "note": "waits for its name"
+        },
+        {
+          "label": "speech to text",
+          "note": "recognized on the GPU"
+        },
+        {
+          "label": "who is speaking",
+          "note": "voice matched to a sample"
+        },
+        {
+          "label": "answer",
+          "note": "shaped by the person and memory"
+        },
+        {
+          "label": "voice",
+          "note": "the Station as a speaker, no cloud"
+        }
+      ],
+      "loop": {
+        "title": "memory",
+        "steps": [
+          {
+            "label": "conversations",
+            "note": "go into memory"
+          },
+          {
+            "label": "what we discussed",
+            "note": "can be asked later"
+          },
+          {
+            "label": "meeting",
+            "note": "shows up in the phone calendar"
+          }
+        ]
+      }
+    }
+  },
+  "lead-agent": {
+    "title": "Order Search",
+    "tagline": "a freelance agent in Telegram",
+    "lead": "The agent reads order channels and a freelance exchange, picks the suitable ones and prepares a reply. The last word on price and deadlines always stays with a person.",
+    "client": "own project",
+    "sections": [
+      {
+        "title": "the task",
+        "body": [
+          "Design and development orders are scattered across dozens of channels. By the time you read the feed, the good ones are gone. We built it together with a developer partner: we both look for orders and wanted to spend less time on it."
+        ]
+      },
+      {
+        "title": "how it works",
+        "body": [
+          "The agent reads only the chosen folder of channels and the exchange feed, rates each order against our skills and sends a card with advice on price and deadlines. On a button it prepares a draft reply, and then the choice is yours: send, edit or answer yourself."
+        ]
+      },
+      {
+        "title": "rules",
+        "body": [
+          "Prices only from the approved price list, no more than ten cold messages a day. Asked “is this a bot?”, the agent doesn’t lie and hands the dialog to a person. Personal and work chats are filtered out at the input and are not read."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "chat",
+      "lines": [
+        {
+          "from": "bot",
+          "text": "New order: a landing page for a studio, there is a budget"
+        },
+        {
+          "from": "bot",
+          "text": "Advice: 3–5 days, draft reply is ready"
+        },
+        {
+          "from": "user",
+          "text": "Send"
+        }
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "an order in a channel → a reply once a person decides",
+      "steps": [
+        {
+          "label": "channels and the exchange",
+          "note": "only the chosen folder"
+        },
+        {
+          "label": "scoring",
+          "note": "against our skills"
+        },
+        {
+          "label": "card",
+          "note": "advice on price and timing"
+        },
+        {
+          "label": "reply",
+          "note": "send, edit or answer yourself"
+        }
+      ],
+      "loop": {
+        "title": "rules",
+        "steps": [
+          {
+            "label": "price list",
+            "note": "approved prices only"
+          },
+          {
+            "label": "up to ten a day",
+            "note": "cold messages"
+          },
+          {
+            "label": "“is this a bot?”",
+            "note": "no lying, hands over to a person"
+          }
+        ]
+      }
+    }
+  },
+  "rag-mentor": {
+    "title": "RAG Mentor",
+    "tagline": "a bot for new employees",
+    "lead": "A mentor for newcomers at a retail chain: answers from the company knowledge base, guides through the first-week programme, trains on work situations. The training specialist sees where the knowledge base had no answer.",
+    "client": "study project",
+    "sections": [
+      {
+        "title": "the task",
+        "body": [
+          "A newcomer in retail needs to get a grip on regulations, assortment and rules quickly in the first weeks. A human mentor is busy, the documents are long. The bot answers right away and only from company materials."
+        ]
+      },
+      {
+        "title": "how it works",
+        "body": [
+          "Search is hybrid: by meaning and by words, taking the employee’s role into account, so that a warehouse worker and a salesperson get their own answers. Answers come with links to documents, and a question unrelated to work is politely declined.",
+          "Besides questions there is a first-week programme, short courses with tests and a simulator: the bot plays out a work situation and rates the newcomer’s answer. An IT request can be left right in the chat."
+        ]
+      },
+      {
+        "title": "training specialist panel",
+        "body": [
+          "If the bot hasn’t found an answer, the question goes to the training specialist. They answer in the panel, the answer becomes part of the knowledge base, and the bot itself writes to those who asked. The same place shows how each newcomer’s onboarding is going."
+        ]
+      },
+      {
+        "title": "quality",
+        "body": [
+          "The models run on my own computer, so the company’s data goes nowhere. After every change the bot is run against a set of control questions, and the “under the hood” mode shows every step of an answer. From a phone the mentor is available in Telegram with a sign-in code."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "chat",
+      "lines": [
+        {
+          "from": "user",
+          "text": "How do I process a return without a receipt?"
+        },
+        {
+          "from": "bot",
+          "text": "Per the returns policy: three steps [1]"
+        }
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "a newcomer’s question → an answer from the company base",
+      "steps": [
+        {
+          "label": "question",
+          "note": "in the chat or in Telegram"
+        },
+        {
+          "label": "search",
+          "note": "by meaning and by words, aware of the role"
+        },
+        {
+          "label": "answer",
+          "note": "with links to documents"
+        }
+      ],
+      "loop": {
+        "title": "no answer in the base",
+        "steps": [
+          {
+            "label": "training specialist",
+            "note": "sees the question in the panel"
+          },
+          {
+            "label": "answer in the base",
+            "note": "becomes part of the knowledge base"
+          },
+          {
+            "label": "bot follows up",
+            "note": "with everyone who asked"
+          }
+        ]
+      }
+    }
+  },
+  "saldo": {
+    "title": "Saldo",
+    "tagline": "finances for the self-employed",
+    "lead": "A concept of a money app for a self-employed (NPD) freelancer: a mobile app, a product website and a web dashboard. The main number on screen is how much you can spend today without touching the money set aside for tax.",
+    "client": "own concept",
+    "sections": [
+      {
+        "title": "the task",
+        "body": [
+          "A self-employed person sees one amount on the card, but part of that money is already not theirs: tax, mandatory payments, a cushion for a slow month. I’m self-employed (NPD) myself, so I built the problem from my own experience: income comes unevenly, client invoices get lost, and you remember the income limit at the end of the year."
+        ]
+      },
+      {
+        "title": "the solution",
+        "body": [
+          "The main screen calculates “Can spend”: the balance minus the tax reserve, mandatory payments and the cushion contribution. Under the number there is a “how it’s calculated” breakdown, so the number can be trusted.",
+          "The rest of the product is built around it: invoices to clients with reminders and a payment page for the client, tax and the 2.4M ₽ yearly limit, an assistant that explains the calculation and drafts a reminder for a client who owes money."
+        ]
+      },
+      {
+        "title": "design system",
+        "body": [
+          "A separate library: primitives and semantic colours with light and dark modes, spacing, radii, grids, 30 text styles and more than a hundred components and sets with states. Every value in the layouts is bound to a token, and every component has a description. The assistant has its own patterns and its own colour, so its suggestions are not mixed up with data."
+        ]
+      },
+      {
+        "title": "what’s in the file",
+        "body": [
+          "Mobile app 393×852, product website at 1440, 768 and 375, web dashboard at 1440 and the invoice page the client sees. Screens have states: loading, empty, error, offline. The main flows are linked into a prototype."
+        ]
+      }
+    ],
+    "captions": [
+      "Today: one number, what you can spend. How it’s calculated: the formula behind the number.",
+      "New income: matched to an invoice, tax set aside. Invoice with its timeline.",
+      "Payment reminder: pick the tone, edit the draft. Assistant answers with the math shown.",
+      "Taxes and the yearly income limit. Today, dark theme.",
+      "Web dashboard.",
+      "Web dashboard: invoices, dark theme.",
+      "Invoice payment page for the client.",
+      "Product website."
+    ],
+    "note": "Concept: data in the layouts is fictional."
+  },
+  "tg-assistant": {
+    "title": "Telegram assistant",
+    "tagline": "the agent office from the phone",
+    "lead": "The bot connects me with the agent office when I’m away from the computer: questions arrive in Telegram with buttons, the answer goes straight to the agent, and the work goes on.",
+    "client": "personal tool",
+    "sections": [
+      {
+        "title": "why",
+        "body": [
+          "Agents stop when they need my decision. If I’m not at the computer, the work stands for hours. The assistant moves these questions to the phone."
+        ]
+      },
+      {
+        "title": "what it does",
+        "body": [
+          "A question arrives with answer options as buttons; you can reply with your own text, a voice message or a photo. A request for an action the agent can’t take without me comes with “Allow” and “No” buttons.",
+          "You can see the office tasks and screenshots of finished work, and give a new task right from the chat. Replies come formatted: headings, lists and tables read on a phone without being cut off."
+        ]
+      },
+      {
+        "title": "no noise",
+        "body": [
+          "The bot writes only when it can’t go on without me, and doesn’t repeat the same question more often than once in half an hour."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "chat",
+      "bot": "lexandro_assistant_bot",
+      "lines": [
+        {
+          "from": "bot",
+          "text": "The “Web” desk is waiting for a decision: shall we publish the site?"
+        },
+        {
+          "from": "user",
+          "text": "Yes"
+        },
+        {
+          "from": "bot",
+          "text": "Passed it on, the work continues"
+        }
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "an agent needs a decision → an answer from the phone",
+      "steps": [
+        {
+          "label": "agent’s question",
+          "note": "work stopped without my decision"
+        },
+        {
+          "label": "Telegram",
+          "note": "answer options on buttons"
+        },
+        {
+          "label": "answer",
+          "note": "a button, text, voice or a photo"
+        },
+        {
+          "label": "work goes on",
+          "note": "the answer goes straight to the agent"
+        }
+      ],
+      "loop": {
+        "title": "no noise",
+        "steps": [
+          {
+            "label": "only when needed",
+            "note": "writes when it can’t go on without me"
+          },
+          {
+            "label": "no repeats",
+            "note": "the same question at most once in half an hour"
+          },
+          {
+            "label": "“Allow” / “No”",
+            "note": "for steps the agent doesn’t take without me"
+          }
+        ]
+      }
+    }
+  },
+  "uni-bot": {
+    "title": "Study Bot",
+    "tagline": "schedule and deadlines without spam",
+    "lead": "A Telegram bot pulls classes, webinars, assignments and deadlines from the university portal and sends only what is needed right now. It runs without its own server and for free.",
+    "client": "personal tool",
+    "sections": [
+      {
+        "title": "what it sends",
+        "body": [
+          "In the evening, tomorrow’s classes, if there are any. A link to a webinar shortly before it starts. A reminder about unsubmitted work three days and one day before the deadline, new assignments and tests. Nothing else: the main requirement was “no spam”."
+        ]
+      },
+      {
+        "title": "menu",
+        "body": [
+          "With buttons you can flip through days and the week, and view deadlines and assignments. Classes are cards with the lesson type and whether the week is odd or even, with buttons for the webinar and the portal under the message."
+        ]
+      },
+      {
+        "title": "no server",
+        "body": [
+          "The check is started every 15 minutes by a cloud function on a timer, and the “already sent” marks are stored in the repository. When the free minutes on the previous platform ran out, I moved the bot so that it still costs nothing."
+        ]
+      }
+    ],
+    "captions": [],
+    "preview": {
+      "kind": "chat",
+      "lines": [
+        {
+          "from": "bot",
+          "text": "Tomorrow 2 classes, the first at 10:00"
+        },
+        {
+          "from": "bot",
+          "text": "Due in a day: practical assignment"
+        }
+      ]
+    },
+    "scheme": {
+      "kind": "pipeline",
+      "title": "the study portal → only what matters right now",
+      "steps": [
+        {
+          "label": "portal",
+          "note": "classes, webinars, assignments, deadlines"
+        },
+        {
+          "label": "check",
+          "note": "every 15 minutes"
+        },
+        {
+          "label": "filter",
+          "note": "the main requirement: no spam"
+        },
+        {
+          "label": "Telegram",
+          "note": "class cards and buttons"
+        }
+      ],
+      "loop": {
+        "title": "what arrives",
+        "steps": [
+          {
+            "label": "in the evening",
+            "note": "tomorrow’s classes"
+          },
+          {
+            "label": "before a webinar",
+            "note": "the link"
+          },
+          {
+            "label": "three days and one day before",
+            "note": "about unsubmitted work"
+          }
+        ]
+      }
     }
   }
 }

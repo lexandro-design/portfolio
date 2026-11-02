@@ -1,0 +1,17 @@
+{
+  "Дизайн-система": { "en": "Design system", "zh": "设计系统", "ja": "デザインシステム" },
+  "Дизайн-система AIPlan-R": { "en": "AIPlan-R design system", "zh": "AIPlan-R 设计系统", "ja": "AIPlan-R デザインシステム" },
+  "Прототип": { "en": "Prototype", "zh": "原型", "ja": "プロトタイプ" },
+  "LLM-агенты": { "en": "LLM agents", "zh": "LLM 智能体", "ja": "LLM エージェント" },
+  "Распознавание речи": { "en": "Speech recognition", "zh": "语音识别", "ja": "音声認識" },
+  "Синтез речи": { "en": "Speech synthesis", "zh": "语音合成", "ja": "音声合成" },
+  "Локальные модели": { "en": "Local models", "zh": "本地模型", "ja": "ローカルモデル" },
+  "Адаптив": { "en": "Responsive", "zh": "响应式", "ja": "レスポンシブ" },
+  "Анимация по скроллу": { "en": "Scroll animation", "zh": "滚动动画", "ja": "スクロールアニメーション" },
+  "UI-кит": { "en": "UI kit", "zh": "UI 组件库", "ja": "UI キット" },
+  "Светлая и тёмная тема": { "en": "Light and dark theme", "zh": "浅色与深色主题", "ja": "ライト・ダークテーマ" },
+  "Дашборды": { "en": "Dashboards", "zh": "仪表盘", "ja": "ダッシュボード" },
+  "152-ФЗ": { "en": "152-FZ", "zh": "152-FZ", "ja": "152-FZ" },
+  "Vision-модель": { "en": "Vision model", "zh": "视觉模型", "ja": "ビジョンモデル" },
+  "Эмбеддинги": { "en": "Embeddings", "zh": "向量嵌入", "ja": "埋め込み" }
+}

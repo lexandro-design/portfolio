@@ -3,7 +3,7 @@
 // кусков интерфейса. Две версии на кейс:
 //   public/cases/<slug>/thumb.jpg  — строка на главной, 608×430
 //   public/cases/<slug>/cover.jpg  — шапка страницы кейса, 1312×640
-// node tools/cards/covers.mjs
+// node tools/cards/covers.mjs [slug…]
 import { chromium } from '@playwright/test'
 import { createServer } from 'node:http'
 import { readFile } from 'node:fs/promises'
@@ -60,8 +60,14 @@ const src = (shot) => `/public${shot.src}`
  * длинные страницы видны сверху, как в браузере.
  * full — обложка уже собрана в макете (мокап), кладём её целиком.
  */
+// Какие скрины идут на обложку, если не первые два (номера в shots с нуля).
+// Сальдо: в начале галереи телефоны, в окне браузера читаются сайт и кабинет
+const PICK = { saldo: [5, 4] }
+
 const layout = (c) => {
-  const [first, second = first] = c.shots
+  // Петли (video) на обложку не берём: их постер — случайный первый кадр
+  const stills = c.shots.filter((s) => !s.video)
+  const [first, second = first] = PICK[c.slug]?.map((i) => c.shots[i]) ?? stills
   if (c.slug === 'lotus') {
     const full = `<img src="${src(first)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`
     return { thumb: [full], cover: [full] }
@@ -78,8 +84,13 @@ const layout = (c) => {
   }
 }
 
+// node tools/cards/covers.mjs saldo — только выбранные кейсы, остальные обложки не пересобираются
+const only = process.argv.slice(2)
 const LAYOUTS = Object.fromEntries(
-  cases.filter((c) => c.shots.length).map((c) => [c.slug, layout(c)]),
+  cases
+    // Обложка-петля (thumb.video, как у Parfumeria) собрана заранее — не перезаписываем
+    .filter((c) => !c.thumb?.video && c.shots.some((s) => !s.video) && (!only.length || only.includes(c.slug)))
+    .map((c) => [c.slug, layout(c)]),
 )
 
 const browser = await chromium.launch()

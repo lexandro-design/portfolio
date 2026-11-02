@@ -29,9 +29,33 @@ export function CaseHero({ item, index, total, t, directions, backHref }: Props)
   // Собранная обложка — картинка-композиция, её не увеличиваем; скрин — можно
   const cover = item.cover ?? item.shots[0]
   const zoomable = !item.cover && Boolean(cover)
+  // Обложка-петля встаёт сразу под заголовок: движение видно на первом экране, лид и факты — под ним
+  const motion = Boolean(item.cover?.video)
+
+  const media = (
+    <figure className={styles.cover}>
+      {cover ? (
+        <Shot
+          shot={{ ...cover, caption: cover.caption || item.title }}
+          className={styles.image}
+          eager
+          zoom={zoomable}
+        />
+      ) : (
+        <CasePreview
+          index={index}
+          year={item.year}
+          stack={item.stack}
+          size="cover"
+          preview={item.preview}
+        />
+      )}
+      {zoomable && <figcaption className={styles.caption}>{cover.caption}</figcaption>}
+    </figure>
+  )
 
   return (
-    <header className={styles.hero}>
+    <header className={styles.hero} data-motion={motion || undefined}>
       <div className="container">
         <Link href={backHref} className={styles.back}>
           <Arrow dir="left" />
@@ -49,6 +73,7 @@ export function CaseHero({ item, index, total, t, directions, backHref }: Props)
           {item.title}
           <span className={styles.tagline}> · {item.tagline}</span>
         </h1>
+        {motion && media}
         <p className={styles.lead}>{item.lead}</p>
 
         {item.credit && (
@@ -79,25 +104,7 @@ export function CaseHero({ item, index, total, t, directions, backHref }: Props)
           )}
         </dl>
 
-        <figure className={styles.cover}>
-          {cover ? (
-            <Shot
-              shot={{ ...cover, caption: cover.caption || item.title }}
-              className={styles.image}
-              eager
-              zoom={zoomable}
-            />
-          ) : (
-            <CasePreview
-              index={index}
-              year={item.year}
-              stack={item.stack}
-              size="cover"
-              preview={item.preview}
-            />
-          )}
-          {zoomable && <figcaption className={styles.caption}>{cover.caption}</figcaption>}
-        </figure>
+        {!motion && media}
       </div>
     </header>
   )
