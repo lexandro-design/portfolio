@@ -1,0 +1,110 @@
+.root {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  max-block-size: calc(100vh - var(--nav-h) - 160px);
+  min-block-size: 280px;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  cursor: ew-resize;
+  user-select: none;
+  /* Вертикальный свайп остаётся прокруткой страницы */
+  touch-action: pan-y;
+}
+
+.frame > img {
+  position: absolute;
+  inset: 0;
+}
+
+/* Правая половина — новая версия, обрезана слева по положению шторки */
+.after {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--x));
+  transition: clip-path 900ms var(--ease-in-out);
+}
+
+.handle {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: var(--x);
+  inline-size: 2px;
+  margin-inline-start: -1px;
+  background: var(--fg-primary);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+  transition: inset-inline-start 900ms var(--ease-in-out);
+}
+
+.frame[data-drag] .after,
+.frame[data-drag] .handle {
+  transition: none;
+}
+
+.handle:focus-visible {
+  outline: none;
+}
+
+.handle:focus-visible .knob {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
+.knob {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  display: grid;
+  place-items: center;
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: 50%;
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 12px 30px -10px rgb(0 0 0 / 0.6);
+}
+
+.tag {
+  position: absolute;
+  inset-block-start: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--overlay-tag);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f5f5f2;
+  pointer-events: none;
+}
+
+.tagA {
+  inset-inline-start: 14px;
+}
+
+.tagB {
+  inset-inline-end: 14px;
+}
+
+@media (max-width: 767px) {
+  .frame {
+    aspect-ratio: 4 / 3.6;
+  }
+
+  .knob {
+    inline-size: 40px;
+    block-size: 40px;
+    font-size: 15px;
+  }
+}

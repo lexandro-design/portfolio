@@ -339,7 +339,7 @@
       "stack": "技術",
       "site": "サイト"
     },
-    "screens": "画面",
+    "screens": "すべての画面",
     "scheme": "仕組み",
     "next": "次のケース",
     "viewer": "スクリーンショットを表示",
@@ -351,7 +351,33 @@
       "light": "ライト",
       "dark": "ダーク"
     },
-    "credit": "コーディング"
+    "credit": "コーディング",
+    "story": "詳しく",
+    "brief": {
+      "label": "プロジェクト概要",
+      "task": "課題",
+      "did": "やったこと",
+      "result": "結果"
+    },
+    "show": {
+      "example": "例",
+      "drag": "スライダーの位置",
+      "prev": "前へ",
+      "next": "次へ",
+      "incoming": "受信",
+      "tracks": {
+        "me": "自分",
+        "them": "相手"
+      },
+      "hint": {
+        "browse": "ページを選ぶ",
+        "compare": "スライダーを動かす",
+        "steps": "ステップを押す",
+        "deck": "めくる",
+        "reel": "シーンを選ぶ",
+        "console": "スイッチは押せます"
+      }
+    }
   },
   "palette": {
     "open": "検索とコマンド",

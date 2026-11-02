@@ -1,0 +1,71 @@
+.root {
+  display: grid;
+  gap: var(--space-lg);
+  max-inline-size: 920px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 15em) minmax(0, 1fr) 5em;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.label {
+  font-size: var(--type-body);
+  color: var(--fg-secondary);
+}
+
+.track {
+  block-size: 14px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--border-hair);
+}
+
+.track i {
+  display: block;
+  block-size: 100%;
+  inline-size: 0;
+  border-radius: 14px;
+  background: var(--fg-primary);
+}
+
+.row:last-child .track i {
+  background: var(--signal-live);
+}
+
+/* Заполнение за реальное время операции, как только блок виден */
+.root[data-play] .track i {
+  inline-size: var(--w);
+  transition: inline-size var(--t) linear 300ms;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  text-align: end;
+}
+
+@media (max-width: 767px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px var(--space-sm);
+  }
+
+  .track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .value {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track i {
+    inline-size: var(--w);
+  }
+}

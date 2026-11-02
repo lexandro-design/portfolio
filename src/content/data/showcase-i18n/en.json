@@ -1,0 +1,2144 @@
+{
+  "parfumeria": {
+    "brief": {
+      "task": "A new design for the whole store, from the home page to the account. Most people shop from their phones, so the mobile version is worked out in as much detail as desktop.",
+      "did": [
+        "Design system: colour and type in variables, a component library",
+        "450+ screens at 1440, 768 and 375 with every state",
+        "3D video banners in Blender and a site built from the design"
+      ],
+      "result": "Every store flow is drawn down to empty states and errors, and both the design and the site are filled with the real catalog.",
+      "nums": [
+        {
+          "v": "450+",
+          "l": "screens in the design"
+        },
+        {
+          "v": "3",
+          "l": "widths: 1440, 768, 375"
+        },
+        {
+          "v": "951",
+          "l": "catalog items"
+        },
+        {
+          "v": "56",
+          "l": "brands"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "reel",
+        "title": "3D banners for the home page",
+        "items": [
+          {
+            "shot": 1,
+            "title": "Love Hibiscus"
+          },
+          {
+            "shot": 0,
+            "title": "Promo code HELLO"
+          },
+          {
+            "shot": 2,
+            "title": "Issey Miyake"
+          },
+          {
+            "shot": 3,
+            "title": "Hermès for the product card"
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "The system first, then the screens",
+        "steps": [
+          {
+            "shot": 4,
+            "title": "Colour",
+            "text": "54 colour tokens in variables."
+          },
+          {
+            "shot": 5,
+            "title": "Type",
+            "text": "121 text styles across three widths."
+          },
+          {
+            "shot": 20,
+            "title": "File",
+            "text": "Screens are built only from the system's components."
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "title": "The whole store",
+        "pages": [
+          {
+            "shot": 6,
+            "label": "home"
+          },
+          {
+            "shot": 7,
+            "label": "catalog"
+          },
+          {
+            "shot": 8,
+            "label": "product page"
+          },
+          {
+            "shot": 9,
+            "label": "brand"
+          },
+          {
+            "shot": 15,
+            "label": "tablet"
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "The customer's path",
+        "steps": [
+          {
+            "shot": 10,
+            "title": "Search",
+            "text": "Suggestions appear from the first letters."
+          },
+          {
+            "shot": 11,
+            "title": "Cart",
+            "text": "Promo code, availability and total in one place."
+          },
+          {
+            "shot": 13,
+            "title": "Checkout",
+            "text": "Courier or pickup."
+          },
+          {
+            "shot": 12,
+            "title": "Gift card",
+            "text": "Choosing a card design."
+          },
+          {
+            "shot": 14,
+            "title": "Account",
+            "text": "Orders and bonuses."
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Phone",
+        "cards": [
+          {
+            "shot": 16,
+            "title": "Home, catalog, cart"
+          },
+          {
+            "shot": 17,
+            "title": "Product page, filters, payment"
+          },
+          {
+            "shot": 18,
+            "title": "Stories, gift card, stores"
+          },
+          {
+            "shot": 19,
+            "title": "Catalogs for perfume, makeup and care"
+          }
+        ]
+      }
+    ]
+  },
+  "saldo": {
+    "brief": {
+      "task": "A self-employed person sees one sum on their card, but part of that money is no longer theirs: tax, mandatory payments, a cushion for an empty month.",
+      "did": [
+        "A 393×852 app: the main number \"Safe to spend\" and a \"how it's calculated\" breakdown",
+        "Invoices to clients with reminders, tax and income limit, an assistant",
+        "The product site at three widths, a web account and a payment page for the client"
+      ],
+      "result": "A concept where one number answers the main question and below it you can see why to trust it.",
+      "nums": [
+        {
+          "v": "100+",
+          "l": "components and sets"
+        },
+        {
+          "v": "30",
+          "l": "text styles"
+        },
+        {
+          "v": "2",
+          "l": "themes: light and dark"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "deck",
+        "title": "App",
+        "cards": [
+          {
+            "shot": 0,
+            "title": "\"Today\" and \"How it's calculated\""
+          },
+          {
+            "shot": 1,
+            "title": "Incoming payment and an invoice to a client"
+          },
+          {
+            "shot": 2,
+            "title": "Reminder and assistant"
+          },
+          {
+            "shot": 3,
+            "title": "Taxes, limit, dark theme"
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "title": "Site and web account",
+        "pages": [
+          {
+            "shot": 7,
+            "label": "product site"
+          },
+          {
+            "shot": 4,
+            "label": "web account"
+          },
+          {
+            "shot": 5,
+            "label": "invoices"
+          },
+          {
+            "shot": 6,
+            "label": "client payment"
+          }
+        ]
+      }
+    ]
+  },
+  "meeting-rooms": {
+    "brief": {
+      "task": "An internal service for the holding's employees to book meeting rooms. Built to a spec.",
+      "did": [
+        "Two roles: an employee books, an administrator manages rooms, bookings and equipment",
+        "Loading, empty screens, errors and every dialog, including a time conflict",
+        "Screens on Taiga UI, frames named by the scheme \"route · role · state\""
+      ],
+      "result": "Delivered to the spec: from a frame's name a developer knows which screen it is and who it is for.",
+      "nums": [
+        {
+          "v": "60+",
+          "l": "screens with every state"
+        },
+        {
+          "v": "2",
+          "l": "roles"
+        },
+        {
+          "v": "08–20",
+          "l": "working hours per the spec"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "steps",
+        "title": "Employee flow",
+        "steps": [
+          {
+            "shot": 0,
+            "title": "Choosing a room",
+            "text": "A list with filters, rooms of your own location."
+          },
+          {
+            "shot": 2,
+            "title": "Schedule",
+            "text": "The room card shows the booked time."
+          },
+          {
+            "shot": 1,
+            "title": "Booking",
+            "text": "A new booking within working hours."
+          },
+          {
+            "shot": 6,
+            "title": "Conflict",
+            "text": "If the time is taken, the service says so right away."
+          },
+          {
+            "shot": 3,
+            "title": "My bookings",
+            "text": "Upcoming, current, finished and cancelled."
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "Administrator",
+        "steps": [
+          {
+            "shot": 4,
+            "title": "Statistics",
+            "text": "How the rooms are used."
+          },
+          {
+            "shot": 5,
+            "title": "Rooms",
+            "text": "The list and room settings."
+          },
+          {
+            "shot": 7,
+            "title": "Equipment",
+            "text": "New equipment in a room."
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Edges of the flows",
+        "cards": [
+          {
+            "shot": 8,
+            "title": "Empty list"
+          },
+          {
+            "shot": 9,
+            "title": "Access denied"
+          },
+          {
+            "shot": 10,
+            "title": "The whole Figma file"
+          }
+        ]
+      }
+    ]
+  },
+  "mimimibot": {
+    "brief": {
+      "task": "My own product: AI photoshoots with a digital twin right in Telegram, with payment inside the bot.",
+      "did": [
+        "A carousel of ready shots, a twin from 10–20 photos, generation modes",
+        "Four linked processes: request, generation queue, payment through YooKassa, delivery",
+        "All content in the database: the owner changes the bot through an admin panel, without editing code"
+      ],
+      "result": "Over 3000 users. Preparing a reply got faster from about two seconds to 60 milliseconds.",
+      "nums": [
+        {
+          "v": "3000+",
+          "l": "users"
+        },
+        {
+          "v": "60 ms",
+          "l": "to prepare a reply instead of ~2 s"
+        },
+        {
+          "v": "4",
+          "l": "linked processes"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "queue",
+        "title": "The bot's four processes",
+        "stages": [
+          "request intake",
+          "generation queue",
+          "payment",
+          "delivery of the result"
+        ],
+        "items": [
+          "\"Vacation\" photoshoot",
+          "a shot from a reference",
+          "makeup and hairstyle",
+          "the whole photoshoot"
+        ]
+      },
+      {
+        "kind": "speed",
+        "title": "Start of a dialog",
+        "rows": [
+          {
+            "label": "three database queries in a row",
+            "ms": 2000,
+            "value": "≈ 2 s"
+          },
+          {
+            "label": "one PostgreSQL function",
+            "ms": 60,
+            "value": "60 ms"
+          }
+        ]
+      }
+    ]
+  },
+  "ai-office": {
+    "brief": {
+      "task": "There got to be many agents, and in separate chats the picture was lost: who is busy with what, who waits for an answer, how many limits were spent.",
+      "did": [
+        "The dispatcher takes a task in plain words and hands it to a desk with a done criterion",
+        "Desks by department, each hands in work as one line: done, question or failure",
+        "A board, supervision of silent desks, irreversible steps only through me"
+      ],
+      "result": "I set the goal, answer questions and accept the result. The dispatcher runs large assignments by itself for weeks.",
+      "nums": [
+        {
+          "v": "4",
+          "l": "departments: studio, game, content, personal"
+        },
+        {
+          "v": "3",
+          "l": "results: done, question, failure"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "board",
+        "title": "The office board",
+        "me": {
+          "label": "Me, the director",
+          "note": "goal, answers to questions, acceptance"
+        },
+        "hub": {
+          "label": "Dispatcher",
+          "note": "hands out tasks, watches deadlines, runs programs"
+        },
+        "desks": [
+          {
+            "name": "Design",
+            "group": "studio"
+          },
+          {
+            "name": "Web",
+            "group": "studio"
+          },
+          {
+            "name": "Motion and 3D",
+            "group": "content"
+          },
+          {
+            "name": "SMM",
+            "group": "content"
+          },
+          {
+            "name": "Development",
+            "group": "game"
+          },
+          {
+            "name": "Study",
+            "group": "personal"
+          }
+        ],
+        "states": [
+          "working",
+          "waiting for an answer",
+          "done",
+          "free"
+        ],
+        "feed": [
+          {
+            "who": "dispatcher",
+            "text": "TASK · web: build a landing page from the design. Done when: three screens, no errors, a screenshot"
+          },
+          {
+            "who": "web",
+            "text": "accepted"
+          },
+          {
+            "who": "motion",
+            "text": "QUESTION: should the cover be light or dark?"
+          },
+          {
+            "who": "phone",
+            "text": "the question reached me with buttons: light / dark"
+          },
+          {
+            "who": "web",
+            "text": "RESULT: DONE, three screens, screenshot attached"
+          },
+          {
+            "who": "supervision",
+            "text": "the Study desk is silent with an open task, reminded the dispatcher"
+          }
+        ]
+      }
+    ]
+  },
+  "otrx": {
+    "brief": {
+      "task": "The module automatically checks OTRX cost estimate files for nuclear power plant construction. It needed an admin panel: a separate web app for checks and rules.",
+      "did": [
+        "A document registry and a check card in every status",
+        "Analytics, rule and notification settings, users and roles",
+        "All screens moved onto the AIPlan-R design system, new navigation after a meeting with the client"
+      ],
+      "result": "The panel covers the document's whole path: from the registry to the email with the check result.",
+      "nums": [
+        {
+          "v": "6",
+          "l": "check statuses"
+        },
+        {
+          "v": "1",
+          "l": "AIPlan-R design system"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "compare",
+        "title": "One card, two outcomes",
+        "a": "failed",
+        "b": "passed",
+        "pairs": [
+          {
+            "a": 1,
+            "b": 2,
+            "label": "check card"
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "The document's path",
+        "steps": [
+          {
+            "shot": 0,
+            "title": "Registry",
+            "text": "All documents and their statuses."
+          },
+          {
+            "shot": 1,
+            "title": "Check",
+            "text": "What failed and why."
+          },
+          {
+            "shot": 6,
+            "title": "Email",
+            "text": "The check result goes out by email."
+          },
+          {
+            "shot": 3,
+            "title": "Analytics",
+            "text": "How the module performs."
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Rules and edges",
+        "cards": [
+          {
+            "shot": 4,
+            "title": "Module settings"
+          },
+          {
+            "shot": 5,
+            "title": "Adding a rule"
+          },
+          {
+            "shot": 7,
+            "title": "No file attached"
+          },
+          {
+            "shot": 8,
+            "title": "Access denied"
+          }
+        ]
+      }
+    ]
+  },
+  "food-assistants": {
+    "brief": {
+      "task": "Customers wait for an answer in chat, the warehouse searches a large catalog by hand, managers spend time on leads. By law the data must be stored in Russia.",
+      "did": [
+        "\"Andrey\" answers customers in the CRM chat and fills in the lead himself",
+        "\"Sofia\" searches the catalog and procedures for the warehouse and managers",
+        "Request route: SQL on the catalog, a cheap or a powerful model, an answer cache"
+      ],
+      "result": "The model is used only where it can't be avoided, so the bot answers faster and cheaper.",
+      "nums": [
+        {
+          "v": "2",
+          "l": "bots on one infrastructure"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "sort",
+        "title": "Where a request goes",
+        "lanes": [
+          {
+            "label": "SQL on the catalog",
+            "out": "products without a neural network"
+          },
+          {
+            "label": "cheap model",
+            "out": "simple question"
+          },
+          {
+            "label": "powerful model",
+            "out": "complex question"
+          },
+          {
+            "label": "manager",
+            "out": "sees the whole chat"
+          }
+        ],
+        "items": [
+          {
+            "text": "do you have hot dog buns?",
+            "lane": 0
+          },
+          {
+            "text": "when is delivery to my city?",
+            "lane": 1
+          },
+          {
+            "text": "how is brioche different from regular bread?",
+            "lane": 2
+          },
+          {
+            "text": "I want to place an order",
+            "lane": 3
+          }
+        ]
+      }
+    ]
+  },
+  "haiku": {
+    "brief": {
+      "task": "Alice lacked memory: she doesn't remember yesterday's conversation and knows nothing about the family's affairs.",
+      "did": [
+        "Speech is recognised on the graphics card, the answer is spoken within a couple of seconds",
+        "Recognises by voice who is speaking and remembers conversations",
+        "Yandex Station became the microphone and speaker, the cloud is not involved"
+      ],
+      "result": "The assistant answers with the person and memory in mind, and meetings appear at once in the calendar on the phone.",
+      "nums": [
+        {
+          "v": "~2 s",
+          "l": "to a spoken answer"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "voice",
+        "title": "Example conversation",
+        "lines": [
+          {
+            "who": "me",
+            "name": "Lyosha, by voice",
+            "text": "Haiku, what do I have tomorrow?"
+          },
+          {
+            "who": "sys",
+            "text": "voice recognised: Lyosha"
+          },
+          {
+            "who": "it",
+            "name": "Haiku",
+            "text": "Tomorrow at 13:00 a call about the site, in the evening English. Remind you an hour before?"
+          },
+          {
+            "who": "me",
+            "name": "Lyosha",
+            "text": "Yes. And note down: buy coffee."
+          },
+          {
+            "who": "it",
+            "name": "Haiku",
+            "text": "Done. I'll remind you at 12:00, coffee is on the to-do list."
+          },
+          {
+            "who": "sys",
+            "text": "the meeting and the reminder are already in the calendar on the phone"
+          }
+        ]
+      }
+    ]
+  },
+  "meg-site": {
+    "brief": {
+      "task": "A corporate site for an engineering company, built to the client's spec and on its real content: services, ISO and GOST certificates, reviews.",
+      "did": [
+        "Ten pages: home, services, about, documents, reviews, for suppliers and others",
+        "Every page at three widths: 1440, 834 and 393",
+        "A request form per the spec and a block with nuclear industry procurement resources"
+      ],
+      "result": "The site is built entirely on the client's real texts, documents and reviews, including international ones.",
+      "nums": [
+        {
+          "v": "10",
+          "l": "pages"
+        },
+        {
+          "v": "3",
+          "l": "widths: 1440, 834, 393"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "The site page by page",
+        "pages": [
+          {
+            "shot": 0,
+            "label": "home"
+          },
+          {
+            "shot": 1,
+            "label": "service"
+          },
+          {
+            "shot": 2,
+            "label": "about"
+          },
+          {
+            "shot": 4,
+            "label": "for suppliers"
+          },
+          {
+            "shot": 5,
+            "label": "documents"
+          },
+          {
+            "shot": 6,
+            "label": "reviews"
+          },
+          {
+            "shot": 8,
+            "label": "tablet"
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Phone and file",
+        "cards": [
+          {
+            "shot": 3,
+            "title": "Phone: home, service, menu"
+          },
+          {
+            "shot": 7,
+            "title": "Complaints and appeals"
+          },
+          {
+            "shot": 9,
+            "title": "The whole Figma file"
+          }
+        ]
+      }
+    ]
+  },
+  "osq": {
+    "brief": {
+      "task": "OSQ was launching OctoBox packaging. It needed a page that shows the product with scroll animation, not a wall of text.",
+      "did": [
+        "OctoBox promo page: one screen, one message about the product",
+        "An updated home page with a live news feed",
+        "A wholesale client portal: dashboard, catalog, materials, employees"
+      ],
+      "result": "The new product has its own page, and the wholesale client has a portal where the manager, orders and invoices sit on one dashboard.",
+      "nums": [
+        {
+          "v": "5",
+          "l": "portal sections"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "Site",
+        "pages": [
+          {
+            "shot": 1,
+            "label": "OctoBox"
+          },
+          {
+            "shot": 0,
+            "label": "home"
+          },
+          {
+            "shot": 4,
+            "label": "HoReCa"
+          },
+          {
+            "shot": 7,
+            "label": "phone"
+          }
+        ]
+      },
+      {
+        "kind": "steps",
+        "title": "Wholesale client portal",
+        "steps": [
+          {
+            "shot": 8,
+            "title": "Sign-in",
+            "text": "Signing in to the portal."
+          },
+          {
+            "shot": 2,
+            "title": "Dashboard",
+            "text": "Manager, orders, invoices, surveys."
+          },
+          {
+            "shot": 3,
+            "title": "Catalog",
+            "text": "Search and cart."
+          },
+          {
+            "shot": 5,
+            "title": "Materials",
+            "text": "Marketing materials to download."
+          },
+          {
+            "shot": 6,
+            "title": "Employees",
+            "text": "The client's employees and their access rights."
+          }
+        ]
+      }
+    ]
+  },
+  "ai-translator": {
+    "brief": {
+      "task": "Contract translators needed an interface where a translation relies on glossaries and a base of regulatory documents from the start, and scans are recognised automatically.",
+      "did": [
+        "A chat-style interface: translate and refine in plain words",
+        "The source language is detected automatically, alternative translations are available",
+        "Two roles, light and dark theme"
+      ],
+      "result": "Every interface element rests on a requirement of the spec, so extras like a dashboard were removed.",
+      "nums": [
+        {
+          "v": "2",
+          "l": "roles: administrator and linguist"
+        },
+        {
+          "v": "2",
+          "l": "themes"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "compare",
+        "title": "Light and dark theme",
+        "a": "light",
+        "b": "dark",
+        "pairs": [
+          {
+            "a": 1,
+            "b": 1,
+            "dark": true,
+            "label": "contract translation"
+          },
+          {
+            "a": 0,
+            "b": 0,
+            "dark": true,
+            "label": "start screen"
+          }
+        ]
+      }
+    ]
+  },
+  "svarnoy52": {
+    "brief": {
+      "task": "A welding equipment store needed a site that holds the whole range, not a couple of showcases.",
+      "did": [
+        "Structure, a layout in Figma, graphics and a build on Tilda with custom code",
+        "Migration of the client's database: thousands of items with filters and cards",
+        "2026 redesign: a new layout for desktop and phone and a 3D scene"
+      ],
+      "result": "The store runs on its own domain with the whole catalog. The new layout is ready as a concept.",
+      "nums": [
+        {
+          "v": "2025",
+          "l": "site launched"
+        },
+        {
+          "v": "2026",
+          "l": "new layout"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "compare",
+        "title": "Before and after",
+        "a": "2025 site",
+        "b": "2026 redesign",
+        "pairs": [
+          {
+            "a": 5,
+            "b": 0,
+            "label": "home"
+          },
+          {
+            "a": 6,
+            "b": 1,
+            "label": "catalog"
+          },
+          {
+            "a": 8,
+            "b": 2,
+            "label": "product card"
+          },
+          {
+            "a": 7,
+            "b": 3,
+            "label": "phone"
+          }
+        ]
+      },
+      {
+        "kind": "reel",
+        "title": "3D for the redesign",
+        "items": [
+          {
+            "shot": 4,
+            "title": "Mask and welding for the \"About\" block"
+          }
+        ]
+      }
+    ]
+  },
+  "packaging-bots": {
+    "brief": {
+      "task": "Managers spent time on first sales, training newcomers and sorting calls by hand. The data must be stored in Russia.",
+      "did": [
+        "The client bot picks packaging from a vector base and creates a lead in the CRM",
+        "The internal bot trains employees on procedures, access by department",
+        "Calls are turned into text, the contact and the deal fill themselves in"
+      ],
+      "result": "Three scenarios run on one stack, and in each the bot takes over the routine.",
+      "nums": [
+        {
+          "v": "3",
+          "l": "scenarios on one stack"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "sort",
+        "title": "Three scenarios",
+        "lanes": [
+          {
+            "label": "sales",
+            "out": "lead in the CRM"
+          },
+          {
+            "label": "training",
+            "out": "answer from procedures"
+          },
+          {
+            "label": "calls",
+            "out": "deal filled in"
+          }
+        ],
+        "items": [
+          {
+            "text": "I need takeaway sushi packaging",
+            "lane": 0
+          },
+          {
+            "text": "How do I work by the department procedure?",
+            "lane": 1
+          },
+          {
+            "text": "Call recording: name, phone, what they asked for",
+            "lane": 2
+          },
+          {
+            "text": "I need a container for rolls",
+            "lane": 0
+          }
+        ]
+      }
+    ]
+  },
+  "pix-bi": {
+    "brief": {
+      "task": "Reporting for the nuclear industry in PIX BI: contract security and project KPI calculation.",
+      "did": [
+        "A \"Contract security\" report: six screens and a reference board",
+        "Five urgency levels and a chart of obligations by month and type",
+        "A file on styles and auto layout, linked into a prototype"
+      ],
+      "result": "The design is ready to hand over to development.",
+      "nums": [
+        {
+          "v": "5",
+          "l": "urgency levels"
+        },
+        {
+          "v": "1200+",
+          "l": "text layers on styles"
+        },
+        {
+          "v": "6",
+          "l": "report screens"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "steps",
+        "title": "The \"Contract security\" report",
+        "steps": [
+          {
+            "shot": 0,
+            "title": "Overview",
+            "text": "Contracts by five urgency levels."
+          },
+          {
+            "shot": 1,
+            "title": "Detailed",
+            "text": "A detailed report on contracts."
+          },
+          {
+            "shot": 2,
+            "title": "Analytics",
+            "text": "Obligations by month and type."
+          },
+          {
+            "shot": 3,
+            "title": "Contract",
+            "text": "The contract card."
+          },
+          {
+            "shot": 4,
+            "title": "Empty",
+            "text": "No data for the filters."
+          }
+        ]
+      }
+    ]
+  },
+  "ubiray-rf": {
+    "brief": {
+      "task": "A cleaning marketplace was adding a business community: users publish articles and news and run a profile.",
+      "did": [
+        "A profile with a cover, stats and the \"Message\" and \"Follow\" buttons",
+        "Four tabs with their own layouts: feed, career, photos, videos",
+        "Responsive for 1440, 1200 and phone"
+      ],
+      "result": "The community section is designed in full, from the profile to posts and contacts.",
+      "nums": [
+        {
+          "v": "4",
+          "l": "profile tabs"
+        },
+        {
+          "v": "3",
+          "l": "widths"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "The profile by tab",
+        "pages": [
+          {
+            "shot": 0,
+            "label": "feed"
+          },
+          {
+            "shot": 4,
+            "label": "career"
+          },
+          {
+            "shot": 1,
+            "label": "photos"
+          },
+          {
+            "shot": 3,
+            "label": "videos"
+          },
+          {
+            "shot": 5,
+            "label": "1200"
+          },
+          {
+            "shot": 2,
+            "label": "phone"
+          }
+        ]
+      }
+    ]
+  },
+  "resort-bot": {
+    "brief": {
+      "task": "Cabin booking in chat: from a guest's question to a deal in the CRM.",
+      "did": [
+        "Clarifies dates and number of guests, checks free cabins and calculates the price",
+        "Answers questions about the resort by searching documents",
+        "The booking and lead are created in Bitrix24 through Open Channels"
+      ],
+      "result": "The manager gets a ready booking and sees the whole conversation. Everything runs on the client's server under Federal Law 152-FZ.",
+      "nums": [
+        {
+          "v": "152-FZ",
+          "l": "client's server in Russia"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "trace",
+        "title": "What the bot does in one dialog",
+        "prompt": "We'd like a cabin for the weekend, there are four of us",
+        "steps": [
+          {
+            "text": "dates",
+            "note": "weekend"
+          },
+          {
+            "text": "guests",
+            "note": "4"
+          },
+          {
+            "text": "free cabins",
+            "note": "checked"
+          },
+          {
+            "text": "price",
+            "note": "calculated"
+          },
+          {
+            "text": "booking and lead",
+            "note": "in Bitrix24"
+          }
+        ],
+        "out": "Booking created, the manager will get in touch to confirm"
+      }
+    ]
+  },
+  "vacation-plan": {
+    "brief": {
+      "task": "A corporate vacation planning service with dense tables and three roles.",
+      "did": [
+        "The vacation plan and settings for the head admin, a local admin and a user",
+        "Tables with frozen columns and double headers, eight modal variants",
+        "Component specs on Taiga UI, checks of the design against code and an acceptance checklist"
+      ],
+      "result": "Screens were checked at widths up to 3440, the implementation was compared with the design.",
+      "nums": [
+        {
+          "v": "3",
+          "l": "roles"
+        },
+        {
+          "v": "8",
+          "l": "modal variants"
+        },
+        {
+          "v": "3440",
+          "l": "px, the widest check"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "steps",
+        "title": "Roles and settings",
+        "steps": [
+          {
+            "shot": 0,
+            "title": "Administrator",
+            "text": "The vacation plan of the whole department."
+          },
+          {
+            "shot": 2,
+            "title": "User",
+            "text": "Your own vacations and colleagues' schedule."
+          },
+          {
+            "shot": 1,
+            "title": "Employees",
+            "text": "Settings: employees."
+          },
+          {
+            "shot": 3,
+            "title": "Positions",
+            "text": "Settings: positions."
+          }
+        ]
+      },
+      {
+        "kind": "wide",
+        "title": "On a 3440 monitor",
+        "shot": 4
+      }
+    ]
+  },
+  "lotus": {
+    "brief": {
+      "task": "A concept site for an Asian restaurant, made for ourselves, to take the design all the way to a live site.",
+      "did": [
+        "A dark palette with burgundy, large dish photos and the focus on booking a table",
+        "Home, About, a menu with tabs and dish cards with nutrition facts, contacts",
+        "Every page at five widths"
+      ],
+      "result": "The design went all the way to code: Nika built the site from the design.",
+      "nums": [
+        {
+          "v": "5",
+          "l": "widths: from 1440 to 375"
+        },
+        {
+          "v": "4",
+          "l": "pages"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "Site",
+        "pages": [
+          {
+            "shot": 1,
+            "label": "home"
+          },
+          {
+            "shot": 2,
+            "label": "menu"
+          },
+          {
+            "shot": 4,
+            "label": "about"
+          },
+          {
+            "shot": 5,
+            "label": "contacts"
+          },
+          {
+            "shot": 6,
+            "label": "tablet"
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Cover and phone",
+        "cards": [
+          {
+            "shot": 0,
+            "title": "Project cover"
+          },
+          {
+            "shot": 3,
+            "title": "Phone: home, menu, contacts"
+          }
+        ]
+      }
+    ]
+  },
+  "mail-to-crm": {
+    "brief": {
+      "task": "Requests arrived at a shared mailbox, and managers moved them into the CRM by hand. Some emails got lost, some went to the wrong funnel.",
+      "did": [
+        "The email and attachments are parsed automatically",
+        "Request type: customer, supplier, spam and others",
+        "A deal in the right Bitrix24 funnel with the original email and an owner, duplicates are dropped"
+      ],
+      "result": "Managers no longer sort the mail by hand.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "queue",
+        "title": "The email's path",
+        "stages": [
+          "incoming",
+          "email and attachment parsing",
+          "request type",
+          "deal in the funnel"
+        ],
+        "items": [
+          "Price request for boxes",
+          "Invoice for a film delivery",
+          "Need bags with a logo",
+          "Price request for boxes · duplicate"
+        ]
+      }
+    ]
+  },
+  "tetrasis": {
+    "brief": {
+      "task": "Bundles appeared in an appliance store's catalog. The customer should see at once what is in it, the price and why it beats buying separately.",
+      "did": [
+        "A bundle page with its contents and total price",
+        "A product from the bundle with a link back, promo badges, buttons for desktop and phone",
+        "Autoposting news to VK, Telegram and Dzen on a schedule, without duplicates"
+      ],
+      "result": "A bundle reads from one screen: what is included and what it costs.",
+      "nums": [
+        {
+          "v": "3",
+          "l": "autoposting platforms"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "Bundle and catalog",
+        "pages": [
+          {
+            "shot": 0,
+            "label": "bundle"
+          },
+          {
+            "shot": 1,
+            "label": "product from the bundle"
+          },
+          {
+            "shot": 3,
+            "label": "catalog"
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Details",
+        "cards": [
+          {
+            "shot": 4,
+            "title": "Action buttons"
+          },
+          {
+            "shot": 2,
+            "title": "Phone: bundle, product, catalog"
+          }
+        ]
+      }
+    ]
+  },
+  "reckon": {
+    "brief": {
+      "task": "A streetwear brand needed a store in its own aesthetic: no coloured buttons or banners, with the focus on the collection photos.",
+      "did": [
+        "Monochrome and a monospaced font, a lookbook on the home page",
+        "A card with size choice, cart, delivery, an about page, documents",
+        "A cart on Tilda extended with JavaScript for the store's logic"
+      ],
+      "result": "The collection photos make the storefront, and the interface stays in the background.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "Store",
+        "pages": [
+          {
+            "shot": 0,
+            "label": "home"
+          },
+          {
+            "shot": 1,
+            "label": "product"
+          },
+          {
+            "shot": 3,
+            "label": "product, variant"
+          }
+        ]
+      },
+      {
+        "kind": "deck",
+        "title": "Campaign and phone",
+        "cards": [
+          {
+            "shot": 4,
+            "title": "Photos from the campaign"
+          },
+          {
+            "shot": 2,
+            "title": "Phone: home, product, cart"
+          }
+        ]
+      }
+    ]
+  },
+  "prof-study": {
+    "brief": {
+      "task": "A landing page for the holding's career guidance event for school and university students.",
+      "did": [
+        "A first screen with a request form and the steps of taking part",
+        "Blocks about the company, universities, the holding's professions and reviews from sponsored students",
+        "Versions for desktop, tablet and phone"
+      ],
+      "result": "The page is published on the holding's site.",
+      "nums": [
+        {
+          "v": "3",
+          "l": "versions: desktop, tablet, phone"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "browse",
+        "title": "The landing page by block",
+        "pages": [
+          {
+            "shot": 0,
+            "label": "first screen"
+          },
+          {
+            "shot": 1,
+            "label": "steps"
+          },
+          {
+            "shot": 3,
+            "label": "universities and professions"
+          },
+          {
+            "shot": 4,
+            "label": "reviews"
+          },
+          {
+            "shot": 5,
+            "label": "questions"
+          },
+          {
+            "shot": 2,
+            "label": "phone"
+          }
+        ]
+      }
+    ]
+  },
+  "svarprom-nn": {
+    "brief": {
+      "task": "The same owners as Svarnoy 52 needed a second store with its own visual key.",
+      "did": [
+        "A site on Tilda: standard blocks, Zero Block and custom code",
+        "A dark blue palette with orange, catalog migration, \"About\" texts, reviews",
+        "2026 redesign: a new layout and a 3D model of a welding machine for the first screen"
+      ],
+      "result": "Two stores of the same owners look different, while the catalog is organised the same way.",
+      "nums": [
+        {
+          "v": "2025",
+          "l": "site launched"
+        },
+        {
+          "v": "2026",
+          "l": "new layout"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "compare",
+        "title": "Before and after",
+        "a": "2025 site",
+        "b": "2026 redesign",
+        "pairs": [
+          {
+            "a": 5,
+            "b": 0,
+            "label": "home"
+          },
+          {
+            "a": 6,
+            "b": 1,
+            "label": "catalog"
+          },
+          {
+            "a": 8,
+            "b": 2,
+            "label": "product card"
+          },
+          {
+            "a": 7,
+            "b": 3,
+            "label": "phone"
+          }
+        ]
+      },
+      {
+        "kind": "reel",
+        "title": "3D for the first screen",
+        "items": [
+          {
+            "shot": 4,
+            "title": "ATIG 210PAC welding machine"
+          }
+        ]
+      }
+    ]
+  },
+  "art-school": {
+    "brief": {
+      "task": "A student needs feedback on a drawing before the work goes to the teacher.",
+      "did": [
+        "The bot compares a photo of the drawing with the teacher's references",
+        "A model with image recognition writes specific remarks",
+        "A two-step check: the bot first, then the teacher"
+      ],
+      "result": "The teacher receives a work that is already improved.",
+      "nums": [
+        {
+          "v": "2",
+          "l": "check steps"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "trace",
+        "title": "Checking a drawing",
+        "prompt": "Check my drawing",
+        "steps": [
+          {
+            "text": "photo of the drawing",
+            "note": "received"
+          },
+          {
+            "text": "teacher's references",
+            "note": "comparison"
+          },
+          {
+            "text": "composition",
+            "note": "ok"
+          },
+          {
+            "text": "proportions",
+            "note": "fix the head"
+          },
+          {
+            "text": "light and shade",
+            "note": "fix the shadow"
+          }
+        ],
+        "out": "Fix what is marked: the proportions of the head and the direction of the shadow"
+      }
+    ]
+  },
+  "brain-search": {
+    "brief": {
+      "task": "To search my own knowledge base by meaning, not only by words, right from my work tools.",
+      "did": [
+        "A Python server on the MCP protocol, an SQLite database: FTS5 and vectors in one file",
+        "Hybrid search: vectors and BM25, merged with Reciprocal Rank Fusion",
+        "Embeddings are computed locally, only what changed is reindexed"
+      ],
+      "result": "Only the found fragments go out, and the whole base stays on the computer.",
+      "nums": [
+        {
+          "v": "~17,000",
+          "l": "fragments in the index"
+        },
+        {
+          "v": "1",
+          "l": "SQLite file"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "fusion",
+        "title": "Two searches, one answer",
+        "query": "what did we decide on the catalog?",
+        "a": {
+          "label": "by meaning · vectors",
+          "items": [
+            "chat · sort by price",
+            "decisions.md · catalog and filters",
+            "session · product page"
+          ]
+        },
+        "b": {
+          "label": "by words · BM25",
+          "items": [
+            "decisions.md · catalog and filters",
+            "session · product page",
+            "chat · sort by price"
+          ]
+        },
+        "fused": [
+          "decisions.md · catalog and filters",
+          "chat · sort by price",
+          "session · product page"
+        ],
+        "label": "Reciprocal Rank Fusion"
+      }
+    ]
+  },
+  "tg-assistant": {
+    "brief": {
+      "task": "Agents stop without my decision, and if I'm away from the computer, work stands still for hours.",
+      "did": [
+        "Questions arrive in Telegram with answer options on buttons",
+        "An answer by button, text, voice or photo goes straight to the agent",
+        "Office tasks, screenshots of finished work and a new task right from the chat"
+      ],
+      "result": "Work goes on while I'm away from the computer, and the bot writes only when it can't go on without me.",
+      "nums": [
+        {
+          "v": "4",
+          "l": "ways to answer"
+        },
+        {
+          "v": "30 min",
+          "l": "minimum between repeats"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "notify",
+        "title": "Questions on the phone",
+        "app": "lexandro_assistant_bot",
+        "items": [
+          {
+            "text": "The Web desk is waiting for a decision: publish the site?",
+            "actions": [
+              "Yes",
+              "No"
+            ]
+          },
+          {
+            "text": "The agent asks permission for an action",
+            "actions": [
+              "Allow",
+              "No"
+            ]
+          },
+          {
+            "text": "Done: a screenshot of the work",
+            "actions": [
+              "Open"
+            ]
+          }
+        ],
+        "replies": [
+          "button",
+          "text",
+          "voice",
+          "photo"
+        ],
+        "rule": "the same question no more than once in half an hour"
+      }
+    ]
+  },
+  "ai-console": {
+    "brief": {
+      "task": "Services were scattered across hotkeys, scheduler tasks and scripts: to understand what was running, I had to remember where it lived.",
+      "did": [
+        "One window: each service has a status and an on or off button",
+        "The office tab shows agents as characters",
+        "Writing to an agent, limit usage and a calendar in the same place"
+      ],
+      "result": "What is running and how to switch it off is visible in one window on Ctrl+Alt+P.",
+      "nums": [
+        {
+          "v": "1",
+          "l": "window instead of hotkeys and scripts"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "console",
+        "title": "The console window",
+        "window": "AI Console · Ctrl+Alt+P",
+        "tabs": [
+          "services",
+          "office",
+          "limits",
+          "calendar"
+        ],
+        "services": [
+          {
+            "name": "Voice assistant",
+            "note": "Haiku"
+          },
+          {
+            "name": "Call recording",
+            "note": "Ctrl+Alt+R"
+          },
+          {
+            "name": "Agent office",
+            "note": "who works, who waits"
+          },
+          {
+            "name": "Bots",
+            "note": "Telegram"
+          },
+          {
+            "name": "Local models",
+            "note": "graphics card"
+          }
+        ],
+        "foot": "lives in the tray · dark and light theme · this computer only"
+      }
+    ]
+  },
+  "call-recorder": {
+    "brief": {
+      "task": "After a call, quickly get who said what, what was agreed and which tasks remain.",
+      "did": [
+        "Recording on two tracks: my microphone and the other person's sound",
+        "Transcription on the graphics card, by speaker",
+        "Breakdown: the gist, agreements and tasks go into the base; a no-cloud mode for meetings under NDA"
+      ],
+      "result": "A minute after the call ends, the transcript, the gist and the tasks are already in the knowledge base.",
+      "nums": [
+        {
+          "v": "15 s → 1 s",
+          "l": "of recording per recognition"
+        },
+        {
+          "v": "12 min → 30 s",
+          "l": "a whole call"
+        },
+        {
+          "v": "2",
+          "l": "tracks"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "transcript",
+        "title": "Example: a call about a site",
+        "lines": [
+          {
+            "t": "00:12",
+            "who": "me",
+            "name": "me",
+            "text": "Let's go through the home page, what's left."
+          },
+          {
+            "t": "00:19",
+            "who": "them",
+            "name": "client",
+            "text": "We keep the banner, I want the catalog higher."
+          },
+          {
+            "t": "00:31",
+            "who": "me",
+            "name": "me",
+            "text": "We'll raise the catalog, I'll send the design on Thursday."
+          },
+          {
+            "t": "00:40",
+            "who": "them",
+            "name": "client",
+            "text": "Agreed, and the invoice along with it."
+          }
+        ],
+        "summary": [
+          {
+            "title": "Gist",
+            "text": "Home page: the banner stays, the catalog goes higher."
+          },
+          {
+            "title": "Agreements",
+            "text": "The design on Thursday, the invoice with it."
+          },
+          {
+            "title": "Tasks",
+            "text": "Raise the catalog, issue the invoice → into the to-do list"
+          }
+        ]
+      }
+    ]
+  },
+  "channel-pipeline": {
+    "brief": {
+      "task": "To run a channel with three posts a day without spending the whole day on it.",
+      "did": [
+        "Drafts are built in several passes: write, clear of clichés, put together",
+        "A bot in the cloud sends the post with buttons and publishes the approved one in its slot",
+        "Every edit is saved as a \"before → after\" pair and teaches the next drafts"
+      ],
+      "result": "I approve or edit a post with a button, publishing goes out on schedule, and the system writes closer and closer to my voice.",
+      "nums": [
+        {
+          "v": "3",
+          "l": "posts a day"
+        },
+        {
+          "v": "10",
+          "l": "posts without edits, and the rubric goes on autopilot"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "diff",
+        "title": "A draft goes through several rounds",
+        "passes": [
+          "topic and primary source",
+          "draft",
+          "clichés and bureaucratese",
+          "assembly and a template gif",
+          "bot: approve"
+        ],
+        "was": "In the modern world of design it is important to follow trends.",
+        "now": "A new feature came out in Figma, and I've already moved two designs onto it.",
+        "labels": [
+          "before",
+          "after"
+        ],
+        "slots": [
+          "news",
+          "tip",
+          "\"A Day Later\""
+        ]
+      }
+    ]
+  },
+  "lead-agent": {
+    "brief": {
+      "task": "Design and development orders are scattered across dozens of channels, and by the time you read the feed, the good ones are taken.",
+      "did": [
+        "The agent reads a chosen folder of channels and the exchange feed",
+        "Scores an order against our skills and sends a card with advice on price and timing",
+        "Prepares a draft reply on a button, the decision is always the person's"
+      ],
+      "result": "Suitable orders arrive as cards, and the price and timing stay up to us.",
+      "nums": [
+        {
+          "v": "10",
+          "l": "cold messages a day, at most"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "cards",
+        "title": "Order feed",
+        "note": "an example, the orders are made up",
+        "items": [
+          {
+            "src": "orders channel · 2 min",
+            "text": "Need a landing page for a coffee shop: a design in Figma and front-end.",
+            "score": 86,
+            "ok": true,
+            "tip": "price per price list · 5 days"
+          },
+          {
+            "src": "exchange · 6 min",
+            "text": "Set up warehouse accounting in an accounting system.",
+            "score": 12,
+            "ok": false,
+            "tip": "not our profile"
+          }
+        ],
+        "draft": "I'll make the landing page turnkey: design, front-end, responsive. I'll show similar work.",
+        "actions": [
+          "Send",
+          "Edit"
+        ],
+        "rules": [
+          "prices only from the price list",
+          "no more than 10 cold messages a day",
+          "doesn't lie to \"is this a bot?\"",
+          "doesn't read private chats"
+        ]
+      }
+    ]
+  },
+  "rag-mentor": {
+    "brief": {
+      "task": "A newcomer in retail needs to get up to speed on procedures and the range quickly, while a human mentor is busy and the documents are long.",
+      "did": [
+        "Hybrid search aware of the role: a storekeeper and a salesperson get their own answers",
+        "A first-week program, courses with tests and a trainer of work situations",
+        "A training specialist's panel: a question without an answer becomes part of the base"
+      ],
+      "result": "The bot answers at once and only from the company's materials, and the base grows with every question that had no answer.",
+      "nums": [
+        {
+          "v": "local",
+          "l": "models on your own computer"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "trace",
+        "title": "\"Under the hood\" mode",
+        "prompt": "How do I process a return without a receipt?",
+        "steps": [
+          {
+            "text": "role",
+            "note": "salesperson"
+          },
+          {
+            "text": "search by meaning",
+            "note": "returns procedure"
+          },
+          {
+            "text": "search by words",
+            "note": "\"return\", \"receipt\""
+          },
+          {
+            "text": "answer",
+            "note": "with a link to the document"
+          }
+        ],
+        "out": "Per the returns procedure: three steps [1]",
+        "miss": {
+          "text": "no answer in the base",
+          "steps": [
+            "training specialist",
+            "answer in the base",
+            "the bot writes to those who asked"
+          ]
+        }
+      }
+    ]
+  },
+  "uni-bot": {
+    "brief": {
+      "task": "From the study portal I needed to get only what matters right now, without spam.",
+      "did": [
+        "In the evening, classes for tomorrow; a webinar link shortly before it starts",
+        "Reminders about unsubmitted work three days and one day ahead, new assignments and tests",
+        "A check every 15 minutes by a cloud function, without a server of my own"
+      ],
+      "result": "The bot sends only what's needed and costs nothing.",
+      "nums": [
+        {
+          "v": "15 min",
+          "l": "between checks"
+        },
+        {
+          "v": "0 ₽",
+          "l": "a month"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "timeline",
+        "title": "What arrives and when",
+        "events": [
+          {
+            "time": "in the evening",
+            "text": "Tomorrow 2 classes, the first at 10:00"
+          },
+          {
+            "time": "before a webinar",
+            "text": "Webinar link"
+          },
+          {
+            "time": "three days ahead",
+            "text": "Deadline soon: practical work"
+          },
+          {
+            "time": "a day ahead",
+            "text": "Deadline in a day: practical work"
+          }
+        ],
+        "tick": "a check every 15 minutes"
+      }
+    ]
+  },
+  "salon-booking": {
+    "brief": {
+      "task": "Online booking for salons and clinics through a bot, with a visit reminder.",
+      "did": [
+        "Nearest days and free slots on buttons",
+        "After booking, the time closes for others",
+        "A reminder to the client before the visit"
+      ],
+      "result": "A client books in a couple of taps. Runs locally, under Federal Law 152-FZ.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "trace",
+        "title": "Booking",
+        "prompt": "I'd like to book",
+        "steps": [
+          {
+            "text": "service",
+            "note": "chosen"
+          },
+          {
+            "text": "nearest days",
+            "note": "on buttons"
+          },
+          {
+            "text": "free slot",
+            "note": "chosen"
+          },
+          {
+            "text": "time",
+            "note": "closed for others"
+          }
+        ],
+        "out": "Booked. I'll remind you before the visit"
+      }
+    ]
+  },
+  "team-reports": {
+    "brief": {
+      "task": "Employees hand in reports as WhatsApp messages, and they have to be collected, checked and summarised.",
+      "did": [
+        "The bot parses a message into fields and writes to a table",
+        "If a field is missing or the format is wrong, it asks for a fix right away",
+        "At the start of the month it builds a summary KPI report"
+      ],
+      "result": "Reports sit in a table, and the KPI summary builds itself. Local, under Federal Law 152-FZ.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "queue",
+        "title": "The report's path",
+        "stages": [
+          "message",
+          "field check",
+          "table",
+          "KPI report"
+        ],
+        "items": [
+          "daily report",
+          "report with a missing field · request to fix",
+          "daily report",
+          "month summary"
+        ]
+      }
+    ]
+  },
+  "fitness-bot": {
+    "brief": {
+      "task": "A tracker of workouts, weight and diet in Telegram.",
+      "did": [
+        "Records workouts, weight and diet, counts calories",
+        "Suggests recipes and handles complaints about well-being",
+        "A weekly progress report and a data export for the owner"
+      ],
+      "result": "Progress is visible once a week without manual tracking.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "trace",
+        "title": "A week in the bot",
+        "prompt": "Workout and lunch",
+        "steps": [
+          {
+            "text": "workout",
+            "note": "recorded"
+          },
+          {
+            "text": "diet",
+            "note": "calories counted"
+          },
+          {
+            "text": "recommendations",
+            "note": "a recipe"
+          },
+          {
+            "text": "end of the week",
+            "note": "progress report"
+          }
+        ],
+        "out": "The weekly report is ready"
+      }
+    ]
+  },
+  "dice-bots": {
+    "brief": {
+      "task": "Dice mini-games with bets inside Telegram, two projects.",
+      "did": [
+        "Games on Telegram's built-in dice",
+        "Bets and result calculation",
+        "Player statistics and owner reports from the database"
+      ],
+      "result": "The owner sees statistics and reports without opening the database.",
+      "nums": [
+        {
+          "v": "2",
+          "l": "bots"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "trace",
+        "title": "One throw",
+        "prompt": "Bet",
+        "steps": [
+          {
+            "text": "bet",
+            "note": "accepted"
+          },
+          {
+            "text": "throw",
+            "note": "Telegram dice"
+          },
+          {
+            "text": "result",
+            "note": "calculated"
+          },
+          {
+            "text": "statistics",
+            "note": "in the database"
+          }
+        ],
+        "out": "The result and the player's statistics"
+      }
+    ]
+  },
+  "media-to-rag": {
+    "brief": {
+      "task": "Videos and voice messages from Yandex Disk had to be turned into a knowledge base for an assistant.",
+      "did": [
+        "New files are picked up from the Disk automatically",
+        "Conversion and transcription into text",
+        "Chunking, embeddings and loading into a vector database"
+      ],
+      "result": "The assistant answers from the content of the videos and voice messages. Local, under Federal Law 152-FZ.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "queue",
+        "title": "The file's path",
+        "stages": [
+          "Yandex Disk",
+          "transcription",
+          "chunks",
+          "embeddings",
+          "vector database"
+        ],
+        "items": [
+          "video",
+          "voice message",
+          "video",
+          "voice message"
+        ]
+      }
+    ]
+  }
+}

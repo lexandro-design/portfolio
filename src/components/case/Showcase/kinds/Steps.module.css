@@ -1,0 +1,144 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.list {
+  display: grid;
+  gap: 4px;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: var(--space-sm);
+  inline-size: 100%;
+  padding: 14px 16px 16px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  text-align: start;
+  color: var(--fg-tertiary);
+  cursor: pointer;
+  transition:
+    color var(--dur-base),
+    background var(--dur-base),
+    border-color var(--dur-base);
+}
+
+.step:hover {
+  color: var(--fg-secondary);
+}
+
+.step[aria-pressed='true'] {
+  border-color: var(--border-hair);
+  background: var(--bg-elevated);
+  color: var(--fg-primary);
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  padding-block-start: 3px;
+}
+
+.text {
+  display: grid;
+  gap: 4px;
+}
+
+.text b {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Пояснение видно только у активного шага: список не скачет по высоте */
+.text span {
+  max-block-size: 0;
+  overflow: hidden;
+  font-size: var(--type-body-sm);
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  opacity: 0;
+  transition:
+    max-block-size var(--dur-slow) var(--ease-out-expo),
+    opacity var(--dur-slow);
+}
+
+.step[aria-pressed='true'] .text span {
+  max-block-size: 6em;
+  opacity: 1;
+}
+
+/* Полоска времени шага */
+.bar {
+  position: absolute;
+  inset-inline: 16px;
+  inset-block-end: 0;
+  block-size: 2px;
+  background: var(--fg-primary);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.root[data-play] .bar {
+  animation: grow var(--ms) linear forwards;
+}
+
+@keyframes grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.screen {
+  position: relative;
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.015);
+  cursor: zoom-in;
+  transition:
+    opacity var(--dur-slow) var(--ease-out-quart),
+    transform 1200ms var(--ease-out-expo);
+}
+
+.img[data-on] {
+  z-index: 1;
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1023px) {
+  .root {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-md);
+  }
+
+  .screen {
+    order: -1;
+  }
+
+  .text b {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    display: none;
+  }
+}

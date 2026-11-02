@@ -339,7 +339,7 @@
       "stack": "技术栈",
       "site": "网站"
     },
-    "screens": "界面",
+    "screens": "全部界面",
     "scheme": "运作方式",
     "next": "下一个案例",
     "viewer": "查看截图",
@@ -351,7 +351,33 @@
       "light": "浅色",
       "dark": "深色"
     },
-    "credit": "前端"
+    "credit": "前端",
+    "story": "详细",
+    "brief": {
+      "label": "项目概要",
+      "task": "任务",
+      "did": "我做了什么",
+      "result": "结果"
+    },
+    "show": {
+      "example": "示例",
+      "drag": "滑块位置",
+      "prev": "上一张",
+      "next": "下一张",
+      "incoming": "收件",
+      "tracks": {
+        "me": "我",
+        "them": "对方"
+      },
+      "hint": {
+        "browse": "选择页面",
+        "compare": "拖动滑块",
+        "steps": "点击步骤",
+        "deck": "翻阅",
+        "reel": "选择场景",
+        "console": "开关可以点击"
+      }
+    }
   },
   "palette": {
     "open": "搜索与命令",
