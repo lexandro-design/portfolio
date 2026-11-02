@@ -1,0 +1,152 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--space-md);
+}
+
+.rec {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  min-block-size: 400px;
+}
+
+.track {
+  --tone: var(--accent);
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.track[data-who='them'] {
+  --tone: #7aa7ff;
+}
+
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  block-size: 34px;
+  overflow: hidden;
+}
+
+.wave i {
+  flex: 1;
+  min-inline-size: 2px;
+  block-size: 12%;
+  border-radius: 2px;
+  background: var(--tone);
+  opacity: 0.35;
+  transition:
+    opacity var(--dur-base),
+    block-size var(--dur-slow) var(--ease-out-expo);
+}
+
+/* Говорит этот человек — его дорожка оживает */
+.root[data-play] .track[data-on] .wave i {
+  opacity: 1;
+  animation: wv 0.9s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.05s);
+}
+
+@keyframes wv {
+  0%,
+  100% {
+    block-size: 15%;
+  }
+
+  50% {
+    block-size: var(--h);
+  }
+}
+
+.lines {
+  display: grid;
+  gap: 12px;
+  margin-block-start: var(--space-sm);
+  padding-block-start: var(--space-md);
+  border-block-start: 1px solid var(--border-hair);
+  list-style: none;
+}
+
+.lines li {
+  display: grid;
+  grid-template-columns: 52px 96px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 10px;
+  font-size: var(--type-body-sm);
+  line-height: 1.5;
+}
+
+.lines b {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.lines li[data-who='them'] b {
+  color: #7aa7ff;
+}
+
+.sum {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+}
+
+.card {
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px;
+  opacity: 0.25;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo),
+    border-color var(--dur-slow);
+}
+
+.card[data-on] {
+  border-color: var(--border-hover);
+  opacity: 1;
+  transform: none;
+}
+
+.card p {
+  font-size: var(--type-body);
+  line-height: 1.45;
+}
+
+@media (max-width: 1023px) {
+  .root {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rec {
+    min-block-size: 0;
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 767px) {
+  .track {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+
+  .lines li {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .lines li span {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transform: none;
+  }
+}

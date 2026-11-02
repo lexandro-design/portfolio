@@ -1,0 +1,84 @@
+.root {
+  display: grid;
+  gap: var(--space-md);
+}
+
+/* Место под веер справа, чтобы карты сзади не вылезали за контейнер */
+.stack {
+  position: relative;
+  aspect-ratio: 16 / 10.4;
+  margin-inline-end: 9%;
+  touch-action: pan-y;
+}
+
+.card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  box-shadow: 0 30px 60px -36px rgb(0 0 0 / 0.7);
+  transform: translateX(calc(var(--d) * 3.2%)) scale(calc(1 - var(--d) * 0.06))
+    rotate(calc(var(--d) * 1.2deg));
+  transform-origin: left center;
+  opacity: calc(1 - var(--d) * 0.22);
+  filter: brightness(calc(1 - var(--d) * 0.18));
+  cursor: pointer;
+  transition:
+    transform 800ms var(--ease-out-expo),
+    opacity 800ms var(--ease-out-expo),
+    filter 800ms var(--ease-out-expo);
+}
+
+.card[data-top] {
+  cursor: zoom-in;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px var(--space-sm);
+  font-size: var(--type-body-lg);
+  color: var(--fg-primary);
+  animation: in var(--dur-slow) var(--ease-out-expo);
+}
+
+@keyframes in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.nav {
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+
+@media (max-width: 767px) {
+  .stack {
+    margin-inline-end: 12%;
+  }
+
+  .caption {
+    font-size: var(--type-body);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .caption {
+    transition: none;
+    animation: none;
+  }
+}

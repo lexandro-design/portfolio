@@ -1,0 +1,80 @@
+.root {
+  display: grid;
+  /* minmax(0) — широкий скрин не распирает колонку на телефоне */
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+}
+
+.monitor {
+  inline-size: 100%;
+  padding: 10px;
+  border-radius: 16px;
+  background: linear-gradient(#1d1d1f, #0b0b0c);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.06) inset,
+    0 50px 90px -50px rgb(0 0 0 / 0.8);
+}
+
+.screen {
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  cursor: zoom-in;
+}
+
+.stand {
+  inline-size: 18%;
+  block-size: 34px;
+  background: linear-gradient(#2a2a2d, #141416);
+  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+}
+
+.caption {
+  margin-block-start: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+/* Телефон: таблица крупнее экрана и плавно едет туда-обратно */
+@media (max-width: 767px) {
+  .monitor {
+    padding: 6px;
+  }
+
+  .screen {
+    aspect-ratio: 4 / 3;
+    container-type: inline-size;
+  }
+
+  .img {
+    inline-size: auto;
+    block-size: 100%;
+    max-inline-size: none;
+    animation: slide 14s var(--ease-in-out) infinite alternate;
+  }
+
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% + 100cqw));
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img {
+    animation: none;
+  }
+}

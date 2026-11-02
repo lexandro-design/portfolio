@@ -1,0 +1,108 @@
+.root {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.inbox {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-md);
+  padding: 14px 20px;
+}
+
+.slot {
+  display: flex;
+  min-block-size: 46px;
+  align-items: center;
+}
+
+.msg {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--bg-subtle);
+  font-size: var(--type-body-sm);
+  line-height: 1.4;
+}
+
+.lanes {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.lane {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  min-block-size: 280px;
+  padding: 18px;
+  border: 1px solid var(--border-hair);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  transition:
+    border-color var(--dur-slow),
+    box-shadow var(--dur-slow);
+}
+
+.lane[data-hot] {
+  border-color: var(--signal-live);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal-live) 12%, transparent);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  list-style: none;
+}
+
+.out {
+  font-size: var(--type-body-sm);
+  color: var(--fg-tertiary);
+  transition: color var(--dur-slow);
+}
+
+.out[data-on] {
+  color: var(--signal-live);
+}
+
+@media (max-width: 1023px) {
+  .lanes {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .lane {
+    min-block-size: 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .inbox {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .lanes {
+    gap: 8px;
+  }
+
+  /* Высота с запасом под два сообщения: блок не прыгает, пока они приходят */
+  .lane {
+    min-block-size: 210px;
+    padding: 12px;
+  }
+
+  .lane .msg {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+}

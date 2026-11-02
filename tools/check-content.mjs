@@ -150,6 +150,38 @@ for (const s of new Set(cases.flatMap((c) => c.stack))) {
   for (const l of LOCALES) if (!str(stackCopy[s]?.[l])) fail('cases-i18n/stack', `нет перевода «${s}» на ${l}`)
 }
 
+// Раскрытие кейсов (showcase.json): у каждого кейса есть, кадры по номеру существуют,
+// переводы той же формы — иначе на чужом языке тихо остался бы русский текст
+const show = read('showcase.json')
+const shape = (a, b) =>
+  typeof a !== 'object' || a === null
+    ? typeof a === typeof b
+    : Array.isArray(a)
+      ? Array.isArray(b) && a.length === b.length && a.every((v, i) => shape(v, b[i]))
+      : !!b && typeof b === 'object' && Object.keys(a).every((k) => shape(a[k], b[k]))
+for (const c of cases) {
+  const s = show[c.slug]
+  if (!s) {
+    fail(`showcase.${c.slug}`, 'нет раскрытия')
+    continue
+  }
+  if (!str(s.brief?.task) || !str(s.brief?.result) || !s.brief?.did?.length) {
+    fail(`showcase.${c.slug}`, 'brief: нужны task, did, result')
+  }
+  const refs = s.blocks.flatMap((b) => [
+    ...['pages', 'steps', 'cards', 'items'].flatMap((k) =>
+      (b[k] ?? []).map((p) => p.shot).filter((n) => typeof n === 'number'),
+    ),
+    ...(typeof b.shot === 'number' ? [b.shot] : []),
+    ...(b.pairs ?? []).flatMap((p) => [p.a, p.b]),
+  ])
+  for (const n of refs) if (!c.shots[n]) fail(`showcase.${c.slug}`, `нет кадра ${n}`)
+  for (const l of LOCALES) {
+    const tr = read(`showcase-i18n/${l}.json`)[c.slug]
+    if (!shape(s, tr)) fail(`showcase-i18n/${l}.${c.slug}`, 'форма не совпадает с русской')
+  }
+}
+
 // Контакты
 const site = read('site.json')
 for (const k of ['email', 'telegram', 'telegramHandle', 'github', 'behance']) {

@@ -1,0 +1,117 @@
+.root {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.stages {
+  position: relative;
+  display: grid;
+  gap: var(--space-sm);
+  list-style: none;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-md);
+  min-block-size: 220px;
+  padding: 18px;
+  border: 1px solid var(--border-hair);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  transition:
+    border-color var(--dur-slow),
+    background var(--dur-slow);
+}
+
+/* Стрелка к следующему этапу */
+.stage:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: calc(-1 * var(--space-sm) / 2 - 5px);
+  z-index: 1;
+  inline-size: 10px;
+  block-size: 10px;
+  border-block-start: 1px solid var(--border-hover);
+  border-inline-end: 1px solid var(--border-hover);
+  background: var(--bg-base);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.stage[data-on] {
+  border-color: var(--signal-live);
+  background: color-mix(in srgb, var(--signal-live) 6%, var(--bg-elevated));
+}
+
+.head {
+  display: grid;
+  gap: 6px;
+}
+
+.head b {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.slot {
+  display: grid;
+  align-content: end;
+}
+
+.job {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+  font-size: var(--type-body-sm);
+  line-height: 1.35;
+}
+
+.done {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.tick {
+  inline-size: 28px;
+  block-size: 6px;
+  border-radius: 6px;
+  background: var(--border-hair);
+  transition: background var(--dur-slow);
+}
+
+.tick[data-on] {
+  background: var(--signal-live);
+}
+
+@media (max-width: 1023px) {
+  .stages {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px;
+  }
+
+  .stage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: none;
+    align-items: center;
+    min-block-size: 76px;
+    padding: 12px 16px;
+  }
+
+  .stage:not(:last-child)::after {
+    inset-block-start: auto;
+    inset-block-end: -10px;
+    inset-inline-end: auto;
+    inset-inline-start: 28px;
+    transform: rotate(135deg);
+  }
+
+  .slot {
+    align-content: center;
+  }
+}

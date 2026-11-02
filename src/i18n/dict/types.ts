@@ -194,5 +194,21 @@ export type Dict = {
     shotTheme: { label: string; light: string; dark: string }
     /** Подпись кнопки соавтора: «вёрстка — github.com/…» */
     credit: string
+    /** Метка подробного текста кейса после интерактивных блоков */
+    story: string
+    /** «Коротко» под шапкой кейса */
+    brief: { label: string; task: string; did: string; result: string }
+    /** Интерактивные блоки раскрытия */
+    show: {
+      /** Пометка у демо ботов: данные в нём — пример */
+      example: string
+      drag: string
+      prev: string
+      next: string
+      incoming: string
+      tracks: { me: string; them: string }
+      /** Как обращаться с блоком — рядом с его номером */
+      hint: { browse: string; compare: string; steps: string; deck: string; reel: string; console: string }
+    }
   }
 }

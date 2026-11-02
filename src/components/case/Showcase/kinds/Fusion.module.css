@@ -1,0 +1,140 @@
+.root {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.query {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-block-size: 64px;
+  padding: 0 22px;
+  font-size: 20px;
+}
+
+.icon {
+  color: var(--fg-tertiary);
+  font-size: 24px;
+}
+
+.cursor {
+  display: inline-block;
+  inline-size: 2px;
+  block-size: 1.1em;
+  margin-inline-start: 2px;
+  vertical-align: -0.15em;
+  background: var(--fg-primary);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.col {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+  padding: 18px 20px;
+  transition: border-color var(--dur-slow);
+}
+
+.col ol {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+.col li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--type-body-sm);
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+
+/* Фаза 1 — списки двух поисков, фаза 2 — ещё и слитый */
+.cols:not([data-phase='0']) .col:not(.fused) li,
+.cols[data-phase='2'] .fused li {
+  opacity: 1;
+  transform: none;
+}
+
+.cols[data-phase='2'] .fused {
+  border-color: var(--signal-live);
+}
+
+.n {
+  display: grid;
+  place-items: center;
+  inline-size: 24px;
+  block-size: 24px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+}
+
+.fused .n {
+  background: var(--signal-live);
+  color: var(--fg-inverse);
+}
+
+.item {
+  min-inline-size: 0;
+}
+
+.ranks {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+@media (max-width: 1023px) {
+  .cols {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .fused {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .query {
+    font-size: 17px;
+    padding: 0 16px;
+  }
+
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .col li {
+    grid-template-columns: 26px minmax(0, 1fr);
+  }
+
+  .ranks {
+    grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}

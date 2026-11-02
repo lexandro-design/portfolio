@@ -1,0 +1,97 @@
+.root {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.count {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+/* Окно фиксированной пропорции — контейнер по размеру, чтобы проезд
+   считался в его высотах (cqh): страница едет ровно до своего низа */
+.view {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  /* Окно целиком помещается в экран вместе с вкладками */
+  max-block-size: calc(100vh - var(--nav-h) - 160px);
+  min-block-size: 280px;
+  overflow: hidden;
+  container-type: size;
+  background: var(--bg-base);
+}
+
+.page {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  inline-size: 100%;
+  block-size: auto;
+  cursor: zoom-in;
+  animation: pan var(--dur) var(--ease-in-out) both paused;
+  will-change: transform;
+}
+
+.view[data-play] .page {
+  animation-play-state: running;
+}
+
+.view:hover .page,
+.view:hover .progress i {
+  animation-play-state: paused;
+}
+
+/* Пауза наверху, проезд вниз, пауза внизу. min() — страница ниже окна не едет вверх */
+@keyframes pan {
+  0%,
+  10% {
+    transform: translateY(0);
+  }
+
+  88%,
+  100% {
+    transform: translateY(min(0px, calc(100cqh - 100%)));
+  }
+}
+
+.progress {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 2px;
+  background: var(--border-hair);
+}
+
+.progress i {
+  display: block;
+  block-size: 100%;
+  background: var(--fg-primary);
+  transform-origin: left;
+  animation: grow var(--dur) linear both paused;
+}
+
+.view[data-play] .progress i {
+  animation-play-state: running;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .view {
+    aspect-ratio: 4 / 3.4;
+  }
+}
+
+/* Без движения — верх страницы, листать вкладками */
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .progress i {
+    animation: none;
+  }
+}

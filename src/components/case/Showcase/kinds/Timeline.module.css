@@ -1,0 +1,110 @@
+.root {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+/* Шкала с засечками каждые 15 минут: повторяющийся градиент */
+.scale {
+  position: relative;
+  block-size: 14px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--border-hover) 0 1px,
+    transparent 1px 2.5%
+  );
+  border-block-end: 1px solid var(--border-hover);
+}
+
+.fill {
+  position: absolute;
+  inset-block-end: -1px;
+  inset-inline-start: 0;
+  block-size: 2px;
+  inline-size: calc((var(--k) + 0.5) / var(--n) * 100%);
+  background: var(--signal-live);
+  transition: inline-size 1200ms var(--ease-in-out);
+}
+
+.runner {
+  position: absolute;
+  inset-block-end: -7px;
+  inset-inline-start: calc((var(--k) + 0.5) / var(--n) * 100%);
+  inline-size: 14px;
+  block-size: 14px;
+  margin-inline-start: -7px;
+  border-radius: 50%;
+  background: var(--signal-live);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--signal-live) 20%, transparent);
+  transition: inset-inline-start 1200ms var(--ease-in-out);
+}
+
+.events {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: var(--space-sm);
+  list-style: none;
+}
+
+.event {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.msg {
+  padding: 14px 16px;
+  border: 1px solid var(--border-hair);
+  border-radius: 16px 16px 16px 6px;
+  background: var(--bg-elevated);
+  font-size: var(--type-body-sm);
+  line-height: 1.45;
+  opacity: 0.2;
+  transform: translateY(10px) scale(0.98);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo),
+    border-color var(--dur-slow);
+}
+
+.event[data-on] .msg {
+  opacity: 1;
+  transform: none;
+}
+
+.event[data-now] .msg {
+  border-color: var(--signal-live);
+}
+
+/* Телефон: шкала уходит, события столбиком, бегунок не нужен */
+@media (max-width: 767px) {
+  .scale {
+    display: none;
+  }
+
+  .events {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding-inline-start: 18px;
+    border-inline-start: 1px solid var(--border-hover);
+  }
+
+  .event {
+    position: relative;
+  }
+
+  .event::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-start: -23px;
+    inline-size: 9px;
+    block-size: 9px;
+    border-radius: 50%;
+    background: var(--border-hover);
+    transition: background var(--dur-slow);
+  }
+
+  .event[data-on]::before {
+    background: var(--signal-live);
+  }
+}

@@ -340,7 +340,7 @@
       "stack": "stack",
       "site": "website"
     },
-    "screens": "screens",
+    "screens": "all screens",
     "scheme": "how it works",
     "next": "next case",
     "viewer": "Screenshot viewer",
@@ -352,7 +352,33 @@
       "light": "light",
       "dark": "dark"
     },
-    "credit": "front end by"
+    "credit": "front end by",
+    "story": "in detail",
+    "brief": {
+      "label": "Project in brief",
+      "task": "task",
+      "did": "what I did",
+      "result": "result"
+    },
+    "show": {
+      "example": "example",
+      "drag": "Slider position",
+      "prev": "Previous",
+      "next": "Next",
+      "incoming": "incoming",
+      "tracks": {
+        "me": "me",
+        "them": "other side"
+      },
+      "hint": {
+        "browse": "pick a page",
+        "compare": "drag the slider",
+        "steps": "tap a step",
+        "deck": "flip through",
+        "reel": "pick a scene",
+        "console": "switches are clickable"
+      }
+    }
   },
   "palette": {
     "open": "Search and commands",

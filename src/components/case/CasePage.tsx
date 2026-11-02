@@ -2,7 +2,10 @@ import { notFound } from 'next/navigation'
 import { getCase, getCases } from '@/content/cases-i18n'
 import { HTML_LANG, localePath, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
+import { getShowcase } from '@/content/showcase'
+import { Brief } from './Brief/Brief'
 import { CaseBody } from './CaseBody'
+import { Showcase } from './Showcase/Showcase'
 import { CaseHero } from './CaseHero'
 import { Lightbox } from './Lightbox'
 import { NextCase } from './NextCase'
@@ -16,6 +19,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   const items = getCases(locale)
   const index = items.findIndex((c) => c.slug === slug)
   const next = items[(index + 1) % items.length]
+  const show = getShowcase(locale, slug)
 
   return (
     <div lang={HTML_LANG[locale]} data-case data-shots="light">
@@ -27,6 +31,8 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
         directions={t.works.directions}
         backHref={localePath(locale, '/#works')}
       />
+      {show && <Brief brief={show.brief} t={t.case.brief} />}
+      {show && <Showcase data={show} item={item} t={t.case.show} />}
       <CaseBody item={item} t={t.case} />
       <NextCase
         item={next}

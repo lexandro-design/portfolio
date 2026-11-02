@@ -1,0 +1,125 @@
+.root {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.passes {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 8px;
+  list-style: none;
+}
+
+.passes li {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--border-hair);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  font-size: var(--type-body-sm);
+  line-height: 1.35;
+  color: var(--fg-tertiary);
+  transition:
+    color var(--dur-base),
+    border-color var(--dur-base),
+    box-shadow var(--dur-base);
+}
+
+.passes li[data-s='done'] {
+  color: var(--fg-primary);
+}
+
+.passes li[data-s='run'] {
+  border-color: var(--signal-live);
+  color: var(--fg-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal-live) 14%, transparent);
+}
+
+.diff {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: var(--space-sm);
+}
+
+.was,
+.now {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px 24px;
+  border-radius: 14px;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  opacity: 0.25;
+  transition: opacity var(--dur-slow) var(--ease-out-expo);
+}
+
+.was {
+  background: color-mix(in srgb, #ff7a59 10%, transparent);
+}
+
+.was[data-on] p {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, #ff7a59 70%, transparent);
+  color: var(--fg-secondary);
+}
+
+.now {
+  background: color-mix(in srgb, var(--signal-live) 10%, transparent);
+}
+
+.was[data-on],
+.now[data-on] {
+  opacity: 1;
+}
+
+.arrow {
+  align-self: center;
+  font-size: 22px;
+  color: var(--fg-tertiary);
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.slot {
+  padding: 8px 14px;
+  border: 1px solid var(--border-hair);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-secondary);
+}
+
+@media (max-width: 1023px) {
+  .passes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .passes li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .diff {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .was,
+  .now {
+    padding: 18px;
+    font-size: 18px;
+  }
+}
