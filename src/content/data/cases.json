@@ -1253,6 +1253,13 @@
         "h": 1100
       },
       {
+        "src": "/cases/svarnoy52/3d-about.jpg",
+        "video": "/cases/svarnoy52/3d-about.mp4",
+        "caption": "Редизайн 2026: 3D-сцена для блока «О компании», маска и сварка, петля.",
+        "w": 1120,
+        "h": 960
+      },
+      {
         "src": "/cases/svarnoy52/01.jpg",
         "caption": "Сайт 2025: главная.",
         "w": 1600,
@@ -2131,6 +2138,13 @@
         "caption": "Редизайн 2026, телефон: главная, каталог, товар.",
         "w": 1600,
         "h": 1100
+      },
+      {
+        "src": "/cases/svarprom-nn/3d-atig.jpg",
+        "video": "/cases/svarprom-nn/3d-atig.mp4",
+        "caption": "Редизайн 2026: 3D-модель аппарата ATIG 210PAC для первого экрана, петля.",
+        "w": 828,
+        "h": 660
       },
       {
         "src": "/cases/svarprom-nn/01.jpg",
