@@ -1,6 +1,9 @@
 .root {
   display: grid;
   gap: var(--space-md);
+  /* Кадр 16:10 целиком помещается в экран вместе с вкладками: ширина от высоты окна, по центру */
+  inline-size: min(100%, calc((100vh - var(--nav-h) - 220px) * 16 / 10));
+  margin-inline: auto;
 }
 
 .count {
@@ -15,8 +18,6 @@
 .view {
   position: relative;
   aspect-ratio: 16 / 10;
-  /* Окно целиком помещается в экран вместе с вкладками */
-  max-block-size: calc(100vh - var(--nav-h) - 160px);
   min-block-size: 280px;
   overflow: hidden;
   container-type: size;

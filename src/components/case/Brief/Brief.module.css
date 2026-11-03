@@ -63,6 +63,7 @@
   border-radius: 14px;
   background: var(--bg-elevated);
   border: 1px solid var(--border-hair);
+  box-shadow: inset 3px 0 0 var(--case-accent);
 }
 
 .result p {

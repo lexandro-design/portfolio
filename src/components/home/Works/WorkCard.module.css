@@ -1,0 +1,229 @@
+.card {
+  min-inline-size: 0;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+
+.card {
+  --case-color: var(--signal-live);
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  transition: border-color var(--dur-base) var(--ease-out-quart);
+}
+
+/* Полоса цвета кейса снизу картинки — проезжает при наведении */
+.media::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 3px;
+  background: var(--case-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.link:hover .media {
+  border-color: color-mix(in oklab, var(--case-color) 55%, transparent);
+}
+
+.link:hover .media::after {
+  transform: scaleX(1);
+}
+
+/* Метка направления на картинке */
+.chip {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-start: 12px;
+  z-index: 1;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--overlay-tag, rgb(10 10 10 / 0.6));
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f5f5f2;
+  pointer-events: none;
+}
+
+/* В мозаике картинка занимает всё место ячейки над подписью */
+.card[data-size] .media {
+  flex: 1;
+  aspect-ratio: auto;
+  min-block-size: 0;
+}
+
+.media > * {
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.link:hover .media > * {
+  transform: scale(1.035);
+}
+
+.text {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding-block: 20px 0;
+  padding-inline-end: 32px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.title {
+  margin-block-start: 6px;
+  font-size: 22px;
+  font-weight: 450;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.card[data-size='hero'] .title {
+  font-size: 44px;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.card[data-size='wide'] .title {
+  font-size: 28px;
+  letter-spacing: -0.025em;
+}
+
+.tagline {
+  font-size: var(--type-body);
+  line-height: 1.4;
+  color: var(--fg-secondary);
+  transition: color var(--dur-base) var(--ease-out-quart);
+}
+
+.card[data-size='hero'] .tagline {
+  font-size: 22px;
+}
+
+.card[data-size='hero'] .lead {
+  margin-block-start: var(--space-xs);
+}
+
+.link:hover .tagline {
+  color: var(--fg-primary);
+}
+
+.lead {
+  max-inline-size: 40em;
+  font-size: var(--type-body);
+  line-height: 1.5;
+  color: var(--fg-secondary);
+}
+
+.arrow {
+  position: absolute;
+  inset-block-end: 2px;
+  inset-inline-end: 0;
+  display: inline-flex;
+  color: var(--fg-tertiary);
+  transition:
+    transform var(--dur-base) var(--ease-out-expo),
+    color var(--dur-fast) var(--ease-out-quart);
+}
+
+.link:hover .arrow {
+  color: var(--fg-primary);
+  transform: translateX(4px);
+}
+
+@media (max-width: 1023px) {
+  .card[data-size='hero'] .title {
+    font-size: 32px;
+  }
+
+  .card[data-size]:not([data-size='hero']) .media {
+    flex: none;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Телефон: крупная только первая ячейка подборки, остальные — строка с картинкой слева */
+@media (max-width: 767px) {
+  .card:not([data-size='hero']) .link {
+    display: grid;
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .card:not([data-size='hero']) .media {
+    flex: none;
+    aspect-ratio: 1;
+    min-block-size: 0;
+  }
+
+  .card:not([data-size='hero']) .text {
+    padding-block: 0;
+  }
+
+  .card[data-size='hero'] .media {
+    flex: none;
+    aspect-ratio: 4 / 3;
+  }
+
+  .title,
+  .card[data-size='wide'] .title {
+    font-size: 19px;
+  }
+
+  .tagline,
+  .card[data-size='hero'] .tagline {
+    font-size: var(--type-body-sm);
+  }
+
+  .chip {
+    display: none;
+  }
+
+  .card[data-size='hero'] .chip {
+    display: block;
+  }
+
+  .card[data-size='hero'] .title {
+    font-size: 28px;
+  }
+
+  .lead {
+    font-size: var(--type-body-sm);
+  }
+}

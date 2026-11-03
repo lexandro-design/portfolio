@@ -93,25 +93,61 @@ function Kind({ block: b, shots, t }: { block: Block; shots: Case['shots']; t: T
   }
 }
 
-/** Интерактивное раскрытие кейса: блоки идут после «коротко», до подробного текста */
+/** Демо, которым тесно в узкой колонке: им — сцена на всю ширину, текст строкой над ними */
+const STAGE = new Set<Block['kind']>(['browse', 'compare', 'steps', 'deck', 'reel', 'wide', 'board', 'transcript', 'sort'])
+
+/** Якорь главы: на него ведут оглавление в шапке и рельс глав сбоку */
+export const chapterId = (i: number) => `ch-${i + 1}`
+
+/**
+ * Раскрытие кейса главами. У главы номер, заголовок, пояснение из текста
+ * кейса (поле section) и живое демо. Узкие демо (бот, пульт, поиск) стоят
+ * справа, текст слева прилипает к экрану, пока демо крутится; широкие —
+ * сайт, шторка, сценарий — сценой на всю ширину. Так страница одна
+ * история, а не «блоки сверху, старый текст снизу»
+ */
 export function Showcase({ data, item, t }: { data: Data; item: Case; t: T }) {
   const total = data.blocks.length
   return (
     <>
       {data.blocks.map((b, i) => {
         const h = hint(b, t)
+        const text = b.section === undefined ? undefined : item.sections[b.section]
+        const layout = STAGE.has(b.kind) || !text ? 'stage' : 'side'
         return (
-          <section key={b.title + i} className={styles.block} data-kind={b.kind}>
-            <Reveal className="container">
-              <div className={styles.head}>
-                <span className={styles.label}>
-                  {pad(i + 1)} / {pad(total)}
-                  {h && <span className={styles.hint}> · {h}</span>}
-                </span>
-                <h2 className={styles.title}>{b.title}</h2>
+          <section
+            key={b.title + i}
+            id={chapterId(i)}
+            className={styles.block}
+            data-kind={b.kind}
+            data-layout={layout}
+          >
+            <div className="container">
+              <div className={styles.chapter}>
+                <Reveal className={styles.head}>
+                  <div className={styles.headText}>
+                    <span className={styles.n} aria-hidden="true">
+                      {pad(i + 1)}
+                    </span>
+                    <span className={styles.label}>
+                      {pad(i + 1)} / {pad(total)}
+                      {h && <span className={styles.hint}> · {h}</span>}
+                    </span>
+                    <h2 className={styles.title}>{b.title}</h2>
+                  </div>
+                  {text && (
+                    <div className={styles.text}>
+                      {text.body.map((p) => (
+                        <p key={p.slice(0, 32)}>{p}</p>
+                      ))}
+                    </div>
+                  )}
+                </Reveal>
+                <Reveal className={styles.demo} delay={120}>
+                  <Kind block={b} shots={item.shots} t={t} />
+                </Reveal>
               </div>
-              <Kind block={b} shots={item.shots} t={t} />
-            </Reveal>
+            </div>
           </section>
         )
       })}

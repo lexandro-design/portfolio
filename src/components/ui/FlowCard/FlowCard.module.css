@@ -1,0 +1,330 @@
+.root {
+  position: relative;
+  display: grid;
+  block-size: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 100% 0%, color-mix(in oklab, var(--signal-live) 10%, transparent), transparent 60%),
+    var(--bg-elevated);
+  container-type: size;
+}
+
+/* Точечная сетка, как на монтажной схеме */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--border-hair) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+  pointer-events: none;
+}
+
+.chain,
+.route {
+  position: relative;
+  /* Сверху место под метку направления карточки */
+  padding: max(46px, 12cqh) clamp(14px, 6cqi, 32px) clamp(14px, 6cqi, 32px);
+  font-size: clamp(11px, 3.6cqi, 15px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(6px, 2.6cqh, 14px);
+  min-block-size: 0;
+}
+
+/* Реплики: вход слева, ответ справа, проявляются снизу */
+.bubble {
+  align-self: flex-start;
+  max-inline-size: 86%;
+  padding: 0.55em 0.85em;
+  border-radius: 12px 12px 12px 4px;
+  background: var(--bg-subtle);
+  color: var(--fg-primary);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 420ms var(--ease-out-quart),
+    transform 600ms var(--ease-out-expo);
+}
+
+.bubble[data-side='out'] {
+  align-self: flex-end;
+  border-radius: 12px 12px 4px 12px;
+  background: var(--fg-primary);
+  color: var(--bg-base);
+}
+
+.bubble[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Шаги цепочкой: линия слева, по ней едет точка к активному шагу */
+.nodes {
+  position: relative;
+  display: grid;
+  gap: clamp(3px, 1.4cqh, 8px);
+  list-style: none;
+  padding-inline-start: 18px;
+}
+
+.nodes::before {
+  content: '';
+  position: absolute;
+  inset-block: 10px;
+  inset-inline-start: 5px;
+  inline-size: 1px;
+  background: var(--border-hover);
+}
+
+.node {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.42em 0.7em;
+  border: 1px solid var(--border-hair);
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--bg-base) 70%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  letter-spacing: 0.02em;
+  color: var(--fg-tertiary);
+  transition:
+    color 300ms var(--ease-out-quart),
+    border-color 300ms var(--ease-out-quart),
+    box-shadow 500ms var(--ease-out-quart);
+}
+
+/* Точка на линии у каждого шага */
+.node::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: -17px;
+  inset-block-start: 50%;
+  inline-size: 9px;
+  block-size: 9px;
+  margin-block-start: -4.5px;
+  border: 1px solid var(--border-hover);
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  transition:
+    background-color 300ms,
+    border-color 300ms,
+    box-shadow 500ms;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.idx {
+  opacity: 0.7;
+}
+
+.tick {
+  opacity: 0;
+  font-size: 0.9em;
+  color: var(--signal-live);
+  transform: scale(0.6);
+  transition:
+    opacity 260ms,
+    transform 400ms var(--ease-out-expo);
+}
+
+.node[data-state] {
+  color: var(--fg-primary);
+}
+
+.node[data-state='active'] {
+  border-color: var(--signal-live);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal-live) 16%, transparent);
+}
+
+.node[data-state]::before {
+  border-color: var(--signal-live);
+  background: var(--signal-live);
+}
+
+.node[data-state='active']::before {
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--signal-live) 25%, transparent);
+  animation: ping 720ms var(--ease-out-quart);
+}
+
+.node[data-state='done'] .tick {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes ping {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal-live) 60%, transparent);
+  }
+}
+
+/* Маршрут: запрос, развилка, дорожки рядом */
+.router {
+  position: relative;
+  align-self: center;
+  inline-size: 2px;
+  block-size: clamp(10px, 6cqh, 28px);
+  background: var(--border-hover);
+}
+
+.router i {
+  position: absolute;
+  inset-inline-start: -3px;
+  inset-block-start: 0;
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 50%;
+  background: var(--signal-live);
+  opacity: 0;
+}
+
+.router[data-on] i {
+  animation: drop 900ms var(--ease-in-out) both;
+}
+
+@keyframes drop {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(clamp(10px, 6cqh, 28px));
+  }
+}
+
+.lanes {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 6px;
+  list-style: none;
+}
+
+.lane {
+  display: grid;
+  align-content: space-between;
+  gap: 0.6em;
+  min-block-size: clamp(54px, 30cqh, 140px);
+  padding: 0.6em;
+  border: 1px solid var(--border-hair);
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--bg-base) 70%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  color: var(--fg-tertiary);
+  transition:
+    border-color 300ms,
+    color 300ms,
+    box-shadow 500ms;
+}
+
+.lane .label {
+  white-space: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.laneOut {
+  font-family: var(--font-sans);
+  font-size: 1.1em;
+  line-height: 1.3;
+  opacity: 0.5;
+  transition: opacity 300ms;
+}
+
+.lane[data-state='active'] {
+  border-color: var(--signal-live);
+  color: var(--fg-primary);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal-live) 16%, transparent);
+}
+
+.lane[data-state='active'] .laneOut {
+  opacity: 1;
+  color: var(--signal-live);
+}
+
+/* Мелкая миниатюра (список на телефоне): только шаги, без реплик */
+@container (max-width: 180px) {
+  .chain,
+  .route {
+    padding: 10px;
+  }
+
+  .nodes {
+    padding-inline-start: 0;
+  }
+
+  .nodes::before,
+  .node::before {
+    display: none;
+  }
+
+  .bubble,
+  .idx,
+  .tick,
+  .laneOut {
+    display: none;
+  }
+
+  .node {
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+
+  .lane {
+    min-block-size: 0;
+    padding: 4px;
+    font-size: 8px;
+  }
+}
+
+/* Низкая ячейка мозаики: шаги в ряд не помещаются по высоте — прячем ответ */
+@container (max-height: 230px) {
+  .bubble[data-side='out'] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble,
+  .node,
+  .node::before,
+  .tick,
+  .lane {
+    transition: none;
+  }
+
+  .node[data-state='active']::before,
+  .router[data-on] i {
+    animation: none;
+  }
+}
+
+/* Крупная схема в шапке кейса: текст и шаги крупнее, места больше */
+.root[data-size='big'] .chain,
+.root[data-size='big'] .route {
+  padding: clamp(24px, 8cqi, 48px);
+  font-size: clamp(13px, 3.4cqi, 19px);
+  gap: clamp(10px, 3.4cqh, 20px);
+}
+
+.root[data-size='big'] .nodes {
+  gap: clamp(6px, 2cqh, 12px);
+}
+
+.root[data-size='big'] .node {
+  padding: 0.6em 0.9em;
+}

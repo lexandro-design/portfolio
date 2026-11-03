@@ -1,4 +1,5 @@
 import data from './data/cases.json'
+import accents from './data/accents.json'
 
 /**
  * Кейсы — единственный источник: главная, страницы кейсов и навигация
@@ -122,3 +123,11 @@ export type Case = {
  * (thumb, cover) собирает tools/cards/covers.mjs
  */
 export const cases = data as Case[]
+
+/**
+ * Свой цвет кейса — взят с его же экранов (фирменный цвет продукта или
+ * дизайн-системы). Им подсвечены номера глав, рельс и свечение в шапке;
+ * у автоматизаций без экранов — общий «живой» зелёный
+ */
+export const caseColor = (slug: string): string | undefined =>
+  (accents as Record<string, string>)[slug]

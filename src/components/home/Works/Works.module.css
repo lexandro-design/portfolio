@@ -1,8 +1,16 @@
+/* Панель: вкладки направлений слева, вид справа */
+.bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block-end: var(--space-md);
+}
+
 .tabs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   border: 1px solid var(--border-hair);
-  margin-block-end: var(--space-2xl);
 }
 
 .tab {
@@ -49,17 +57,76 @@
 }
 
 .count {
-  margin-inline-start: auto;
+  margin-inline-start: var(--space-xs);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
 }
 
-.list {
-  border-block-end: 1px solid var(--border-hair);
+.view {
+  display: flex;
+  border: 1px solid var(--border-hair);
 }
 
-.restLabel {
-  margin-block: var(--space-3xl) var(--space-lg);
+.viewBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-inline: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+  transition:
+    color var(--dur-fast) var(--ease-out-quart),
+    background-color var(--dur-base) var(--ease-out-quart);
+}
+
+.viewBtn + .viewBtn {
+  border-inline-start: 1px solid var(--border-hair);
+}
+
+.viewBtn:hover,
+.viewBtn[aria-pressed='true'] {
+  color: var(--fg-primary);
+}
+
+.viewBtn[aria-pressed='true'] {
+  background: var(--bg-elevated);
+}
+
+/* Значок вида: четыре квадрата или четыре полоски */
+.viewIcon {
+  display: grid;
+  grid-template-columns: repeat(2, 5px);
+  gap: 2px;
+}
+
+.viewIcon i {
+  display: block;
+  block-size: 5px;
+  background: currentColor;
+}
+
+.viewIcon[data-view='list'] {
+  grid-template-columns: 12px;
+}
+
+.viewIcon[data-view='list'] i {
+  block-size: 1.5px;
+}
+
+/* Второй фильтр — «где сделано» */
+.where {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-block-end: var(--space-xl);
+}
+
+.whereLabel {
+  margin-inline-end: var(--space-xs);
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   letter-spacing: 0.08em;
@@ -67,9 +134,211 @@
   color: var(--fg-tertiary);
 }
 
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  block-size: 34px;
+  padding-inline: 14px;
+  border: 1px solid var(--border-hair);
+  border-radius: 999px;
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+  transition:
+    color var(--dur-fast) var(--ease-out-quart),
+    border-color var(--dur-base) var(--ease-out-quart),
+    background-color var(--dur-base) var(--ease-out-quart);
+}
+
+.chip:hover {
+  color: var(--fg-primary);
+  border-color: var(--fg-tertiary);
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--fg-primary);
+  background: var(--fg-primary);
+  color: var(--bg-base);
+}
+
+.chipCount {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  opacity: 0.6;
+}
+
+/* Подборка — мозаика: крупный кейс слева, два широких и три обычных */
+.panel {
+  margin-block-start: var(--space-xl);
+}
+
+.where + .panel {
+  margin-block-start: 0;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Ряды фиксированной высоты: картинка заполняет ячейку над подписью */
+  grid-template-rows: 320px 320px 380px;
+  grid-template-areas:
+    'a a b b'
+    'a a c c'
+    'd e f f';
+  gap: var(--space-2xl) var(--space-lg);
+}
+
+.bento > :nth-child(1) {
+  grid-area: a;
+}
+
+.bento > :nth-child(2) {
+  grid-area: b;
+}
+
+.bento > :nth-child(3) {
+  grid-area: c;
+}
+
+.bento > :nth-child(4) {
+  grid-area: d;
+}
+
+.bento > :nth-child(5) {
+  grid-area: e;
+}
+
+.bento > :nth-child(6) {
+  grid-area: f;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2xl) var(--space-lg);
+}
+
+/* Карточки въезжают лесенкой после смены фильтра */
+.cell {
+  animation: cardIn 700ms var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* Под подборкой: все кейсы и быстрые входы в направления */
+.more {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  margin-block-start: var(--space-2xl);
+  border: 1px solid var(--border-hair);
+}
+
+.moreAll,
+.moreDir {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-block-size: 72px;
+  padding-inline: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+  text-align: start;
+  transition:
+    color var(--dur-fast) var(--ease-out-quart),
+    background-color var(--dur-base) var(--ease-out-quart);
+}
+
+.moreAll {
+  justify-content: space-between;
+  color: var(--fg-primary);
+}
+
+.moreDir {
+  border-inline-start: 1px solid var(--border-hair);
+}
+
+.moreAll:hover,
+.moreDir:hover {
+  background: var(--bg-elevated);
+  color: var(--fg-primary);
+}
+
+.moreAll :global(svg) {
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+.moreAll:hover :global(svg) {
+  transform: translateX(6px);
+}
+
+.moreN {
+  font-size: 28px;
+  font-family: var(--font-sans, inherit);
+  letter-spacing: -0.03em;
+  color: var(--fg-primary);
+}
+
+.empty {
+  padding-block: var(--space-2xl);
+  color: var(--fg-tertiary);
+}
+
+@media (max-width: 1199px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .bar {
+    flex-direction: column;
+  }
+
+  .view {
+    align-self: start;
+    block-size: 44px;
+  }
+
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-template-areas:
+      'a a'
+      'b c'
+      'd e'
+      'f f';
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .more {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .moreAll {
+    grid-column: 1 / -1;
+    border-block-end: 1px solid var(--border-hair);
+  }
+
+  .moreDir:nth-child(2) {
+    border-inline-start: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .tabs {
-    display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
     margin-inline: calc(var(--bleed) * -1);
     border-inline: 0;
@@ -80,7 +349,52 @@
     flex: none;
   }
 
-  .count {
-    margin-inline-start: var(--space-xs);
+  .where {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--bleed) * -1);
+    padding-inline: var(--bleed);
+    scrollbar-width: none;
+  }
+
+  .chip,
+  .whereLabel {
+    flex: none;
+  }
+
+  /* На телефоне мозаика — крупный кейс и строки с картинкой слева */
+  .bento,
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: none;
+    gap: var(--space-lg);
+  }
+
+  .bento > * {
+    grid-area: auto !important;
+  }
+
+  .more {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .moreDir {
+    border-inline-start: 0;
+    border-block-start: 1px solid var(--border-hair);
+    min-block-size: 56px;
+  }
+
+  .moreAll {
+    border-block-end: 0;
+  }
+
+  .moreN {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    animation: none;
   }
 }

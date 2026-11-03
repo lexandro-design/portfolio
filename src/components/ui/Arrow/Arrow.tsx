@@ -4,9 +4,9 @@ export function Arrow({
   dir = 'right',
 }: {
   size?: number
-  dir?: 'right' | 'left' | 'up-right'
+  dir?: 'right' | 'left' | 'up-right' | 'down'
 }) {
-  const rotate = dir === 'left' ? 180 : dir === 'up-right' ? -45 : 0
+  const rotate = dir === 'left' ? 180 : dir === 'up-right' ? -45 : dir === 'down' ? 90 : 0
   return (
     <svg
       width={size}

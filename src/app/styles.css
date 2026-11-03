@@ -159,3 +159,10 @@ img[data-variant='dark'],
     radial-gradient(900px 520px at -8% 108%, rgb(198 255 61 / 0.05), transparent 60%);
   background-attachment: fixed;
 }
+
+/* Цвет кейса: свой у каждого (CasePage ставит --case-color), смешан с цветом
+   текста темы — на тёмной светлее, на светлой темнее, читается в любой */
+[data-case] {
+  --case-color: var(--signal-live);
+  --case-accent: color-mix(in oklab, var(--case-color) 78%, var(--fg-primary));
+}
