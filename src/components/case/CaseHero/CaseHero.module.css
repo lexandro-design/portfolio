@@ -94,6 +94,21 @@
   animation: rise var(--dur-reveal) var(--ease-out-expo) 160ms both;
 }
 
+/* Схема автоматизации в рамке справа от лида */
+.intro[data-flow] {
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+}
+
+.flow {
+  aspect-ratio: 5 / 4;
+  max-block-size: 520px;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 16px;
+  box-shadow: 0 40px 80px -50px color-mix(in oklab, var(--case-color) 50%, transparent);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
 .toc {
   display: grid;
   align-content: start;
@@ -215,7 +230,8 @@
 }
 
 @media (max-width: 1023px) {
-  .intro {
+  .intro,
+  .intro[data-flow] {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-xl);
   }
@@ -250,6 +266,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .flow,
   .hero::before,
   .title,
   .lead,

@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import type { Case, Direction } from '@/content/cases'
+import type { Flow } from '@/content/flows'
 import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
 import { FILTER_EVENT } from './FilterLink'
@@ -15,6 +16,8 @@ type Where = 'any' | Case['group']
 type View = 'grid' | 'list'
 type Props = {
   items: Case[]
+  /** Схема «как работает» по slug — у автоматизаций вместо картинки */
+  flows: Record<string, Flow | null>
   t: Dict['works']
   /** Префикс языка для ссылок на кейсы: '' или '/en' */
   base: string
@@ -34,7 +37,7 @@ const order = (i: number) => ({ '--i': i }) as CSSProperties
  * плиткой или списком. Список с превью под курсором — 37 кейсов за пару
  * экранов вместо двадцати. Номер кейса — его место в общем списке.
  */
-export function Works({ items, t, base }: Props) {
+export function Works({ items, flows, t, base }: Props) {
   const [tab, setTab] = useState<Tab>('pick')
   const [where, setWhere] = useState<Where>('any')
   const [view, setView] = useState<View>('grid')
@@ -151,6 +154,7 @@ export function Works({ items, t, base }: Props) {
                   item={c}
                   index={index}
                   href={href(c)}
+                  flow={flows[c.slug]}
                   size={i === 0 ? 'hero' : i < 3 ? 'wide' : 'base'}
                   style={order(i)}
                   className={styles.cell}
@@ -184,6 +188,7 @@ export function Works({ items, t, base }: Props) {
                 item={c}
                 index={index}
                 href={href(c)}
+                flow={flows[c.slug]}
                 style={order(Math.min(i, 12))}
                 className={styles.cell}
               />
@@ -192,7 +197,7 @@ export function Works({ items, t, base }: Props) {
         )}
 
         {tab !== 'pick' && view === 'list' && shown.length > 0 && (
-          <WorkList items={shown} href={href} where={t.where} />
+          <WorkList items={shown} flows={flows} href={href} where={t.where} />
         )}
       </div>
 

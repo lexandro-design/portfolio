@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
-import type { Case } from '@/content/cases'
+import { caseColor, type Case } from '@/content/cases'
+import type { Flow } from '@/content/flows'
 import { Arrow } from '@/components/ui/Arrow'
 import { CasePreview } from '@/components/ui/CasePreview'
+import { FlowCard } from '@/components/ui/FlowCard'
 import { Shot } from '@/components/ui/Shot'
 import styles from './WorkCard.module.css'
 
@@ -12,6 +14,8 @@ type Props = {
   item: Case
   index: number
   href: string
+  /** Как работает автоматизация — живая схема вместо картинки */
+  flow?: Flow | null
   /** Ячейка мозаики: hero — крупная, wide — широкая, base — малая. Нет — обычная плитка сетки */
   size?: 'hero' | 'wide' | 'base'
   style?: CSSProperties
@@ -19,21 +23,24 @@ type Props = {
 }
 
 /**
- * Плитка кейса: картинка или живое превью автоматизации сверху, номер,
- * название и строка «что это» снизу. В мозаике крупная ячейка
+ * Плитка кейса: картинка или живая схема автоматизации сверху, на ней
+ * метка направления; снизу номер, название и строка «что это». В мозаике крупная ячейка
  * показывает ещё и лид. Кликается целиком
  */
-export function WorkCard({ item, index, href, size, style, className }: Props) {
+export function WorkCard({ item, index, href, flow, size, style, className }: Props) {
   const media = item.thumb ?? item.shots[0]
+  const color = caseColor(item.slug)
   return (
     <article
       className={[styles.card, className].filter(Boolean).join(' ')}
       data-size={size}
-      style={style}
+      style={color ? ({ ...style, '--case-color': color } as CSSProperties) : style}
     >
       <Link href={href} className={styles.link}>
         <div className={styles.media}>
-          {media ? (
+          {flow ? (
+            <FlowCard flow={flow} />
+          ) : media ? (
             <Shot shot={{ ...media, caption: item.title }} className={styles.image} />
           ) : (
             <CasePreview
@@ -43,19 +50,16 @@ export function WorkCard({ item, index, href, size, style, className }: Props) {
               preview={item.preview}
             />
           )}
+          <span className={styles.chip}>{item.label}</span>
         </div>
 
         <div className={styles.text}>
           <div className={styles.meta}>
-            <span>
-              {pad(index)} · {item.label}
-            </span>
+            <span>{pad(index)}</span>
             <span>{item.year}</span>
           </div>
-          <h3 className={styles.title}>
-            {item.title}
-            <span className={styles.tagline}> · {item.tagline}</span>
-          </h3>
+          <h3 className={styles.title}>{item.title}</h3>
+          <p className={styles.tagline}>{item.tagline}</p>
           {size === 'hero' && <p className={styles.lead}>{item.lead}</p>}
           <span className={styles.arrow} aria-hidden="true">
             <Arrow size={18} />

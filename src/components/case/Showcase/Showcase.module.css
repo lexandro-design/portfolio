@@ -1,5 +1,5 @@
 .block {
-  padding-block: var(--space-3xl);
+  padding-block: var(--space-4xl);
   border-block-start: 1px solid var(--border-hair);
   scroll-margin-block-start: var(--nav-h);
 }
@@ -7,7 +7,7 @@
 /* Сцена: шапка главы строкой (номер, заголовок, пояснение), демо на всю ширину */
 .chapter {
   display: grid;
-  gap: var(--space-xl);
+  gap: var(--space-2xl);
 }
 
 .head {

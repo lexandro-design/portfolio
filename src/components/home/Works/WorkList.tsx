@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import type { Case } from '@/content/cases'
+import type { Flow } from '@/content/flows'
 import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
 import { CasePreview } from '@/components/ui/CasePreview'
+import { FlowCard } from '@/components/ui/FlowCard'
 import { Shot } from '@/components/ui/Shot'
 import styles from './WorkList.module.css'
 
@@ -13,6 +15,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 
 type Props = {
   items: { c: Case; index: number }[]
+  flows: Record<string, Flow | null>
   href: (c: Case) => string
   where: Dict['works']['where']
 }
@@ -22,7 +25,7 @@ type Props = {
  * На устройствах с мышью под курсором плывёт превью кейса: позиция
  * догоняет курсор с затуханием (rAF), смена кейса — проявлением.
  */
-export function WorkList({ items, href, where }: Props) {
+export function WorkList({ items, flows, href, where }: Props) {
   const [active, setActive] = useState<number | null>(null)
   const box = useRef<HTMLDivElement>(null)
   const target = useRef({ x: 0, y: 0 })
@@ -87,7 +90,9 @@ export function WorkList({ items, href, where }: Props) {
       <div ref={box} className={styles.float} data-on={current ? '' : undefined} aria-hidden="true">
         {hover && current && (
           <div key={current.slug} className={styles.floatInner}>
-            {media ? (
+            {flows[current.slug] ? (
+              <FlowCard flow={flows[current.slug]!} />
+            ) : media ? (
               <Shot shot={{ ...media, caption: current.title }} className={styles.floatImg} />
             ) : (
               <CasePreview

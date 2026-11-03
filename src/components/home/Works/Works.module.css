@@ -180,12 +180,12 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   /* Ряды фиксированной высоты: картинка заполняет ячейку над подписью */
-  grid-template-rows: 300px 300px 340px;
+  grid-template-rows: 320px 320px 380px;
   grid-template-areas:
     'a a b b'
     'a a c c'
     'd e f f';
-  gap: var(--space-md);
+  gap: var(--space-2xl) var(--space-lg);
 }
 
 .bento > :nth-child(1) {
@@ -215,7 +215,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-xl) var(--space-md);
+  gap: var(--space-2xl) var(--space-lg);
 }
 
 /* Карточки въезжают лесенкой после смены фильтра */
@@ -235,7 +235,7 @@
 .more {
   display: grid;
   grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
-  margin-block-start: var(--space-md);
+  margin-block-start: var(--space-2xl);
   border: 1px solid var(--border-hair);
 }
 
@@ -367,7 +367,7 @@
   .grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: none;
-    gap: var(--space-sm);
+    gap: var(--space-lg);
   }
 
   .bento > * {

@@ -1,5 +1,7 @@
 import { sectionIndex } from '@/content/site'
 import { getCases } from '@/content/cases-i18n'
+import { flowOf } from '@/content/flows'
+import { getShowcase } from '@/content/showcase'
 import { HTML_LANG, localePath, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { SectionHeader } from '@/components/ui/SectionHeader'
@@ -18,6 +20,8 @@ export function HomePage({ locale }: { locale: Locale }) {
   const t = getDict(locale)
   const items = getCases(locale)
   const base = localePath(locale, '').replace(/\/$/, '')
+  // Автоматизации в карточках показывают, как работают, — схема из их же демо
+  const flows = Object.fromEntries(items.map((c) => [c.slug, flowOf(c, getShowcase(locale, c.slug))]))
 
   return (
     <div lang={HTML_LANG[locale]}>
@@ -36,7 +40,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             index={sectionIndex('works')}
             copy={{ ...t.sections.works, aside: `${items.length} · ${t.sections.works.aside}` }}
           />
-          <Works items={items} t={t.works} base={base} />
+          <Works items={items} flows={flows} t={t.works} base={base} />
         </div>
       </section>
 
