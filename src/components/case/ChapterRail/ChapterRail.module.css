@@ -51,7 +51,7 @@
 .bar i {
   position: absolute;
   inset: 0;
-  background: var(--fg-primary);
+  background: var(--case-accent);
   transform-origin: top;
   transition: transform 120ms linear;
 }
@@ -81,10 +81,13 @@
   translate: 0 0;
 }
 
-.rail li[data-active] .n,
 .rail li[data-done] .n,
 .rail a:hover .n {
   color: var(--fg-primary);
+}
+
+.rail li[data-active] .n {
+  color: var(--case-accent);
 }
 
 /* На узких экранах рельс наезжал бы на демо */

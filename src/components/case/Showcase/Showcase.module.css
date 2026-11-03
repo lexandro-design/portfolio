@@ -29,8 +29,36 @@
   letter-spacing: -0.06em;
   color: transparent;
   -webkit-text-stroke: 1px var(--border-hover);
+  /* При появлении главы контур заливается её цветом слева направо */
+  background: linear-gradient(90deg, var(--case-accent) 0 50%, transparent 50% 100%) 100% 0 / 200% 100% no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
   pointer-events: none;
   user-select: none;
+  transition:
+    background-position 1600ms var(--ease-out-expo) 300ms,
+    -webkit-text-stroke-color 1600ms var(--ease-out-expo) 300ms;
+}
+
+.head[data-visible] .n {
+  background-position: 0 0;
+  -webkit-text-stroke-color: transparent;
+}
+
+/* Демо въезжает по прокрутке: чуть меньше и прозрачнее, пока не дошло до середины экрана */
+@supports (animation-timeline: view()) {
+  .demo {
+    animation: demoIn linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+
+  @keyframes demoIn {
+    from {
+      opacity: 0.2;
+      transform: translateY(48px) scale(0.96);
+    }
+  }
 }
 
 .headText {
@@ -142,5 +170,15 @@
 
   .text {
     font-size: var(--type-body);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .n {
+    transition: none;
+  }
+
+  .demo {
+    animation: none;
   }
 }

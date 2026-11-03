@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation'
+import type { CSSProperties } from 'react'
+import { caseColor } from '@/content/cases'
 import { getCase, getCases } from '@/content/cases-i18n'
 import { HTML_LANG, localePath, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
@@ -26,7 +28,12 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   const used = (show?.blocks ?? []).flatMap((b) => (b.section === undefined ? [] : [b.section]))
 
   return (
-    <div lang={HTML_LANG[locale]} data-case data-shots="light">
+    <div
+      lang={HTML_LANG[locale]}
+      data-case
+      data-shots="light"
+      style={caseColor(slug) ? ({ '--case-color': caseColor(slug) } as CSSProperties) : undefined}
+    >
       <CaseHero
         item={item}
         index={index + 1}

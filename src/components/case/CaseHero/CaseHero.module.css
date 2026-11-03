@@ -1,5 +1,31 @@
 .hero {
+  position: relative;
+  overflow: hidden;
   padding-block: var(--space-2xl) var(--space-xl);
+}
+
+/* Мягкое свечение цвета кейса за оглавлением, медленно дрейфует */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -20%;
+  inset-inline-end: -10%;
+  inline-size: 60vw;
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--case-color) 22%, transparent), transparent);
+  filter: blur(20px);
+  pointer-events: none;
+  animation: drift 22s var(--ease-in-out) infinite alternate;
+}
+
+.hero > :global(.container) {
+  position: relative;
+}
+
+@keyframes drift {
+  to {
+    transform: translate(-12%, 10%) scale(1.15);
+  }
 }
 
 .back {
@@ -116,6 +142,11 @@
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   color: var(--fg-tertiary);
+  transition: color var(--dur-fast) var(--ease-out-quart);
+}
+
+.toc a:hover .tocN {
+  color: var(--case-accent);
 }
 
 @keyframes rise {
@@ -219,6 +250,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero::before,
   .title,
   .lead,
   .toc li,
