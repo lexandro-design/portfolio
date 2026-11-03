@@ -66,22 +66,39 @@
   margin-block-end: var(--space-xl);
 }
 
-/* Все экраны мелкой сеткой: верх каждого кадра, целиком — по клику */
-.gallery {
+/* Все экраны лентой: кадры одной высоты, лента выходит за поля до краёв экрана */
+.film {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-lg) var(--space-sm);
+  gap: var(--space-md);
+}
+
+.strip {
+  display: flex;
+  gap: var(--space-sm);
+  padding-inline: calc(max(0px, (100vw - var(--container)) / 2) + var(--bleed));
+  scroll-padding-inline: calc(max(0px, (100vw - var(--container)) / 2) + var(--bleed));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
 }
 
 .figure {
+  flex: none;
   display: grid;
   align-content: start;
   gap: 10px;
+  inline-size: min(calc(300px * var(--ratio)), 560px);
+  scroll-snap-align: start;
 }
 
 .image {
   inline-size: 100%;
-  aspect-ratio: 4 / 3;
+  block-size: 300px;
   object-fit: cover;
   object-position: top;
   border: 1px solid var(--border-hair);
@@ -103,14 +120,34 @@
   color: var(--fg-tertiary);
 }
 
+.filmNav {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+}
+
+.filmBtn {
+  display: grid;
+  place-items: center;
+  inline-size: 48px;
+  block-size: 48px;
+  border: 1px solid var(--border-hair);
+  border-radius: 50%;
+  color: var(--fg-secondary);
+  transition:
+    color var(--dur-fast) var(--ease-out-quart),
+    border-color var(--dur-base) var(--ease-out-quart);
+}
+
+.filmBtn:hover {
+  border-color: var(--fg-primary);
+  color: var(--fg-primary);
+}
+
 @media (max-width: 1023px) {
   .story,
   .story[data-count='1'] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .title {
@@ -134,26 +171,15 @@
     font-size: 24px;
   }
 
-  /* Телефон: экраны лентой вбок, следующий выглядывает справа */
-  .gallery {
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: 62%;
-    gap: var(--space-sm);
-    margin-inline: calc(-1 * var(--bleed));
-    padding-inline: var(--bleed);
-    scroll-padding-inline: var(--bleed);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .gallery::-webkit-scrollbar {
-    display: none;
-  }
-
   .figure {
-    scroll-snap-align: start;
+    inline-size: min(calc(220px * var(--ratio)), 78vw);
+  }
+
+  .image {
+    block-size: 220px;
+  }
+
+  .filmNav {
+    display: none;
   }
 }

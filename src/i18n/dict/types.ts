@@ -203,6 +203,8 @@ export type Dict = {
     credit: string
     /** Метка подробного текста кейса после интерактивных блоков */
     story: string
+    /** Заголовок оглавления глав в шапке кейса */
+    toc: string
     /** «Коротко» под шапкой кейса */
     brief: { label: string; task: string; did: string; result: string }
     /** Интерактивные блоки раскрытия */

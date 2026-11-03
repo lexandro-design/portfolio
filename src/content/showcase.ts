@@ -21,7 +21,8 @@ export type Brief = {
   nums: { v: string; l: string }[]
 }
 
-type Titled = { title: string }
+/** section — номер раздела текста кейса, который идёт рядом с блоком как пояснение */
+type Titled = { title: string; section?: number }
 
 export type Block = Titled &
   (

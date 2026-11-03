@@ -30,6 +30,7 @@
     "blocks": [
       {
         "kind": "reel",
+        "section": 3,
         "title": "3D banners for the home page",
         "items": [
           {
@@ -52,6 +53,7 @@
       },
       {
         "kind": "steps",
+        "section": 1,
         "title": "The system first, then the screens",
         "steps": [
           {
@@ -73,6 +75,7 @@
       },
       {
         "kind": "browse",
+        "section": 4,
         "title": "The whole store",
         "pages": [
           {
@@ -99,6 +102,7 @@
       },
       {
         "kind": "steps",
+        "section": 2,
         "title": "The customer's path",
         "steps": [
           {
@@ -130,6 +134,7 @@
       },
       {
         "kind": "deck",
+        "section": 5,
         "title": "Phone",
         "cards": [
           {
@@ -179,6 +184,7 @@
     "blocks": [
       {
         "kind": "deck",
+        "section": 1,
         "title": "App",
         "cards": [
           {
@@ -201,6 +207,7 @@
       },
       {
         "kind": "browse",
+        "section": 3,
         "title": "Site and web account",
         "pages": [
           {
@@ -250,6 +257,7 @@
     "blocks": [
       {
         "kind": "steps",
+        "section": 0,
         "title": "Employee flow",
         "steps": [
           {
@@ -302,6 +310,7 @@
       },
       {
         "kind": "deck",
+        "section": 1,
         "title": "Edges of the flows",
         "cards": [
           {
@@ -347,6 +356,7 @@
     "blocks": [
       {
         "kind": "queue",
+        "section": 2,
         "title": "The bot's four processes",
         "stages": [
           "request intake",
@@ -402,6 +412,7 @@
     "blocks": [
       {
         "kind": "board",
+        "section": 1,
         "title": "The office board",
         "me": {
           "label": "Me, the director",
@@ -495,6 +506,7 @@
     "blocks": [
       {
         "kind": "compare",
+        "section": 1,
         "title": "One card, two outcomes",
         "a": "failed",
         "b": "passed",
@@ -575,6 +587,7 @@
     "blocks": [
       {
         "kind": "sort",
+        "section": 2,
         "title": "Where a request goes",
         "lanes": [
           {
@@ -634,6 +647,7 @@
     "blocks": [
       {
         "kind": "voice",
+        "section": 1,
         "title": "Example conversation",
         "lines": [
           {
@@ -691,6 +705,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 1,
         "title": "The site page by page",
         "pages": [
           {
@@ -762,6 +777,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 1,
         "title": "Site",
         "pages": [
           {
@@ -838,6 +854,7 @@
     "blocks": [
       {
         "kind": "compare",
+        "section": 1,
         "title": "Light and dark theme",
         "a": "light",
         "b": "dark",
@@ -881,6 +898,7 @@
     "blocks": [
       {
         "kind": "compare",
+        "section": 1,
         "title": "Before and after",
         "a": "2025 site",
         "b": "2026 redesign",
@@ -909,6 +927,7 @@
       },
       {
         "kind": "reel",
+        "section": 2,
         "title": "3D for the redesign",
         "items": [
           {
@@ -938,6 +957,7 @@
     "blocks": [
       {
         "kind": "sort",
+        "section": 1,
         "title": "Three scenarios",
         "lanes": [
           {
@@ -1001,6 +1021,7 @@
     "blocks": [
       {
         "kind": "steps",
+        "section": 0,
         "title": "The \"Contract security\" report",
         "steps": [
           {
@@ -1055,6 +1076,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 1,
         "title": "The profile by tab",
         "pages": [
           {
@@ -1104,6 +1126,7 @@
     "blocks": [
       {
         "kind": "trace",
+        "section": 0,
         "title": "What the bot does in one dialog",
         "prompt": "We'd like a cabin for the weekend, there are four of us",
         "steps": [
@@ -1159,6 +1182,7 @@
     "blocks": [
       {
         "kind": "steps",
+        "section": 0,
         "title": "Roles and settings",
         "steps": [
           {
@@ -1213,6 +1237,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 1,
         "title": "Site",
         "pages": [
           {
@@ -1267,6 +1292,7 @@
     "blocks": [
       {
         "kind": "queue",
+        "section": 1,
         "title": "The email's path",
         "stages": [
           "incoming",
@@ -1302,6 +1328,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 1,
         "title": "Bundle and catalog",
         "pages": [
           {
@@ -1348,6 +1375,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 1,
         "title": "Store",
         "pages": [
           {
@@ -1399,6 +1427,7 @@
     "blocks": [
       {
         "kind": "browse",
+        "section": 0,
         "title": "The landing page by block",
         "pages": [
           {
@@ -1452,6 +1481,7 @@
     "blocks": [
       {
         "kind": "compare",
+        "section": 0,
         "title": "Before and after",
         "a": "2025 site",
         "b": "2026 redesign",
@@ -1480,6 +1510,7 @@
       },
       {
         "kind": "reel",
+        "section": 1,
         "title": "3D for the first screen",
         "items": [
           {
@@ -1509,6 +1540,7 @@
     "blocks": [
       {
         "kind": "trace",
+        "section": 0,
         "title": "Checking a drawing",
         "prompt": "Check my drawing",
         "steps": [
@@ -1560,6 +1592,7 @@
     "blocks": [
       {
         "kind": "fusion",
+        "section": 0,
         "title": "Two searches, one answer",
         "query": "what did we decide on the catalog?",
         "a": {
@@ -1610,6 +1643,7 @@
     "blocks": [
       {
         "kind": "notify",
+        "section": 1,
         "title": "Questions on the phone",
         "app": "lexandro_assistant_bot",
         "items": [
@@ -1663,6 +1697,7 @@
     "blocks": [
       {
         "kind": "console",
+        "section": 1,
         "title": "The console window",
         "window": "AI Console · Ctrl+Alt+P",
         "tabs": [
@@ -1724,6 +1759,7 @@
     "blocks": [
       {
         "kind": "transcript",
+        "section": 0,
         "title": "Example: a call about a site",
         "lines": [
           {
@@ -1791,6 +1827,7 @@
     "blocks": [
       {
         "kind": "diff",
+        "section": 1,
         "title": "A draft goes through several rounds",
         "passes": [
           "topic and primary source",
@@ -1832,6 +1869,7 @@
     "blocks": [
       {
         "kind": "cards",
+        "section": 1,
         "title": "Order feed",
         "note": "an example, the orders are made up",
         "items": [
@@ -1883,6 +1921,7 @@
     "blocks": [
       {
         "kind": "trace",
+        "section": 1,
         "title": "\"Under the hood\" mode",
         "prompt": "How do I process a return without a receipt?",
         "steps": [
@@ -1938,6 +1977,7 @@
     "blocks": [
       {
         "kind": "timeline",
+        "section": 0,
         "title": "What arrives and when",
         "events": [
           {
@@ -1975,6 +2015,7 @@
     "blocks": [
       {
         "kind": "trace",
+        "section": 0,
         "title": "Booking",
         "prompt": "I'd like to book",
         "steps": [
@@ -2013,6 +2054,7 @@
     "blocks": [
       {
         "kind": "queue",
+        "section": 0,
         "title": "The report's path",
         "stages": [
           "message",
@@ -2043,6 +2085,7 @@
     "blocks": [
       {
         "kind": "trace",
+        "section": 0,
         "title": "A week in the bot",
         "prompt": "Workout and lunch",
         "steps": [
@@ -2086,6 +2129,7 @@
     "blocks": [
       {
         "kind": "trace",
+        "section": 0,
         "title": "One throw",
         "prompt": "Bet",
         "steps": [
@@ -2124,6 +2168,7 @@
     "blocks": [
       {
         "kind": "queue",
+        "section": 0,
         "title": "The file's path",
         "stages": [
           "Yandex Disk",

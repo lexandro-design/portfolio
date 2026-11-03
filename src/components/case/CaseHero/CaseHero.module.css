@@ -1,5 +1,5 @@
 .hero {
-  padding-block: var(--space-2xl) var(--space-3xl);
+  padding-block: var(--space-2xl) var(--space-xl);
 }
 
 .back {
@@ -20,7 +20,7 @@
 
 .meta,
 .fact dt,
-.caption {
+.tocLabel {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   letter-spacing: 0.08em;
@@ -36,11 +36,11 @@
 }
 
 .title {
-  max-inline-size: 15em;
-  font-size: var(--type-h2);
+  max-inline-size: 16em;
+  font-size: clamp(var(--type-h2), 6.4vw, 96px);
   font-weight: 450;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
   text-wrap: balance;
   animation: rise var(--dur-reveal) var(--ease-out-expo) 80ms both;
 }
@@ -49,12 +49,73 @@
   color: var(--fg-secondary);
 }
 
+/* Лид слева, оглавление глав справа */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-3xl);
+  margin-block-start: var(--space-2xl);
+}
+
 .lead {
-  max-inline-size: 42em;
-  margin-block-start: var(--space-lg);
-  font-size: var(--type-body-lg);
+  display: grid;
+  align-content: start;
+  gap: var(--space-lg);
+  font-size: 24px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
   color: var(--fg-secondary);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 160ms both;
+}
+
+.toc {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+}
+
+.toc ol {
+  list-style: none;
+  border-block-start: 1px solid var(--border-hair);
+}
+
+.toc li {
+  border-block-end: 1px solid var(--border-hair);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) both;
+}
+
+.toc a {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-xs);
+  padding-block: 14px;
+  font-size: var(--type-body);
+  color: var(--fg-secondary);
+  transition:
+    color var(--dur-fast) var(--ease-out-quart),
+    padding var(--dur-base) var(--ease-out-expo);
+}
+
+.toc a:hover {
+  padding-inline-start: 8px;
+  color: var(--fg-primary);
+}
+
+.toc a :global(svg) {
+  color: var(--fg-tertiary);
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+.toc a:hover :global(svg) {
+  color: var(--fg-primary);
+  transform: translateY(3px);
+}
+
+.tocN {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
 }
 
 @keyframes rise {
@@ -68,7 +129,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--space-lg);
-  margin-block: var(--space-2xl) var(--space-2xl);
+  margin-block-start: var(--space-3xl);
   padding-block-start: var(--space-lg);
   border-block-start: 1px solid var(--border-hair);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
@@ -98,11 +159,12 @@
 .credit {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   gap: 14px;
-  margin-block-start: var(--space-lg);
   padding: 14px 20px;
   border: 1px solid var(--border-hover);
   font-size: var(--type-body);
+  color: var(--fg-primary);
   transition:
     border-color var(--dur-base) var(--ease-out-quart),
     background-color var(--dur-base) var(--ease-out-quart);
@@ -121,66 +183,46 @@
   color: var(--fg-tertiary);
 }
 
-.cover {
-  display: grid;
-  gap: var(--space-sm);
-  animation: rise var(--dur-reveal) var(--ease-out-expo) 320ms both;
-}
+@media (max-width: 1023px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+  }
 
-.cover > :first-child {
-  aspect-ratio: 1312 / 640;
-}
-
-/* Без скриншота плашка ниже: пустая обложка во весь экран выглядит дырой */
-.cover > [data-size='cover'] {
-  aspect-ratio: 1312 / 400;
-}
-
-/* Шапка с петлёй: меньше воздуха над заголовком, петля сразу под ним, лид и факты ниже */
-.hero[data-motion] .meta {
-  margin-block: var(--space-xl) var(--space-md);
-}
-
-.hero[data-motion] .cover {
-  margin-block: var(--space-lg) 0;
-}
-
-.hero[data-motion] .facts {
-  margin-block-end: 0;
-}
-
-.image {
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-  object-position: top;
-  border: 1px solid var(--border-hair);
+  .lead {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 767px) {
   .hero {
-    padding-block: var(--space-lg) var(--space-2xl);
+    padding-block: var(--space-lg) var(--space-lg);
   }
 
   .meta {
     margin-block: var(--space-xl) var(--space-md);
   }
 
+  .intro {
+    margin-block-start: var(--space-lg);
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+
   .facts {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
+    margin-block-start: var(--space-xl);
   }
+}
 
-  .cover > :first-child {
-    aspect-ratio: 4 / 3;
-  }
-
-  .cover > [data-size='cover'] {
-    aspect-ratio: 4 / 3;
-  }
-
-  /* Своя версия для телефона (Shot, поле mobile) — по своей пропорции, вертикальная не режется */
-  .cover > [data-screen='narrow'] {
-    aspect-ratio: var(--ratio);
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .lead,
+  .toc li,
+  .facts {
+    animation: none;
   }
 }

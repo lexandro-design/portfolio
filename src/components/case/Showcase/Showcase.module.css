@@ -1,12 +1,42 @@
 .block {
   padding-block: var(--space-3xl);
   border-block-start: 1px solid var(--border-hair);
+  scroll-margin-block-start: var(--nav-h);
+}
+
+/* Сцена: шапка главы строкой (номер, заголовок, пояснение), демо на всю ширину */
+.chapter {
+  display: grid;
+  gap: var(--space-xl);
 }
 
 .head {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: end;
+  gap: var(--space-sm) var(--space-3xl);
+}
+
+/* Номер главы контуром над заголовком — общий знак глав на всех кейсах */
+.n {
+  display: block;
+  margin-block-end: var(--space-xs);
+  margin-inline-start: -0.04em;
+  font-size: 140px;
+  font-weight: 300;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border-hover);
+  pointer-events: none;
+  user-select: none;
+}
+
+.headText {
+  position: relative;
   display: grid;
   gap: var(--space-sm);
-  margin-block-end: var(--space-xl);
 }
 
 .label {
@@ -29,9 +59,66 @@
   text-wrap: balance;
 }
 
+.text {
+  display: grid;
+  gap: var(--space-sm);
+  max-inline-size: 44em;
+  font-size: var(--type-body-lg);
+  line-height: 1.6;
+  color: var(--fg-secondary);
+}
+
+.demo {
+  min-inline-size: 0;
+}
+
+/* Сбоку: текст слева прилипает к экрану, демо справа */
+.block[data-layout='side'] .chapter {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  align-items: start;
+  gap: var(--space-3xl);
+}
+
+.block[data-layout='side'] .head {
+  position: sticky;
+  inset-block-start: calc(var(--nav-h) + var(--space-xl));
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-lg);
+}
+
+.block[data-layout='side'] .title {
+  font-size: 48px;
+}
+
+.block[data-layout='side'] .text {
+  font-size: var(--type-body);
+}
+
+/* Глава без пояснения: заголовок на всю строку */
+.block[data-layout='stage'] .head:not(:has(.text)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 @media (max-width: 1023px) {
-  .title {
+  .head,
+  .block[data-layout='side'] .chapter {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .block[data-layout='side'] .head {
+    position: relative;
+    inset-block-start: auto;
+  }
+
+  .title,
+  .block[data-layout='side'] .title {
     font-size: 44px;
+  }
+
+  .n {
+    font-size: 112px;
   }
 }
 
@@ -40,11 +127,20 @@
     padding-block: var(--space-2xl);
   }
 
-  .head {
-    margin-block-end: var(--space-lg);
+  .chapter {
+    gap: var(--space-lg);
   }
 
-  .title {
+  .title,
+  .block[data-layout='side'] .title {
     font-size: 34px;
+  }
+
+  .n {
+    font-size: 84px;
+  }
+
+  .text {
+    font-size: var(--type-body);
   }
 }
