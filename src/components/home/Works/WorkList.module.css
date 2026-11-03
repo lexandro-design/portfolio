@@ -1,0 +1,189 @@
+.root {
+  position: relative;
+}
+
+.list {
+  border-block-end: 1px solid var(--border-hair);
+}
+
+.row {
+  border-block-start: 1px solid var(--border-hair);
+  animation: rowIn 600ms var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 25ms);
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.link {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 2fr) minmax(0, 1.3fr) 90px 20px;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding-block: 18px;
+  transition:
+    color var(--dur-fast) var(--ease-out-quart),
+    padding var(--dur-base) var(--ease-out-expo);
+}
+
+.n,
+.label,
+.where,
+.year {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.year {
+  text-align: end;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 450;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  color: var(--fg-secondary);
+  font-size: var(--type-body);
+}
+
+.arrow {
+  display: inline-flex;
+  align-self: center;
+  color: var(--fg-tertiary);
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+/* Остальные строки гаснут, активная выезжает чуть вправо */
+.list:hover .link:not([data-active]) {
+  color: var(--fg-tertiary);
+}
+
+.list:hover .link:not([data-active]) .tagline {
+  color: var(--fg-tertiary);
+}
+
+.link[data-active] {
+  padding-inline-start: 12px;
+}
+
+.link[data-active] .arrow {
+  color: var(--fg-primary);
+  transform: translateX(4px);
+}
+
+/* Превью под курсором */
+.float {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 20;
+  inline-size: 320px;
+  aspect-ratio: 4 / 3;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.92;
+  transition:
+    opacity var(--dur-base) var(--ease-out-quart),
+    scale var(--dur-base) var(--ease-out-expo);
+}
+
+.float[data-on] {
+  opacity: 1;
+  scale: 1;
+}
+
+.floatInner {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.7);
+  animation: floatIn 380ms var(--ease-out-expo) both;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+.floatImg {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+@media (max-width: 1199px) {
+  .link {
+    grid-template-columns: 40px minmax(0, 3fr) minmax(0, 3fr) minmax(0, 1.4fr) 80px 20px;
+  }
+
+  .where {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .link {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'n title year'
+      'n tag tag';
+    gap: 2px var(--space-sm);
+    padding-block: 14px;
+  }
+
+  .n {
+    grid-area: n;
+  }
+
+  .title {
+    grid-area: title;
+    font-size: 18px;
+  }
+
+  .tagline {
+    grid-area: tag;
+    font-size: var(--type-body-sm);
+  }
+
+  .year {
+    grid-area: year;
+  }
+
+  .label,
+  .where,
+  .arrow {
+    display: none;
+  }
+
+  .float {
+    display: none;
+  }
+}
+
+@media (hover: none) {
+  .float {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .floatInner {
+    animation: none;
+  }
+}

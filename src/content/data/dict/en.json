@@ -145,7 +145,22 @@
       "ai": "automation / ai"
     },
     "read": "read the case",
-    "rest": "smaller automations"
+    "rest": "smaller automations",
+    "pick": "selected",
+    "where": {
+      "label": "where",
+      "any": "anywhere",
+      "titan": "TITAN-2",
+      "entersales": "EnterSales",
+      "freelance": "freelance",
+      "own": "own products"
+    },
+    "view": {
+      "grid": "grid",
+      "list": "list"
+    },
+    "showAll": "all cases",
+    "empty": "no cases for this combination"
   },
   "system": {
     "intro": "This site is built the way I build products: colour, type, spacing and motion are tokens, and components refer to nothing else. Switch the theme on the right: token values change, and not a single component is touched.",

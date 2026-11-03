@@ -1,4 +1,4 @@
-import type { Direction } from '@/content/cases'
+import type { Case, Direction } from '@/content/cases'
 
 /** Шапка секции главной: «02 / 08 · услуги», заголовок и пояснение справа */
 export type SectionCopy = { label: string; title: string; aside?: string }
@@ -70,6 +70,13 @@ export type Dict = {
     directions: Record<Direction, string>
     read: string
     rest: string
+    /** Вкладка с отобранными кейсами — открыта по умолчанию */
+    pick: string
+    /** Второй фильтр: где сделан проект (поле group кейса) */
+    where: { label: string; any: string } & Record<Case['group'], string>
+    view: { grid: string; list: string }
+    showAll: string
+    empty: string
   }
 
   system: {
