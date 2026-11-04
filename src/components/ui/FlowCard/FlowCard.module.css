@@ -1,10 +1,11 @@
 .root {
+  --flow-color: var(--case-color, var(--signal-live));
   position: relative;
   display: grid;
   block-size: 100%;
   overflow: hidden;
   background:
-    radial-gradient(120% 80% at 100% 0%, color-mix(in oklab, var(--signal-live) 10%, transparent), transparent 60%),
+    radial-gradient(120% 80% at 100% 0%, color-mix(in oklab, var(--flow-color) 10%, transparent), transparent 60%),
     var(--bg-elevated);
   container-type: size;
 }
@@ -133,7 +134,7 @@
 .tick {
   opacity: 0;
   font-size: 0.9em;
-  color: var(--signal-live);
+  color: var(--flow-color);
   transform: scale(0.6);
   transition:
     opacity 260ms,
@@ -145,17 +146,17 @@
 }
 
 .node[data-state='active'] {
-  border-color: var(--signal-live);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal-live) 16%, transparent);
+  border-color: var(--flow-color);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--flow-color) 16%, transparent);
 }
 
 .node[data-state]::before {
-  border-color: var(--signal-live);
-  background: var(--signal-live);
+  border-color: var(--flow-color);
+  background: var(--flow-color);
 }
 
 .node[data-state='active']::before {
-  box-shadow: 0 0 0 5px color-mix(in oklab, var(--signal-live) 25%, transparent);
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--flow-color) 25%, transparent);
   animation: ping 720ms var(--ease-out-quart);
 }
 
@@ -166,7 +167,7 @@
 
 @keyframes ping {
   from {
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal-live) 60%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--flow-color) 60%, transparent);
   }
 }
 
@@ -186,7 +187,7 @@
   inline-size: 8px;
   block-size: 8px;
   border-radius: 50%;
-  background: var(--signal-live);
+  background: var(--flow-color);
   opacity: 0;
 }
 
@@ -246,14 +247,14 @@
 }
 
 .lane[data-state='active'] {
-  border-color: var(--signal-live);
+  border-color: var(--flow-color);
   color: var(--fg-primary);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal-live) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--flow-color) 16%, transparent);
 }
 
 .lane[data-state='active'] .laneOut {
   opacity: 1;
-  color: var(--signal-live);
+  color: var(--flow-color);
 }
 
 /* Мелкая миниатюра (список на телефоне): только шаги, без реплик */

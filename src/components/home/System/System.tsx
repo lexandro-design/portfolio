@@ -5,6 +5,7 @@ import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
 import { ThemeSwitch } from '@/components/layout/ThemeSwitch'
 import { THEME_EVENT } from '@/components/layout/ThemeSwitch/ThemeSwitch'
+import { useInView } from '@/components/case/Showcase/hooks'
 import { features } from '@/content/site'
 import { Sandbox } from './Sandbox'
 import styles from './System.module.css'
@@ -55,6 +56,7 @@ type Props = {
 export function System({ t, themes }: Props) {
   const values = useSyncExternalStore(subscribe, readValues, () => '').split('|')
   const [copied, setCopied] = useState<string | null>(null)
+  const [gridRef, live] = useInView<HTMLDivElement>()
 
   const copy = async (key: string, value: string) => {
     try {
@@ -76,7 +78,7 @@ export function System({ t, themes }: Props) {
         </div>
       </Reveal>
 
-      <div className={styles.grid}>
+      <div ref={gridRef} className={styles.grid} data-live={live || undefined}>
         <Reveal className={`${styles.cell} ${styles.colors}`}>
           <span className={styles.label}>01 / {t.colors}</span>
           <ul className={styles.swatches}>

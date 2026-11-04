@@ -40,9 +40,10 @@ export function Hero({ t, locale }: Props) {
               key={line.text}
               className={styles.line}
               data-accent={line.accent || undefined}
-              style={{ animationDelay: `${120 + i * 80}ms` }}
             >
-              {line.text}
+              <span className={styles.lineIn} style={{ animationDelay: `${120 + i * 90}ms` }}>
+                {line.text}
+              </span>
             </span>
           ))}
         </h1>

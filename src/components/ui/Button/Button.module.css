@@ -6,6 +6,7 @@
   min-block-size: 40px;
   padding-inline: 20px;
   border: 1px solid transparent;
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 13px;
   letter-spacing: 0.04em;
@@ -29,9 +30,6 @@
 .button[data-variant='ghost'] {
   border-color: var(--border-hair);
   color: var(--fg-primary);
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.08em;
 }
 
 .button[data-variant='ghost']:hover {

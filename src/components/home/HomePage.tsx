@@ -13,6 +13,7 @@ import { Process } from './Process'
 import { Services } from './Services'
 import { System } from './System'
 import { Works } from './Works'
+import { PICK } from './Works/pick'
 import styles from './HomePage.module.css'
 
 /** Главная на любом языке: одни и те же секции, тексты из словаря */
@@ -22,6 +23,10 @@ export function HomePage({ locale }: { locale: Locale }) {
   const base = localePath(locale, '').replace(/\/$/, '')
   // Автоматизации в карточках показывают, как работают, — схема из их же демо
   const flows = Object.fromEntries(items.map((c) => [c.slug, flowOf(c, getShowcase(locale, c.slug))]))
+
+  const nums = Object.fromEntries(
+    PICK.map((slug) => [slug, getShowcase(locale, slug)?.brief.nums.slice(0, 2) ?? []]),
+  )
 
   return (
     <div lang={HTML_LANG[locale]}>
@@ -40,7 +45,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             index={sectionIndex('works')}
             copy={{ ...t.sections.works, aside: `${items.length} · ${t.sections.works.aside}` }}
           />
-          <Works items={items} flows={flows} t={t.works} base={base} />
+          <Works items={items} flows={flows} nums={nums} t={t.works} base={base} />
         </div>
       </section>
 

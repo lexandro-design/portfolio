@@ -21,7 +21,6 @@
      Цвет без переменных — ::backdrop их наследует не во всех браузерах */
   background: rgb(8 8 8 / 0.95);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 @keyframes fade {

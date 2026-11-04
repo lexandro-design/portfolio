@@ -1,19 +1,20 @@
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
+import { ScrollWords } from '@/components/ui/ScrollWords'
 import styles from './About.module.css'
 
 /** Обо мне: подход крупным текстом слева, опыт строками справа */
 export function About({ t }: { t: Dict['about'] }) {
   return (
     <div className={styles.grid}>
-      <Reveal className={styles.text}>
-        <p className={styles.lead}>{t.lead}</p>
+      <div className={styles.text}>
+        <ScrollWords text={t.lead} className={styles.lead} />
         {t.text.map((p) => (
           <p key={p.slice(0, 24)} className={styles.p}>
             {p}
           </p>
         ))}
-      </Reveal>
+      </div>
 
       <ol className={styles.timeline}>
         {t.timeline.map((row, i) => (

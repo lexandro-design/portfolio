@@ -15,6 +15,7 @@
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 1px solid var(--border-hair);
+  border-radius: 18px;
   background: var(--bg-elevated);
 }
 

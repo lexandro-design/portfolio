@@ -1,17 +1,29 @@
 .next {
-  display: block;
-  border-block-start: 1px solid var(--border-hair);
-  transition: background-color var(--dur-slow) var(--ease-out-expo);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-block-size: 360px;
+  margin-block-end: var(--space-3xl);
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 28px;
+  background: var(--bg-elevated);
+  transition: border-color var(--dur-slow) var(--ease-out-quart);
+}
+
+.next[data-media] {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
 }
 
 .next:hover {
-  background: var(--bg-elevated);
+  border-color: color-mix(in oklab, var(--case-color, var(--fg-primary)) 45%, transparent);
 }
 
-.inner {
-  display: grid;
+.copy {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-lg);
-  padding-block: var(--space-3xl);
+  padding: clamp(32px, 4vw, 56px);
 }
 
 .label {
@@ -22,19 +34,13 @@
   color: var(--fg-tertiary);
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-lg);
-}
-
 .title {
   min-inline-size: 0;
-  font-size: var(--type-h2);
+  font-size: clamp(32px, 4.2vw, 60px);
   font-weight: 450;
-  line-height: 1.02;
+  line-height: 1.04;
   letter-spacing: -0.04em;
+  text-wrap: pretty;
 }
 
 .tagline {
@@ -43,7 +49,7 @@
 
 .arrow {
   display: inline-flex;
-  flex: none;
+  margin-block-start: auto;
   transition: transform var(--dur-slow) var(--ease-out-expo);
 }
 
@@ -51,20 +57,52 @@
   transform: translateX(12px);
 }
 
+/* Кадр уходит за правый и нижний край, как в подборке на главной */
+.media {
+  position: relative;
+  margin-block-start: clamp(32px, 4vw, 56px);
+  overflow: hidden;
+  border-block-start: 1px solid var(--border-hair);
+  border-inline-start: 1px solid var(--border-hair);
+  border-start-start-radius: 18px;
+  background: var(--bg-subtle);
+  transition: transform 900ms var(--ease-out-expo);
+}
+
+.next:hover .media {
+  transform: translate(-6px, -6px);
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
 @media (max-width: 767px) {
-  .inner {
-    padding-block: var(--space-2xl);
+  .next,
+  .next[data-media] {
+    grid-template-columns: minmax(0, 1fr);
+    min-block-size: 0;
+    margin-block-end: var(--space-2xl);
+    border-radius: 22px;
   }
 
-  .row {
-    gap: var(--space-md);
+  .copy {
+    padding: var(--space-md);
   }
 
-  .title {
-    font-size: min(34px, 9vw);
+  .media {
+    block-size: 220px;
+    margin: 0 0 0 var(--space-md);
   }
+}
 
-  .arrow svg {
-    inline-size: 24px;
+@media (hover: none) {
+  .next:hover .media {
+    transform: none;
   }
 }

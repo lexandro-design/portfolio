@@ -15,7 +15,9 @@ export function SectionHeader({ index, copy }: { index: number; copy: SectionCop
         </span>
         {copy.aside && <span className={styles.aside}>{copy.aside}</span>}
       </div>
-      <h2 className={styles.title}>{copy.title}</h2>
+      <h2 className={styles.title}>
+        <span className={styles.titleIn}>{copy.title}</span>
+      </h2>
     </Reveal>
   )
 }

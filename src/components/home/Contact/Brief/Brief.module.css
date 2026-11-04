@@ -47,6 +47,7 @@
 }
 
 .services {
+  border-radius: 14px;
   display: grid;
   gap: 8px;
 }
@@ -78,6 +79,7 @@
   inline-size: 18px;
   block-size: 18px;
   border: 1px solid var(--border-hover);
+  border-radius: 5px;
   transition:
     background-color var(--dur-fast) var(--ease-out-quart),
     border-color var(--dur-fast) var(--ease-out-quart);
@@ -114,9 +116,11 @@
   gap: 2px;
   padding: 3px;
   border: 1px solid var(--border-hair);
+  border-radius: 14px;
 }
 
 .seg button {
+  border-radius: 11px;
   flex: 1;
   min-block-size: 38px;
   padding-inline: 12px;
@@ -142,6 +146,7 @@
   min-block-size: 96px;
   padding: 14px 16px;
   border: 1px solid var(--border-hair);
+  border-radius: 14px;
   background: transparent;
   font: inherit;
   font-size: var(--type-body-sm);
@@ -213,6 +218,7 @@
   margin: 0;
   padding: 16px;
   border: 1px solid var(--border-hair);
+  border-radius: 14px;
   background: var(--bg-elevated);
   font-family: var(--font-mono);
   font-size: var(--type-mono);
@@ -229,6 +235,8 @@
 
 .primary,
 .secondary {
+  border-radius: 999px;
+  border-radius: 999px;
   display: grid;
   place-items: center;
   min-block-size: 52px;
