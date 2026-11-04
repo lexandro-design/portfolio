@@ -242,6 +242,45 @@
         "booked": "Done, booked",
         "footer": "demo interface from the sandbox"
       }
+    },
+    "xray": {
+      "title": "X-ray of this page",
+      "lead": "Turn it on and scroll: sections get their component names, a grid appears, and the cursor shows the component, size and font of any element.",
+      "on": "turn on x-ray",
+      "off": "turn off x-ray",
+      "layers": [
+        {
+          "title": "Hosting",
+          "text": "GitHub Pages. The site is ready-made pages, with no server to break."
+        },
+        {
+          "title": "Framework",
+          "text": "Next.js and TypeScript, static export: pages are built in advance."
+        },
+        {
+          "title": "Styles",
+          "text": "CSS modules and tokens: colour, type, spacing and motion live in one place."
+        },
+        {
+          "title": "Content",
+          "text": "Cases, scenarios and translations are JSON, and a script checks they are complete."
+        },
+        {
+          "title": "Live parts",
+          "text": "The case player, product builder and brief run on React. None of it is video."
+        },
+        {
+          "title": "Background",
+          "text": "The steel sheet is a WebGL shader, with no image textures."
+        }
+      ],
+      "numbers": {
+        "cases": "cases",
+        "langs": "languages",
+        "themes": "themes",
+        "casts": "player scenarios",
+        "pages": "pages"
+      }
     }
   },
   "process": {
@@ -249,25 +288,38 @@
     "steps": [
       {
         "title": "Analysis",
-        "text": "I get into the task, the processes and the timeline. If it is not a fit or an off-the-shelf service solves it, I say so right away."
+        "text": "I get into the task, the processes and the timeline. If it is not a fit or an off-the-shelf service solves it, I say so right away.",
+        "get": "A written description of the task and its limits, and a straight answer on whether the project is needed.",
+        "need": "Tell me about the business and show how you work now."
       },
       {
         "title": "Design",
-        "text": "I build the design system and design screens with every state. Decisions are written down, not agreed verbally."
+        "text": "I build the design system and design screens with every state. Decisions are written down, not agreed verbally.",
+        "get": "A design system and screens with every state in Figma.",
+        "need": "Review the layouts and send edits in writing."
       },
       {
         "title": "Code",
-        "text": "I build the site on my own design and check every screen at every width before the client finds a bug."
+        "text": "I build the site on my own design and check every screen at every width before the client finds a bug.",
+        "get": "A working site or app, checked against the layout at every width.",
+        "need": "Texts, photos and access to the domain and hosting."
       },
       {
         "title": "Automation",
-        "text": "I wire in bots, CRM integrations and AI agents that take routine off the team."
+        "text": "I wire in bots, CRM integrations and AI agents that take routine off the team.",
+        "get": "Bots, CRM integrations and AI agents inside the product.",
+        "need": "CRM access and examples of real requests."
       },
       {
         "title": "Handover",
-        "text": "Documentation and training, so the project can grow without me."
+        "text": "Documentation and training, so the project can grow without me.",
+        "get": "Documentation, training and a product you can develop without me.",
+        "need": "Name who will run the project next."
       }
-    ]
+    ],
+    "get": "what you get",
+    "need": "what I need from you",
+    "example": "how it went"
   },
   "about": {
     "lead": "I'm Alexey, a designer and developer from Saint Petersburg. I build the whole product: from analysis and design to the website and automation, so nothing gets lost between contractors.",
@@ -290,6 +342,34 @@
         "when": "since 2024",
         "title": "Freelance and own products",
         "text": "Websites, bots and AI assistants for businesses. My own product, MiMiMi AI, has 3,000+ users."
+      },
+      {
+        "when": "2024",
+        "title": "Yandex Practicum",
+        "text": "UX/UI Designer course, with a certificate."
+      },
+      {
+        "when": "since 2023",
+        "title": "SPbUTUiE",
+        "text": "Business informatics, fourth year."
+      }
+    ],
+    "sources": {
+      "title": "cases on this site",
+      "note": "This is what I picked to show, not every order. Click a part of the bar to open its cases."
+    },
+    "facts": [
+      {
+        "v": "3000+",
+        "l": "MiMiMi AI users"
+      },
+      {
+        "v": "450+",
+        "l": "screens in the Parfumeria.by design"
+      },
+      {
+        "v": "since 2024",
+        "l": "doing design, code and automation"
       }
     ]
   },

@@ -7,6 +7,7 @@ import { ThemeSwitch } from '@/components/layout/ThemeSwitch'
 import { THEME_EVENT } from '@/components/layout/ThemeSwitch/ThemeSwitch'
 import { features } from '@/content/site'
 import { Sandbox } from './Sandbox'
+import { Xray } from './Xray'
 import styles from './System.module.css'
 
 const SWATCHES = [
@@ -43,6 +44,8 @@ type Props = {
   t: Dict['system']
   /** Подписи переключателя тем — те же, что в шапке */
   themes: { label: string; labels: Dict['nav']['themes'] }
+  /** Цифры сайта: считаются из данных при сборке */
+  numbers: { v: number; l: string }[]
 }
 
 /**
@@ -52,7 +55,7 @@ type Props = {
  * толщины переменного шрифта, шкала отступов вырастает при появлении,
  * по кривой out-expo бежит точка в такт шару на дорожке.
  */
-export function System({ t, themes }: Props) {
+export function System({ t, themes, numbers }: Props) {
   const values = useSyncExternalStore(subscribe, readValues, () => '').split('|')
   const [copied, setCopied] = useState<string | null>(null)
 
@@ -154,6 +157,8 @@ export function System({ t, themes }: Props) {
           </div>
         </Reveal>
       </div>
+
+      <Xray t={t.xray} numbers={numbers} />
 
       {features.sandbox && <Sandbox t={t.sandbox} themeLabels={themes.labels} copied={t.copied} />}
     </>

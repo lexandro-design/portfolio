@@ -119,6 +119,14 @@ export type Dict = {
   }
 
   system: {
+    xray: {
+      title: string
+      lead: string
+      on: string
+      off: string
+      layers: { title: string; text: string }[]
+      numbers: { cases: string; langs: string; themes: string; casts: string; pages: string }
+    }
     intro: string
     colors: string
     type: string
@@ -173,12 +181,22 @@ export type Dict = {
     }
   }
 
-  process: { steps: { title: string; text: string }[]; step: string }
+  process: {
+    steps: { title: string; text: string; get: string; need: string }[]
+    step: string
+    get: string
+    need: string
+    example: string
+  }
 
   about: {
     lead: string
     text: string[]
     timeline: { when: string; title: string; text: string }[]
+    /** Подпись к полосе «откуда кейсы»: сами числа считаются из cases.json */
+    sources: { title: string; note: string }
+    /** Только цифры из материалов кейсов */
+    facts: { v: string; l: string }[]
   }
 
   principles: { title: string; text: string }[]

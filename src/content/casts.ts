@@ -60,6 +60,7 @@ export type Cast = {
 }
 
 const RU = data as unknown as Record<string, Cast>
+export const CAST_COUNT = Object.keys(RU).length
 const COPY: Partial<Record<Locale, Record<string, { app?: string }>>> = { en, zh, ja }
 
 export function getCast(locale: Locale, slug: string): Cast | null {

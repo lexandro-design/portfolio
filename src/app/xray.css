@@ -1,0 +1,45 @@
+/* Рентген страницы из блока «Система»: секции подписаны именами компонентов, поверх сетка */
+[data-xray] main section {
+  position: relative;
+  outline: 1px dashed var(--fg-tertiary);
+  outline-offset: -1px;
+}
+
+[data-xray] main section::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 5;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+}
+
+[data-xray] main section[aria-labelledby='hero-title']::before { content: '<Hero />'; }
+[data-xray] main #services::before { content: '<Services />'; }
+[data-xray] main #works::before { content: '<Works />'; }
+[data-xray] main #system::before { content: '<System />'; }
+[data-xray] main #process::before { content: '<Process />'; }
+[data-xray] main #about::before { content: '<About />'; }
+[data-xray] main #principles::before { content: '<Principles />'; }
+[data-xray] main #contact::before { content: '<Contact />'; }
+
+[data-xray] body::after {
+  content: '';
+  position: fixed;
+  inset-block: 0;
+  inset-inline: max(var(--bleed), calc((100vw - var(--container)) / 2 + var(--bleed)));
+  z-index: 70;
+  pointer-events: none;
+  --col: calc((100% - 11 * 24px) / 12);
+  background: repeating-linear-gradient(90deg, rgb(128 128 128 / 0.07) 0 var(--col), transparent var(--col) calc(var(--col) + 24px));
+}
+
+@media (max-width: 767px) {
+  [data-xray] body::after {
+    --col: calc((100% - 3 * 16px) / 4);
+    background: repeating-linear-gradient(90deg, rgb(128 128 128 / 0.07) 0 var(--col), transparent var(--col) calc(var(--col) + 16px));
+  }
+}
