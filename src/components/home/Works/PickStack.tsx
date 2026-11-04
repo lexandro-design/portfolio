@@ -37,17 +37,21 @@ export function PickStack({ items, flows, nums, href, read }: Props) {
     const rows = [...root.children] as HTMLElement[]
     const tiles = rows.map((r) => r.firstElementChild as HTMLElement)
     let raf = 0
+    // Высота плитки и отступ прилипания меняются только с размером окна
+    const size = { h: 0, sticky: 0 }
+    const measure = () => {
+      size.h = tiles[0].offsetHeight
+      size.sticky = parseFloat(getComputedStyle(rows[0]).top) || 0
+    }
 
     const paint = () => {
       raf = 0
       const vh = innerHeight
       const tops = rows.map((r) => r.getBoundingClientRect().top)
-      const sticky = parseFloat(getComputedStyle(rows[0]).top) || 0
       tiles.forEach((tile, i) => {
-        const h = tile.offsetHeight
         const next = tops[i + 1]
         // Насколько следующая плитка закрыла эту и насколько эта уже вошла в экран
-        const cover = next === undefined ? 0 : clamp(1 - (next - sticky) / h)
+        const cover = next === undefined ? 0 : clamp(1 - (next - size.sticky) / size.h)
         const enter = clamp((vh - tops[i]) / (vh * 0.55))
         tile.style.transform = `scale(${(0.955 + 0.045 * enter - 0.05 * cover).toFixed(4)})`
         tile.style.setProperty('--dim', (cover * 0.6).toFixed(3))
@@ -56,23 +60,27 @@ export function PickStack({ items, flows, nums, href, read }: Props) {
     const queue = () => {
       if (!raf) raf = requestAnimationFrame(paint)
     }
+    const resize = () => {
+      measure()
+      queue()
+    }
 
     // Считаем только пока блок на экране
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) {
         addEventListener('scroll', queue, { passive: true })
-        addEventListener('resize', queue)
-        queue()
+        addEventListener('resize', resize)
+        resize()
       } else {
         removeEventListener('scroll', queue)
-        removeEventListener('resize', queue)
+        removeEventListener('resize', resize)
       }
     })
     io.observe(root)
     return () => {
       io.disconnect()
       removeEventListener('scroll', queue)
-      removeEventListener('resize', queue)
+      removeEventListener('resize', resize)
       cancelAnimationFrame(raf)
     }
   }, [])

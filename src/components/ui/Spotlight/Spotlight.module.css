@@ -1,0 +1,45 @@
+/* Плитка сайта: поверхность, скругление и свет под курсором */
+.tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 28px;
+  background: var(--bg-elevated);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    transform var(--dur-reveal) var(--ease-out-expo),
+    border-color var(--dur-slow) var(--ease-out-quart);
+}
+
+/* Круг гаснет раньше своего края, поэтому обреза нет */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset-block-start: var(--my, 50%);
+  inset-inline-start: var(--mx, 50%);
+  inline-size: 560px;
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--fg-primary) 9%, transparent), transparent);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--dur-slow) var(--ease-out-quart);
+  pointer-events: none;
+}
+
+.tile > * {
+  position: relative;
+}
+
+.tile:hover {
+  border-color: var(--border-hover);
+}
+
+.tile:hover::before {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .tile {
+    border-radius: 22px;
+  }
+}

@@ -5,46 +5,10 @@
 }
 
 .card {
-  position: relative;
   display: flex;
   flex-direction: column;
   min-block-size: 520px;
   padding: 40px;
-  overflow: hidden;
-  border: 1px solid var(--border-hair);
-  border-radius: 28px;
-  background: var(--bg-elevated);
-  transition:
-    opacity var(--dur-reveal) var(--ease-out-expo),
-    transform var(--dur-reveal) var(--ease-out-expo),
-    border-color var(--dur-slow) var(--ease-out-quart);
-}
-
-/* Свет под курсором: круг гаснет раньше своего края и не даёт обреза */
-.card::before {
-  content: '';
-  position: absolute;
-  inset-block-start: var(--my, 50%);
-  inset-inline-start: var(--mx, 50%);
-  inline-size: 560px;
-  aspect-ratio: 1;
-  background: radial-gradient(closest-side, color-mix(in oklab, var(--fg-primary) 9%, transparent), transparent);
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: opacity var(--dur-slow) var(--ease-out-quart);
-  pointer-events: none;
-}
-
-.card > * {
-  position: relative;
-}
-
-.card:hover {
-  border-color: var(--border-hover);
-}
-
-.card:hover::before {
-  opacity: 1;
 }
 
 .meta {
@@ -130,6 +94,5 @@
 @media (max-width: 767px) {
   .card {
     padding: var(--space-md);
-    border-radius: 22px;
   }
 }

@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, type ElementType, type ReactNode } from 'react'
 
-/** Пишет позицию курсора в --mx и --my на плитке под ним: свет плывёт за мышью */
-export function Spotlight({ className, children }: { className?: string; children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null)
+type Props = { as?: ElementType; className?: string; children: ReactNode }
+
+/** Сетка плиток: пишет позицию курсора в --mx и --my плитки под ним, свет плывёт за мышью */
+export function Spotlight({ as: Tag = 'div', className, children }: Props) {
+  const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const el = ref.current
@@ -31,8 +33,8 @@ export function Spotlight({ className, children }: { className?: string; childre
   }, [])
 
   return (
-    <div ref={ref} className={className}>
+    <Tag ref={ref} className={className}>
       {children}
-    </div>
+    </Tag>
   )
 }

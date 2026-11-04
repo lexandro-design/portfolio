@@ -1,8 +1,9 @@
 import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
 import { Reveal } from '@/components/ui/Reveal'
+import { Spotlight } from '@/components/ui/Spotlight'
+import spot from '@/components/ui/Spotlight/Spotlight.module.css'
 import { FilterLink } from '../Works'
-import { Spotlight } from './Spotlight'
 import styles from './Services.module.css'
 
 /** Три направления карточками в одну линию, ссылка включает фильтр кейсов */
@@ -10,7 +11,7 @@ export function Services({ items, more }: { items: Dict['services']; more: strin
   return (
     <Spotlight className={styles.grid}>
       {items.map((s, i) => (
-        <Reveal key={s.code} className={styles.card} delay={i * 80}>
+        <Reveal key={s.code} className={`${spot.tile} ${styles.card}`} delay={i * 80}>
           <div className={styles.meta}>
             <span>
               0{i + 1} / {s.code}
