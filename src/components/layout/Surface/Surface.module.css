@@ -1,0 +1,13 @@
+.plate {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  inline-size: 100%;
+  block-size: 100%;
+  display: none;
+  pointer-events: none;
+}
+
+.ready {
+  display: block;
+}
