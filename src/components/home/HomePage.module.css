@@ -2,11 +2,22 @@
   padding-block: var(--section-y);
 }
 
-/* Единственный светлый блок: пауза между тёмными */
-.paper {
+/* Плита малахита: главный материал сайта, одна и та же в обеих темах */
+.slab {
   padding-block: var(--section-y);
-  background: var(--bg-base);
+  border-block: 1px solid color-mix(in oklab, #d4b77a 55%, transparent);
+  background:
+    linear-gradient(rgb(3 16 12 / 0.5), rgb(3 16 12 / 0.74)),
+    url('./malachite.webp') 50% 50% / cover #06120e;
   color: var(--fg-primary);
+}
+
+@media (max-width: 767px) {
+  .slab {
+    background:
+      linear-gradient(rgb(3 16 12 / 0.66), rgb(3 16 12 / 0.8)),
+      url('./malachite-m.webp') 50% 50% / cover #06120e;
+  }
 }
 
 /* Заголовок стоит слева, шаги идут справа */

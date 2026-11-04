@@ -9,8 +9,8 @@ export const contacts = data.contacts
 
 export const COORDS = data.coords
 
-export type Theme = 'dark' | 'neon' | 'light'
-export const THEMES: Theme[] = ['dark', 'neon', 'light']
+export type Theme = 'dark' | 'light'
+export const THEMES: Theme[] = ['dark', 'light']
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
 export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean }

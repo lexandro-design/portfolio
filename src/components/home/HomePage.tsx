@@ -38,7 +38,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section id="services" className={styles.paper} data-theme="light">
+      <section id="services" className={styles.slab} data-theme="dark">
         <div className="container">
           <SectionHeader copy={t.sections.services} />
           <Services items={t.services} more={t.servicesMore} />

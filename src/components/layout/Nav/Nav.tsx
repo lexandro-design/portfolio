@@ -9,11 +9,12 @@ import { PaletteButton } from '../CommandPalette/CommandPalette'
 import { LangSwitch } from '../LangSwitch'
 import { Logo } from './Logo'
 import { MobileMenu } from '../MobileMenu'
+import { ThemeSwitch } from '../ThemeSwitch'
 import { useLocale } from '../useLocale'
 import styles from './Nav.module.css'
 
 /**
- * Шапка: логотип, разделы, язык, «написать». Вверху страницы её как бы нет,
+ * Шапка: логотип, разделы, язык, тема, «написать». Вверху страницы её как бы нет,
  * при прокрутке появляется стекло. Живёт в общем layout, поэтому язык
  * узнаёт из адреса, а не из пропсов.
  */
@@ -55,6 +56,7 @@ export function Nav() {
         <div className={styles.side}>
           {features.palette && <PaletteButton label={t.nav.search} />}
           <LangSwitch locale={locale} rest={rest} label={t.nav.language} />
+          <ThemeSwitch labels={t.nav.themes} />
           <Button href={contacts.telegram} external className={styles.cta}>
             {t.nav.write}
           </Button>

@@ -1,66 +1,47 @@
 /* ============================================================
-   Дизайн-токены. Сайт один: чистый чёрный, белый как кость и
-   свет, который приходит только от самих работ. Светлая и неоновая
-   палитры живут как поверхности: data-theme на секции (бумага в
-   услугах) и на демо в блоке «Система», у страницы тема всегда тёмная.
+   Дизайн-токены. Образ сайта: малахит и латунь, как в петербургских
+   дворцах. Ночью глубокий зелёный камень и белая кость, днём светлый
+   камень и зелёные чернила. Плита малахита остаётся в обеих темах.
+   Тема ставится атрибутом data-theme на <html> до первой отрисовки.
    ============================================================ */
 
 :root,
 [data-theme='dark'] {
-  --bg-base: #000;
-  --bg-elevated: #0e0e0f;
-  --bg-subtle: #1a1a1b;
-  --fg-primary: #f5f4f0;
-  --fg-secondary: #a9a8a3;
-  --fg-tertiary: #8b8a85;
-  --border-hair: rgb(245 244 240 / 0.12);
-  --border-hover: rgb(245 244 240 / 0.34);
-  --signal-live: #9fd8b4;
-  --border-focus: #f5f4f0;
-  --bg-scrim: rgb(0 0 0 / 0.82);
+  --bg-base: #06120e;
+  --bg-elevated: #0b1b15;
+  --bg-subtle: #132a21;
+  --fg-primary: #f3efe4;
+  --fg-secondary: #b0baae;
+  --fg-tertiary: #8c9c91;
+  --border-hair: rgb(243 239 228 / 0.13);
+  --border-hover: rgb(243 239 228 / 0.36);
+  --signal-live: #7fd4ad;
+  --border-focus: #d4b77a;
+  --bg-scrim: rgb(6 18 14 / 0.84);
   --overlay-tag: rgb(0 0 0 / 0.55);
   --shadow-tile: rgb(0 0 0 / 0.6);
-  --fg-inverse: #000;
-  --accent: #f5f4f0;
+  --fg-inverse: #06120e;
+  --accent: #d4b77a;
   color-scheme: dark;
 }
 
 [data-theme='light'] {
-  --bg-base: #ecebe7;
-  --bg-elevated: #e2e1dc;
-  --bg-subtle: #d6d5cf;
-  --fg-primary: #0c0c0d;
-  --fg-secondary: #4a4a47;
-  --fg-tertiary: #62615d;
-  --border-hair: rgb(12 12 13 / 0.14);
-  --border-hover: rgb(12 12 13 / 0.4);
-  --signal-live: #1d7a45;
-  --border-focus: #0c0c0d;
-  --bg-scrim: rgb(12 12 13 / 0.5);
+  --bg-base: #f1f0ea;
+  --bg-elevated: #e6e5dd;
+  --bg-subtle: #d9d8cf;
+  --fg-primary: #0b2a20;
+  --fg-secondary: #3c564b;
+  --fg-tertiary: #566e63;
+  --border-hair: rgb(11 42 32 / 0.15);
+  --border-hover: rgb(11 42 32 / 0.42);
+  --signal-live: #0e7a55;
+  --border-focus: #8a6a2c;
+  --bg-scrim: rgb(11 42 32 / 0.5);
   --overlay-tag: rgb(0 0 0 / 0.35);
-  --shadow-tile: rgb(12 12 13 / 0.14);
-  --fg-inverse: #ecebe7;
-  --accent: #0c0c0d;
+  --shadow-tile: rgb(11 42 32 / 0.14);
+  --fg-inverse: #f1f0ea;
+  --accent: #8a6a2c;
   color-scheme: light;
-}
-
-[data-theme='neon'] {
-  --bg-base: #0a0817;
-  --bg-elevated: #120f26;
-  --bg-subtle: #1b1735;
-  --fg-primary: #f3f0ff;
-  --fg-secondary: #aba4d6;
-  --fg-tertiary: #8d86ba;
-  --border-hair: rgb(243 240 255 / 0.1);
-  --border-hover: rgb(243 240 255 / 0.28);
-  --signal-live: #c6ff3d;
-  --border-focus: #9d8cff;
-  --bg-scrim: rgb(10 8 23 / 0.8);
-  --overlay-tag: rgb(0 0 0 / 0.5);
-  --shadow-tile: rgb(0 0 0 / 0.55);
-  --fg-inverse: #0a0817;
-  --accent: #c6ff3d;
-  color-scheme: dark;
 }
 
 :root {

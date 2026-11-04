@@ -2,13 +2,19 @@
   position: sticky;
   inset-block-start: 0;
   z-index: 10;
-  background: rgb(0 0 0 / 0.74);
+  background: color-mix(in srgb, var(--bg-base) 76%, transparent);
   backdrop-filter: blur(28px) saturate(1.5);
   transition: background-color var(--dur-slow) var(--ease-out-quart);
 }
 
+/* Днём стекло плотнее: над тёмной плитой иначе выходит серая полоса */
+:global([data-theme='light']) .nav {
+  background: color-mix(in srgb, var(--bg-base) 92%, transparent);
+}
+
 /* Вверху страницы шапки как бы нет */
-.nav[data-top] {
+.nav[data-top],
+:global([data-theme='light']) .nav[data-top] {
   background: transparent;
   backdrop-filter: none;
 }
@@ -57,7 +63,7 @@
 .side {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   margin-inline-start: auto;
 }
 

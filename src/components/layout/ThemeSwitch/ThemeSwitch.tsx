@@ -24,29 +24,23 @@ export function applyTheme(next: Theme) {
   window.dispatchEvent(new Event(THEME_EVENT))
 }
 
-type Props = { label: string; labels: Record<Theme, string> }
+type Props = { labels: Record<Theme, string> }
 
-/** Переключатель трёх тем: тёмная, неон, светлая. Выбор помнится */
-export function ThemeSwitch({ label, labels }: Props) {
+/** Ночь и день: кнопка показывает, куда переключит. Выбор помнится */
+export function ThemeSwitch({ labels }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
+  const next: Theme = theme === 'dark' ? 'light' : 'dark'
 
   return (
-    <div className={styles.switch} role="radiogroup" aria-label={label}>
-      {THEMES.map((id) => (
-        <button
-          key={id}
-          type="button"
-          role="radio"
-          aria-checked={theme === id}
-          aria-label={labels[id]}
-          title={labels[id]}
-          className={styles.option}
-          onClick={() => applyTheme(id)}
-        >
-          <Icon id={id} />
-        </button>
-      ))}
-    </div>
+    <button
+      type="button"
+      className={styles.toggle}
+      aria-label={labels[next]}
+      title={labels[next]}
+      onClick={() => applyTheme(next)}
+    >
+      <Icon id={next} />
+    </button>
   )
 }
 
@@ -58,13 +52,7 @@ function Icon({ id }: { id: Theme }) {
   if (id === 'dark')
     return (
       <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <circle cx="7" cy="7" r="4" fill="currentColor" />
-      </svg>
-    )
-  if (id === 'neon')
-    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="M8.2 1.2 3.2 8h3.3l-.9 4.8 5.2-7H7.4z" fill="currentColor" />
+        <path d="M11.8 8.9A5.2 5.2 0 0 1 5.1 2.2a5.2 5.2 0 1 0 6.7 6.7Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
       </svg>
     )
   return (

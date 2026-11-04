@@ -23,6 +23,19 @@
   white-space: nowrap;
 }
 
+/* Днём заголовок выточен из малахита */
+:global([data-theme='light']) :lang(ru) .line,
+:global([data-theme='light']) :lang(en) .line {
+  background: url('../malachite.webp') 30% 40% / 1400px auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+:global([data-theme='light']) .title {
+  font-weight: 400;
+}
+
 /* Иероглифы шире и плотнее антиквы: тот же размер давил бы экран */
 .title:lang(zh),
 .title:lang(ja) {
@@ -89,6 +102,8 @@
   inset-block-start: 0;
   block-size: 100svh;
   overflow: hidden;
+  /* Прилипание создаёт свой слой: смешивание ночного кадра идёт с этим фоном */
+  background: var(--bg-base);
 }
 
 /* Кадр заканчивается под шапкой: крышка флакона не уходит под неё */
@@ -96,8 +111,28 @@
   position: absolute;
   inset: var(--nav-h) 0 0;
   transform: scale(calc(var(--from) + (1 - var(--from)) * var(--p, 0)));
+  overflow: hidden;
   transform-origin: 50% 0;
   will-change: transform;
+}
+
+/* Ночью чёрный ролика растворяется в зелёном: остаётся только свет */
+:global([data-theme='dark']) .frame {
+  mix-blend-mode: screen;
+}
+
+/* Днём кадр настоящий: скругление уходит, когда он вырастает на весь экран */
+:global([data-theme='light']) .frame {
+  border-radius: calc((1 - var(--p, 0)) * 14px);
+}
+
+:global([data-theme='light']) .frame::after,
+:global([data-theme='light']) .night {
+  display: none;
+}
+
+:global([data-theme='dark']) .day {
+  display: none;
 }
 
 .frame img,
@@ -108,6 +143,11 @@
   block-size: 100%;
   object-fit: cover;
   object-position: 50% 55%;
+}
+
+:global([data-theme='light']) .frame video,
+.frame .day {
+  object-position: 66% 50%;
 }
 
 .frame video {
