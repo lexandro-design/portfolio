@@ -16,6 +16,9 @@ const BUDGET_MOVING = 1_400_000
 const BUDGET_WEAK = 700_000
 /** Живые материалы не чаще 30 кадров в секунду */
 const FRAME = 33
+/** Кадр дольше этого отнимает время у страницы. Меряем каждый четвёртый */
+const HEAVY = 20
+const SAMPLE = 4
 
 const NAMES = ['uRes', 'uLight', 'uScroll', 'uDpr', 'uTime', 'uIn', 'uBand', 'uTint', 'uAmount', 'uSat'] as const
 
@@ -73,6 +76,8 @@ export function Surface() {
     let moving = false
     let slow = 0
     let slowed = 0
+    let drawnCount = 0
+    const pixel = new Uint8Array(4)
 
     const draw = (now: number) => {
       if (!active) return
@@ -80,14 +85,19 @@ export function Surface() {
       gl.uniform2f(u.uLight, light.x, light.y)
       gl.uniform1f(u.uScroll, calm ? 0 : scrollY)
       gl.uniform1f(u.uTime, now / 1000)
+      /* rAF о загрузке видеокарты не говорит: readPixels ждёт, пока кадр дорисуется */
+      const watched = ++drawnCount % SAMPLE === 0
+      const start = performance.now()
       gl.drawArrays(gl.TRIANGLES, 0, 3)
+      if (!watched) return
+      gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel)
+      watch(performance.now() - start)
     }
 
     /* Кадры не успевают: сначала считаем меньше пикселей, потом останавливаем время */
-    const watch = (gap: number) => {
-      if (gap > 200) return
-      slow = gap > 48 ? slow + 1 : Math.max(0, slow - 1)
-      if (slow < 12) return
+    const watch = (cost: number) => {
+      slow = cost > HEAVY ? slow + 1 : Math.max(0, slow - 1)
+      if (slow < 6) return
       slow = 0
       slowed += 1
       if (slowed > 2) moving = false
@@ -105,7 +115,6 @@ export function Surface() {
       const settling = Math.abs(target.x - light.x) + Math.abs(target.y - light.y) > 0.5
       const key = `${Math.round(light.x)} ${Math.round(light.y)} ${scrollY} ${el.width}`
       if (moving && now - last >= FRAME) {
-        if (last) watch(now - last)
         last = now
         draw(now)
       } else if (!moving && key !== drawn) {
