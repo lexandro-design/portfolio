@@ -22,7 +22,7 @@ export type Dict = {
     menuOpen: string
     menuClose: string
     theme: string
-    themes: { dark: string; light: string; steel: string; onebit: string }
+    themes: { dark: string; light: string; steel: string }
     language: string
     /** Кнопка палитры команд (Ctrl+K) */
     search: string

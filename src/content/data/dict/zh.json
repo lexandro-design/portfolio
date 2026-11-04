@@ -18,8 +18,7 @@
     "themes": {
       "dark": "深色主题",
       "light": "浅色主题",
-      "steel": "钢铁主题",
-      "onebit": "单比特主题"
+      "steel": "钢铁主题"
     },
     "language": "语言",
     "search": "搜索与命令"

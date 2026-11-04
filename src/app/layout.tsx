@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
-import { Dither } from '@/components/layout/Dither'
 import { Footer } from '@/components/layout/Footer'
 import { Nav } from '@/components/layout/Nav'
 import { CommandPalette, type PaletteCase } from '@/components/layout/CommandPalette/CommandPalette'
 import { getCases } from '@/content/cases-i18n'
 import { features } from '@/content/site'
+import { Steel } from '@/components/layout/Steel'
 import { LOCALES, type Locale } from '@/i18n/config'
 import { ThemeScript } from '@/components/layout/ThemeScript'
 import { Metrika } from '@/components/layout/Metrika'
@@ -44,11 +44,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeScript />
       </head>
       <body>
+        {features.steel && <Steel />}
         <Nav />
         <main>{children}</main>
         <Footer />
         {features.palette && <CommandPalette index={paletteIndex} />}
-        {features.onebit && <Dither />}
         <Metrika />
       </body>
     </html>

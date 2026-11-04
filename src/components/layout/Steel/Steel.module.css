@@ -1,0 +1,25 @@
+.plate {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  inline-size: 100%;
+  block-size: 100%;
+  display: none;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out-quart);
+  pointer-events: none;
+}
+
+:global([data-theme='steel']) .plate {
+  display: block;
+}
+
+.ready {
+  opacity: 1;
+}
+
+.defs {
+  position: absolute;
+  inline-size: 0;
+  block-size: 0;
+}

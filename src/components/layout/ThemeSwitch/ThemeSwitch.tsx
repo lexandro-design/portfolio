@@ -68,13 +68,6 @@ function Icon({ id }: { id: Theme }) {
         <circle cx="7" cy="7" r="1.8" fill="currentColor" />
       </svg>
     )
-  if (id === 'onebit')
-    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="M2 2h5v5H2zM7 7h5v5H7z" fill="currentColor" />
-        <path d="M7.5 2.5h4v4h-4zM2.5 7.5h4v4h-4z" fill="none" stroke="currentColor" />
-      </svg>
-    )
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
       <circle cx="7" cy="7" r="2.5" fill="none" stroke="currentColor" strokeWidth="1.3" />

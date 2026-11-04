@@ -11,8 +11,7 @@
     "brief": true,
     "palette": false,
     "sandbox": false,
-    "steel": true,
-    "onebit": true
+    "steel": true
   },
   "defaultTheme": "dark",
   "sandbox": {
