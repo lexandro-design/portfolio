@@ -59,7 +59,7 @@
     "services": {
       "label": "服务",
       "title": "我做什么",
-      "aside": "分析 · 设计 · 代码 · 自动化"
+      "aside": "分析、设计、代码、自动化"
     },
     "works": {
       "label": "案例",
@@ -69,12 +69,12 @@
     "system": {
       "label": "系统",
       "title": "这个网站的底层",
-      "aside": "三套主题 · 一组令牌"
+      "aside": "三套主题、一组令牌"
     },
     "process": {
       "label": "流程",
       "title": "我如何工作",
-      "aside": "交钥匙 · 一人完成"
+      "aside": "交钥匙、一人完成"
     },
     "about": {
       "label": "关于我",
@@ -312,8 +312,8 @@
   ],
   "contact": {
     "title": "有项目想聊聊吗？",
-    "github": "github",
-    "behance": "behance",
+    "github": "Github",
+    "behance": "Behance",
     "telegram": "在 telegram 联系",
     "location": "圣彼得堡 · utc+3",
     "status": "可接项目",
@@ -343,7 +343,7 @@
   },
   "footer": {
     "line": "LEXANDRO · ux/ui、设计系统、开发",
-    "place": "Alexey Sveshnikov · 圣彼得堡"
+    "place": "Alexey Sveshnikov, 圣彼得堡"
   },
   "case": {
     "back": "全部案例",

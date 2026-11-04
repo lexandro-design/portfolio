@@ -1,76 +1,54 @@
-import { COORDS, SECTION_COUNT } from '@/content/site'
 import { localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
 import { Button } from '@/components/ui/Button'
-import { Clock } from '@/components/ui/Clock'
-import { Ticker } from '@/components/ui/Ticker'
-import { HeroPhoto } from './HeroPhoto'
+import { Stage } from './Stage'
 import styles from './Hero.module.css'
 
-type Props = { t: Dict['hero']; locale: Locale }
+type Props = {
+  t: Dict['hero']
+  locale: Locale
+  /** Работа на сцене: название и что это */
+  stage: { title: string; text: string }
+}
 
 /**
- * Первый экран: мета по краям, заголовок слева и фото справа, под ними
- * описание и действия. Высота по содержимому, а не на весь экран:
- * растянутый первый экран давал дыру между метой и заголовком.
+ * Первый экран: фраза на всю ширину в две строки, на телефоне по смыслу
+ * в четыре, под ней описание и действия. Ниже из темноты поднимается работа
  */
-export function Hero({ t, locale }: Props) {
-  const lines = [
-    ...t.title.map((text) => ({ text, accent: false })),
-    ...t.accent.map((text) => ({ text, accent: true })),
-  ]
+export function Hero({ t, locale, stage }: Props) {
+  const lines = [...t.title, ...t.accent]
+  const split = Math.ceil(lines.length / 2)
   return (
-    <section className={`container ${styles.hero}`} aria-labelledby="hero-title">
-      <div className={styles.meta}>
-        <div>
-          {t.metaLeft.map((line) => (
-            <span key={line}>{line}</span>
-          ))}
-        </div>
-        <div className={styles.metaEnd}>
-          <span>{COORDS}</span>
-          <Clock />
-        </div>
-      </div>
-
-      <div className={styles.main}>
+    <section className={styles.hero} aria-labelledby="hero-title">
+      <div className={`container ${styles.head}`}>
         <h1 id="hero-title" className={styles.title}>
-          {lines.map((line, i) => (
-            <span
-              key={line.text}
-              className={styles.line}
-              data-accent={line.accent || undefined}
-            >
-              <span className={styles.lineIn} style={{ animationDelay: `${120 + i * 90}ms` }}>
-                {line.text}
-              </span>
+          {[lines.slice(0, split), lines.slice(split)].map((row, r) => (
+            <span key={r} className={styles.row}>
+              {row.map((line, i) => (
+                <span
+                  key={line}
+                  className={styles.line}
+                  style={{ animationDelay: `${80 + (r * split + i) * 110}ms` }}
+                >
+                  {line}{' '}
+                </span>
+              ))}
             </span>
           ))}
         </h1>
 
-        <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
-      </div>
-
-      <div className={styles.bottom}>
-        <p className={styles.lead}>{t.body}</p>
-        <div className={styles.actions}>
-          <div className={styles.buttons}>
+        <div className={styles.under}>
+          <p className={styles.lead}>{t.body}</p>
+          <div className={styles.actions}>
             <Button href={localePath(locale, '/#contact')}>{t.primary}</Button>
-            <Button href={localePath(locale, '/#works')} variant="ghost">
+            <Button href={localePath(locale, '/#works')} variant="text">
               {t.secondary}
             </Button>
           </div>
-          <Ticker label={t.ticker} items={t.tickerItems} />
         </div>
       </div>
 
-      <div className={styles.foot}>
-        <span>01 / {String(SECTION_COUNT).padStart(2, '0')} · intro</span>
-        <a href="#services" className={styles.scroll}>
-          {t.scroll}
-          <span aria-hidden="true">↓</span>
-        </a>
-      </div>
+      <Stage href={localePath(locale, '/cases/parfumeria/')} title={stage.title} text={stage.text} />
     </section>
   )
 }

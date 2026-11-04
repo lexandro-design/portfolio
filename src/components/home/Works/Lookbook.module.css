@@ -1,0 +1,340 @@
+/* Свет работы: лежит под страницей на весь экран, цвет перетекает сам */
+.light {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    var(--grain),
+    radial-gradient(90% 62% at 50% 112%, color-mix(in oklab, var(--light) 36%, transparent), transparent 72%),
+    radial-gradient(70% 46% at 50% -14%, color-mix(in oklab, var(--light) 16%, transparent), transparent 72%);
+  opacity: 0;
+  transition:
+    --light 1600ms var(--ease-out-quart),
+    opacity 1200ms var(--ease-out-quart);
+  pointer-events: none;
+}
+
+.light[data-on] {
+  opacity: 1;
+}
+
+.book {
+  display: grid;
+  gap: clamp(112px, 15vw, 256px);
+}
+
+.piece {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-xl) clamp(16px, 2vw, 32px);
+}
+
+/* ---------- кадр ---------- */
+
+.media {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+}
+
+.image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  transition: scale 1600ms var(--ease-out-expo);
+}
+
+.piece:hover .image {
+  scale: 1.02;
+}
+
+/* Первая работа на всю ширину окна, дальше кадры ходят от края к краю */
+.row:nth-child(1) .media {
+  grid-column: 1 / -1;
+  margin-inline: calc(var(--bleed) * -1);
+  border-radius: 0;
+  aspect-ratio: 16 / 8.4;
+}
+
+.row:nth-child(3) .media {
+  grid-column: 5 / -1;
+  grid-row: 1;
+  aspect-ratio: 16 / 11;
+}
+
+.row:nth-child(3) .caption {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-lg);
+}
+
+.row:nth-child(5) .media {
+  grid-column: 1 / 10;
+  grid-row: 1;
+  aspect-ratio: 2624 / 1280;
+}
+
+.row:nth-child(5) .caption {
+  grid-column: 10 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-lg);
+}
+
+/* ---------- подпись ---------- */
+
+.caption {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-lg) clamp(16px, 2vw, 32px);
+  align-items: start;
+}
+
+.title {
+  grid-column: 1 / 7;
+  font-size: var(--type-h2);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.about {
+  grid-column: 7 / -1;
+  display: grid;
+  gap: var(--space-md);
+  justify-items: start;
+  padding-block-start: 0.7em;
+}
+
+.row:nth-child(3) .title,
+.row:nth-child(5) .title {
+  font-size: clamp(44px, 4.6vw, 88px);
+}
+
+.row:nth-child(3) .about,
+.row:nth-child(5) .about {
+  padding-block-start: 0;
+}
+
+.tagline {
+  font-size: var(--type-body-lg);
+  color: var(--fg-secondary);
+}
+
+.nums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-xl);
+}
+
+.num {
+  display: grid;
+  gap: 2px;
+  max-inline-size: 15em;
+}
+
+.num dd {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.num dt {
+  font-size: var(--type-body-sm);
+  line-height: 1.35;
+  color: var(--fg-tertiary);
+}
+
+/* Ссылка подчёркнута тонкой линией, на наведении линия прочерчивается заново */
+.read {
+  position: relative;
+  padding-block-end: 3px;
+  font-size: var(--type-body-sm);
+  font-weight: 500;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  transition: background-size var(--dur-slow) var(--ease-out-expo);
+}
+
+.piece:hover .read {
+  animation: redraw 900ms var(--ease-out-expo);
+}
+
+@keyframes redraw {
+  0% {
+    background-size: 100% 1px;
+    background-position: 100% 100%;
+  }
+
+  45% {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  46% {
+    background-size: 0% 1px;
+    background-position: 0 100%;
+  }
+
+  100% {
+    background-size: 100% 1px;
+    background-position: 0 100%;
+  }
+}
+
+/* ---------- автоматизации: цифра вместо картинки ---------- */
+
+.row[data-kind='flow'] .piece {
+  align-items: end;
+}
+
+.lead {
+  grid-column: 1 / 8;
+  grid-row: 1;
+}
+
+.row[data-kind='flow'] .caption {
+  grid-column: 1 / 8;
+  grid-row: 2;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.row[data-kind='flow'] .title,
+.row[data-kind='flow'] .about {
+  grid-column: 1;
+}
+
+.row[data-kind='flow'] .about {
+  padding-block-start: 0;
+}
+
+.big {
+  display: grid;
+  gap: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: clamp(120px, 19vw, 360px);
+  font-weight: 300;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: color-mix(in oklab, var(--case-color) 34%, var(--fg-primary));
+}
+
+.bigLabel {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-lg);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  white-space: normal;
+  color: var(--fg-secondary);
+}
+
+.flow {
+  grid-column: 8 / -1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  block-size: clamp(340px, 32vw, 560px);
+}
+
+@media (max-width: 1023px) {
+  .row:nth-child(3) .media,
+  .row:nth-child(5) .media {
+    grid-column: 1 / -1;
+  }
+
+  .row:nth-child(3) .caption,
+  .row:nth-child(5) .caption {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .lead,
+  .flow,
+  .row[data-kind='flow'] .caption {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .piece {
+    gap: var(--space-lg) 0;
+  }
+
+  /* На телефоне кадры выше: на узком экране важнее масштаб, чем весь снимок */
+  .row:nth-child(1) .media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .row:nth-child(3) .media,
+  .row:nth-child(5) .media {
+    margin-inline: calc(var(--bleed) * -1);
+    border-radius: 0;
+    aspect-ratio: 4 / 4.4;
+  }
+
+  .caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .title,
+  .about {
+    grid-column: 1;
+  }
+
+  .about {
+    padding-block-start: 0;
+  }
+
+  .row:nth-child(3) .title,
+  .row:nth-child(5) .title {
+    font-size: var(--type-h2);
+  }
+
+  .big {
+    font-size: clamp(112px, 34vw, 160px);
+  }
+
+  .flow {
+    block-size: 340px;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Кадр входит из глубины: снимок чуть крупнее рамки и садится на место */
+    .image {
+      animation: open linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 46%;
+    }
+
+    @keyframes open {
+      from {
+        opacity: 0.3;
+        transform: scale(1.09);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light {
+    transition: none;
+  }
+
+  .piece:hover .image {
+    scale: none;
+  }
+
+  .piece:hover .read {
+    animation: none;
+  }
+}

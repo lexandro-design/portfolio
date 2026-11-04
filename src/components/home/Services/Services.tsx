@@ -1,38 +1,27 @@
 import type { Dict } from '@/i18n/dict'
-import { Arrow } from '@/components/ui/Arrow'
 import { Reveal } from '@/components/ui/Reveal'
-import { Spotlight } from '@/components/ui/Spotlight'
-import spot from '@/components/ui/Spotlight/Spotlight.module.css'
 import { FilterLink } from '../Works'
 import styles from './Services.module.css'
 
-/** Три направления карточками в одну линию, ссылка включает фильтр кейсов */
+/** Три направления строками: название крупно, что входит, цена, ссылка включает фильтр кейсов */
 export function Services({ items, more }: { items: Dict['services']; more: string }) {
   return (
-    <Spotlight className={styles.grid}>
-      {items.map((s, i) => (
-        <Reveal key={s.code} className={`${spot.tile} ${styles.card}`} delay={i * 80}>
-          <div className={styles.meta}>
-            <span>
-              0{i + 1} / {s.code}
-            </span>
-          </div>
+    <ul className={styles.list}>
+      {items.map((s) => (
+        <Reveal as="li" key={s.code} className={styles.row}>
           <h3 className={styles.title}>{s.title}</h3>
-          <p className={styles.text}>{s.text}</p>
-          <p className={styles.price}>{s.price}</p>
-          <ul className={styles.tags}>
-            {s.tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-          <FilterLink direction={s.filter} className={styles.more}>
-            {more}
-            <span className={styles.arrow}>
-              <Arrow />
-            </span>
-          </FilterLink>
+          <div className={styles.body}>
+            <p className={styles.text}>{s.text}</p>
+            <p className={styles.tags}>{s.tags.join(', ')}</p>
+          </div>
+          <div className={styles.side}>
+            <p className={styles.price}>{s.price}</p>
+            <FilterLink direction={s.filter} className={styles.more}>
+              {more}
+            </FilterLink>
+          </div>
         </Reveal>
       ))}
-    </Spotlight>
+    </ul>
   )
 }

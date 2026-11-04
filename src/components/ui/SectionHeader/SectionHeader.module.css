@@ -1,46 +1,15 @@
 .header {
   display: grid;
   gap: var(--space-sm);
-  margin-block-end: var(--space-2xl);
-}
-
-.meta {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-md);
-  color: var(--fg-tertiary);
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  margin-block-end: clamp(48px, 6vw, 112px);
 }
 
 .title {
   font-size: var(--type-h2);
-  font-weight: 450;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  /* Заголовок выезжает из-под нижней кромки; запас, чтобы не резало хвосты букв */
-  overflow: clip;
-  padding-block-end: 0.14em;
-  margin-block-end: -0.14em;
+  font-weight: 300;
+  line-height: 1;
 }
 
-.titleIn {
-  display: block;
-  transition: transform 1100ms var(--ease-out-expo);
-}
-
-:global(.js) .header:not([data-visible]) .titleIn {
-  transform: translateY(112%);
-}
-
-@media (max-width: 767px) {
-  .header {
-    margin-block-end: var(--space-xl);
-  }
-
-  .aside {
-    display: none;
-  }
+.aside {
+  color: var(--fg-secondary);
 }

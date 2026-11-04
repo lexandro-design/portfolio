@@ -16,7 +16,6 @@
   background: var(--bg-base);
   color: var(--fg-primary);
   text-transform: none;
-  letter-spacing: 0.02em;
 }
 
 .prompt {

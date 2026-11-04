@@ -43,7 +43,6 @@ export function CaseBody({ item, t, used }: Props) {
             <div className={styles.story} data-count={Math.min(rest.length, 3)}>
               {rest.map((s, i) => (
                 <Reveal key={s.title} className={styles.part} delay={(i % 3) * 80}>
-                  <span className={styles.label}>{pad(i + 1)}</span>
                   <h2 className={styles.title}>{s.title}</h2>
                   <div className={styles.body}>
                     {s.body.map((p) => (

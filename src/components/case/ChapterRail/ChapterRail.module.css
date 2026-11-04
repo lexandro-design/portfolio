@@ -33,9 +33,8 @@
 }
 
 .n {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono-sm);
-  letter-spacing: 0.06em;
   color: var(--fg-tertiary);
   text-align: end;
   transition: color var(--dur-fast) var(--ease-out-quart);

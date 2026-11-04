@@ -2,10 +2,8 @@
   display: inline-flex;
   padding: 3px;
   border: 1px solid var(--border-hair);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .option {

@@ -78,7 +78,6 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
               style={{ animationDelay: `${80 + i * 60}ms` }}
               onClick={() => setOpen(false)}
             >
-              <span className={styles.index}>0{i + 1}</span>
               {item.label}
             </Link>
           ))}

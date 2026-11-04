@@ -1,4 +1,34 @@
 .section {
   padding-block: var(--section-y);
-  border-block-start: 1px solid var(--border-hair);
+}
+
+/* Единственный светлый блок: пауза между тёмными */
+.paper {
+  padding-block: var(--section-y);
+  background: var(--bg-base);
+  color: var(--fg-primary);
+}
+
+/* Заголовок стоит слева, шаги идут справа */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.pin {
+  position: sticky;
+  inset-block-start: calc(var(--nav-h) + var(--space-xl));
+}
+
+@media (max-width: 1023px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pin {
+    position: relative;
+    inset: auto;
+  }
 }

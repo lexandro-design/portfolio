@@ -23,7 +23,6 @@ import { Voice } from './kinds/Voice'
 import { Wide } from './kinds/Wide'
 import styles from './Showcase.module.css'
 
-const pad = (n: number) => String(n).padStart(2, '0')
 
 type T = Dict['case']['show']
 
@@ -126,13 +125,7 @@ export function Showcase({ data, item, t }: { data: Data; item: Case; t: T }) {
               <div className={styles.chapter}>
                 <Reveal className={styles.head}>
                   <div className={styles.headText}>
-                    <span className={styles.n} aria-hidden="true">
-                      {pad(i + 1)}
-                    </span>
-                    <span className={styles.label}>
-                      {pad(i + 1)} / {pad(total)}
-                      {h && <span className={styles.hint}> · {h}</span>}
-                    </span>
+                    {h && <span className={styles.label}>{h}</span>}
                     <h2 className={styles.title}>{b.title}</h2>
                   </div>
                   {text && (

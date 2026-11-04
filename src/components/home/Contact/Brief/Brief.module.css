@@ -27,10 +27,8 @@
 }
 
 .label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
@@ -47,7 +45,7 @@
 }
 
 .services {
-  border-radius: 14px;
+  border-radius: var(--radius);
   display: grid;
   gap: 8px;
 }
@@ -104,7 +102,7 @@
 }
 
 .price {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
   color: var(--fg-secondary);
   white-space: nowrap;
@@ -116,11 +114,11 @@
   gap: 2px;
   padding: 3px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
+  border-radius: var(--radius);
 }
 
 .seg button {
-  border-radius: 11px;
+  border-radius: var(--radius);
   flex: 1;
   min-block-size: 38px;
   padding-inline: 12px;
@@ -146,7 +144,7 @@
   min-block-size: 96px;
   padding: 14px 16px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: transparent;
   font: inherit;
   font-size: var(--type-body-sm);
@@ -188,7 +186,7 @@
 }
 
 .stepN {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
   color: var(--signal-live);
   padding-block-start: 3px;
@@ -218,9 +216,9 @@
   margin: 0;
   padding: 16px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: var(--bg-elevated);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
   line-height: 1.7;
   color: var(--fg-secondary);
@@ -241,10 +239,8 @@
   place-items: center;
   min-block-size: 52px;
   padding-inline: 24px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   cursor: pointer;
   transition:
     background-color var(--dur-base) var(--ease-out-quart),

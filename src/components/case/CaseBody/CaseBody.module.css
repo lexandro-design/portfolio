@@ -4,10 +4,8 @@
 }
 
 .label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
@@ -39,10 +37,13 @@
 }
 
 .title {
-  font-size: 32px;
-  font-weight: 450;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-size: clamp(32px, 2.8vw, 48px);
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.title::first-letter {
+  text-transform: uppercase;
 }
 
 .body {
@@ -102,7 +103,7 @@
   object-fit: cover;
   object-position: top;
   border: 1px solid var(--border-hair);
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: var(--bg-elevated);
   transition:
     border-color var(--dur-base),

@@ -9,7 +9,6 @@
 .label {
   color: var(--fg-tertiary);
   text-transform: lowercase;
-  letter-spacing: 0.06em;
 }
 
 .inbox {

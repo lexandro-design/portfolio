@@ -17,33 +17,6 @@
   gap: var(--space-sm) var(--space-3xl);
 }
 
-/* Номер главы контуром над заголовком — общий знак глав на всех кейсах */
-.n {
-  display: block;
-  margin-block-end: var(--space-xs);
-  margin-inline-start: -0.04em;
-  font-size: 140px;
-  font-weight: 300;
-  line-height: 0.82;
-  letter-spacing: -0.06em;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--border-hover);
-  /* При появлении главы контур заливается её цветом слева направо */
-  background: linear-gradient(90deg, var(--case-accent) 0 50%, transparent 50% 100%) 100% 0 / 200% 100% no-repeat;
-  background-clip: text;
-  -webkit-background-clip: text;
-  pointer-events: none;
-  user-select: none;
-  transition:
-    background-position 1600ms var(--ease-out-expo) 300ms,
-    -webkit-text-stroke-color 1600ms var(--ease-out-expo) 300ms;
-}
-
-.head[data-visible] .n {
-  background-position: 0 0;
-  -webkit-text-stroke-color: transparent;
-}
-
 /* Демо въезжает по прокрутке: чуть меньше и прозрачнее, пока не дошло до середины экрана */
 @supports (animation-timeline: view()) {
   .demo {
@@ -67,23 +40,18 @@
 }
 
 .label {
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--type-body-sm);
   color: var(--fg-tertiary);
 }
 
-.hint {
-  color: var(--fg-secondary);
+.label::first-letter {
+  text-transform: uppercase;
 }
 
 .title {
-  font-size: 56px;
-  font-weight: 450;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
+  font-size: clamp(48px, 5.4vw, 104px);
+  font-weight: 300;
+  line-height: 1;
 }
 
 .text {
@@ -115,7 +83,7 @@
 }
 
 .block[data-layout='side'] .title {
-  font-size: 48px;
+  font-size: clamp(44px, 4.2vw, 80px);
 }
 
 .block[data-layout='side'] .text {
@@ -139,14 +107,6 @@
     inset-block-start: auto;
   }
 
-  .title,
-  .block[data-layout='side'] .title {
-    font-size: 44px;
-  }
-
-  .n {
-    font-size: 112px;
-  }
 }
 
 @media (max-width: 767px) {
@@ -160,11 +120,7 @@
 
   .title,
   .block[data-layout='side'] .title {
-    font-size: 34px;
-  }
-
-  .n {
-    font-size: 84px;
+    font-size: 44px;
   }
 
   .text {
@@ -173,10 +129,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .n {
-    transition: none;
-  }
-
   .demo {
     animation: none;
   }

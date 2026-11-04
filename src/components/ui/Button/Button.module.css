@@ -3,18 +3,22 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-block-size: 40px;
-  padding-inline: 20px;
+  min-block-size: 48px;
+  padding-inline: 26px;
   border: 1px solid transparent;
   border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  font-size: 15px;
+  font-weight: 500;
   white-space: nowrap;
   transition:
     background-color var(--dur-base) var(--ease-out-quart),
     border-color var(--dur-base) var(--ease-out-quart),
-    color var(--dur-base) var(--ease-out-quart);
+    color var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-base) var(--ease-out-expo);
+}
+
+.button:active {
+  transform: scale(0.975);
 }
 
 .button[data-variant='primary'] {
@@ -23,32 +27,52 @@
 }
 
 .button[data-variant='primary']:hover {
-  background: var(--accent);
-  color: #14140f;
+  background: color-mix(in oklab, var(--fg-primary) 84%, var(--bg-base));
 }
 
 .button[data-variant='ghost'] {
-  border-color: var(--border-hair);
+  border-color: var(--border-hover);
   color: var(--fg-primary);
 }
 
 .button[data-variant='ghost']:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-elevated);
+  border-color: var(--fg-primary);
 }
 
+/* Ссылка: линия снизу уходит вправо и возвращается слева */
 .button[data-variant='text'] {
   min-block-size: 0;
-  padding: 0 0 6px;
-  border-block-end-color: var(--border-hair);
+  padding: 0 0 3px;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
   color: var(--fg-primary);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .button[data-variant='text']:hover {
-  border-block-end-color: var(--fg-primary);
+  animation: redraw 900ms var(--ease-out-expo);
+}
+
+@keyframes redraw {
+  0% {
+    background-size: 100% 1px;
+    background-position: 100% 100%;
+  }
+
+  45% {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  46% {
+    background-size: 0% 1px;
+    background-position: 0 100%;
+  }
+
+  100% {
+    background-size: 100% 1px;
+    background-position: 0 100%;
+  }
 }
 
 .arrow {
@@ -57,5 +81,11 @@
 }
 
 .button:hover .arrow {
-  transform: translateX(4px);
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button[data-variant='text']:hover {
+    animation: none;
+  }
 }

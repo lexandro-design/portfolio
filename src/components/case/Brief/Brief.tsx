@@ -32,7 +32,6 @@ export function Brief({ brief, t }: { brief: Data; t: Dict['case']['brief'] }) {
             <ol className={styles.did}>
               {brief.did.map((d, i) => (
                 <li key={d}>
-                  <span className={styles.n}>{String(i + 1).padStart(2, '0')}</span>
                   {d}
                 </li>
               ))}

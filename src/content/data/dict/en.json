@@ -5,13 +5,13 @@
     "caseTitle": "Alexey Sveshnikov"
   },
   "nav": {
-    "services": "services",
-    "works": "work",
-    "system": "system",
-    "about": "about",
-    "contact": "contact",
+    "services": "Services",
+    "works": "Work",
+    "system": "System",
+    "about": "About",
+    "contact": "Contact",
     "status": "open to projects",
-    "write": "get in touch",
+    "write": "Get in touch",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "theme": "Theme",
@@ -30,15 +30,15 @@
     ],
     "title": [
       "Design, code",
-      "and AI agents,",
-      "end to end,"
+      "and AI agents"
     ],
     "accent": [
-      "in one pair of hands."
+      "end to end,",
+      "in one pair of hands"
     ],
     "body": "I design the product and its design system, build a clean front end, write the back end, set up the database and server and wire in AI agents. The whole product, from idea to launch.",
-    "primary": "discuss a project",
-    "secondary": "see the work",
+    "primary": "Discuss a project",
+    "secondary": "See the work",
     "ticker": "end to end:",
     "tickerItems": [
       "analysis",
@@ -59,33 +59,33 @@
   "sections": {
     "services": {
       "label": "services",
-      "title": "what I do",
-      "aside": "analysis · design · code · automation"
+      "title": "What I do",
+      "aside": "Analysis, design, code, automation"
     },
     "works": {
       "label": "work",
-      "title": "selected work",
+      "title": "Selected work",
       "aside": "TITAN-2, EnterSales, freelance and my own products"
     },
     "system": {
       "label": "system",
-      "title": "what this site runs on",
-      "aside": "three themes · one set of tokens"
+      "title": "What this site runs on",
+      "aside": "Three themes, one set of tokens"
     },
     "process": {
       "label": "process",
-      "title": "how I work",
-      "aside": "end to end · one person"
+      "title": "How I work",
+      "aside": "End to end, one person"
     },
     "about": {
       "label": "about",
-      "title": "who is behind it",
-      "aside": "design and code in one pair of hands"
+      "title": "Who is behind it",
+      "aside": "Design and code in one pair of hands"
     },
     "principles": {
       "label": "principles",
-      "title": "how I think",
-      "aside": "four rules"
+      "title": "How I think",
+      "aside": "Four rules"
     },
     "contact": {
       "label": "let's talk"
@@ -136,30 +136,30 @@
       "filter": "ai"
     }
   ],
-  "servicesMore": "see projects",
+  "servicesMore": "See projects",
   "works": {
-    "all": "all",
+    "all": "All",
     "directions": {
-      "design": "design",
-      "web": "web",
-      "ai": "automation / ai"
+      "design": "Design",
+      "web": "Web",
+      "ai": "Automation / ai"
     },
-    "read": "read the case",
-    "rest": "smaller automations",
-    "pick": "selected",
+    "read": "Read the case",
+    "rest": "Smaller automations",
+    "pick": "Selected",
     "where": {
-      "label": "where",
-      "any": "anywhere",
+      "label": "Where",
+      "any": "Anywhere",
       "titan": "TITAN-2",
       "entersales": "EnterSales",
-      "freelance": "freelance",
-      "own": "own products"
+      "freelance": "Freelance",
+      "own": "Own products"
     },
     "view": {
       "grid": "grid",
       "list": "list"
     },
-    "showAll": "all cases",
+    "showAll": "All cases",
     "empty": "no cases for this combination"
   },
   "system": {
@@ -312,28 +312,28 @@
     }
   ],
   "contact": {
-    "title": "have a project in mind?",
-    "github": "github",
-    "behance": "behance",
-    "telegram": "message on telegram",
-    "location": "saint petersburg, utc+3",
-    "status": "open to projects",
+    "title": "Have a project in mind?",
+    "github": "GitHub",
+    "behance": "Behance",
+    "telegram": "Message on Telegram",
+    "location": "Saint petersburg, utc+3",
+    "status": "Open to projects",
     "brief": {
-      "label": "brief in a minute",
+      "label": "Brief in a minute",
       "title": "Put the task together",
-      "pick": "what you need",
-      "route": "how the work goes",
-      "deadline": "timeline",
+      "pick": "What you need",
+      "route": "How the work goes",
+      "deadline": "Timeline",
       "deadlines": [
-        "urgent",
-        "within a month",
-        "no rush"
+        "Urgent",
+        "Within a month",
+        "No rush"
       ],
-      "about": "a few words about the task",
+      "about": "A few words about the task",
       "aboutPlaceholder": "For example: a store website and a bot that takes orders",
-      "preview": "your message",
-      "telegram": "send via telegram",
-      "email": "by email",
+      "preview": "Your message",
+      "telegram": "Send via telegram",
+      "email": "By email",
       "copied": "Message copied. If it did not appear in the chat, paste it",
       "empty": "Pick at least one service",
       "hello": "Hi! I would like to discuss a project.",
@@ -344,23 +344,23 @@
   },
   "footer": {
     "line": "LEXANDRO · ux/ui, design systems, development",
-    "place": "Alexey Sveshnikov · saint petersburg"
+    "place": "Alexey Sveshnikov, Saint Petersburg"
   },
   "case": {
-    "back": "all work",
+    "back": "All work",
     "cta": "Let’s talk about your project",
     "facts": {
-      "client": "client",
-      "year": "year",
-      "direction": "discipline",
-      "stack": "stack",
-      "site": "website"
+      "client": "Client",
+      "year": "Year",
+      "direction": "Discipline",
+      "stack": "Stack",
+      "site": "Website"
     },
-    "screens": "all screens",
-    "scheme": "how it works",
-    "next": "next case",
+    "screens": "All screens",
+    "scheme": "How it works",
+    "next": "Next case",
     "viewer": "Screenshot viewer",
-    "close": "close",
+    "close": "Close",
     "prev": "Previous",
     "nextShot": "Next",
     "shotTheme": {
@@ -368,14 +368,14 @@
       "light": "light",
       "dark": "dark"
     },
-    "credit": "front end by",
-    "story": "more on the project",
-    "toc": "in this case",
+    "credit": "Front end by",
+    "story": "More on the project",
+    "toc": "In this case",
     "brief": {
       "label": "Project in brief",
-      "task": "task",
-      "did": "what I did",
-      "result": "result"
+      "task": "Task",
+      "did": "What I did",
+      "result": "Result"
     },
     "show": {
       "example": "example",

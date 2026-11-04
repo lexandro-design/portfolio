@@ -2,17 +2,13 @@
   position: sticky;
   inset-block-start: 0;
   z-index: 10;
-  border-block-end: 1px solid var(--border-hair);
-  background: color-mix(in srgb, var(--bg-base) 72%, transparent);
-  backdrop-filter: blur(24px) saturate(1.6);
-  transition:
-    background-color var(--dur-slow) var(--ease-out-quart),
-    border-color var(--dur-slow) var(--ease-out-quart);
+  background: rgb(0 0 0 / 0.74);
+  backdrop-filter: blur(28px) saturate(1.5);
+  transition: background-color var(--dur-slow) var(--ease-out-quart);
 }
 
-/* Вверху страницы шапки как бы нет: свет кейса идёт до самого края окна */
+/* Вверху страницы шапки как бы нет */
 .nav[data-top] {
-  border-block-end-color: transparent;
   background: transparent;
   backdrop-filter: none;
 }
@@ -20,7 +16,7 @@
 .inner {
   display: flex;
   align-items: center;
-  gap: var(--space-xl);
+  gap: clamp(24px, 4vw, 64px);
   block-size: var(--nav-h);
 }
 
@@ -29,30 +25,24 @@
   gap: var(--space-lg);
 }
 
-.link,
-.status {
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-secondary);
-}
-
 .link {
   position: relative;
-  transition: color var(--dur-fast) var(--ease-out-quart);
+  padding-block: 4px;
+  white-space: nowrap;
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+  transition: color var(--dur-base) var(--ease-out-quart);
 }
 
 .link::after {
   content: '';
   position: absolute;
-  inset: auto 0 -6px;
+  inset: auto 0 0;
   block-size: 1px;
   background: currentColor;
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-base) var(--ease-out-expo);
+  transform-origin: right;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
 }
 
 .link:hover {
@@ -61,6 +51,7 @@
 
 .link:hover::after {
   transform: scaleX(1);
+  transform-origin: left;
 }
 
 .side {
@@ -70,54 +61,20 @@
   margin-inline-start: auto;
 }
 
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.cta {
+  min-block-size: 40px;
+  padding-inline: 20px;
 }
 
-.dot {
-  inline-size: 6px;
-  block-size: 6px;
-  border-radius: 50%;
-  background: var(--signal-live);
-  box-shadow: 0 0 0 0 var(--signal-live);
-  animation: pulse 2.4s var(--ease-out-quart) infinite;
-}
-
-@keyframes pulse {
-  70% {
-    box-shadow: 0 0 0 6px transparent;
-  }
-}
-
-/* Статус влезает рядом с разделами только от 1360 */
-@media (max-width: 1359px) {
-  .status {
-    display: none;
-  }
-}
-
-/* Пять разделов, язык, тема и кнопка в одну строку помещаются от 1200 */
-@media (max-width: 1199px) {
-  .status,
+@media (max-width: 1023px) {
   .links {
     display: none;
   }
 }
 
 @media (max-width: 767px) {
-  .inner {
-    gap: var(--space-sm);
-  }
-
   .side {
-    gap: 12px;
-  }
-
-  .cta {
-    min-block-size: 36px;
-    padding-inline: 14px;
+    gap: var(--space-sm);
   }
 }
 
