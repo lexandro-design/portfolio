@@ -1,4 +1,5 @@
 import type { Case } from './cases'
+import type { Cast, CastBeat, CastView } from './casts'
 import type { Showcase } from './showcase'
 
 /**
@@ -18,6 +19,12 @@ export type Flow =
   | { variant: 'board'; hub: string; desks: { name: string; group: string }[]; feed: { who: string; text: string }[] }
   | { variant: 'trace'; prompt: string; steps: string[]; out: string }
   | { variant: 'compare'; a: { src: string; label: string }; b: { src: string; label: string } }
+  | { variant: 'view'; view: CastView; steps: NonNullable<CastBeat['v']>[] }
+  | { variant: 'notify'; app: string; items: { text: string; actions: string[] }[] }
+  | { variant: 'console'; window: string; services: { name: string; note: string }[] }
+  | { variant: 'tracks'; lines: { t?: string; who: string; name?: string; text: string }[] }
+  | { variant: 'diff'; was: string; now: string; labels: string[] }
+  | { variant: 'frames'; metric?: Metric }
 
 const MAX = 4
 
@@ -78,13 +85,38 @@ export function flowOf(item: Case, show: Showcase | null): Flow | null {
   }
 }
 
+/** Своя картинка кейса: что нельзя спутать с соседним. У остальных остаётся схема из раскрытия */
+export function liveOf(item: Case, show: Showcase | null, cast: Cast | null): Flow | null {
+  if (item.thumb || item.shots.length) return null
+  const b = show?.blocks[0]
+  switch (b?.kind) {
+    case 'notify':
+      return { variant: 'notify', app: b.app, items: b.items }
+    case 'console':
+      return { variant: 'console', window: b.window, services: b.services }
+    case 'transcript':
+      return { variant: 'tracks', lines: b.lines }
+    case 'diff':
+      return { variant: 'diff', was: b.was, now: b.now, labels: b.labels }
+  }
+  const view = cast?.view
+  if (view?.kind === 'stages' && b?.kind === 'queue') {
+    return { variant: 'frames', metric: show?.brief.nums[0] }
+  }
+  // Табло, маршрут, голос и очередь файлов в схеме читаются лучше, чем вид из плеера
+  if (view && !['desks', 'lanes'].includes(view.kind) && cast?.screen !== 'voice' && cast?.screen !== 'view') {
+    return { variant: 'view', view, steps: cast?.beats.flatMap((x) => (x.v ? [x.v] : [])) ?? [] }
+  }
+  return flowOf(item, show)
+}
+
 /** Превью в карточке: у проекта со сравнением два экрана под шторкой, остальное как в шапке кейса */
-export function previewOf(item: Case, show: Showcase | null): Flow | null {
+export function previewOf(item: Case, show: Showcase | null, cast: Cast | null): Flow | null {
   const b = show?.blocks.find((x) => x.kind === 'compare')
   const pair = b?.kind === 'compare' ? b.pairs[0] : undefined
   const [left, right] = pair ? [item.shots[pair.a], item.shots[pair.b]] : []
   if (b?.kind === 'compare' && left && right) {
     return { variant: 'compare', a: { src: left.src, label: b.a }, b: { src: right.src, label: b.b } }
   }
-  return flowOf(item, show)
+  return liveOf(item, show, cast)
 }

@@ -217,6 +217,8 @@ export type Dict = {
       next: string
       incoming: string
       tracks: { me: string; them: string }
+      /** Плеер записи экрана */
+      cast: { inside: string; demo: string; play: string; pause: string; step: string }
       /** Как обращаться с блоком — рядом с его номером */
       hint: { browse: string; compare: string; steps: string; deck: string; reel: string; console: string }
     }

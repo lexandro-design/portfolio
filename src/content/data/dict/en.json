@@ -383,6 +383,13 @@
       "prev": "Previous",
       "next": "Next",
       "incoming": "incoming",
+      "cast": {
+        "demo": "Screen simulation with sample data. Figures come from the case.",
+        "inside": "under the hood",
+        "play": "Play",
+        "pause": "Pause",
+        "step": "Step"
+      },
       "tracks": {
         "me": "me",
         "them": "other side"

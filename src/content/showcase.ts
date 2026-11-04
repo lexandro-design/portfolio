@@ -118,7 +118,7 @@ const COPY: Partial<Record<Locale, unknown>> = { en, zh, ja }
 const KEEP = new Set(['kind', 'app'])
 
 /** Накладывает перевод на русский: строки по тем же ключам и индексам, всё прочее из исходника */
-function overlay<T>(base: T, tr: unknown): T {
+export function overlay<T>(base: T, tr: unknown): T {
   if (typeof base === 'string') return (typeof tr === 'string' && tr ? tr : base) as T
   if (Array.isArray(base)) {
     const list = Array.isArray(tr) ? tr : []

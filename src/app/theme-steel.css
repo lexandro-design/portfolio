@@ -42,6 +42,11 @@
   --case-color: #14171a !important;
 }
 
+/* Плеер и живые карточки тоже без цвета: на листе акцент только чёрный */
+[data-theme='steel'] :is([data-screen], [data-variant]) {
+  --case-color: #14171a;
+}
+
 /* Буквы вырезаны: дно темнее листа, сверху тень от стенки, снизу кромка блестит */
 [data-theme='steel'] :is(h1, h2) {
   filter: url(#engrave);

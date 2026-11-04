@@ -1,0 +1,698 @@
+/* Виды «внутри»: у каждого кейса свой. Цвет только у того, что сейчас меняется */
+.stages,
+.card,
+.chips,
+.lanes,
+.doc,
+.desks,
+.rank,
+.ticks ul,
+.sketch ul,
+.col ul {
+  list-style: none;
+}
+
+/* Лампочка статуса в тёмной теме зелёная, поэтому у замечаний свой цвет */
+.stages,
+.sheet,
+.desks,
+.sketch,
+.doc {
+  --cast-warn: #e8604a;
+}
+
+:global([data-theme='light']) :is(.sheet, .desks, .sketch, .doc) {
+  --cast-warn: #c0341d;
+}
+
+:global([data-theme='steel']) :is(.sheet, .desks, .sketch, .doc) {
+  --cast-warn: #8f1d0a;
+}
+
+/* Этапы: квадрат и линия вниз, идущий этап мигает */
+.stages {
+  display: grid;
+  gap: 2px;
+}
+
+.stages li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-block-size: 40px;
+  font-size: 15px;
+  color: var(--fg-tertiary);
+  transition: color 240ms;
+}
+
+.stages li:not(:last-child)::after {
+  position: absolute;
+  inset-block: calc(50% + 7px) calc(-50% + 5px);
+  inset-inline-start: 5px;
+  inline-size: 1px;
+  background: var(--border-hair);
+  content: '';
+}
+
+.stages i {
+  flex: none;
+  inline-size: 11px;
+  block-size: 11px;
+  border: 1px solid var(--border-hover);
+}
+
+.stages [data-s='run'] {
+  color: var(--fg-primary);
+}
+
+.stages [data-s='run'] i {
+  background: var(--case-color, var(--accent));
+  border-color: var(--case-color, var(--accent));
+  animation: blink 900ms steps(2) infinite;
+}
+
+.stages [data-s='done'] {
+  color: var(--fg-secondary);
+}
+
+.stages [data-s='done'] i {
+  background: var(--case-color, var(--accent));
+  border-color: var(--case-color, var(--accent));
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Таблица: строки на месте с самого начала, поэтому экран не прыгает */
+.sheet {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--fg-secondary);
+}
+
+.sheet th {
+  padding: 6px 8px 6px 0;
+  border-block-end: 1px solid var(--border-hover);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--fg-tertiary);
+  text-align: start;
+}
+
+.sheet td {
+  padding: 9px 8px 9px 0;
+  border-block-end: 1px solid var(--border-hair);
+  vertical-align: top;
+}
+
+.sheet tr:not([data-s]) td {
+  color: transparent;
+}
+
+.sheet tbody tr[data-s] td {
+  animation: rise 320ms var(--ease-out-quart) both;
+}
+
+.sheet [data-s='on'] td:last-child {
+  color: var(--fg-primary);
+}
+
+.sheet [data-s='bad'] td:last-child {
+  color: var(--cast-warn);
+}
+
+.sheet [data-s='dim'] td {
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Карточка: подписи стоят сразу, значения появляются по одному */
+.card {
+  display: grid;
+  border-block-start: 1px solid var(--border-hair);
+}
+
+.card > div {
+  display: grid;
+  grid-template-columns: minmax(96px, 2fr) minmax(0, 5fr);
+  gap: 12px;
+  align-items: baseline;
+  min-block-size: 44px;
+  padding-block: 10px;
+  border-block-end: 1px solid var(--border-hair);
+}
+
+.card dt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-tertiary);
+}
+
+.card dd {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--fg-primary);
+  animation: rise 320ms var(--ease-out-quart) both;
+}
+
+.card > div:not([data-s]) dd {
+  block-size: 1px;
+  margin-block-start: 10px;
+  background: var(--border-hair);
+}
+
+/* Канбан. На узком экране колонки встают друг под другом */
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 8px;
+  block-size: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-block-size: 200px;
+  min-inline-size: 0;
+  padding: 8px;
+  background: var(--bg-subtle);
+}
+
+.col > span {
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--fg-tertiary);
+}
+
+.col ul {
+  display: grid;
+  gap: 6px;
+}
+
+.col li {
+  padding: 8px;
+  border-inline-start: 2px solid var(--case-color, var(--accent));
+  background: var(--bg-base);
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--fg-primary);
+  animation: rise 320ms var(--ease-out-quart) both;
+}
+
+.col li[data-s='dim'] {
+  border-inline-start-color: var(--border-hover);
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+/* Сетка окон: свободно рамкой, занято штриховкой, своё залито */
+.slots {
+  display: grid;
+  grid-template-columns: minmax(64px, auto) repeat(var(--cols), minmax(0, 1fr));
+  gap: 4px;
+  align-items: center;
+}
+
+.slotHead,
+.slotName {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+.slotHead {
+  padding-block-end: 2px;
+  text-align: center;
+}
+
+.slotName {
+  padding-inline-end: 6px;
+  white-space: nowrap;
+}
+
+.slots i {
+  block-size: 34px;
+  border: 1px solid var(--border-hover);
+  transition:
+    background 240ms,
+    border-color 240ms;
+}
+
+.slots [data-cell='busy'] {
+  border-color: var(--border-hair);
+  background: repeating-linear-gradient(135deg, var(--border-hover) 0 1px, transparent 1px 6px);
+}
+
+.slots [data-cell='mine'] {
+  border-color: var(--case-color, var(--accent));
+  background: var(--case-color, var(--accent));
+}
+
+.slots [data-cell='none'] {
+  border-color: var(--border-hair);
+}
+
+/* Рейтинг: строки едут на своё место */
+.rank {
+  position: relative;
+}
+
+.rank li {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  block-size: 58px;
+  padding-inline: 10px;
+  background: var(--bg-subtle);
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--fg-primary);
+  opacity: 0;
+  transition:
+    transform 620ms var(--ease-out-quart),
+    opacity 240ms;
+}
+
+.rank li[data-s] {
+  opacity: 1;
+}
+
+.rank li[data-s='top'] {
+  box-shadow: inset 2px 0 0 var(--case-color, var(--accent));
+}
+
+.rank b {
+  flex: none;
+  inline-size: 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--fg-tertiary);
+}
+
+.rank small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+/* Столы офиса */
+.desks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.desks li {
+  display: grid;
+  gap: 2px;
+  min-block-size: 92px;
+  align-content: start;
+  padding: 10px;
+  border-block-start: 2px solid var(--border-hover);
+  background: var(--bg-subtle);
+  transition: border-color 240ms;
+}
+
+.desks small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+.desks b {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--fg-primary);
+}
+
+.desks span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-tertiary);
+}
+
+.desks [data-s='on'] {
+  border-block-start-color: var(--case-color, var(--accent));
+}
+
+.desks [data-s='on'] span {
+  color: var(--fg-primary);
+}
+
+.desks [data-s='wait'] {
+  border-block-start-color: var(--cast-warn);
+}
+
+.desks [data-s='wait'] span {
+  color: var(--cast-warn);
+}
+
+/* Значки: вкладки и способы ответить */
+.chips {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.chips li {
+  padding: 18px 12px;
+  border: 1px solid var(--border-hair);
+  font-size: 15px;
+  color: var(--fg-tertiary);
+  transition:
+    background 240ms,
+    color 240ms,
+    border-color 240ms;
+}
+
+.chips [data-s='on'] {
+  border-color: var(--case-color, var(--accent));
+  background: var(--case-color, var(--accent));
+  color: var(--bg-base);
+}
+
+.chips [data-s='was'] {
+  border-color: var(--border-hover);
+  color: var(--fg-primary);
+}
+
+/* Дорожки маршрута: запрос падает в свою */
+.lanes {
+  display: grid;
+  gap: 6px;
+}
+
+.lanes li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 12px;
+  min-block-size: 74px;
+  align-content: start;
+  padding: 10px;
+  border-inline-start: 2px solid var(--border-hover);
+  background: var(--bg-subtle);
+  transition: border-color 240ms;
+}
+
+.lanes b {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--fg-primary);
+}
+
+.lanes small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+  text-align: end;
+}
+
+.lanes span {
+  grid-column: 1 / -1;
+  min-block-size: 1.35em;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--fg-secondary);
+  animation: rise 320ms var(--ease-out-quart) both;
+}
+
+.lanes [data-s='on'] {
+  border-inline-start-color: var(--case-color, var(--accent));
+}
+
+/* Сутки клетками */
+.ticks {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.tickGrid {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.tickGrid i {
+  aspect-ratio: 1;
+  background: var(--border-hair);
+}
+
+.tickGrid [data-on] {
+  background: var(--case-color, var(--accent));
+}
+
+.tickGrid [data-now] {
+  animation: blink 900ms steps(2) infinite;
+}
+
+.ticks ul {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--fg-tertiary);
+}
+
+.ticks li[data-s] {
+  color: var(--fg-primary);
+}
+
+/* Рисунок ученика рядом с эталоном */
+.sketch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sketch figure {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  background: var(--bg-subtle);
+  opacity: 0.25;
+  transition: opacity 240ms;
+}
+
+.sketch figure[data-on] {
+  opacity: 1;
+}
+
+.head {
+  inline-size: 100%;
+  max-block-size: 150px;
+  fill: none;
+  stroke: var(--fg-primary);
+  stroke-width: 1.4;
+}
+
+.head [data-shade] {
+  stroke: var(--fg-tertiary);
+  stroke-width: 1;
+}
+
+.sketch figure[data-ref] .head {
+  stroke: var(--fg-tertiary);
+}
+
+.sketch ul {
+  display: grid;
+  grid-column: 1 / -1;
+}
+
+.sketch li {
+  display: grid;
+  grid-template-columns: minmax(96px, 2fr) minmax(0, 3fr);
+  gap: 12px;
+  align-items: baseline;
+  min-block-size: 36px;
+  padding-block: 8px;
+  border-block-end: 1px solid var(--border-hair);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.sketch b {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--fg-tertiary);
+}
+
+.sketch span {
+  color: var(--fg-primary);
+  animation: rise 320ms var(--ease-out-quart) both;
+}
+
+.sketch [data-s='bad'] span {
+  color: var(--cast-warn);
+}
+
+/* Документ базы знаний */
+.doc {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  background: var(--bg-subtle);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--fg-tertiary);
+}
+
+.doc li {
+  padding: 6px 8px;
+  border-inline-start: 2px solid transparent;
+  transition:
+    color 240ms,
+    border-color 240ms;
+}
+
+.doc [data-s='hit'] {
+  border-inline-start-color: var(--case-color, var(--accent));
+  color: var(--fg-primary);
+}
+
+.doc [data-s='miss'] {
+  border-inline-start-color: var(--cast-warn);
+  color: var(--cast-warn);
+}
+
+.doc [data-s='off'] {
+  opacity: 0;
+}
+
+/* Кубик Telegram */
+.dieBox {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.die {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  inline-size: 132px;
+  block-size: 132px;
+  padding: 18px;
+  background: var(--fg-primary);
+}
+
+.die i {
+  border-radius: 50%;
+  background: transparent;
+}
+
+.die [data-on] {
+  background: var(--bg-base);
+}
+
+.die[data-run] {
+  animation: roll 420ms linear infinite;
+}
+
+@keyframes roll {
+  25% {
+    transform: translate(3px, -4px) rotate(9deg);
+  }
+
+  50% {
+    transform: translate(-2px, 2px) rotate(-7deg);
+  }
+
+  75% {
+    transform: translate(2px, 3px) rotate(5deg);
+  }
+}
+
+@media (max-width: 1023px) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+    block-size: auto;
+    gap: 4px;
+  }
+
+  .col {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    min-block-size: 54px;
+  }
+
+  .col > span {
+    flex: none;
+    inline-size: 38%;
+  }
+
+  .col ul {
+    flex: 1;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  }
+
+  .col li {
+    padding: 5px 7px;
+    font-size: 12px;
+  }
+
+  .desks li {
+    min-block-size: 76px;
+    padding: 8px;
+  }
+
+  .chips li {
+    padding: 12px;
+  }
+
+  .lanes li {
+    min-block-size: 62px;
+    padding: 8px;
+  }
+
+  .head {
+    max-block-size: 110px;
+  }
+
+  .die {
+    inline-size: 96px;
+    block-size: 96px;
+    padding: 12px;
+    gap: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stages [data-s='run'] i,
+  .tickGrid [data-now],
+  .die[data-run],
+  .sheet tbody tr[data-s] td,
+  .card dd,
+  .col li,
+  .lanes span,
+  .sketch span {
+    animation: none;
+  }
+
+  .rank li {
+    transition: none;
+  }
+}

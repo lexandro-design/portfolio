@@ -1,4 +1,5 @@
 import type { Case } from '@/content/cases'
+import type { Cast as CastData } from '@/content/casts'
 import type { Pace } from '@/content/pace'
 import type { Block, Showcase as Data } from '@/content/showcase'
 import type { Dict } from '@/i18n/dict'
@@ -6,6 +7,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Board } from './kinds/Board'
 import { Browse } from './kinds/Browse'
 import { Cards } from './kinds/Cards'
+import { Cast } from './kinds/Cast/Cast'
 import { Compare } from './kinds/Compare'
 import { Console } from './kinds/Console'
 import { Deck } from './kinds/Deck'
@@ -119,11 +121,14 @@ export function Showcase({
   t,
   pace,
   part,
+  cast,
 }: {
   data: Data
   item: Case
   t: T
   pace: Pace
+  /** Запись экрана заменяет демо первой главы */
+  cast?: CastData | null
   part: 'all' | 'lead' | 'rest'
 }) {
   const total = data.blocks.length
@@ -136,7 +141,8 @@ export function Showcase({
         const flip = solo ? MIRROR.has(b.kind) : i % 2 === 1
         const h = hint(b, t)
         const text = b.section === undefined ? undefined : item.sections[b.section]
-        const layout = STAGE.has(b.kind) || !text ? 'stage' : 'side'
+        const screen = i === 0 ? cast : null
+        const layout = screen || STAGE.has(b.kind) || !text ? 'stage' : 'side'
         return (
           <section
             key={b.title + i}
@@ -175,7 +181,11 @@ export function Showcase({
                   )}
                 </Reveal>
                 <Reveal className={styles.demo} delay={120}>
-                  <Kind block={b} shots={item.shots} t={t} />
+                  {screen ? (
+                    <Cast cast={screen} t={{ ...t.cast, prev: t.prev, next: t.next }} />
+                  ) : (
+                    <Kind block={b} shots={item.shots} t={t} />
+                  )}
                 </Reveal>
               </div>
             </div>

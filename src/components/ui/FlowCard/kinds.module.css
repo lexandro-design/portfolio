@@ -494,3 +494,406 @@
     animation: none;
   }
 }
+
+/* Вид из плеера в карточке: те же компоненты, только мельче. Сверху место под метку */
+.mini {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 44px 16px 12px;
+  overflow: hidden;
+  zoom: 0.86;
+}
+
+.mini[data-kind='die'] > div {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.mini[data-kind='die'] [class*='die'] > i {
+  min-inline-size: 0;
+}
+
+.mini[data-kind='die'] dl > div {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6px;
+  min-block-size: 34px;
+  padding-block: 6px;
+}
+
+.mini[data-kind='sketch'] {
+  zoom: 1;
+}
+
+.mini[data-kind='sketch'] ul {
+  display: none;
+}
+
+.mini[data-kind='board'] [class*='col'] {
+  min-block-size: 168px;
+}
+
+/* Телефон с вопросом */
+.notify {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  inline-size: min(280px, 100%);
+  block-size: 100%;
+  margin-inline: auto;
+  padding: 16px;
+}
+
+.notifyApp {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+.notifyCard {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-inline-start: 2px solid var(--case-color, var(--accent));
+  background: var(--bg-subtle);
+  animation: flowIn 320ms var(--ease-out-quart) both;
+}
+
+.notifyCard p {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--fg-primary);
+}
+
+.notifyCard span {
+  display: flex;
+  gap: 6px;
+}
+
+.notifyCard i {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid var(--border-hover);
+  font-size: 13px;
+  font-style: normal;
+  color: var(--fg-primary);
+  text-align: center;
+  transition:
+    background 200ms,
+    color 200ms;
+}
+
+.notifyCard i[data-on] {
+  border-color: var(--case-color, var(--accent));
+  background: var(--case-color, var(--accent));
+  color: var(--bg-base);
+}
+
+@keyframes flowIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Окно с тумблерами */
+.console {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  block-size: 100%;
+  padding: 44px 16px 12px;
+}
+
+.consoleBar {
+  padding: 4px 10px;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+.console ul {
+  border: 1px solid var(--border-hair);
+  border-block-start: 0;
+  list-style: none;
+}
+
+.console li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--fg-tertiary);
+  transition: color 200ms;
+}
+
+.console li + li {
+  border-block-start: 1px solid var(--border-hair);
+}
+
+.console li i {
+  position: relative;
+  inline-size: 26px;
+  block-size: 13px;
+  border: 1px solid var(--border-hover);
+  transition: background 200ms;
+}
+
+.console li i::after {
+  position: absolute;
+  inset-block: 2px;
+  inset-inline-start: 2px;
+  inline-size: 8px;
+  background: var(--fg-tertiary);
+  content: '';
+  transition: transform 200ms;
+}
+
+.console li[data-on] {
+  color: var(--fg-primary);
+}
+
+.console li[data-on] i {
+  border-color: var(--case-color, var(--accent));
+}
+
+.console li[data-on] i::after {
+  background: var(--case-color, var(--accent));
+  transform: translateX(12px);
+}
+
+/* Две дорожки */
+.tracks {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  block-size: 100%;
+  padding: 44px 16px 12px;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  block-size: 44px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+.track div {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  block-size: 100%;
+}
+
+.track i {
+  flex: 1;
+  block-size: calc(10% + var(--h) * 30%);
+  background: var(--border-hover);
+  transition:
+    block-size 200ms,
+    background 200ms;
+}
+
+.track[data-on] {
+  color: var(--fg-primary);
+}
+
+.track[data-on] i {
+  block-size: calc(20% + var(--h) * 80%);
+  background: var(--case-color, var(--accent));
+  animation: trackTalk 700ms ease-in-out var(--d) infinite alternate;
+}
+
+@keyframes trackTalk {
+  to {
+    transform: scaleY(0.55);
+  }
+}
+
+.trackLine {
+  min-block-size: 3em;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--fg-primary);
+  animation: flowIn 320ms var(--ease-out-quart) both;
+}
+
+.trackLine span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+/* Было и стало */
+.diff {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  block-size: 100%;
+  padding: 44px 16px 12px;
+}
+
+.diff div {
+  display: grid;
+  gap: 4px;
+}
+
+.diff span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+.diff p {
+  background-image: linear-gradient(currentcolor, currentcolor);
+  background-position: 0 56%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--fg-primary);
+  transition:
+    background-size 520ms var(--ease-out-quart),
+    color 240ms;
+}
+
+.diff [data-gone] p {
+  background-size: 100% 1px;
+  color: var(--fg-tertiary);
+}
+
+.diff div:last-child {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 320ms,
+    transform 320ms var(--ease-out-quart);
+}
+
+.diff div[data-on] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Кадры фотосессии */
+.frames {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  block-size: 100%;
+  padding: 44px 16px 12px;
+}
+
+.frames ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  list-style: none;
+}
+
+.frames li {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--bg-subtle);
+  transition: box-shadow 200ms;
+}
+
+.frames li[data-on] {
+  background: linear-gradient(
+    calc(150deg + var(--i) * 25deg),
+    var(--case-color, var(--accent)),
+    color-mix(in srgb, var(--case-color, var(--accent)) 30%, var(--bg-base))
+  );
+}
+
+.frames li[data-now] {
+  box-shadow: inset 0 0 0 2px var(--fg-primary);
+}
+
+.frames i {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 42%, var(--bg-base) 17%, transparent 18%),
+    radial-gradient(ellipse 34% 30% at 50% 100%, var(--bg-base) 98%, transparent 100%);
+  opacity: 0;
+}
+
+.frames li[data-on] i {
+  opacity: 1;
+}
+
+.frames p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--fg-secondary);
+}
+
+.frames p span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  animation: flowIn 280ms var(--ease-out-quart) both;
+}
+
+.frames b {
+  flex: none;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--fg-primary);
+}
+
+.frames small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
+/* Миниатюра в списке на телефоне: та же картинка целиком, значком */
+@container (max-width: 240px) {
+  .mini,
+  .notify,
+  .console,
+  .tracks,
+  .diff,
+  .frames {
+    padding: 14px;
+    zoom: 0.36;
+  }
+
+  .mini[data-kind='sketch'] {
+    zoom: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notifyCard,
+  .trackLine,
+  .frames p span,
+  .track[data-on] i {
+    animation: none;
+  }
+}
