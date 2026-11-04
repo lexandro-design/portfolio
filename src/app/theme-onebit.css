@@ -43,6 +43,11 @@
   }
 }
 
+/* Портрет снят в сумерках: без этого от лица остаётся чёрное пятно */
+[data-theme='onebit'] main [class*='HeroPhoto-module'] img {
+  filter: brightness(2.5) contrast(1.05) url(#dither);
+}
+
 [data-theme='onebit'] main a:hover :is(img, video) {
   filter: none;
   mix-blend-mode: normal;
@@ -53,6 +58,16 @@
   background: var(--ink-half);
   background-clip: text;
   color: transparent;
+}
+
+/* Серое свечение за оглавлением кейса в этой теме не живёт */
+[data-theme='onebit'] [class*='CaseHero-module'][class*='__hero']::before {
+  display: none;
+}
+
+/* Шапка сплошная: сквозь неё не видно полосу растра */
+[data-theme='onebit'] header[class*='Nav-module'] {
+  background: var(--bg-base);
 }
 
 /* Граница разделов: полоса растра на всю ширину */
