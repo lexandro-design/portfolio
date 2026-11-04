@@ -52,6 +52,11 @@
     0 1px 0 rgb(255 255 255 / 0.4);
 }
 
+/* Свечение за оглавлением кейса на металле выглядит пятном */
+[data-theme='steel'] [class*='CaseHero-module'][class*='__hero']::before {
+  display: none;
+}
+
 /* Только сами панели: у внутренних классов вроде cardTitle фаски быть не должно */
 [data-theme='steel'] main :is([class$='__card'], [class*='__card '], [class$='__win'], [class*='__win ']) {
   background-color: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
