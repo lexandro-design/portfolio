@@ -26,7 +26,7 @@ export function applyTheme(next: Theme) {
 
 type Props = { label: string; labels: Record<Theme, string> }
 
-/** Переключатель трёх тем: тёмная, неон, светлая. Выбор помнится */
+/** Переключатель тем из THEMES. Выбор помнится */
 export function ThemeSwitch({ label, labels }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
@@ -61,10 +61,18 @@ function Icon({ id }: { id: Theme }) {
         <circle cx="7" cy="7" r="4" fill="currentColor" />
       </svg>
     )
-  if (id === 'neon')
+  if (id === 'steel')
     return (
       <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="M8.2 1.2 3.2 8h3.3l-.9 4.8 5.2-7H7.4z" fill="currentColor" />
+        <path d="M7 1.2 12 4.1v5.8L7 12.8 2 9.9V4.1z" fill="none" stroke="currentColor" strokeWidth="1.3" />
+        <circle cx="7" cy="7" r="1.8" fill="currentColor" />
+      </svg>
+    )
+  if (id === 'onebit')
+    return (
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M2 2h5v5H2zM7 7h5v5H7z" fill="currentColor" />
+        <path d="M7.5 2.5h4v4h-4zM2.5 7.5h4v4h-4z" fill="none" stroke="currentColor" />
       </svg>
     )
   return (

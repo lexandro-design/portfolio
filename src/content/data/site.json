@@ -10,7 +10,9 @@
   "features": {
     "brief": true,
     "palette": false,
-    "sandbox": false
+    "sandbox": false,
+    "steel": true,
+    "onebit": true
   },
   "defaultTheme": "dark",
   "sandbox": {
