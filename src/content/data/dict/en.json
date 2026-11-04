@@ -18,8 +18,7 @@
     "themes": {
       "dark": "Dark theme",
       "light": "Light theme",
-      "steel": "Steel theme",
-      "onebit": "One-bit theme"
+      "steel": "Steel theme"
     },
     "language": "Language",
     "search": "Search and commands"
