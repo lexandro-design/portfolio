@@ -16,6 +16,8 @@ type Props = {
   href: string
   /** Как работает автоматизация — живая схема вместо картинки */
   flow?: Flow | null
+  /** Подпись к иллюстрации: у карточек с card */
+  note?: string
   /** Ячейка мозаики: hero — крупная, wide — широкая, base — малая. Нет — обычная плитка сетки */
   size?: 'hero' | 'wide' | 'base'
   style?: CSSProperties
@@ -27,8 +29,8 @@ type Props = {
  * метка направления; снизу номер, название и строка «что это». В мозаике крупная ячейка
  * показывает ещё и лид. Кликается целиком
  */
-export function WorkCard({ item, index, href, flow, size, style, className }: Props) {
-  const media = item.thumb ?? item.shots[0]
+export function WorkCard({ item, index, href, flow, note, size, style, className }: Props) {
+  const media = item.card ?? item.thumb ?? item.shots[0]
   const color = caseColor(item.slug)
   return (
     <article
@@ -51,6 +53,7 @@ export function WorkCard({ item, index, href, flow, size, style, className }: Pr
             />
           )}
           <span className={styles.chip}>{item.label}</span>
+          {item.card && note && <span className={styles.note}>{note}</span>}
         </div>
 
         <div className={styles.text}>

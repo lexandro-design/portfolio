@@ -44,8 +44,9 @@ export function Works({ items, flows, t, base }: Props) {
 
   useEffect(() => {
     const onFilter = (e: Event) => {
-      setTab((e as CustomEvent<Direction>).detail)
-      setWhere('any')
+      const detail = (e as CustomEvent<Direction | { where: Case['group'] }>).detail
+      setTab(typeof detail === 'string' ? detail : 'all')
+      setWhere(typeof detail === 'string' ? 'any' : detail.where)
     }
     window.addEventListener(FILTER_EVENT, onFilter)
     return () => window.removeEventListener(FILTER_EVENT, onFilter)
@@ -155,6 +156,7 @@ export function Works({ items, flows, t, base }: Props) {
                   index={index}
                   href={href(c)}
                   flow={flows[c.slug]}
+                  note={t.illustration}
                   size={i === 0 ? 'hero' : i < 3 ? 'wide' : 'base'}
                   style={order(i)}
                   className={styles.cell}
@@ -189,6 +191,7 @@ export function Works({ items, flows, t, base }: Props) {
                 index={index}
                 href={href(c)}
                 flow={flows[c.slug]}
+                  note={t.illustration}
                 style={order(Math.min(i, 12))}
                 className={styles.cell}
               />

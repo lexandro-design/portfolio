@@ -131,7 +131,8 @@ export function Steel() {
       removeEventListener('deviceorientation', tilt)
     }
     const sync = () => {
-      if (readTheme() !== 'steel') return stop()
+      /* Материал из примерочной рисует свой холст, лист в это время спит */
+      if (readTheme() !== 'steel' || document.documentElement.dataset.surface) return stop()
       /* Айфон отдаёт наклон только с разрешения и только из нажатия: тема выбрана нажатием */
       if (!on && navigator.userActivation?.isActive) (DeviceOrientationEvent as Tilt).requestPermission?.().catch(() => {})
       start()

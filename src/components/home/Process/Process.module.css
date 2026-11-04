@@ -1,8 +1,97 @@
 .step {
-  display: grid;
-  grid-template-columns: 268px 1fr;
-  padding-block: var(--space-xl);
   border-block-start: 1px solid var(--border-hair);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr) auto;
+  align-items: center;
+  inline-size: 100%;
+  padding: var(--space-lg) 0;
+  text-align: start;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.head:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: -2px;
+}
+
+.mark {
+  position: relative;
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.mark::before,
+.mark::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 9px;
+  inline-size: 20px;
+  block-size: 1px;
+  background: var(--fg-primary);
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+.mark::after {
+  transform: rotate(90deg);
+}
+
+.step[data-open] .mark::after {
+  transform: rotate(0);
+}
+
+.fold {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease-out-expo);
+}
+
+.step[data-open] .fold {
+  grid-template-rows: 1fr;
+}
+
+.inner {
+  min-block-size: 0;
+  overflow: hidden;
+  visibility: hidden;
+  padding-inline-start: 268px;
+  transition: visibility var(--dur-slow);
+}
+
+.step[data-open] .inner {
+  visibility: visible;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+  margin-block: var(--space-md) var(--space-xl);
+}
+
+.facts dt {
+  margin-block-end: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.facts dd {
+  margin: 0;
+  font-size: var(--type-body-sm);
+  line-height: 1.45;
+}
+
+.facts a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .number {
@@ -15,13 +104,14 @@
   transition: -webkit-text-stroke-color var(--dur-slow) var(--ease-out-expo);
 }
 
-.step:hover .number {
+.head:hover .number,
+.step[data-open] .number {
   -webkit-text-stroke-color: var(--fg-primary);
 }
 
 .body {
   display: grid;
-  gap: 10px;
+  gap: 6px;
 }
 
 .label {
@@ -44,8 +134,17 @@
 }
 
 @media (max-width: 1023px) {
-  .step {
-    grid-template-columns: 160px 1fr;
+  .head {
+    grid-template-columns: 160px minmax(0, 1fr) auto;
+  }
+
+  .inner {
+    padding-inline-start: 160px;
+  }
+
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
   }
 
   .number {
@@ -54,9 +153,13 @@
 }
 
 @media (max-width: 767px) {
-  .step {
-    grid-template-columns: 72px 1fr;
-    padding-block: var(--space-lg);
+  .head {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    padding-block: var(--space-md);
+  }
+
+  .inner {
+    padding-inline-start: 0;
   }
 
   .number {

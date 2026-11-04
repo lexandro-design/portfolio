@@ -1961,7 +1961,7 @@ function toggleDict(k, open) {
 
 function renderSettings() {
   const s = state.data[P.site]
-  s.features ??= { brief: true, palette: true, sandbox: true, steel: true }
+  s.features ??= { brief: true, palette: true, sandbox: true, steel: true, fitting: true }
   s.sandbox ??= { accents: ['#c6ff3d'] }
   const accents = s.sandbox.accents
   return h(

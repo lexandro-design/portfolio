@@ -12,7 +12,7 @@ export const COORDS = data.coords
 export type Theme = 'dark' | 'light' | 'steel'
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
-export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean }
+export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean; fitting: boolean }
 
 /** Порядок кнопок в переключателе. Сталь отключается своим флагом */
 export const THEMES: Theme[] = ['dark', 'light', ...(features.steel ? (['steel'] as const) : [])]

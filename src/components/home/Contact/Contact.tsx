@@ -1,9 +1,8 @@
 import { contacts, features, SECTION_COUNT } from '@/content/site'
 import type { Dict } from '@/i18n/dict'
-import { Arrow } from '@/components/ui/Arrow'
-import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { Brief } from './Brief'
+import { Ways } from './Ways'
 import styles from './Contact.module.css'
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
   steps: Dict['process']['steps']
 }
 
-/** Финальный экран: вопрос крупно, конструктор заявки, почта ссылкой, кнопки и статус */
+/** Финальный экран: вопрос крупно, три пути связи сразу, ниже заявка для тех, кому удобнее собрать задачу */
 export function Contact({ t, label, services, steps }: Props) {
   const n = String(SECTION_COUNT).padStart(2, '0')
   return (
@@ -23,31 +22,19 @@ export function Contact({ t, label, services, steps }: Props) {
       </span>
       <h2 className={styles.title}>{t.title}</h2>
 
+      <Ways t={t.ways} hello={t.brief.hello} />
+
       {features.brief && <Brief t={t.brief} services={services} steps={steps} />}
 
-      <div className={styles.row}>
-        <a href={`mailto:${contacts.email}`} className={styles.email}>
-          {contacts.email}
-          <span className={styles.arrow}>
-            <Arrow size={24} />
-          </span>
-        </a>
-        <div className={styles.actions}>
-          <Button href={contacts.behance} external variant="ghost">
-            {t.behance}
-          </Button>
-          <Button href={contacts.github} external variant="ghost">
-            {t.github}
-          </Button>
-          <Button href={contacts.telegram} external>
-            {t.telegram}
-          </Button>
-        </div>
-      </div>
-
       <div className={styles.foot}>
-        <span>
-          telegram {contacts.telegramHandle} · {t.location}
+        <span>{t.location}</span>
+        <span className={styles.links}>
+          <a href={contacts.behance} target="_blank" rel="noopener noreferrer">
+            {t.behance}
+          </a>
+          <a href={contacts.github} target="_blank" rel="noopener noreferrer">
+            {t.github}
+          </a>
         </span>
         <span className={styles.status}>
           <span className={styles.dot} />

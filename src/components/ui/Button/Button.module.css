@@ -61,3 +61,28 @@
 .button:hover .arrow {
   transform: translateX(4px);
 }
+
+/* Широкие мониторы: кнопка растёт вместе с текстом вокруг */
+@media (min-width: 2560px) {
+  .button {
+    min-block-size: 48px;
+    padding-inline: 24px;
+    font-size: 15px;
+  }
+
+  .button[data-variant='ghost'] {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 3440px) {
+  .button {
+    min-block-size: 58px;
+    padding-inline: 30px;
+    font-size: 18px;
+  }
+
+  .button[data-variant='ghost'] {
+    font-size: 17px;
+  }
+}

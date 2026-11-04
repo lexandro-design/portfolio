@@ -63,9 +63,48 @@ export type Dict = {
     tags: string[]
     filter: Direction
   }[]
-  servicesMore: string
+
+  /** Сборка продукта в разделе услуг: слои включает посетитель, цены берутся из services */
+  build: {
+    lead: string
+    layers: {
+      code: 'ux' | 'web' | 'back' | 'flow' | 'ai'
+      /** Какая услуга из services стоит за слоем */
+      service: string
+      filter: Direction
+      title: string
+      text: string
+      /** Кейсы, где эта часть правда делалась */
+      cases: string[]
+    }[]
+    more: string
+    demo: {
+      url: string
+      mock: string
+      brand: string
+      room: string
+      meta: string
+      book: string
+      booked: string
+      empty: string
+      db: string
+      dbOld: string
+      dbNew: string
+      bot: string
+      botText: string
+      ai: string
+      aiAsk: string
+      aiAnswer: string
+    }
+    /** Чего не хватает набору, от пустого до полного */
+    notes: { none: string; noScreen: string; mock: string; plain: string; noBack: string; noFlow: string; noAi: string; all: string }
+    discuss: string
+    write: string
+  }
 
   works: {
+    /** Метка на карточке с иллюстрацией вместо экрана */
+    illustration: string
     all: string
     directions: Record<Direction, string>
     read: string
@@ -80,6 +119,14 @@ export type Dict = {
   }
 
   system: {
+    xray: {
+      title: string
+      lead: string
+      on: string
+      off: string
+      layers: { title: string; text: string }[]
+      numbers: { cases: string; langs: string; themes: string; casts: string; pages: string }
+    }
     intro: string
     colors: string
     type: string
@@ -134,12 +181,22 @@ export type Dict = {
     }
   }
 
-  process: { steps: { title: string; text: string }[]; step: string }
+  process: {
+    steps: { title: string; text: string; get: string; need: string }[]
+    step: string
+    get: string
+    need: string
+    example: string
+  }
 
   about: {
     lead: string
     text: string[]
     timeline: { when: string; title: string; text: string }[]
+    /** Подпись к полосе «откуда кейсы»: сами числа считаются из cases.json */
+    sources: { title: string; note: string }
+    /** Только цифры из материалов кейсов */
+    facts: { v: string; l: string }[]
   }
 
   principles: { title: string; text: string }[]
@@ -151,6 +208,18 @@ export type Dict = {
     telegram: string
     location: string
     status: string
+    /** Три пути связи над заявкой */
+    ways: {
+      telegram: string
+      telegramNote: string
+      email: string
+      emailNote: string
+      copied: string
+      brief: string
+      briefValue: string
+      briefNote: string
+      time: string
+    }
     /** Конструктор заявки: услуги берутся из services, этапы — из process */
     brief: {
       label: string
@@ -188,6 +257,8 @@ export type Dict = {
   footer: { line: string; place: string }
 
   case: {
+    /** Галерея иллюстраций: подпись обязательна, это не результат работы */
+    mood: { title: string; note: string }
     back: string
     cta: string
     facts: { client: string; year: string; direction: string; stack: string; site: string }

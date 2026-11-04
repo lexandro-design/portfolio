@@ -1116,12 +1116,7 @@
         "The booking and lead are created in Bitrix24 through Open Channels"
       ],
       "result": "The manager gets a ready booking and sees the whole conversation. Everything runs on the client's server under Federal Law 152-FZ.",
-      "nums": [
-        {
-          "v": "152-FZ",
-          "l": "client's server in Russia"
-        }
-      ]
+      "nums": []
     },
     "blocks": [
       {
@@ -1911,12 +1906,7 @@
         "A training specialist's panel: a question without an answer becomes part of the base"
       ],
       "result": "The bot answers at once and only from the company's materials, and the base grows with every question that had no answer.",
-      "nums": [
-        {
-          "v": "local",
-          "l": "models on your own computer"
-        }
-      ]
+      "nums": []
     },
     "blocks": [
       {

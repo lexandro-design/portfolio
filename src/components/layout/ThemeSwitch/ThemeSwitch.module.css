@@ -31,3 +31,22 @@
     block-size: 28px;
   }
 }
+
+@media (min-width: 2560px) {
+  .option {
+    inline-size: 38px;
+    block-size: 36px;
+  }
+}
+
+@media (min-width: 3440px) {
+  .option {
+    inline-size: 46px;
+    block-size: 44px;
+  }
+
+  .option svg {
+    inline-size: 18px;
+    block-size: 18px;
+  }
+}

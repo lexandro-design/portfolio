@@ -123,13 +123,13 @@
       {
         "title": "a platform, not a bot",
         "body": [
-          "All content lives in the database: generation presets and prompts, texts, buttons, images. The owner changes them in the admin panel and rebuilds the bot for a new niche without touching code."
+          "All content lives in the database: generation presets, texts, buttons, images. The owner changes them in the admin panel and rebuilds the bot for a new niche without touching code."
         ]
       },
       {
         "title": "under the hood",
         "body": [
-          "I wrote the logic myself: four linked processes — taking the request, the generation queue, payment and delivering the result. Payments through YooKassa: subscriptions, packs, refunds. Segmented broadcasts.",
+          "I wrote the logic myself: four linked processes: taking the request, the generation queue, payment and delivering the result. Payments through YooKassa: subscriptions, packs, refunds. Segmented broadcasts.",
           "Three sequential database queries at the start of a dialog became one PostgreSQL function: preparing a reply went from about two seconds to 60 milliseconds."
         ]
       }
@@ -254,7 +254,7 @@
   "meg-site": {
     "title": "MEG",
     "tagline": "corporate website",
-    "lead": "Corporate website for an engineering company in the TITAN-2 holding: ten pages, each at three widths — 1440, 834 and 393.",
+    "lead": "Corporate website for an engineering company in the TITAN-2 holding: ten pages, each at three widths: 1440, 834 and 393.",
     "client": "Max Engineering Group",
     "sections": [
       {
@@ -477,7 +477,7 @@
       {
         "title": "what I did",
         "body": [
-          "A profile with a cover, stats and “Message” and “Follow” buttons, four tabs with their own layouts — feed, career, photos, videos — posts in the feed and a contacts block. Responsive at 1440, 1200 and phone."
+          "A profile with a cover, stats and “Message” and “Follow” buttons, four tabs with their own layouts (feed, career, photos, videos), posts in the feed and a contacts block. Responsive at 1440, 1200 and phone."
         ]
       }
     ],
@@ -546,7 +546,7 @@
       {
         "title": "what was done",
         "body": [
-          "Two pages — the vacation plan and settings — for three roles: head admin, local admin and user.",
+          "Two pages, the vacation plan and settings, for three roles: head admin, local admin and user.",
           "A design system on Taiga UI, component specs for developers and an implementation audit. Tables with frozen columns and double headers for dense data, eight modal variants, a notification popover, design-to-code checks and an acceptance checklist."
         ]
       }
@@ -604,7 +604,7 @@
       {
         "title": "how it works",
         "body": [
-          "Each email and its attachments are parsed automatically: the request type is detected — customer, supplier, spam and others — and a deal with the original email and an owner is created in the right Bitrix24 funnel. Duplicates are filtered out, statuses are tracked."
+          "Each email and its attachments are parsed automatically: the request type is detected (customer, supplier, spam and others), and a deal with the original email and an owner is created in the right Bitrix24 funnel. Duplicates are filtered out, statuses are tracked."
         ]
       }
     ],

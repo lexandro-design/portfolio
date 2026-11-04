@@ -64,7 +64,11 @@
           "label": "Отпуск",
           "btns": [
             "Сгенерировать этот кадр"
-          ]
+          ],
+          "media": {
+            "src": "/cases/mimimibot/gen/card-16x10.webp",
+            "ratio": "16:10"
+          }
         }
       },
       {
@@ -121,7 +125,11 @@
           "label": "Кадр готов",
           "btns": [
             "Перейти к фотосессии"
-          ]
+          ],
+          "media": {
+            "src": "/cases/mimimibot/gen/05-1x1.webp",
+            "ratio": "1:1"
+          }
         },
         "v": [
           {
@@ -1964,7 +1972,13 @@
         "msg": {
           "k": "photos",
           "n": 1,
-          "label": "Проверь мой рисунок"
+          "label": "Проверь мой рисунок",
+          "media": [
+            {
+              "src": "/cases/art-school/gen/04-1x1.webp",
+              "ratio": "1:1"
+            }
+          ]
         }
       },
       {
@@ -2014,7 +2028,13 @@
         "msg": {
           "k": "photos",
           "n": 1,
-          "label": "Поправил"
+          "label": "Поправил",
+          "media": [
+            {
+              "src": "/cases/art-school/gen/01-1x1.webp",
+              "ratio": "1:1"
+            }
+          ]
         },
         "v": [
           {

@@ -112,6 +112,7 @@ export function liveOf(item: Case, show: Showcase | null, cast: Cast | null): Fl
 
 /** Превью в карточке: у проекта со сравнением два экрана под шторкой, остальное как в шапке кейса */
 export function previewOf(item: Case, show: Showcase | null, cast: Cast | null): Flow | null {
+  if (item.card) return null
   const b = show?.blocks.find((x) => x.kind === 'compare')
   const pair = b?.kind === 'compare' ? b.pairs[0] : undefined
   const [left, right] = pair ? [item.shots[pair.a], item.shots[pair.b]] : []

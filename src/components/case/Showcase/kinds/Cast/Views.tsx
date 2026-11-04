@@ -1,4 +1,5 @@
 import type { CastView } from '@/content/casts'
+import { Frame } from './Frame'
 import styles from './Views.module.css'
 
 type Row = CastView['rows'][number]
@@ -209,16 +210,16 @@ function Ticks({ rows }: { rows: Row[] }) {
   )
 }
 
-function Sketch({ rows }: { rows: Row[] }) {
+function Sketch({ rows, media }: { rows: Row[]; media?: CastView['media'] }) {
   const shown = rows.some((r) => r.s)
   const fixed = rows.length > 0 && rows.every((r) => r.s === 'ok')
   return (
     <div className={styles.sketch}>
       <figure data-on={shown || undefined}>
-        <Head fixed={fixed} />
+        {media?.[0] ? <Frame media={media[0]} /> : <Head fixed={fixed} />}
       </figure>
       <figure data-on="true" data-ref>
-        <Head fixed />
+        {media?.[1] ? <Frame media={media[1]} /> : <Head fixed />}
       </figure>
       <ul>
         {rows.map((r) => (
@@ -256,7 +257,7 @@ function DieView({ rows }: { rows: Row[] }) {
 
 /** Что происходит внутри, у каждого кейса свой вид: состояние собирает плеер по шагам */
 export function View({ view }: { view: CastView }) {
-  const { kind, rows, cols } = view
+  const { kind, rows, cols, media } = view
   switch (kind) {
     case 'stages':
       return <Stages rows={rows} />
@@ -279,7 +280,7 @@ export function View({ view }: { view: CastView }) {
     case 'ticks':
       return <Ticks rows={rows} />
     case 'sketch':
-      return <Sketch rows={rows} />
+      return <Sketch rows={rows} media={media} />
     case 'doc':
       return <Doc rows={rows} />
     case 'die':
