@@ -114,10 +114,10 @@
 .frame::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -2px;
   background:
-    linear-gradient(90deg, #000, transparent 14%, transparent 86%, #000),
-    linear-gradient(#000, transparent 12%, transparent 74%, #000);
+    linear-gradient(90deg, #000 1%, transparent 14%, transparent 86%, #000 99%),
+    linear-gradient(#000 1%, transparent 12%, transparent 74%, #000 99%);
   pointer-events: none;
 }
 
@@ -182,7 +182,7 @@
   }
 
   .frame::after {
-    background: linear-gradient(#000, transparent 16%, transparent 72%, #000);
+    background: linear-gradient(#000 1%, transparent 16%, transparent 72%, #000 99%);
   }
 
   .caption {

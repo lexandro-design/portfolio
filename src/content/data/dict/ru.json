@@ -98,11 +98,11 @@
       "text": "Дизайн-системы, которые работают на продукт: токены цвета, типографики и отступов, компоненты со всеми состояниями, правила сетки. Новый экран собирается из готовых частей, а разработчик верстает без догадок.",
       "price": "от 50 000 ₽",
       "tags": [
-        "ux/ui",
-        "design systems",
-        "design tokens",
-        "figma",
-        "auto layout"
+        "UX/UI",
+        "Design Systems",
+        "Design Tokens",
+        "Figma",
+        "Auto Layout"
       ],
       "filter": "design"
     },
@@ -112,11 +112,11 @@
       "text": "Сайты и веб-приложения по своему дизайну: вёрстка на Tilda или React и Next.js, бэкенд, база данных и сервер. Каждый экран сверяю с макетом на всех ширинах.",
       "price": "от 100 000 ₽",
       "tags": [
-        "react",
-        "next.js",
-        "node.js",
-        "postgresql",
-        "tilda"
+        "React",
+        "Next.js",
+        "Node.js",
+        "PostgreSQL",
+        "Tilda"
       ],
       "filter": "web"
     },
@@ -126,12 +126,12 @@
       "text": "Telegram-боты и AI-ассистенты, интеграции с CRM и платёжными системами, базы данных, RAG-поиск по документам. Могу работать по 152-ФЗ: данные и модели в РФ.",
       "price": "от 20 000 ₽",
       "tags": [
-        "javascript",
-        "postgresql",
-        "rag",
-        "ai agents",
-        "bitrix24",
-        "152-фз"
+        "JavaScript",
+        "PostgreSQL",
+        "RAG",
+        "AI Agents",
+        "Bitrix24",
+        "152-ФЗ"
       ],
       "filter": "ai"
     }
@@ -142,7 +142,7 @@
     "directions": {
       "design": "Дизайн",
       "web": "Веб",
-      "ai": "Автоматизация / ai"
+      "ai": "Автоматизация и AI"
     },
     "read": "Читать кейс",
     "rest": "Небольшие автоматизации",
@@ -168,7 +168,7 @@
     "type": "типографика",
     "spacing": "отступы",
     "motion": "движение",
-    "motionNote": "out-expo · 900 мс · появление блоков",
+    "motionNote": "out-expo, 1200 мс, появление блоков",
     "swatches": {
       "base": "фон",
       "elevated": "поверхность",

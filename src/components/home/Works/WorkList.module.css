@@ -12,7 +12,7 @@
 
 .link {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 2fr) 56px;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 2fr) 96px;
   align-items: baseline;
   gap: var(--space-md);
   padding-block: 18px 20px;
@@ -49,6 +49,7 @@
 }
 
 .year {
+  white-space: nowrap;
   text-align: end;
   font-variant-numeric: tabular-nums;
 }

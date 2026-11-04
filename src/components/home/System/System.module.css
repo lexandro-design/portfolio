@@ -39,6 +39,11 @@
   color: var(--fg-tertiary);
 }
 
+.label::first-letter,
+.name::first-letter {
+  text-transform: uppercase;
+}
+
 .code {
   font-family: var(--font-sans);
   font-size: var(--type-mono-sm);

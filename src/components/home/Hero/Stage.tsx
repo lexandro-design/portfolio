@@ -62,7 +62,6 @@ export function Stage({ href, title, text }: Props) {
         <div className={styles.frame}>
           <picture>
             <source media="(max-width: 767px)" srcSet={asset('/cases/parfumeria/hero-mobile.jpg')} />
-            {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
             <img src={asset('/cases/parfumeria/hero.jpg')} alt="" width={1600} height={780} />
           </picture>
           <video

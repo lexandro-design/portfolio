@@ -106,7 +106,6 @@ export const chapterId = (i: number) => `ch-${i + 1}`
  * история, а не «блоки сверху, старый текст снизу»
  */
 export function Showcase({ data, item, t }: { data: Data; item: Case; t: T }) {
-  const total = data.blocks.length
   return (
     <>
       {data.blocks.map((b, i) => {

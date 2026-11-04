@@ -1,0 +1,16 @@
+.page {
+  animation: page 800ms var(--ease-out-quart) backwards;
+}
+
+/* С 0.01, а не с нуля: браузер считает страницу показанной с первой отрисовки */
+@keyframes page {
+  from {
+    opacity: 0.01;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+}
