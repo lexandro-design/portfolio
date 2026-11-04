@@ -17,8 +17,9 @@
     "theme": "Theme",
     "themes": {
       "dark": "Dark theme",
-      "neon": "Bordeaux theme",
-      "light": "Light theme"
+      "light": "Light theme",
+      "steel": "Steel theme",
+      "onebit": "One-bit theme"
     },
     "language": "Language",
     "search": "Search and commands"
@@ -70,7 +71,7 @@
     "system": {
       "label": "system",
       "title": "what this site runs on",
-      "aside": "three themes · one set of tokens"
+      "aside": "all themes · one set of tokens"
     },
     "process": {
       "label": "process",

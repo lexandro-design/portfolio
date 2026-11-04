@@ -38,11 +38,14 @@ const FEATURES = [
     'Песочница дизайн-системы',
     'В разделе «Система»: ручки скругления, плотности, акцента, шрифта и темы над мини-интерфейсом.',
   ],
+  ['steel', 'Тема «Сталь»', 'Кнопка в переключателе тем. Выключена: тема пропадает, выбравшие её видят тему по умолчанию.'],
+  ['onebit', 'Тема «Один бит»', 'Кнопка в переключателе тем. Выключена: тема пропадает, выбравшие её видят тему по умолчанию.'],
 ]
 const SITE_THEMES = [
   ['dark', 'Тёмная'],
-  ['neon', 'Неон'],
   ['light', 'Светлая'],
+  ['steel', 'Сталь'],
+  ['onebit', 'Один бит'],
 ]
 const DIRECTIONS = [
   ['design', 'дизайн'],
@@ -1960,7 +1963,7 @@ function toggleDict(k, open) {
 
 function renderSettings() {
   const s = state.data[P.site]
-  s.features ??= { brief: true, palette: true, sandbox: true }
+  s.features ??= { brief: true, palette: true, sandbox: true, steel: true, onebit: true }
   s.sandbox ??= { accents: ['#c6ff3d'] }
   const accents = s.sandbox.accents
   return h(

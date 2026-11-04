@@ -17,8 +17,9 @@
     "theme": "主题",
     "themes": {
       "dark": "深色主题",
-      "neon": "酒红主题",
-      "light": "浅色主题"
+      "light": "浅色主题",
+      "steel": "钢铁主题",
+      "onebit": "单比特主题"
     },
     "language": "语言",
     "search": "搜索与命令"
@@ -69,7 +70,7 @@
     "system": {
       "label": "系统",
       "title": "这个网站的底层",
-      "aside": "三套主题 · 一组令牌"
+      "aside": "所有主题 · 一组令牌"
     },
     "process": {
       "label": "流程",

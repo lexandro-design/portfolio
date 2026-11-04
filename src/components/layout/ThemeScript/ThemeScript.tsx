@@ -12,7 +12,7 @@ const langs = Object.fromEntries(
   LOCALES.filter((l) => l !== DEFAULT_LOCALE).map((l) => [l, HTML_LANG[l]]),
 )
 
-const script = `(function(){var d=document.documentElement;var t=${JSON.stringify(DEFAULT_THEME)};try{var s=localStorage.getItem('theme');if(s==='warm')s='neon';if(${JSON.stringify(THEMES)}.indexOf(s)>-1)t=s}catch(e){}d.dataset.theme=t;var l=${JSON.stringify(langs)},p=location.pathname.slice(${base.length}).split('/')[1];if(l[p])d.lang=l[p];d.classList.add('js')})()`
+const script = `(function(){var d=document.documentElement;var t=${JSON.stringify(DEFAULT_THEME)};try{var s=localStorage.getItem('theme');if(${JSON.stringify(THEMES)}.indexOf(s)>-1)t=s}catch(e){}d.dataset.theme=t;var l=${JSON.stringify(langs)},p=location.pathname.slice(${base.length}).split('/')[1];if(l[p])d.lang=l[p];d.classList.add('js')})()`
 
 export function ThemeScript() {
   return <script dangerouslySetInnerHTML={{ __html: script }} />
