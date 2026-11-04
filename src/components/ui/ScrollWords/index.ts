@@ -1,1 +1,0 @@
-export { ScrollWords } from './ScrollWords'

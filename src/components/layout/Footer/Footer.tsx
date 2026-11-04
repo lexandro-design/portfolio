@@ -5,10 +5,10 @@ import { useLocale } from '../useLocale'
 import styles from './Footer.module.css'
 
 const links = [
-  { href: `mailto:${contacts.email}`, label: 'Email' },
-  { href: contacts.telegram, label: 'Telegram' },
-  { href: contacts.behance, label: 'Behance' },
-  { href: contacts.github, label: 'GitHub' },
+  { href: `mailto:${contacts.email}`, label: 'email' },
+  { href: contacts.telegram, label: 'telegram' },
+  { href: contacts.behance, label: 'behance' },
+  { href: contacts.github, label: 'github' },
 ]
 
 /** Подвал: кто и где, контакты, год */
@@ -17,7 +17,10 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.inner}`}>
-        <span>{t.footer.place}</span>
+        <div className={styles.col}>
+          <span className={styles.primary}>{t.footer.line}</span>
+          <span>{t.footer.place}</span>
+        </div>
         <ul className={styles.links}>
           {links.map((l) => (
             <li key={l.label}>
@@ -30,7 +33,10 @@ export function Footer() {
             </li>
           ))}
         </ul>
-        <span>© 2026</span>
+        <div className={`${styles.col} ${styles.end}`}>
+          <span>© 2026</span>
+          <span>next.js · github pages</span>
+        </div>
       </div>
     </footer>
   )

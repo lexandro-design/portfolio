@@ -1,43 +1,41 @@
 .hero {
   position: relative;
+  overflow: hidden;
   padding-block: var(--space-2xl) var(--space-xl);
 }
 
-/* Свечение цвета кейса: заходит под полупрозрачную шапку и гаснет раньше края
-   своего круга, поэтому ни сверху, ни снизу нет обреза; по бокам страницу
-   держит overflow-x: clip у обёртки кейса */
+/* Мягкое свечение цвета кейса за оглавлением, медленно дрейфует */
 .hero::before {
   content: '';
   position: absolute;
-  inset-block-start: calc(var(--nav-h) * -1 - 26vw);
-  inset-inline-end: -18vw;
-  z-index: -1;
-  inline-size: max(72vw, 760px);
+  inset-block-start: -20%;
+  inset-inline-end: -10%;
+  inline-size: 60vw;
   aspect-ratio: 1;
-  background: var(--grain), color-mix(in oklab, var(--case-color) 30%, transparent);
-  mask-image: radial-gradient(
-    closest-side,
-    #000,
-    rgb(0 0 0 / 0.78) 18%,
-    rgb(0 0 0 / 0.5) 36%,
-    rgb(0 0 0 / 0.26) 54%,
-    rgb(0 0 0 / 0.1) 72%,
-    rgb(0 0 0 / 0.025) 88%,
-    transparent
-  );
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--case-color) 22%, transparent), transparent);
+  filter: blur(20px);
   pointer-events: none;
+  animation: drift 22s var(--ease-in-out) infinite alternate;
 }
 
 .hero > :global(.container) {
   position: relative;
 }
 
+@keyframes drift {
+  to {
+    transform: translate(-12%, 10%) scale(1.15);
+  }
+}
+
 .back {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-secondary);
   transition: color var(--dur-fast) var(--ease-out-quart);
 }
@@ -46,33 +44,35 @@
   color: var(--fg-primary);
 }
 
+.meta,
 .fact dt,
 .tocLabel {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-block: var(--space-3xl) var(--space-lg);
+}
+
 .title {
-  margin-block-start: clamp(48px, 7vw, 120px);
-  font-size: var(--type-h1);
-  font-weight: 300;
+  max-inline-size: 16em;
+  font-size: clamp(var(--type-h2), 6.4vw, 96px);
+  font-weight: 450;
   line-height: 0.98;
-  letter-spacing: -0.024em;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
   animation: rise var(--dur-reveal) var(--ease-out-expo) 80ms both;
 }
 
 .tagline {
-  display: block;
-  margin-block-start: 0.14em;
-  font-size: 0.52em;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
   color: var(--fg-secondary);
-}
-
-.tagline::first-letter {
-  text-transform: uppercase;
 }
 
 /* Лид слева, оглавление глав справа */
@@ -87,8 +87,9 @@
   display: grid;
   align-content: start;
   gap: var(--space-lg);
-  font-size: 22px;
-  line-height: 1.5;
+  font-size: 24px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
   color: var(--fg-secondary);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 160ms both;
 }
@@ -102,6 +103,9 @@
   aspect-ratio: 5 / 4;
   max-block-size: 520px;
   overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 16px;
+  box-shadow: 0 40px 80px -50px color-mix(in oklab, var(--case-color) 50%, transparent);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
 
@@ -118,28 +122,52 @@
 
 .toc li {
   border-block-end: 1px solid var(--border-hair);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) both;
 }
 
 .toc a {
-  display: block;
-  padding-block: 13px;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-xs);
+  padding-block: 14px;
   font-size: var(--type-body);
   color: var(--fg-secondary);
   transition:
-    color var(--dur-base) var(--ease-out-quart),
-    translate var(--dur-slow) var(--ease-out-expo);
+    color var(--dur-fast) var(--ease-out-quart),
+    padding var(--dur-base) var(--ease-out-expo);
 }
 
 .toc a:hover {
-  translate: 8px 0;
+  padding-inline-start: 8px;
   color: var(--fg-primary);
 }
 
-/* С 0.01, а не с нуля: браузер считает текст показанным с первой отрисовки, а не после задержки */
+.toc a :global(svg) {
+  color: var(--fg-tertiary);
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+
+.toc a:hover :global(svg) {
+  color: var(--fg-primary);
+  transform: translateY(3px);
+}
+
+.tocN {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+  transition: color var(--dur-fast) var(--ease-out-quart);
+}
+
+.toc a:hover .tocN {
+  color: var(--case-accent);
+}
+
 @keyframes rise {
   from {
-    opacity: 0.01;
-    transform: translateY(0.14em);
+    opacity: 0;
+    transform: translateY(40px);
   }
 }
 
@@ -194,8 +222,10 @@
 }
 
 .creditRole {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
@@ -214,6 +244,10 @@
 @media (max-width: 767px) {
   .hero {
     padding-block: var(--space-lg) var(--space-lg);
+  }
+
+  .meta {
+    margin-block: var(--space-xl) var(--space-md);
   }
 
   .intro {

@@ -8,7 +8,7 @@
 .monitor {
   inline-size: 100%;
   padding: 10px;
-  border-radius: var(--radius);
+  border-radius: 16px;
   background: linear-gradient(#1d1d1f, #0b0b0c);
   box-shadow:
     0 0 0 1px rgb(255 255 255 / 0.06) inset,
@@ -37,8 +37,10 @@
 
 .caption {
   margin-block-start: var(--space-sm);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 

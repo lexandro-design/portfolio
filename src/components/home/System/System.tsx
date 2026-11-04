@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useState, useSyncExternalStore, type CSSProperties } from 'react'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
-import { useInView } from '@/components/case/Showcase/hooks'
-import { THEMES, type Theme } from '@/content/site'
+import { ThemeSwitch } from '@/components/layout/ThemeSwitch'
+import { THEME_EVENT } from '@/components/layout/ThemeSwitch/ThemeSwitch'
+import { features } from '@/content/site'
+import { Sandbox } from './Sandbox'
 import styles from './System.module.css'
 
 const SWATCHES = [
@@ -17,40 +19,42 @@ const SWATCHES = [
 ] as const
 
 const TYPE = [
-  { token: 'h1', size: 196, sample: 60, serif: true },
-  { token: 'h2', size: 128, sample: 44, serif: true },
-  { token: 'h3', size: 56, sample: 30, serif: true },
+  { token: 'h1', size: 120, sample: 56 },
+  { token: 'h2', size: 72, sample: 40 },
+  { token: 'h3', size: 32, sample: 28 },
   { token: 'body', size: 17, sample: 17 },
-  { token: 'small', size: 15, sample: 15 },
+  { token: 'mono', size: 12, sample: 12, mono: true },
 ]
 
 const SPACING = [4, 8, 16, 24, 32, 48, 64, 96, 128]
 
+/* Значения токенов читаются из CSS прямо сейчас: переключили тему —
+   подписи под образцами сменились вместе с цветом */
+const subscribe = (cb: () => void) => {
+  window.addEventListener(THEME_EVENT, cb)
+  return () => window.removeEventListener(THEME_EVENT, cb)
+}
+const readValues = () => {
+  const css = getComputedStyle(document.documentElement)
+  return SWATCHES.map(([, v]) => css.getPropertyValue(v).trim()).join('|')
+}
+
 type Props = {
   t: Dict['system']
-  /** Названия палитр */
-  labels: Dict['nav']['themes']
+  /** Подписи переключателя тем — те же, что в шапке */
+  themes: { label: string; labels: Dict['nav']['themes'] }
 }
 
 /**
  * Живая спецификация токенов этого сайта: цвет, типографика, отступы,
- * движение. Палитру можно переключить прямо здесь: меняются значения
- * токенов внутри панели, подписи под образцами читаются из CSS. Цвет
- * копируется по клику, шкала отступов вырастает при появлении, по кривой
- * out-expo бежит точка в такт шару на дорожке.
+ * движение. Тему можно переключить прямо здесь — значения под образцами
+ * меняются на глазах. Цвет копируется по клику, «Aa» показывает ось
+ * толщины переменного шрифта, шкала отступов вырастает при появлении,
+ * по кривой out-expo бежит точка в такт шару на дорожке.
  */
-export function System({ t, labels }: Props) {
-  const [theme, setTheme] = useState<Theme>('dark')
-  const [values, setValues] = useState<string[]>([])
-  const panel = useRef<HTMLDivElement>(null)
+export function System({ t, themes }: Props) {
+  const values = useSyncExternalStore(subscribe, readValues, () => '').split('|')
   const [copied, setCopied] = useState<string | null>(null)
-  const [gridRef, live] = useInView<HTMLDivElement>()
-
-  useEffect(() => {
-    if (!panel.current) return
-    const css = getComputedStyle(panel.current)
-    setValues(SWATCHES.map(([, v]) => css.getPropertyValue(v).trim()))
-  }, [theme])
 
   const copy = async (key: string, value: string) => {
     try {
@@ -66,26 +70,15 @@ export function System({ t, labels }: Props) {
     <>
       <Reveal className={styles.introRow}>
         <p className={styles.intro}>{t.intro}</p>
-        <div className={styles.try} role="radiogroup" aria-label={t.tryTheme}>
-          {THEMES.map((id) => (
-            <button
-              key={id}
-              type="button"
-              role="radio"
-              aria-checked={theme === id}
-              className={styles.pick}
-              onClick={() => setTheme(id)}
-            >
-              {labels[id]}
-            </button>
-          ))}
+        <div className={styles.try}>
+          <span className={styles.label}>{t.tryTheme}</span>
+          <ThemeSwitch label={themes.label} labels={themes.labels} />
         </div>
       </Reveal>
 
-      <div ref={panel} className={styles.panel} data-theme={theme}>
-      <div ref={gridRef} className={styles.grid} data-live={live || undefined}>
+      <div className={styles.grid}>
         <Reveal className={`${styles.cell} ${styles.colors}`}>
-          <span className={styles.label}>{t.colors}</span>
+          <span className={styles.label}>01 / {t.colors}</span>
           <ul className={styles.swatches}>
             {SWATCHES.map(([key, variable], i) => (
               <li key={key}>
@@ -106,7 +99,7 @@ export function System({ t, labels }: Props) {
         </Reveal>
 
         <Reveal className={styles.cell} delay={80}>
-          <span className={styles.label}>{t.type}</span>
+          <span className={styles.label}>02 / {t.type}</span>
           <ul className={styles.type}>
             {TYPE.map((row, i) => (
               <li key={row.token}>
@@ -115,15 +108,15 @@ export function System({ t, labels }: Props) {
                   style={
                     {
                       fontSize: row.sample,
-                      fontFamily: row.serif ? 'var(--font-heading)' : undefined,
+                      fontFamily: row.mono ? 'var(--font-mono)' : undefined,
                       '--i': i,
                     } as CSSProperties
                   }
                 >
-                  {row.serif ? 'Aa' : t.specimen}
+                  {row.mono ? 'MONO 0123' : row.token === 'body' ? t.specimen : 'Aa'}
                 </span>
                 <code className={styles.code}>
-                  {row.token}, {row.size}
+                  {row.token} · {row.size}
                 </code>
               </li>
             ))}
@@ -131,7 +124,7 @@ export function System({ t, labels }: Props) {
         </Reveal>
 
         <Reveal className={styles.cell} delay={160}>
-          <span className={styles.label}>{t.spacing}</span>
+          <span className={styles.label}>03 / {t.spacing}</span>
           <ul className={styles.spacing}>
             {SPACING.map((s, i) => (
               <li key={s}>
@@ -143,7 +136,7 @@ export function System({ t, labels }: Props) {
         </Reveal>
 
         <Reveal className={styles.cell} delay={240}>
-          <span className={styles.label}>{t.motion}</span>
+          <span className={styles.label}>04 / {t.motion}</span>
           <div className={styles.motion}>
             <svg viewBox="0 0 200 120" className={styles.curve} aria-hidden="true">
               <path d="M0 120 L200 0" className={styles.linear} />
@@ -162,7 +155,7 @@ export function System({ t, labels }: Props) {
         </Reveal>
       </div>
 
-      </div>
+      {features.sandbox && <Sandbox t={t.sandbox} themeLabels={themes.labels} copied={t.copied} />}
     </>
   )
 }

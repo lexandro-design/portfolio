@@ -1,21 +1,33 @@
-.toggle {
+.switch {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-hair);
+}
+
+.option {
   display: grid;
   place-items: center;
-  inline-size: 40px;
-  block-size: 40px;
-  border-radius: 50%;
-  color: var(--fg-secondary);
+  inline-size: 32px;
+  block-size: 30px;
+  color: var(--fg-tertiary);
   transition:
-    color var(--dur-base) var(--ease-out-quart),
-    rotate var(--dur-slow) var(--ease-out-expo);
+    color var(--dur-fast) var(--ease-out-quart),
+    background-color var(--dur-base) var(--ease-out-quart);
 }
 
-.toggle:hover {
-  color: var(--accent);
-  rotate: 24deg;
+.option:hover {
+  color: var(--fg-primary);
 }
 
-.toggle svg {
-  inline-size: 18px;
-  block-size: 18px;
+.option[aria-checked='true'] {
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+}
+
+@media (max-width: 767px) {
+  .option {
+    inline-size: 28px;
+    block-size: 28px;
+  }
 }

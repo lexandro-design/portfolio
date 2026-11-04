@@ -1,14 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import type { Case } from '@/content/cases'
 import type { Flow } from '@/content/flows'
 import type { Dict } from '@/i18n/dict'
+import { Arrow } from '@/components/ui/Arrow'
 import { CasePreview } from '@/components/ui/CasePreview'
 import { FlowCard } from '@/components/ui/FlowCard'
 import { Shot } from '@/components/ui/Shot'
 import styles from './WorkList.module.css'
+
+const pad = (n: number) => String(n).padStart(2, '0')
 
 type Props = {
   items: { c: Case; index: number }[]
@@ -18,7 +21,7 @@ type Props = {
 }
 
 /**
- * Кейсы списком: строка на проект — название, что это, где и год.
+ * Кейсы списком: строка на проект — номер, название, что это, где и год.
  * На устройствах с мышью под курсором плывёт превью кейса: позиция
  * догоняет курсор с затуханием (rAF), смена кейса — проявлением.
  */
@@ -57,8 +60,8 @@ export function WorkList({ items, flows, href, where }: Props) {
   return (
     <div className={styles.root} onPointerLeave={() => setActive(null)}>
       <ul className={styles.list}>
-        {items.map(({ c }, i) => (
-          <li key={c.slug} className={styles.row}>
+        {items.map(({ c, index }, i) => (
+          <li key={c.slug} className={styles.row} style={{ '--i': Math.min(i, 16) } as CSSProperties}>
             <Link
               href={href(c)}
               className={styles.link}
@@ -70,10 +73,15 @@ export function WorkList({ items, flows, href, where }: Props) {
               }}
               data-active={active === i || undefined}
             >
+              <span className={styles.n}>{pad(index)}</span>
               <span className={styles.title}>{c.title}</span>
               <span className={styles.tagline}>{c.tagline}</span>
+              <span className={styles.label}>{c.label}</span>
               <span className={styles.where}>{where[c.group]}</span>
               <span className={styles.year}>{c.year}</span>
+              <span className={styles.arrow}>
+                <Arrow size={16} />
+              </span>
             </Link>
           </li>
         ))}

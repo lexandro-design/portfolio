@@ -16,15 +16,17 @@
 }
 
 .label {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
 .task {
-  font-family: var(--font-heading);
-  font-size: clamp(28px, 2.4vw, 40px);
-  line-height: 1.16;
+  font-size: 22px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
 }
 
 .did {
@@ -34,6 +36,9 @@
 }
 
 .did li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 8px;
   padding-block-end: 12px;
   border-block-end: 1px solid var(--border-hair);
   font-size: var(--type-body);
@@ -46,40 +51,56 @@
   padding-block-end: 0;
 }
 
+.n {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  padding-block-start: 4px;
+  color: var(--fg-tertiary);
+}
+
+.result {
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hair);
+  box-shadow: inset 3px 0 0 var(--case-accent);
+}
+
 .result p {
   font-size: var(--type-body);
   line-height: 1.55;
 }
 
-/* Цифры проекта: первое, что видно под шапкой */
 .nums {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xl) clamp(48px, 7vw, 112px);
-  margin-block-end: var(--space-3xl);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  margin-block-start: var(--space-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 14px;
+  background: var(--border-hair);
 }
 
 .num {
   display: grid;
   align-content: start;
-  gap: 10px;
-  max-inline-size: 16em;
+  gap: 8px;
+  padding: 22px 24px;
+  background: var(--bg-base);
 }
 
 .v {
-  font-family: var(--font-heading);
-  font-size: clamp(72px, 9.4vw, 176px);
-  font-weight: 300;
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  font-variant-numeric: lining-nums tabular-nums;
+  font-size: 56px;
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: color-mix(in oklab, var(--case-color) 30%, var(--fg-primary));
 }
 
 .l {
-  font-size: var(--type-body);
-  line-height: 1.35;
+  font-size: var(--type-body-sm);
   color: var(--fg-secondary);
 }
 
@@ -90,6 +111,10 @@
 
   .col:first-child {
     grid-column: 1 / -1;
+  }
+
+  .v {
+    font-size: 44px;
   }
 }
 
@@ -103,11 +128,16 @@
     gap: var(--space-lg);
   }
 
+  .task {
+    font-size: 19px;
+  }
+
   .nums {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg) var(--space-md);
-    margin-block-end: var(--space-2xl);
+  }
+
+  .num {
+    padding: 16px;
   }
 
   /* Нечётная последняя цифра — на всю ширину, без пустой клетки рядом */
@@ -116,11 +146,7 @@
   }
 
   .v {
-    font-size: 64px;
+    font-size: 32px;
     white-space: normal;
-  }
-
-  .l {
-    font-size: var(--type-body-sm);
   }
 }

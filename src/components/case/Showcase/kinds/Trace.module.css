@@ -10,7 +10,7 @@
   gap: var(--space-md);
   padding: var(--space-lg);
   border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: #09090c;
   color: #cfcfd6;
   font-family: var(--font-mono);
@@ -89,7 +89,7 @@
 
 .out {
   padding: 12px 16px;
-  border-radius: var(--radius);
+  border-radius: 12px;
   background: rgb(198 255 61 / 0.12);
   color: #e9ffc2;
   font-family: var(--font-sans);

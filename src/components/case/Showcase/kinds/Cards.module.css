@@ -58,7 +58,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
   color: var(--tone);
 }
@@ -115,7 +115,7 @@
   flex: 1;
   padding: 11px;
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius);
+  border-radius: 10px;
   font-size: var(--type-body-sm);
   font-weight: 600;
   text-align: center;

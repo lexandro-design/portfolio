@@ -125,6 +125,7 @@
   border-block-start: 1px solid var(--border-hair);
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  letter-spacing: 0.04em;
   color: var(--fg-tertiary);
 }
 

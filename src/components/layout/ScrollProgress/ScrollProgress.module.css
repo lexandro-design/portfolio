@@ -1,0 +1,9 @@
+.bar {
+  position: absolute;
+  inset: auto 0 -1px;
+  block-size: 1px;
+  background: var(--fg-primary);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  opacity: 0.6;
+}

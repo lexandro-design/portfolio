@@ -8,8 +8,9 @@
   padding: 44px 40px 40px;
   border: 1px solid var(--border-hair);
   background: var(--bg-elevated);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
   color: var(--fg-tertiary);
 }
 

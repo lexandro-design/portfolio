@@ -85,7 +85,7 @@
   block-size: 24px;
   border-radius: 50%;
   background: var(--bg-subtle);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
 }
 
@@ -99,7 +99,7 @@
 }
 
 .ranks {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
 }

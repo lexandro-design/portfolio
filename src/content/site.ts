@@ -9,8 +9,8 @@ export const contacts = data.contacts
 
 export const COORDS = data.coords
 
-export type Theme = 'dark' | 'light'
-export const THEMES: Theme[] = ['dark', 'light']
+export type Theme = 'dark' | 'neon' | 'light'
+export const THEMES: Theme[] = ['dark', 'neon', 'light']
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
 export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean }
@@ -22,3 +22,36 @@ export const DEFAULT_THEME = (THEMES as string[]).includes(data.defaultTheme)
 
 /** Цвета акцента, которые можно выбрать в песочнице блока «Система» */
 export const SANDBOX_ACCENTS: string[] = data.sandbox.accents
+
+/** Разделы главной по порядку — для меток «02 / 08» */
+export const SECTIONS = [
+  'intro',
+  'services',
+  'works',
+  'system',
+  'process',
+  'about',
+  'principles',
+  'contact',
+] as const
+export const SECTION_COUNT = SECTIONS.length
+export const sectionIndex = (id: (typeof SECTIONS)[number]) => SECTIONS.indexOf(id) + 1
+
+/**
+ * Фото на первом экране в шести форматах — нарезаны из одного снимка,
+ * кроп 4:5 с Лахтой за плечом. mask — монохромный формат: файл хранит
+ * только рисунок, цвет даёт тема сайта (см. HeroPhoto). id — подпись
+ * формата под фото, на всех языках одинаковая
+ */
+export const PHOTO = {
+  w: 720,
+  h: 900,
+  formats: [
+    { id: 'photo', src: '/me/photo.jpg', mask: false },
+    { id: 'engraving', src: '/me/lines.png', mask: true },
+    { id: 'dither', src: '/me/dots.png', mask: true },
+    { id: 'ascii', src: '/me/ascii.png', mask: true },
+    { id: 'halftone', src: '/me/halftone.png', mask: true },
+    { id: 'pixels', src: '/me/pixels.jpg', mask: false },
+  ],
+}
