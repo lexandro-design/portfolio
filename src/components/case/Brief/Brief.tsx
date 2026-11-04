@@ -30,9 +30,8 @@ export function Brief({ brief, t }: { brief: Data; t: Dict['case']['brief'] }) {
           <div className={styles.col}>
             <span className={styles.label}>{t.did}</span>
             <ol className={styles.did}>
-              {brief.did.map((d, i) => (
+              {brief.did.map((d) => (
                 <li key={d}>
-                  <span className={styles.n}>{String(i + 1).padStart(2, '0')}</span>
                   {d}
                 </li>
               ))}

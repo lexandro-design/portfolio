@@ -1,71 +1,49 @@
 /* ============================================================
-   Дизайн-токены — 1:1 из переменных макета (коллекции Colors,
-   Spacing, Motion). Три темы: dark по умолчанию, light и neon.
-   Тема ставится атрибутом data-theme на <html> до первой отрисовки
-   (см. ThemeScript), поэтому при загрузке ничего не моргает.
+   Дизайн-токены. Образ сайта: малахит и латунь, как в петербургских
+   дворцах. Ночью глубокий зелёный камень и белая кость, днём светлый
+   камень и зелёные чернила. Плита малахита остаётся в обеих темах.
+   Тема ставится атрибутом data-theme на <html> до первой отрисовки.
    ============================================================ */
 
 :root,
 [data-theme='dark'] {
-  --bg-base: #0a0a0a;
-  --bg-elevated: #121212;
-  --bg-subtle: #1a1a1a;
-  --fg-primary: #f5f5f2;
-  --fg-secondary: #a8a8a3;
-  --fg-tertiary: #858581;
-  --border-hair: rgb(245 245 242 / 0.08);
-  --border-hover: rgb(245 245 242 / 0.22);
-  --signal-live: #4ade80;
-  --border-focus: #dddec7;
-  --bg-scrim: rgb(10 10 10 / 0.8);
+  --bg-base: #06120e;
+  --bg-elevated: #0b1b15;
+  --bg-subtle: #132a21;
+  --fg-primary: #f3efe4;
+  --fg-secondary: #b0baae;
+  --fg-tertiary: #8c9c91;
+  --border-hair: rgb(243 239 228 / 0.13);
+  --border-hover: rgb(243 239 228 / 0.36);
+  --signal-live: #7fd4ad;
+  --border-focus: #d4b77a;
+  --bg-scrim: rgb(6 18 14 / 0.84);
   --overlay-tag: rgb(0 0 0 / 0.55);
-  --shadow-tile: rgb(0 0 0 / 0.55);
-  --fg-inverse: #0a0a0a;
-  --accent: #dddec7;
+  --shadow-tile: rgb(0 0 0 / 0.6);
+  --fg-inverse: #06120e;
+  --accent: #d4b77a;
   color-scheme: dark;
 }
 
 [data-theme='light'] {
-  --bg-base: #f5f4ef;
-  --bg-elevated: #eceae1;
-  --bg-subtle: #e2dfd3;
-  --fg-primary: #14140f;
-  --fg-secondary: #57564e;
-  --fg-tertiary: #6f6d64;
-  --border-hair: rgb(20 20 15 / 0.1);
-  --border-hover: rgb(20 20 15 / 0.28);
-  --signal-live: #1f8a4c;
-  --border-focus: #14140f;
-  --bg-scrim: rgb(20 20 15 / 0.5);
+  --bg-base: #f1f0ea;
+  --bg-elevated: #e6e5dd;
+  --bg-subtle: #d9d8cf;
+  --fg-primary: #0b2a20;
+  --fg-secondary: #3c564b;
+  --fg-tertiary: #566e63;
+  --border-hair: rgb(11 42 32 / 0.15);
+  --border-hover: rgb(11 42 32 / 0.42);
+  --signal-live: #0e7a55;
+  --border-focus: #8a6a2c;
+  --bg-scrim: rgb(11 42 32 / 0.5);
   --overlay-tag: rgb(0 0 0 / 0.35);
-  --shadow-tile: rgb(20 20 15 / 0.14);
-  --fg-inverse: #f5f4ef;
-  --accent: #dddec7;
+  --shadow-tile: rgb(11 42 32 / 0.14);
+  --fg-inverse: #f1f0ea;
+  --accent: #8a6a2c;
   color-scheme: light;
 }
 
-/* Неон: чернильно-фиолетовый фон, кислотный лайм в акцентах и статусах,
-   фиолетовый фокус. Заменила тёплую тему (2026-09-27) */
-[data-theme='neon'] {
-  --bg-base: #0a0817;
-  --bg-elevated: #120f26;
-  --bg-subtle: #1b1735;
-  --fg-primary: #f3f0ff;
-  --fg-secondary: #aba4d6;
-  --fg-tertiary: #8d86ba;
-  --border-hair: rgb(243 240 255 / 0.1);
-  --border-hover: rgb(243 240 255 / 0.28);
-  --signal-live: #c6ff3d;
-  --border-focus: #9d8cff;
-  --bg-scrim: rgb(10 8 23 / 0.8);
-  --overlay-tag: rgb(0 0 0 / 0.5);
-  --shadow-tile: rgb(0 0 0 / 0.55);
-  --fg-inverse: #0a0817;
-  --accent: #c6ff3d;
-  color-scheme: dark;
-}
-
-/* Акцент (кнопки, активные фильтры) задан в каждой теме: в неоне он свой */
 :root {
   /* ---------- Отступы ---------- */
   --space-2xs: 4px;
@@ -77,59 +55,44 @@
   --space-2xl: 64px;
   --space-3xl: 96px;
   --space-4xl: 128px;
-  --bleed: 64px;
-  /* В макете 192, но между секциями выходило ~400px пустоты — 144 */
-  --section-y: 144px;
-  --container: 1440px;
-  --nav-h: 76px;
+  --bleed: clamp(20px, 4.4vw, 88px);
+  --section-y: clamp(104px, 13vw, 224px);
+  --container: 1840px;
+  --nav-h: 72px;
+  --radius: 6px;
 
   /* ---------- Типографика ---------- */
   --font-sans: 'Inter Variable', system-ui, sans-serif;
+  /* Антиква заголовков: тонкая, с контрастом, только от 28px, мельче волосные штрихи пропадают */
+  --font-heading: 'Cormorant Variable', 'Times New Roman', serif;
   --font-cjk-zh: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', sans-serif;
   --font-cjk-ja: 'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
-  /* Только логотип: широкий гротеск отделяет бренд от Inter интерфейса */
-  --font-display: 'Unbounded Variable', var(--font-sans);
-  --type-h1: 120px;
-  --type-h2: 72px;
-  --type-h3: 32px;
-  --type-h4: 22px;
-  --type-body-lg: 18px;
+  --type-h1: clamp(60px, 9.55vw, 190px);
+  --type-h2: clamp(52px, 6.8vw, 128px);
+  --type-h3: clamp(34px, 3.3vw, 56px);
+  --type-h4: 28px;
+  --type-body-lg: 19px;
   --type-body: 17px;
   --type-body-sm: 15px;
-  --type-mono: 12px;
-  --type-mono-sm: 11px;
+  --type-mono: 14px;
+  --type-mono-sm: 13px;
 
-  /* ---------- Движение (Motion Lab) ---------- */
-  --dur-fast: 150ms;
-  --dur-base: 250ms;
-  --dur-slow: 600ms;
-  --dur-reveal: 900ms;
+  /* ---------- Движение ---------- */
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+  --dur-reveal: 1200ms;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* Планшет (Landing / Tablet 768): поля 32, секции 128, H1 88 */
-@media (max-width: 1023px) {
-  :root {
-    --bleed: 32px;
-    --section-y: 112px;
-    --type-h1: 88px;
-    --type-h2: 56px;
-  }
-}
-
-/* Телефон (Landing / Mobile 390): space/bleed-mobile 24, section-y-mobile 96 */
 @media (max-width: 767px) {
   :root {
-    --bleed: 24px;
-    --section-y: 80px;
-    --nav-h: 60px;
-    --type-h1: 52px;
-    --type-h2: 40px;
-    --type-h3: 26px;
-    --type-body-lg: 17px;
+    --nav-h: 64px;
+    --type-h1: 15.2vw;
+    --type-body-lg: 18px;
     --type-body: 16px;
   }
 }

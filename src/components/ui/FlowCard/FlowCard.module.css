@@ -10,6 +10,15 @@
   container-type: size;
 }
 
+/* Большая схема стоит прямо на странице, без подложки */
+.root[data-size='big'] {
+  background: none;
+}
+
+.root[data-size='big'] .grid {
+  display: none;
+}
+
 /* Точечная сетка, как на монтажной схеме */
 .grid {
   position: absolute;
@@ -93,9 +102,8 @@
   border: 1px solid var(--border-hair);
   border-radius: 8px;
   background: color-mix(in oklab, var(--bg-base) 70%, transparent);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.86em;
-  letter-spacing: 0.02em;
   color: var(--fg-tertiary);
   transition:
     color 300ms var(--ease-out-quart),
@@ -223,7 +231,7 @@
   border: 1px solid var(--border-hair);
   border-radius: 8px;
   background: color-mix(in oklab, var(--bg-base) 70%, transparent);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.78em;
   color: var(--fg-tertiary);
   transition:
@@ -234,8 +242,6 @@
 
 .lane .label {
   white-space: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 .laneOut {

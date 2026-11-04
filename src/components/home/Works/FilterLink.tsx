@@ -17,7 +17,7 @@ export function FilterLink({
 }) {
   return (
     <a
-      href="#works"
+      href="#all"
       className={className}
       onClick={() => window.dispatchEvent(new CustomEvent(FILTER_EVENT, { detail: direction }))}
     >

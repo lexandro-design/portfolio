@@ -59,7 +59,7 @@
     "services": {
       "label": "サービス",
       "title": "できること",
-      "aside": "分析 · デザイン · コード · 自動化"
+      "aside": "分析、デザイン、コード、自動化"
     },
     "works": {
       "label": "実績",
@@ -69,12 +69,12 @@
     "system": {
       "label": "システム",
       "title": "このサイトの土台",
-      "aside": "三つのテーマ · ひと組のトークン"
+      "aside": "二つのテーマ、ひと組のトークン"
     },
     "process": {
       "label": "プロセス",
       "title": "進め方",
-      "aside": "一貫対応 · ひとりで"
+      "aside": "一貫対応、ひとりで"
     },
     "about": {
       "label": "わたしについて",
@@ -97,11 +97,11 @@
       "text": "プロダクトの味方になるデザインシステム。色・文字・余白のトークン、すべての状態を備えたコンポーネント、グリッドのルール。新しい画面は既存のパーツから組み立てられ、開発者は迷わず実装できます。",
       "price": "¥94,000〜",
       "tags": [
-        "ux/ui",
-        "design systems",
-        "design tokens",
-        "figma",
-        "auto layout"
+        "UX/UI",
+        "Design Systems",
+        "Design Tokens",
+        "Figma",
+        "Auto Layout"
       ],
       "filter": "design"
     },
@@ -111,11 +111,11 @@
       "text": "自分のデザインでつくるサイトとウェブアプリ。Tilda または React・Next.js でのフロントエンド、バックエンド、データベース、サーバーまで。すべての画面を全幅でデザインと照合します。",
       "price": "¥188,000〜",
       "tags": [
-        "react",
-        "next.js",
-        "node.js",
-        "postgresql",
-        "tilda"
+        "React",
+        "Next.js",
+        "Node.js",
+        "PostgreSQL",
+        "Tilda"
       ],
       "filter": "web"
     },
@@ -125,11 +125,11 @@
       "text": "Telegram ボットと AI アシスタント、CRM と決済の連携、データベース、文書の RAG 検索。データ法 152-FZ に沿ってデータとモデルをロシア国内に置くこともできます。",
       "price": "¥38,000〜",
       "tags": [
-        "javascript",
-        "postgresql",
-        "rag",
-        "ai agents",
-        "bitrix24",
+        "JavaScript",
+        "PostgreSQL",
+        "RAG",
+        "AI Agents",
+        "Bitrix24",
         "152-fz"
       ],
       "filter": "ai"
@@ -167,7 +167,7 @@
     "type": "文字",
     "spacing": "余白",
     "motion": "動き",
-    "motionNote": "out-expo · 900 ms · ブロックの表示",
+    "motionNote": "out-expo, 1200 ms, ブロックの表示",
     "swatches": {
       "base": "背景",
       "elevated": "サーフェス",
@@ -312,9 +312,9 @@
   ],
   "contact": {
     "title": "プロジェクトのご相談はこちら",
-    "github": "github",
-    "behance": "behance",
-    "telegram": "telegram で連絡",
+    "github": "Github",
+    "behance": "Behance",
+    "telegram": "Telegram で連絡",
     "location": "サンクトペテルブルク · utc+3",
     "status": "案件受付中",
     "brief": {
@@ -331,7 +331,7 @@
       "about": "タスクについてひとこと",
       "aboutPlaceholder": "例：ショップのサイトと注文を受けるボット",
       "preview": "依頼文",
-      "telegram": "telegram で送る",
+      "telegram": "Telegram で送る",
       "email": "メールで",
       "copied": "コピーしました。チャットに入らなかった場合は貼り付けてください",
       "empty": "サービスを 1 つ以上選んでください",
@@ -343,7 +343,7 @@
   },
   "footer": {
     "line": "LEXANDRO · ux/ui、デザインシステム、開発",
-    "place": "Alexey Sveshnikov · サンクトペテルブルク"
+    "place": "Alexey Sveshnikov, サンクトペテルブルク"
   },
   "case": {
     "back": "すべての実績",

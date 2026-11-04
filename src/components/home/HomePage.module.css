@@ -1,4 +1,45 @@
 .section {
   padding-block: var(--section-y);
-  border-block-start: 1px solid var(--border-hair);
+}
+
+/* Плита малахита: главный материал сайта, одна и та же в обеих темах */
+.slab {
+  padding-block: var(--section-y);
+  border-block: 1px solid color-mix(in oklab, #d4b77a 55%, transparent);
+  background:
+    linear-gradient(rgb(3 16 12 / 0.5), rgb(3 16 12 / 0.74)),
+    url('./malachite.webp') 50% 50% / cover #06120e;
+  color: var(--fg-primary);
+}
+
+@media (max-width: 767px) {
+  .slab {
+    background:
+      linear-gradient(rgb(3 16 12 / 0.66), rgb(3 16 12 / 0.8)),
+      url('./malachite-m.webp') 50% 50% / cover #06120e;
+  }
+}
+
+/* Заголовок стоит слева, шаги идут справа */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.pin {
+  position: sticky;
+  inset-block-start: calc(var(--nav-h) + var(--space-xl));
+}
+
+@media (max-width: 1023px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pin {
+    position: relative;
+    inset: auto;
+  }
 }

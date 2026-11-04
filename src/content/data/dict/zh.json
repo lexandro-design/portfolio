@@ -59,7 +59,7 @@
     "services": {
       "label": "服务",
       "title": "我做什么",
-      "aside": "分析 · 设计 · 代码 · 自动化"
+      "aside": "分析、设计、代码、自动化"
     },
     "works": {
       "label": "案例",
@@ -69,12 +69,12 @@
     "system": {
       "label": "系统",
       "title": "这个网站的底层",
-      "aside": "三套主题 · 一组令牌"
+      "aside": "两套主题、一组令牌"
     },
     "process": {
       "label": "流程",
       "title": "我如何工作",
-      "aside": "交钥匙 · 一人完成"
+      "aside": "交钥匙、一人完成"
     },
     "about": {
       "label": "关于我",
@@ -97,11 +97,11 @@
       "text": "为产品服务的设计系统：颜色、字体和间距令牌，覆盖所有状态的组件，清晰的栅格规则。新页面由现成的部件组装，开发无需猜测。",
       "price": "¥4,000 起",
       "tags": [
-        "ux/ui",
-        "design systems",
-        "design tokens",
-        "figma",
-        "auto layout"
+        "UX/UI",
+        "Design Systems",
+        "Design Tokens",
+        "Figma",
+        "Auto Layout"
       ],
       "filter": "design"
     },
@@ -111,11 +111,11 @@
       "text": "按自己的设计搭建网站和 Web 应用：用 Tilda 或 React、Next.js 实现前端，加上后端、数据库和服务器。每个页面都在所有宽度下与设计稿核对。",
       "price": "¥8,000 起",
       "tags": [
-        "react",
-        "next.js",
-        "node.js",
-        "postgresql",
-        "tilda"
+        "React",
+        "Next.js",
+        "Node.js",
+        "PostgreSQL",
+        "Tilda"
       ],
       "filter": "web"
     },
@@ -125,11 +125,11 @@
       "text": "Telegram 机器人和 AI 助手，CRM 与支付系统集成，数据库，文档 RAG 检索。可按 152-FZ 数据法把数据和模型留在俄罗斯。",
       "price": "¥1,600 起",
       "tags": [
-        "javascript",
-        "postgresql",
-        "rag",
-        "ai agents",
-        "bitrix24",
+        "JavaScript",
+        "PostgreSQL",
+        "RAG",
+        "AI Agents",
+        "Bitrix24",
         "152-fz"
       ],
       "filter": "ai"
@@ -167,7 +167,7 @@
     "type": "字体",
     "spacing": "间距",
     "motion": "动效",
-    "motionNote": "out-expo · 900 毫秒 · 区块出现",
+    "motionNote": "out-expo, 1200 毫秒, 区块出现",
     "swatches": {
       "base": "背景",
       "elevated": "表面",
@@ -312,8 +312,8 @@
   ],
   "contact": {
     "title": "有项目想聊聊吗？",
-    "github": "github",
-    "behance": "behance",
+    "github": "Github",
+    "behance": "Behance",
     "telegram": "在 telegram 联系",
     "location": "圣彼得堡 · utc+3",
     "status": "可接项目",
@@ -343,7 +343,7 @@
   },
   "footer": {
     "line": "LEXANDRO · ux/ui、设计系统、开发",
-    "place": "Alexey Sveshnikov · 圣彼得堡"
+    "place": "Alexey Sveshnikov, 圣彼得堡"
   },
   "case": {
     "back": "全部案例",

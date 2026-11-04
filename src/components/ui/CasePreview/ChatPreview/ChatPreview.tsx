@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { ChatLine } from '@/content/cases'
-import { PHOTO } from '@/content/site'
+
 import { asset } from '@/lib/asset'
 import styles from './ChatPreview.module.css'
 
@@ -36,7 +36,7 @@ function Media({ line }: { line: ChatLine }) {
       return (
         <span className={styles.photo}>
           {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
-          <img src={asset(PHOTO.formats[0].src)} alt="" width={PHOTO.w} height={PHOTO.h} />
+          <img src={asset('/me/photo.jpg')} alt="" width={720} height={900} />
         </span>
       )
     case 'products':

@@ -1,73 +1,19 @@
-'use client'
-
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
 import styles from './Logo.module.css'
 
-const WORD = 'LEXANDRO'
-const GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*/<>'
-// Буква «встаёт на место» с шагом 45 мс слева направо, всё вместе — около 0,4 с
-const STEP = 45
-// Сам по себе логотип сбоит раз в 20 секунд — сайт живёт, даже если мышь стоит
-const IDLE = 20_000
-
-type Props = { href: string }
-
-/**
- * Логотип-вордмарк. Шрифт Unbounded — широкий гротеск, который сразу
- * отличает бренд от Inter в интерфейсе. На наведении буквы коротко
- * перебирают случайные знаки и собираются обратно слева направо —
- * тот же мотив «пересборки», что у фото на первом экране. Раз в 20 секунд
- * это происходит и без наведения.
- */
-export function Logo({ href }: Props) {
-  const [text, setText] = useState(WORD)
-  const frame = useRef<number | null>(null)
-
-  useEffect(
-    () => () => {
-      if (frame.current) cancelAnimationFrame(frame.current)
-    },
-    [],
-  )
-
-  const scramble = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    if (frame.current) cancelAnimationFrame(frame.current)
-    const start = performance.now()
-
-    const tick = (now: number) => {
-      const settled = Math.floor((now - start) / STEP)
-      const next = [...WORD]
-        .map((letter, i) =>
-          i < settled ? letter : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
-        )
-        .join('')
-      setText(next)
-      frame.current = settled < WORD.length ? requestAnimationFrame(tick) : null
-    }
-
-    frame.current = requestAnimationFrame(tick)
-  }
-
-  useEffect(() => {
-    const idle = window.setInterval(() => {
-      if (document.visibilityState === 'visible') scramble()
-    }, IDLE)
-    return () => {
-      window.clearInterval(idle)
-      if (frame.current) cancelAnimationFrame(frame.current)
-    }
-  }, [])
-
+/** Вордмарк кривыми: широкий гротеск Unbounded 800, отдельный шрифт ради восьми букв не грузится */
+export function LogoMark() {
   return (
-    <Link href={href} className={styles.logo} aria-label={WORD} onPointerEnter={scramble}>
-      {/* Каждая буква в своей ячейке: знаки разной ширины не дёргают строку */}
-      {[...text].map((letter, i) => (
-        <span key={i} className={styles.cell} aria-hidden="true">
-          {letter}
-        </span>
-      ))}
+    <svg className={styles.mark} viewBox="0 -750 7200 750" role="img" aria-label="LEXANDRO">
+      <path d="M298 -750V-103L193 -207H752V0H65V-750ZM1492 -457V-293H935V-457ZM1094 -375 1047 -85 956 -186H1527V0H816L872 -375L816 -750H1522V-564H956L1047 -665ZM2110 -319V-461L2484 0H2197L1964 -306H2080L1845 0H1563L1939 -461V-319L1583 -750H1874L2085 -475H1969L2176 -750H2463ZM2698 -135V-321H3212V-135ZM3113 -750 3449 0H3200L2928 -649H2991L2718 0H2470L2805 -750ZM4208 -166 4141 -152V-750H4367V0H4075L3672 -598L3738 -612V0H3513V-750H3814ZM4882 -750Q5017 -750 5118 -703Q5220 -657 5276 -573Q5333 -489 5333 -375Q5333 -262 5276 -178Q5220 -93 5118 -47Q5017 0 4882 0H4496V-750ZM4727 -101 4620 -207H4900Q4961 -207 5006 -228Q5050 -248 5074 -286Q5098 -324 5098 -375Q5098 -427 5074 -465Q5050 -502 5006 -522Q4961 -543 4900 -543H4620L4727 -649ZM5593 -426H5855Q5899 -426 5923 -446Q5948 -466 5948 -504Q5948 -542 5923 -562Q5899 -582 5855 -582H5560L5665 -690V0H5432V-750H5890Q5977 -750 6043 -719Q6109 -688 6146 -633Q6183 -578 6183 -504Q6183 -432 6146 -376Q6109 -321 6043 -291Q5977 -260 5890 -260H5593ZM5693 -351H5952L6210 0H5943ZM6715 17Q6580 17 6479 -32Q6377 -81 6321 -169Q6264 -257 6264 -375Q6264 -493 6321 -581Q6377 -669 6479 -718Q6580 -767 6715 -767Q6850 -767 6952 -718Q7053 -669 7110 -581Q7166 -493 7166 -375Q7166 -257 7110 -169Q7053 -81 6952 -32Q6850 17 6715 17ZM6715 -190Q6782 -190 6831 -213Q6879 -235 6905 -276Q6931 -318 6931 -375Q6931 -432 6905 -474Q6879 -515 6831 -537Q6782 -560 6715 -560Q6648 -560 6600 -537Q6551 -515 6525 -474Q6499 -432 6499 -375Q6499 -318 6525 -276Q6551 -235 6600 -213Q6648 -190 6715 -190Z" fill="currentColor" />
+    </svg>
+  )
+}
+
+export function Logo({ href }: { href: string }) {
+  return (
+    <Link href={href} className={styles.logo}>
+      <LogoMark />
     </Link>
   )
 }

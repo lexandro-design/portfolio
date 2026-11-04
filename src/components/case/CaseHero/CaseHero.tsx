@@ -6,12 +6,8 @@ import { Arrow } from '@/components/ui/Arrow'
 import { FlowCard } from '@/components/ui/FlowCard'
 import styles from './CaseHero.module.css'
 
-const pad = (n: number) => String(n).padStart(2, '0')
-
 type Props = {
   item: Case
-  index: number
-  total: number
   t: Dict['case']
   directions: Dict['works']['directions']
   /** Куда ведёт «все кейсы» — главная на своём языке */
@@ -28,25 +24,21 @@ type Props = {
  * Большой обложки нет: первым кадром работает сама первая глава, так
  * страница не начинается с «одной большой картинки»
  */
-export function CaseHero({ item, index, total, t, directions, backHref, chapters, flow }: Props) {
+export function CaseHero({ item, t, directions, backHref, chapters, flow }: Props) {
   const facts = [
     { label: t.facts.client, value: item.client },
     { label: t.facts.year, value: item.year },
     { label: t.facts.direction, value: item.directions.map((d) => directions[d]).join(', ') },
-    { label: t.facts.stack, value: item.stack.join(' · ') },
+    { label: t.facts.stack, value: item.stack.join(', ') },
   ]
 
   const toc = chapters.length > 0 && (
     <nav className={styles.toc} aria-label={t.toc}>
       <span className={styles.tocLabel}>{t.toc}</span>
       <ol>
-        {chapters.map((c, i) => (
-          <li key={c.id} style={{ animationDelay: `${240 + i * 60}ms` }}>
-            <a href={`#${c.id}`}>
-              <span className={styles.tocN}>{pad(i + 1)}</span>
-              <span className={styles.tocTitle}>{c.title}</span>
-              <Arrow size={14} dir="down" />
-            </a>
+        {chapters.map((c) => (
+          <li key={c.id}>
+            <a href={`#${c.id}`}>{c.title}</a>
           </li>
         ))}
       </ol>
@@ -61,16 +53,9 @@ export function CaseHero({ item, index, total, t, directions, backHref, chapters
           {t.back}
         </Link>
 
-        <div className={styles.meta}>
-          <span>
-            case {pad(index)} / {pad(total)} · {item.label}
-          </span>
-          <span>{item.year}</span>
-        </div>
-
         <h1 className={styles.title}>
           {item.title}
-          <span className={styles.tagline}> · {item.tagline}</span>
+          <span className={styles.tagline}>{item.tagline}</span>
         </h1>
 
         <div className={styles.intro} data-flow={flow ? '' : undefined}>

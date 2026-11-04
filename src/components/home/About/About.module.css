@@ -1,69 +1,93 @@
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-3xl);
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(32px, 6vw, 112px);
+  align-items: start;
+}
+
+.photo {
+  position: sticky;
+  inset-block-start: calc(var(--nav-h) + var(--space-lg));
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+/* Чёрно-белое: цвет на сайте только у работ */
+.photo img {
+  inline-size: 100%;
+  filter: grayscale(1) contrast(1.06);
 }
 
 .text {
   display: grid;
-  align-content: start;
-  gap: var(--space-md);
+  gap: clamp(40px, 5vw, 80px);
 }
 
 .lead {
-  font-size: 32px;
-  font-weight: 450;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 4vw, 72px);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg) var(--space-xl);
 }
 
 .p {
-  max-inline-size: 36em;
   color: var(--fg-secondary);
 }
 
 .timeline {
-  border-block-end: 1px solid var(--border-hair);
+  border-block-start: 1px solid var(--border-hair);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 6fr);
   gap: var(--space-md);
-  padding-block: var(--space-lg);
-  border-block-start: 1px solid var(--border-hair);
+  padding-block: var(--space-md) var(--space-lg);
+  border-block-end: 1px solid var(--border-hair);
 }
 
 .when {
-  padding-block-start: 5px;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding-block-start: 0.5em;
+  font-size: var(--type-body-sm);
   color: var(--fg-tertiary);
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  margin-block-end: 6px;
-  font-size: 22px;
-  font-weight: 450;
-  letter-spacing: -0.015em;
+  margin-block-end: var(--space-xs);
+  font-size: clamp(30px, 2.6vw, 44px);
 }
 
 @media (max-width: 1023px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .photo {
+    position: relative;
+    inset: auto;
+    max-inline-size: 520px;
   }
 }
 
 @media (max-width: 767px) {
-  .lead {
-    font-size: 24px;
+  .columns,
+  .row {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .row {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    gap: var(--space-2xs);
+  }
+
+  .when {
+    padding-block-start: 0;
   }
 }

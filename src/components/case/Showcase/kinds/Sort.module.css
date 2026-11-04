@@ -20,7 +20,7 @@
 .msg {
   display: block;
   padding: 10px 14px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: var(--bg-subtle);
   font-size: var(--type-body-sm);
   line-height: 1.4;
@@ -38,7 +38,7 @@
   min-block-size: 280px;
   padding: 18px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: var(--bg-elevated);
   transition:
     border-color var(--dur-slow),
@@ -51,11 +51,9 @@
 }
 
 .label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .list {

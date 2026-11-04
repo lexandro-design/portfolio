@@ -1,5 +1,5 @@
 .root {
-  padding-block: var(--space-3xl);
+  padding-block: var(--section-y);
 }
 
 .tile {
@@ -7,23 +7,19 @@
   display: grid;
   justify-items: center;
   gap: var(--space-xl);
-  padding: clamp(64px, 9vw, 128px) var(--space-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-hair);
-  border-radius: 28px;
-  background: var(--bg-elevated);
   text-align: center;
 }
 
-/* Свет цвета кейса снизу: круг гаснет раньше своего края */
+/* Свет цвета кейса под вопросом: круг гаснет раньше своего края */
 .tile::before {
   content: '';
   position: absolute;
-  inset-block-start: 100%;
+  inset-block-start: 50%;
   inset-inline-start: 50%;
-  inline-size: max(90%, 640px);
-  aspect-ratio: 1;
-  background: var(--grain), color-mix(in oklab, var(--case-color) 34%, transparent);
+  z-index: -1;
+  inline-size: max(84vw, 640px);
+  aspect-ratio: 1.6;
+  background: var(--grain), color-mix(in oklab, var(--case-color) 26%, transparent);
   mask-image: radial-gradient(
     closest-side,
     #000,
@@ -36,18 +32,11 @@
   pointer-events: none;
 }
 
-.title,
-.actions {
-  position: relative;
-}
-
 .title {
-  max-inline-size: 14em;
+  max-inline-size: 11em;
   font-size: var(--type-h2);
-  font-weight: 450;
-  line-height: 1.04;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
+  font-weight: 300;
+  line-height: 1;
 }
 
 .actions {
@@ -55,14 +44,4 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-}
-
-@media (max-width: 767px) {
-  .root {
-    padding-block: var(--space-2xl);
-  }
-
-  .tile {
-    border-radius: 22px;
-  }
 }

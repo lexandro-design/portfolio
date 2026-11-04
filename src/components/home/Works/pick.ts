@@ -1,5 +1,11 @@
-/** Подборка на первом экране блока: самые показательные проекты разных направлений */
+import type { Shot } from '@/content/cases'
+
+/** Подборка: самые показательные проекты разных направлений */
 export const PICK = ['parfumeria', 'mimimibot', 'saldo', 'ai-office', 'otrx', 'haiku']
 
-/** Какая часть кадра важна, если он не влезает в плитку целиком. По умолчанию верхний левый угол */
-export const FOCUS: Record<string, string> = { parfumeria: '50% 60%' }
+/** Большой кадр для подборки там, где миниатюры кейса мало. Hermès уже на сцене первого экрана */
+export const LOOK: Record<string, Shot> = {
+  parfumeria: { src: '/cases/parfumeria/3d-hibiscus.jpg', video: '/cases/parfumeria/3d-hibiscus.mp4', caption: '', w: 1600, h: 900 },
+  saldo: { src: '/cases/saldo/01.jpg', caption: '', w: 1600, h: 1100 },
+  otrx: { src: '/cases/otrx/cover.jpg', video: '/cases/otrx/cover.mp4', caption: '', w: 2624, h: 1280 },
+}

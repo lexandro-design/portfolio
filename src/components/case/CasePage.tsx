@@ -38,8 +38,6 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
     >
       <CaseHero
         item={item}
-        index={index + 1}
-        total={items.length}
         t={t.case}
         directions={t.works.directions}
         backHref={localePath(locale, '/#works')}
@@ -58,8 +56,6 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
       />
       <NextCase
         item={next}
-        index={items.indexOf(next) + 1}
-        total={items.length}
         href={localePath(locale, `/cases/${next.slug}/`)}
         label={t.case.next}
       />

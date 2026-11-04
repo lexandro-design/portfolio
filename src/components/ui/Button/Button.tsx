@@ -13,13 +13,13 @@ type Props = {
   className?: string
 }
 
-/** Кнопка-ссылка из макета: моно, стрелка сдвигается на ховере */
+/** Кнопка-ссылка: заливка, контур или подчёркнутый текст */
 export function Button({
   href,
   children,
   variant = 'primary',
   external,
-  arrow = true,
+  arrow = false,
   className,
 }: Props) {
   const cls = [styles.button, className].filter(Boolean).join(' ')

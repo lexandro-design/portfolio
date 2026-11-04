@@ -16,17 +16,15 @@
 }
 
 .label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--type-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
 .task {
-  font-size: 22px;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 2.4vw, 40px);
+  line-height: 1.16;
 }
 
 .did {
@@ -36,9 +34,6 @@
 }
 
 .did li {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: 8px;
   padding-block-end: 12px;
   border-block-end: 1px solid var(--border-hair);
   font-size: var(--type-body);
@@ -49,20 +44,6 @@
 .did li:last-child {
   border-block-end: 0;
   padding-block-end: 0;
-}
-
-.n {
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  padding-block-start: 4px;
-  color: var(--fg-tertiary);
-}
-
-.result {
-  padding: 20px 22px;
-  border-radius: 18px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-hair);
 }
 
 .result p {
@@ -86,13 +67,14 @@
 }
 
 .v {
-  font-size: clamp(64px, 8vw, 120px);
-  font-weight: 450;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--font-heading);
+  font-size: clamp(72px, 9.4vw, 176px);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-variant-numeric: lining-nums tabular-nums;
   white-space: nowrap;
-  color: var(--case-accent);
+  color: color-mix(in oklab, var(--case-color) 30%, var(--fg-primary));
 }
 
 .l {
@@ -121,10 +103,6 @@
     gap: var(--space-lg);
   }
 
-  .task {
-    font-size: 19px;
-  }
-
   .nums {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -138,7 +116,7 @@
   }
 
   .v {
-    font-size: 52px;
+    font-size: 64px;
     white-space: normal;
   }
 

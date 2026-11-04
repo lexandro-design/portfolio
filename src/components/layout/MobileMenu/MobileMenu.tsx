@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { contacts } from '@/content/site'
 import { LOCALE_LABELS, LOCALES, localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
+import { LogoMark } from '../Nav/Logo'
 import styles from './MobileMenu.module.css'
 
 type Props = {
@@ -57,7 +58,7 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
         onClose={() => setOpen(false)}
       >
         <div className={`container ${styles.head}`}>
-          <span className={styles.logo}>LEXANDRO</span>
+          <LogoMark />
           <button
             type="button"
             className={styles.close}
@@ -78,7 +79,6 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
               style={{ animationDelay: `${80 + i * 60}ms` }}
               onClick={() => setOpen(false)}
             >
-              <span className={styles.index}>0{i + 1}</span>
               {item.label}
             </Link>
           ))}
@@ -100,14 +100,14 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
             ))}
           </div>
           <a href={contacts.telegram} target="_blank" rel="noreferrer">
-            telegram {contacts.telegramHandle}
+            Telegram {contacts.telegramHandle}
           </a>
           <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
           <a href={contacts.behance} target="_blank" rel="noreferrer">
-            behance
+            Behance
           </a>
           <a href={contacts.github} target="_blank" rel="noreferrer">
-            github
+            GitHub
           </a>
         </div>
       </dialog>
