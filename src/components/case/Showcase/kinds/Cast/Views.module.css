@@ -12,6 +12,23 @@
   list-style: none;
 }
 
+/* Лампочка статуса в тёмной теме зелёная, поэтому у замечаний свой цвет */
+.stages,
+.sheet,
+.desks,
+.sketch,
+.doc {
+  --cast-warn: #e8604a;
+}
+
+:global([data-theme='light']) :is(.sheet, .desks, .sketch, .doc) {
+  --cast-warn: #c0341d;
+}
+
+:global([data-theme='steel']) :is(.sheet, .desks, .sketch, .doc) {
+  --cast-warn: #8f1d0a;
+}
+
 /* Этапы: квадрат и линия вниз, идущий этап мигает */
 .stages {
   display: grid;
@@ -108,7 +125,7 @@
 }
 
 .sheet [data-s='bad'] td:last-child {
-  color: var(--signal-live);
+  color: var(--cast-warn);
 }
 
 .sheet [data-s='dim'] td {
@@ -345,11 +362,11 @@
 }
 
 .desks [data-s='wait'] {
-  border-block-start-color: var(--signal-live);
+  border-block-start-color: var(--cast-warn);
 }
 
 .desks [data-s='wait'] span {
-  color: var(--signal-live);
+  color: var(--cast-warn);
 }
 
 /* Значки: вкладки и способы ответить */
@@ -529,7 +546,7 @@
 }
 
 .sketch [data-s='bad'] span {
-  color: var(--signal-live);
+  color: var(--cast-warn);
 }
 
 /* Документ базы знаний */
@@ -557,8 +574,8 @@
 }
 
 .doc [data-s='miss'] {
-  border-inline-start-color: var(--signal-live);
-  color: var(--signal-live);
+  border-inline-start-color: var(--cast-warn);
+  color: var(--cast-warn);
 }
 
 .doc [data-s='off'] {

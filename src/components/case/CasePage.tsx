@@ -4,7 +4,7 @@ import { caseColor } from '@/content/cases'
 import { getCase, getCases } from '@/content/cases-i18n'
 import { HTML_LANG, localePath, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
-import { flowOf } from '@/content/flows'
+import { liveOf } from '@/content/flows'
 import { paceOf } from '@/content/pace'
 import { getShowcase } from '@/content/showcase'
 import { getCast } from '@/content/casts'
@@ -54,7 +54,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
         directions={t.works.directions}
         backHref={localePath(locale, '/#works')}
         chapters={chapters}
-        flow={flowOf(item, show)}
+        flow={liveOf(item, show, cast)}
       />
       {show && pace === 'show' && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="lead" />}
       {show && <Brief brief={show.brief} t={t.case.brief} />}

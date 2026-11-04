@@ -1,5 +1,8 @@
 import type { Locale } from '@/i18n/config'
 import data from './data/casts.json'
+import en from './data/casts-i18n/en.json'
+import ja from './data/casts-i18n/ja.json'
+import zh from './data/casts-i18n/zh.json'
 import { overlay } from './showcase'
 
 /**
@@ -52,11 +55,12 @@ export type Cast = {
 }
 
 const RU = data as unknown as Record<string, Cast>
-const COPY: Partial<Record<Locale, Record<string, unknown>>> = {}
+const COPY: Partial<Record<Locale, Record<string, { app?: string }>>> = { en, zh, ja }
 
 export function getCast(locale: Locale, slug: string): Cast | null {
   const base = RU[slug]
   if (!base) return null
   const tr = COPY[locale]?.[slug]
-  return tr ? overlay(base, tr) : base
+  // Название приложения overlay не трогает: у кейсов это имя продукта, здесь подпись окна
+  return tr ? { ...overlay(base, tr), app: tr.app ?? base.app } : base
 }

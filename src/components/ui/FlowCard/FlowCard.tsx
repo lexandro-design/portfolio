@@ -3,7 +3,7 @@
 import type { CSSProperties } from 'react'
 import type { Flow } from '@/content/flows'
 import { useInView, useScript } from '@/components/case/Showcase/hooks'
-import { Board, Compare, Queue, Trace, Voice } from './kinds'
+import { Board, Compare, Console, Diff, Frames, Mini, Notify, Queue, Trace, Tracks, Voice } from './kinds'
 import styles from './FlowCard.module.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -27,6 +27,12 @@ export function FlowCard({ flow, size = 'card' }: { flow: Flow; size?: 'card' | 
       {flow.variant === 'board' && <Board flow={flow} on={inView} />}
       {flow.variant === 'trace' && <Trace flow={flow} on={inView} />}
       {flow.variant === 'compare' && <Compare flow={flow} />}
+      {flow.variant === 'view' && <Mini flow={flow} on={inView} />}
+      {flow.variant === 'notify' && <Notify flow={flow} on={inView} />}
+      {flow.variant === 'console' && <Console flow={flow} on={inView} />}
+      {flow.variant === 'tracks' && <Tracks flow={flow} on={inView} />}
+      {flow.variant === 'diff' && <Diff flow={flow} on={inView} />}
+      {flow.variant === 'frames' && <Frames flow={flow} on={inView} />}
     </div>
   )
 }

@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import { asset } from '@/lib/asset'
 import type { Flow } from '@/content/flows'
 import { useScript } from '@/components/case/Showcase/hooks'
+import { View } from '@/components/case/Showcase/kinds/Cast/Views'
 import styles from './kinds.module.css'
 
 type Of<V extends Flow['variant']> = Extract<Flow, { variant: V }>
@@ -174,6 +175,128 @@ export function Compare({ flow }: { flow: Of<'compare'> }) {
       <span className={styles.tag} data-side="b">
         {flow.b.label}
       </span>
+    </div>
+  )
+}
+
+/** Вид из плеера кейса: крутится теми же шагами, только без чата */
+export function Mini({ flow, on }: { flow: Of<'view'>; on: boolean }) {
+  const { view, steps } = flow
+  const t = useScript(steps.length, 1100, on, 3)
+  const state = useMemo(() => {
+    const rows = view.rows.map((r) => ({ ...r }))
+    steps.slice(0, t + 1).forEach((v) => v.forEach(({ r, ...patch }) => Object.assign(rows[r], patch)))
+    return { ...view, rows }
+  }, [view, steps, t])
+  return (
+    <div className={styles.mini} data-kind={view.kind}>
+      <View view={state} />
+    </div>
+  )
+}
+
+/** Телефон: вопросы приходят по одному, на кнопку нажимают, работа идёт дальше */
+export function Notify({ flow, on }: { flow: Of<'notify'>; on: boolean }) {
+  const t = useScript(flow.items.length * 2, 1100, on, 3)
+  const at = Math.floor(t / 2)
+  const item = flow.items[at]
+  return (
+    <div className={styles.notify}>
+      <span className={styles.notifyApp}>{flow.app}</span>
+      <div key={at} className={styles.notifyCard}>
+        <p>{item.text}</p>
+        <span>
+          {item.actions.map((a, i) => (
+            <i key={a} data-on={(t % 2 === 1 && i === 0) || undefined}>
+              {a}
+            </i>
+          ))}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+/** Окно пульта: сервисы включаются и выключаются по одному */
+export function Console({ flow, on }: { flow: Of<'console'>; on: boolean }) {
+  const n = flow.services.length
+  const t = useScript(n + 1, 800, on, 3)
+  return (
+    <div className={styles.console}>
+      <span className={styles.consoleBar}>{flow.window}</span>
+      <ul>
+        {flow.services.map((s, i) => (
+          <li key={s.name} data-on={i < t || undefined}>
+            {s.name}
+            <i />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+/** Две дорожки созвона: говорит то я, то собеседник, реплика ниже уже текстом */
+export function Tracks({ flow, on }: { flow: Of<'tracks'>; on: boolean }) {
+  const t = useScript(flow.lines.length, 1600, on, 2)
+  const line = flow.lines[t]
+  const tracks = [...new Map(flow.lines.map((l) => [l.who, l.name ?? l.who])).entries()]
+  return (
+    <div className={styles.tracks}>
+      {tracks.map(([who, name], n) => (
+        <div key={who} className={styles.track} data-on={line.who === who || undefined}>
+          <span>{name}</span>
+          <div>
+            {Array.from({ length: 30 }, (_, i) => (
+              <i key={i} style={{ '--h': shape(i * 2 + n * 7), '--d': `${-(i % 7) * 120}ms` } as CSSProperties} />
+            ))}
+          </div>
+        </div>
+      ))}
+      <p key={line.text} className={styles.trackLine}>
+        <span>{line.t}</span> {line.text}
+      </p>
+    </div>
+  )
+}
+
+/** Правка текста: штамп вычёркивается, на его месте живая фраза */
+export function Diff({ flow, on }: { flow: Of<'diff'>; on: boolean }) {
+  const t = useScript(3, 1300, on, 3)
+  return (
+    <div className={styles.diff}>
+      <div data-gone={t >= 1 || undefined}>
+        <span>{flow.labels[0]}</span>
+        <p>{flow.was}</p>
+      </div>
+      <div data-on={t >= 2 || undefined}>
+        <span>{flow.labels[1]}</span>
+        <p>{flow.now}</p>
+      </div>
+    </div>
+  )
+}
+
+/** Лента кадров: фотосессия собирается кадр за кадром, рамка идёт по карусели */
+export function Frames({ flow, on }: { flow: Of<'frames'>; on: boolean }) {
+  const n = 8
+  const t = useScript(n, 620, on, 4)
+  return (
+    <div className={styles.frames}>
+      <ul>
+        {Array.from({ length: n }, (_, i) => (
+          <li key={i} data-on={i <= t || undefined} data-now={i === t || undefined} style={{ '--i': i } as CSSProperties}>
+            <i />
+          </li>
+        ))}
+      </ul>
+      <p>
+        {flow.metric && (
+          <b>
+            {flow.metric.v} <small>{flow.metric.l}</small>
+          </b>
+        )}
+      </p>
     </div>
   )
 }
