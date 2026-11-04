@@ -8,9 +8,16 @@ import type { Showcase } from './showcase'
  * приходят сами. chain — цепочка шагов, route — запрос уходит по одной
  * из дорожек (маршрутизация FoodMarket, сценарии упаковки)
  */
+type Metric = { v: string; l: string }
+
 export type Flow =
   | { variant: 'chain'; input?: string; steps: string[]; output?: string }
   | { variant: 'route'; lanes: { label: string; out: string }[]; items: { text: string; lane: number }[] }
+  | { variant: 'voice'; me: string; reply: string; metric?: Metric }
+  | { variant: 'queue'; stages: string[]; items: string[]; metric?: Metric }
+  | { variant: 'board'; hub: string; desks: { name: string; group: string }[]; feed: { who: string; text: string }[] }
+  | { variant: 'trace'; prompt: string; steps: string[]; out: string }
+  | { variant: 'compare'; a: { src: string; label: string }; b: { src: string; label: string } }
 
 const MAX = 4
 
@@ -31,21 +38,20 @@ export function flowOf(item: Case, show: Showcase | null): Flow | null {
 
   switch (b?.kind) {
     case 'queue':
-      return chain(b.stages, b.items[0])
+      return { variant: 'queue', stages: b.stages, items: b.items, metric: show?.brief.nums[0] }
+    case 'board':
+      return { variant: 'board', hub: b.hub.label, desks: b.desks, feed: b.feed }
     case 'trace':
-      return chain(
-        b.steps.map((s) => s.text),
-        b.prompt,
-        b.out,
-      )
+      return { variant: 'trace', prompt: b.prompt, steps: b.steps.map((s) => s.text), out: b.out }
     case 'sort':
       return { variant: 'route', lanes: b.lanes, items: b.items }
     case 'voice':
-      return chain(
-        fallback,
-        b.lines.find((l) => l.who === 'me')?.text,
-        b.lines.find((l) => l.who === 'it')?.text,
-      )
+      return {
+        variant: 'voice',
+        me: b.lines.find((l) => l.who === 'me')?.text ?? '',
+        reply: b.lines.find((l) => l.who === 'it')?.text ?? '',
+        metric: show?.brief.nums[0],
+      }
     case 'fusion':
       return chain([b.a.label, b.b.label, b.label], b.query, b.fused[0])
     case 'notify':
@@ -70,4 +76,15 @@ export function flowOf(item: Case, show: Showcase | null): Flow | null {
     default:
       return fallback.length ? chain(fallback) : null
   }
+}
+
+/** Превью в карточке: у проекта со сравнением два экрана под шторкой, остальное как в шапке кейса */
+export function previewOf(item: Case, show: Showcase | null): Flow | null {
+  const b = show?.blocks.find((x) => x.kind === 'compare')
+  const pair = b?.kind === 'compare' ? b.pairs[0] : undefined
+  const [left, right] = pair ? [item.shots[pair.a], item.shots[pair.b]] : []
+  if (b?.kind === 'compare' && left && right) {
+    return { variant: 'compare', a: { src: left.src, label: b.a }, b: { src: right.src, label: b.b } }
+  }
+  return flowOf(item, show)
 }

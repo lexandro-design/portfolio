@@ -3,6 +3,7 @@
 import type { CSSProperties } from 'react'
 import type { Flow } from '@/content/flows'
 import { useInView, useScript } from '@/components/case/Showcase/hooks'
+import { Board, Compare, Queue, Trace, Voice } from './kinds'
 import styles from './FlowCard.module.css'
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -11,6 +12,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
  * Живая схема автоматизации вместо фото: запрос приходит, бежит по шагам
  * (шаг загорается, получает галочку, точка едет к следующему) и выходит
  * ответом. Маршрут — запрос уходит по своей дорожке, следующий по другой.
+ * У голоса, очереди, табло, журнала и шторки своя подача (см. kinds).
  * Крутится, только пока карточка на экране; без движения — всё сразу
  */
 export function FlowCard({ flow, size = 'card' }: { flow: Flow; size?: 'card' | 'big' }) {
@@ -18,7 +20,13 @@ export function FlowCard({ flow, size = 'card' }: { flow: Flow; size?: 'card' | 
   return (
     <div ref={ref} className={styles.root} data-variant={flow.variant} data-size={size} aria-hidden="true">
       <span className={styles.grid} />
-      {flow.variant === 'chain' ? <Chain flow={flow} on={inView} /> : <Route flow={flow} on={inView} />}
+      {flow.variant === 'chain' && <Chain flow={flow} on={inView} />}
+      {flow.variant === 'route' && <Route flow={flow} on={inView} />}
+      {flow.variant === 'voice' && <Voice flow={flow} on={inView} />}
+      {flow.variant === 'queue' && <Queue flow={flow} on={inView} />}
+      {flow.variant === 'board' && <Board flow={flow} on={inView} />}
+      {flow.variant === 'trace' && <Trace flow={flow} on={inView} />}
+      {flow.variant === 'compare' && <Compare flow={flow} />}
     </div>
   )
 }

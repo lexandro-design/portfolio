@@ -17,7 +17,7 @@
     "theme": "主题",
     "themes": {
       "dark": "深色主题",
-      "neon": "霓虹主题",
+      "neon": "酒红主题",
       "light": "浅色主题"
     },
     "language": "语言",
@@ -347,6 +347,7 @@
   },
   "case": {
     "back": "全部案例",
+    "cta": "聊聊您的项目？",
     "facts": {
       "client": "客户",
       "year": "年份",

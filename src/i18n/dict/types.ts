@@ -189,6 +189,7 @@ export type Dict = {
 
   case: {
     back: string
+    cta: string
     facts: { client: string; year: string; direction: string; stack: string; site: string }
     screens: string
     scheme: string

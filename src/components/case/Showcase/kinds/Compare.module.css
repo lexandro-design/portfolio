@@ -12,7 +12,6 @@
   min-block-size: 280px;
   overflow: hidden;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
   background: var(--bg-elevated);
   cursor: ew-resize;
   user-select: none;
@@ -80,7 +79,6 @@
   position: absolute;
   inset-block-start: 14px;
   padding: 6px 10px;
-  border-radius: 999px;
   background: var(--overlay-tag);
   backdrop-filter: blur(8px);
   font-family: var(--font-mono);

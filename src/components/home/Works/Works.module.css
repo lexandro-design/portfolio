@@ -141,7 +141,6 @@
   block-size: 34px;
   padding-inline: 14px;
   border: 1px solid var(--border-hair);
-  border-radius: 999px;
   font-size: var(--type-body-sm);
   color: var(--fg-secondary);
   transition:
@@ -176,50 +175,43 @@
   margin-block-start: 0;
 }
 
-.bento {
+/* Таблица на линиях: линии стоят, движется только содержимое ячеек */
+.bento,
+.grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  /* Ряды фиксированной высоты: картинка заполняет ячейку над подписью */
-  grid-template-rows: 320px 320px 380px;
-  grid-template-areas:
-    'a a b b'
-    'a a c c'
-    'd e f f';
-  gap: var(--space-2xl) var(--space-lg);
+  border-block-start: 1px solid var(--border-hair);
+  border-inline-start: 1px solid var(--border-hair);
+}
+
+/* Ритм подборки: один, два, три */
+.bento {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .bento > :nth-child(1) {
-  grid-area: a;
+  grid-column: 1 / -1;
 }
 
-.bento > :nth-child(2) {
-  grid-area: b;
-}
-
+.bento > :nth-child(2),
 .bento > :nth-child(3) {
-  grid-area: c;
+  grid-column: span 3;
 }
 
-.bento > :nth-child(4) {
-  grid-area: d;
-}
-
-.bento > :nth-child(5) {
-  grid-area: e;
-}
-
-.bento > :nth-child(6) {
-  grid-area: f;
+.bento > :nth-child(n + 4) {
+  grid-column: span 2;
 }
 
 .grid {
-  display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-2xl) var(--space-lg);
+}
+
+.cell {
+  border-inline-end: 1px solid var(--border-hair);
+  border-block-end: 1px solid var(--border-hair);
 }
 
 /* Карточки въезжают лесенкой после смены фильтра */
-.cell {
+.cell > a {
   animation: cardIn 700ms var(--ease-out-expo) both;
   animation-delay: calc(var(--i, 0) * 45ms);
 }
@@ -227,7 +219,7 @@
 @keyframes cardIn {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(16px);
   }
 }
 
@@ -235,8 +227,8 @@
 .more {
   display: grid;
   grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
-  margin-block-start: var(--space-2xl);
   border: 1px solid var(--border-hair);
+  border-block-start: 0;
 }
 
 .moreAll,
@@ -310,12 +302,14 @@
 
   .bento {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: none;
-    grid-template-areas:
-      'a a'
-      'b c'
-      'd e'
-      'f f';
+  }
+
+  .bento > :nth-child(n + 2) {
+    grid-column: span 1;
+  }
+
+  .bento > :last-child {
+    grid-column: 1 / -1;
   }
 
   .grid {
@@ -362,16 +356,19 @@
     flex: none;
   }
 
-  /* На телефоне мозаика — крупный кейс и строки с картинкой слева */
+  /* На телефоне одна колонка, линии только между строками */
   .bento,
   .grid {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: none;
-    gap: var(--space-lg);
+    border-inline-start: 0;
   }
 
-  .bento > * {
-    grid-area: auto !important;
+  .bento > :nth-child(n) {
+    grid-column: auto;
+  }
+
+  .cell {
+    border-inline-end: 0;
   }
 
   .more {
@@ -394,7 +391,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cell {
+  .cell > a {
     animation: none;
   }
 }

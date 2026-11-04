@@ -55,8 +55,8 @@
 
   @keyframes demoIn {
     from {
-      opacity: 0.2;
-      transform: translateY(48px) scale(0.96);
+      opacity: 0.35;
+      transform: translateY(32px);
     }
   }
 }
@@ -126,6 +126,36 @@
 /* Глава без пояснения: заголовок на всю строку */
 .block[data-layout='stage'] .head:not(:has(.text)) {
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* Витрина: сначала сама работа, заголовок и пояснение под ней */
+.block[data-lead] {
+  padding-block-start: var(--space-xl);
+  border-block-start: 0;
+}
+
+.block[data-lead] .head {
+  order: 1;
+  align-items: start;
+}
+
+/* Зеркало: чётные главы меняют стороны, чтобы страница не шла одной колонкой */
+@media (min-width: 1024px) {
+  .block[data-flip][data-layout='side'] .chapter {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  }
+
+  .block[data-flip][data-layout='side'] .head {
+    order: 1;
+  }
+
+  .block[data-flip][data-layout='stage'] .head:has(.text) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .block[data-flip][data-layout='stage'] .headText {
+    order: 1;
+  }
 }
 
 @media (max-width: 1023px) {

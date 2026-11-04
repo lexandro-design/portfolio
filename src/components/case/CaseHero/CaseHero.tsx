@@ -70,7 +70,7 @@ export function CaseHero({ item, index, total, t, directions, backHref, chapters
 
         <h1 className={styles.title}>
           {item.title}
-          <span className={styles.tagline}> · {item.tagline}</span>
+          <span className={styles.tagline}>{item.tagline}</span>
         </h1>
 
         <div className={styles.intro} data-flow={flow ? '' : undefined}>

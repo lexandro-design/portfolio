@@ -17,7 +17,7 @@
     "theme": "Theme",
     "themes": {
       "dark": "Dark theme",
-      "neon": "Neon theme",
+      "neon": "Bordeaux theme",
       "light": "Light theme"
     },
     "language": "Language",
@@ -348,6 +348,7 @@
   },
   "case": {
     "back": "all work",
+    "cta": "Let’s talk about your project",
     "facts": {
       "client": "client",
       "year": "year",

@@ -20,7 +20,6 @@
 .msg {
   display: block;
   padding: 10px 14px;
-  border-radius: 14px;
   background: var(--bg-subtle);
   font-size: var(--type-body-sm);
   line-height: 1.4;
@@ -38,7 +37,6 @@
   min-block-size: 280px;
   padding: 18px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
   background: var(--bg-elevated);
   transition:
     border-color var(--dur-slow),

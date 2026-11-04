@@ -34,7 +34,7 @@ export function Brief({ brief, t }: { brief: Data; t: Dict['case']['brief'] }) {
           </div>
         </Reveal>
         {brief.nums.length > 0 && (
-          <Reveal className={styles.nums} delay={120}>
+          <Reveal className={brief.nums.length === 1 ? `${styles.nums} ${styles.one}` : styles.nums} delay={120}>
             {brief.nums.map((n) => (
               <div key={n.l} className={styles.num}>
                 <CountUp value={n.v} className={styles.v} />

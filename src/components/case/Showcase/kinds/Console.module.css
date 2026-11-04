@@ -29,7 +29,6 @@
 
 .side span {
   padding: 9px 12px;
-  border-radius: 8px;
   font-size: var(--type-body-sm);
   color: var(--fg-tertiary);
 }
@@ -88,7 +87,6 @@
   position: relative;
   inline-size: 46px;
   block-size: 26px;
-  border-radius: 999px;
   background: var(--border-hover);
   cursor: pointer;
   transition: background var(--dur-base) var(--ease-out-quart);
