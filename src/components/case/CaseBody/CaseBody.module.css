@@ -45,6 +45,11 @@
   letter-spacing: -0.03em;
 }
 
+/* Заголовки глав с большой буквы, разделы в данных со строчной */
+.title::first-letter {
+  text-transform: uppercase;
+}
+
 .body {
   display: grid;
   gap: 1em;
@@ -102,7 +107,6 @@
   object-fit: cover;
   object-position: top;
   border: 1px solid var(--border-hair);
-  border-radius: 10px;
   background: var(--bg-elevated);
   transition:
     border-color var(--dur-base),
@@ -132,7 +136,6 @@
   inline-size: 48px;
   block-size: 48px;
   border: 1px solid var(--border-hair);
-  border-radius: 50%;
   color: var(--fg-secondary);
   transition:
     color var(--dur-fast) var(--ease-out-quart),

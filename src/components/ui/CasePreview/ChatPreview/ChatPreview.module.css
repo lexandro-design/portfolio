@@ -18,7 +18,6 @@
   max-inline-size: 78%;
   padding: 9px 13px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px 14px 14px 4px;
   background: var(--bg-subtle);
   color: var(--fg-primary);
   line-height: 1.35;
@@ -28,7 +27,6 @@
 .bubble[data-from='user'] {
   align-self: end;
   border-color: transparent;
-  border-radius: 14px 14px 4px;
   background: var(--fg-primary);
   color: var(--fg-inverse);
 }
@@ -81,7 +79,6 @@
   inline-size: 92px;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 8px;
   background: var(--bg-elevated);
 }
 
@@ -143,7 +140,6 @@
   gap: 4px;
   padding: 6px;
   border: 1px solid var(--border-hair);
-  border-radius: 6px;
   background: var(--bg-base);
   animation: arrive var(--dur-base) var(--ease-out-quart) both;
 }
@@ -151,7 +147,6 @@
 /* Заглушка фото товара: штриховка вместо выдуманной картинки */
 .thumb {
   aspect-ratio: 4 / 3;
-  border-radius: 4px;
   background: repeating-linear-gradient(135deg, var(--bg-subtle) 0 4px, var(--bg-elevated) 4px 8px);
 }
 
@@ -185,7 +180,6 @@
 .day {
   padding-block: 6px;
   border: 1px solid var(--border-hair);
-  border-radius: 4px;
   font-family: var(--font-mono);
   font-size: 9px;
   text-align: center;
@@ -228,7 +222,6 @@
 
 .drawing {
   inline-size: 132px;
-  border-radius: 6px;
   background: var(--bg-base);
 }
 

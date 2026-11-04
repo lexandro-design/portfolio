@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 // Первое число в строке: «450+», «~17 000», «60 мс». Годы и составные значения («15 с → 1 с») не считаем
-const NUM = /^([^\d]*)(\d[\d\s]*)(.*)$/
+const NUM = /^([^\d]*)(\d(?:[\d\s]*\d)?)(.*)$/
 
 /**
  * Цифра результата набегает от нуля, когда появляется на экране. Без JS
@@ -20,6 +20,8 @@ export function CountUp({ value, className }: { value: string; className?: strin
     const target = Number(m[2].replace(/\s/g, ''))
     // Год и маленькие числа не анимируем: «2025» не должен набегать от нуля
     if (target < 5 || (target >= 1990 && target <= 2100) || m[2].startsWith('0')) return
+    // Номер закона тоже: «152-ФЗ» не величина
+    if (m[3].startsWith('-')) return
     const sep = /\s/.test(m[2])
     const fmt = (n: number) => (sep ? n.toLocaleString('ru-RU').replace(/ /g, ' ') : String(n))
     let raf = 0

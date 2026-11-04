@@ -6,7 +6,6 @@
 .stage {
   position: relative;
   overflow: hidden;
-  border-radius: 14px;
   background: #050505;
 }
 
@@ -72,7 +71,6 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border: 1px solid var(--border-hair);
-  border-radius: 10px;
   opacity: 0.55;
   transition:
     opacity var(--dur-base),
@@ -96,7 +94,6 @@
 .thumb:focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 4px;
-  border-radius: 10px;
 }
 
 @media (max-width: 767px) {

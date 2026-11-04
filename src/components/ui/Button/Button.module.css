@@ -17,12 +17,12 @@
 }
 
 .button[data-variant='primary'] {
-  background: var(--fg-primary);
+  background: var(--cta-bg, var(--fg-primary));
   color: var(--fg-inverse);
 }
 
 .button[data-variant='primary']:hover {
-  background: var(--accent);
+  background: var(--cta-hover, var(--accent));
   color: #14140f;
 }
 

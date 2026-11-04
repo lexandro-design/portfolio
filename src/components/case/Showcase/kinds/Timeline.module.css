@@ -54,7 +54,6 @@
 .msg {
   padding: 14px 16px;
   border: 1px solid var(--border-hair);
-  border-radius: 16px 16px 16px 6px;
   background: var(--bg-elevated);
   font-size: var(--type-body-sm);
   line-height: 1.45;

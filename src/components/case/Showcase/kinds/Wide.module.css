@@ -8,7 +8,6 @@
 .monitor {
   inline-size: 100%;
   padding: 10px;
-  border-radius: 16px;
   background: linear-gradient(#1d1d1f, #0b0b0c);
   box-shadow:
     0 0 0 1px rgb(255 255 255 / 0.06) inset,
@@ -17,7 +16,6 @@
 
 .screen {
   overflow: hidden;
-  border-radius: 6px;
   background: #fff;
 }
 

@@ -18,7 +18,6 @@
   min-block-size: 220px;
   padding: 18px;
   border: 1px solid var(--border-hair);
-  border-radius: 14px;
   background: var(--bg-elevated);
   transition:
     border-color var(--dur-slow),
@@ -63,7 +62,6 @@
 
 .job {
   padding: 10px 12px;
-  border-radius: 10px;
   background: var(--fg-primary);
   color: var(--fg-inverse);
   font-size: var(--type-body-sm);
@@ -80,7 +78,6 @@
 .tick {
   inline-size: 28px;
   block-size: 6px;
-  border-radius: 6px;
   background: var(--border-hair);
   transition: background var(--dur-slow);
 }

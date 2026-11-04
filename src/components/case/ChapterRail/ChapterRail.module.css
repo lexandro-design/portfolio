@@ -60,7 +60,6 @@
 .title {
   max-inline-size: 220px;
   padding: 6px 10px;
-  border-radius: 6px;
   background: var(--bg-elevated);
   font-size: 13px;
   line-height: 1.3;

@@ -4,13 +4,13 @@
   padding-block: var(--space-2xl) var(--space-xl);
 }
 
-/* Мягкое свечение цвета кейса за оглавлением, медленно дрейфует */
+/* Мягкое свечение цвета кейса за оглавлением, медленно дрейфует. Размер ограничен: на широком экране круг не упирается в низ шапки */
 .hero::before {
   content: '';
   position: absolute;
   inset-block-start: -20%;
   inset-inline-end: -10%;
-  inline-size: 60vw;
+  inline-size: min(60vw, 760px);
   aspect-ratio: 1;
   background: radial-gradient(closest-side, color-mix(in oklab, var(--case-color) 22%, transparent), transparent);
   filter: blur(20px);
@@ -24,7 +24,7 @@
 
 @keyframes drift {
   to {
-    transform: translate(-12%, 10%) scale(1.15);
+    transform: translate(-12%, 6%) scale(1.1);
   }
 }
 
@@ -71,7 +71,9 @@
   animation: rise var(--dur-reveal) var(--ease-out-expo) 80ms both;
 }
 
+/* Название и суть двумя строками: подпись не рвётся посреди слова */
 .tagline {
+  display: block;
   color: var(--fg-secondary);
 }
 
@@ -104,8 +106,6 @@
   max-block-size: 520px;
   overflow: hidden;
   border: 1px solid var(--border-hair);
-  border-radius: 16px;
-  box-shadow: 0 40px 80px -50px color-mix(in oklab, var(--case-color) 50%, transparent);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
 
@@ -171,12 +171,11 @@
   }
 }
 
+/* Факты таблицей на линиях, как услуги на главной */
 .facts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-lg);
   margin-block-start: var(--space-3xl);
-  padding-block-start: var(--space-lg);
   border-block-start: 1px solid var(--border-hair);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
@@ -185,6 +184,13 @@
   display: grid;
   align-content: start;
   gap: 10px;
+  padding: var(--space-md);
+  border-inline-start: 1px solid var(--border-hair);
+}
+
+.fact:first-child {
+  padding-inline-start: 0;
+  border-inline-start: 0;
 }
 
 .fact dd {
@@ -260,8 +266,22 @@
 
   .facts {
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
     margin-block-start: var(--space-xl);
+  }
+
+  .fact {
+    padding: var(--space-sm);
+    border-block-end: 1px solid var(--border-hair);
+  }
+
+  .fact:nth-child(odd) {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+
+  /* Нечётный последний факт (стек) на всю ширину */
+  .fact:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 

@@ -37,7 +37,6 @@
   align-self: flex-start;
   max-inline-size: 86%;
   padding: 0.55em 0.85em;
-  border-radius: 12px 12px 12px 4px;
   background: var(--bg-subtle);
   color: var(--fg-primary);
   line-height: 1.35;
@@ -54,7 +53,6 @@
 
 .bubble[data-side='out'] {
   align-self: flex-end;
-  border-radius: 12px 12px 4px 12px;
   background: var(--fg-primary);
   color: var(--bg-base);
 }
@@ -90,7 +88,6 @@
   gap: 0.7em;
   padding: 0.42em 0.7em;
   border: 1px solid var(--border-hair);
-  border-radius: 8px;
   background: color-mix(in oklab, var(--bg-base) 70%, transparent);
   font-family: var(--font-mono);
   font-size: 0.86em;
@@ -220,7 +217,6 @@
   min-block-size: clamp(54px, 30cqh, 140px);
   padding: 0.6em;
   border: 1px solid var(--border-hair);
-  border-radius: 8px;
   background: color-mix(in oklab, var(--bg-base) 70%, transparent);
   font-family: var(--font-mono);
   font-size: 0.78em;
@@ -254,6 +250,13 @@
 .lane[data-state='active'] .laneOut {
   opacity: 1;
   color: var(--signal-live);
+}
+
+/* Низкая карточка: реплики наезжали на метку направления сверху, остаются только шаги */
+@container (max-height: 300px) {
+  .chain .bubble {
+    display: none;
+  }
 }
 
 /* Мелкая миниатюра (список на телефоне): только шаги, без реплик */

@@ -1,4 +1,5 @@
 import type { Case } from '@/content/cases'
+import type { Pace } from '@/content/pace'
 import type { Block, Showcase as Data } from '@/content/showcase'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
@@ -96,6 +97,9 @@ function Kind({ block: b, shots, t }: { block: Block; shots: Case['shots']; t: T
 /** Демо, которым тесно в узкой колонке: им — сцена на всю ширину, текст строкой над ними */
 const STAGE = new Set<Block['kind']>(['browse', 'compare', 'steps', 'deck', 'reel', 'wide', 'board', 'transcript', 'sort'])
 
+/** Единственная глава этих демо стоит зеркально: текст справа, демо слева */
+const MIRROR = new Set<Block['kind']>(['notify', 'console', 'timeline', 'cards', 'diff'])
+
 /** Якорь главы: на него ведут оглавление в шапке и рельс глав сбоку */
 export const chapterId = (i: number) => `ch-${i + 1}`
 
@@ -104,13 +108,32 @@ export const chapterId = (i: number) => `ch-${i + 1}`
  * кейса (поле section) и живое демо. Узкие демо (бот, пульт, поиск) стоят
  * справа, текст слева прилипает к экрану, пока демо крутится; широкие —
  * сайт, шторка, сценарий — сценой на всю ширину. Так страница одна
- * история, а не «блоки сверху, старый текст снизу»
+ * история, а не «блоки сверху, старый текст снизу».
+ * Подача меняет порядок: у витрины первая глава идёт до блока «Коротко»,
+ * работа в ней стоит над словами; чётные главы зеркалятся; у единственной
+ * главы нет номера, считать нечего
  */
-export function Showcase({ data, item, t }: { data: Data; item: Case; t: T }) {
+export function Showcase({
+  data,
+  item,
+  t,
+  pace,
+  part,
+}: {
+  data: Data
+  item: Case
+  t: T
+  pace: Pace
+  part: 'all' | 'lead' | 'rest'
+}) {
   const total = data.blocks.length
+  const solo = total === 1
   return (
     <>
       {data.blocks.map((b, i) => {
+        if ((part === 'lead' && i > 0) || (part === 'rest' && i === 0)) return null
+        const lead = pace === 'show' && i === 0
+        const flip = solo ? MIRROR.has(b.kind) : i % 2 === 1
         const h = hint(b, t)
         const text = b.section === undefined ? undefined : item.sections[b.section]
         const layout = STAGE.has(b.kind) || !text ? 'stage' : 'side'
@@ -121,18 +144,26 @@ export function Showcase({ data, item, t }: { data: Data; item: Case; t: T }) {
             className={styles.block}
             data-kind={b.kind}
             data-layout={layout}
+            data-lead={lead || undefined}
+            data-flip={flip || undefined}
           >
             <div className="container">
               <div className={styles.chapter}>
                 <Reveal className={styles.head}>
                   <div className={styles.headText}>
-                    <span className={styles.n} aria-hidden="true">
-                      {pad(i + 1)}
-                    </span>
-                    <span className={styles.label}>
-                      {pad(i + 1)} / {pad(total)}
-                      {h && <span className={styles.hint}> · {h}</span>}
-                    </span>
+                    {!solo && !lead && (
+                      <span className={styles.n} aria-hidden="true">
+                        {pad(i + 1)}
+                      </span>
+                    )}
+                    {solo ? (
+                      h && <span className={styles.label}>{h}</span>
+                    ) : (
+                      <span className={styles.label}>
+                        {pad(i + 1)} / {pad(total)}
+                        {h && <span className={styles.hint}> · {h}</span>}
+                      </span>
+                    )}
                     <h2 className={styles.title}>{b.title}</h2>
                   </div>
                   {text && (

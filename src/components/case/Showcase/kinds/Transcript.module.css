@@ -36,7 +36,6 @@
   flex: 1;
   min-inline-size: 2px;
   block-size: 12%;
-  border-radius: 2px;
   background: var(--tone);
   opacity: 0.35;
   transition:
