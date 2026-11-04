@@ -23,7 +23,7 @@
   border: 1px solid var(--border-hair);
   border-radius: 28px;
   background: var(--bg-elevated);
-  box-shadow: 0 -24px 60px -36px rgb(0 0 0 / 0.55);
+  box-shadow: 0 -24px 60px -36px var(--shadow-tile);
   transform-origin: 50% 0;
   transition: border-color var(--dur-slow) var(--ease-out-quart);
 }

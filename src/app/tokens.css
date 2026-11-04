@@ -19,6 +19,7 @@
   --border-focus: #dddec7;
   --bg-scrim: rgb(10 10 10 / 0.8);
   --overlay-tag: rgb(0 0 0 / 0.55);
+  --shadow-tile: rgb(0 0 0 / 0.55);
   --fg-inverse: #0a0a0a;
   --accent: #dddec7;
   color-scheme: dark;
@@ -37,6 +38,7 @@
   --border-focus: #14140f;
   --bg-scrim: rgb(20 20 15 / 0.5);
   --overlay-tag: rgb(0 0 0 / 0.35);
+  --shadow-tile: rgb(20 20 15 / 0.14);
   --fg-inverse: #f5f4ef;
   --accent: #dddec7;
   color-scheme: light;
@@ -57,6 +59,7 @@
   --border-focus: #9d8cff;
   --bg-scrim: rgb(10 8 23 / 0.8);
   --overlay-tag: rgb(0 0 0 / 0.5);
+  --shadow-tile: rgb(0 0 0 / 0.55);
   --fg-inverse: #0a0817;
   --accent: #c6ff3d;
   color-scheme: dark;
