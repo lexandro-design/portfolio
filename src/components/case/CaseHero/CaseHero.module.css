@@ -176,9 +176,10 @@
   color: var(--case-accent);
 }
 
+/* С 0.01, а не с нуля: браузер считает текст показанным с первой отрисовки, а не после задержки */
 @keyframes rise {
   from {
-    opacity: 0;
+    opacity: 0.01;
     transform: translateY(40px);
   }
 }

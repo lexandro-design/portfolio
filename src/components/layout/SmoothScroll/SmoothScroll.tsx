@@ -25,7 +25,18 @@ export function SmoothScroll() {
         anchors: { offset: 0 },
         prevent: (node) => node.closest('dialog') !== null,
       })
-      stop = () => lenis.destroy()
+      // Якорь на этой же странице ведёт только Lenis: прыжок роутера посреди анимации сбивает цель
+      const own = (e: MouseEvent) => {
+        const a = (e.target as Element).closest('a')
+        if (!a?.hash || a.pathname !== location.pathname || e.ctrlKey || e.metaKey || e.shiftKey) return
+        e.preventDefault()
+        history.pushState(null, '', a.hash)
+      }
+      addEventListener('click', own, true)
+      stop = () => {
+        removeEventListener('click', own, true)
+        lenis.destroy()
+      }
     }
     const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 300))
     idle(() => void start())

@@ -40,7 +40,7 @@
 .count {
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
-  opacity: 0.55;
+  opacity: 0.8;
 }
 
 .view {
@@ -147,7 +147,7 @@
 .chipCount {
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .panel {
