@@ -9,18 +9,13 @@ export const contacts = data.contacts
 
 export const COORDS = data.coords
 
-export type Theme = 'dark' | 'light' | 'steel' | 'onebit'
+export type Theme = 'dark' | 'light' | 'steel'
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
-export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean; onebit: boolean }
+export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean }
 
-/** Порядок кнопок в переключателе. Сталь и один бит отключаются каждая своим флагом */
-export const THEMES: Theme[] = [
-  'dark',
-  'light',
-  ...(features.steel ? (['steel'] as const) : []),
-  ...(features.onebit ? (['onebit'] as const) : []),
-]
+/** Порядок кнопок в переключателе. Сталь отключается своим флагом */
+export const THEMES: Theme[] = ['dark', 'light', ...(features.steel ? (['steel'] as const) : [])]
 
 /** Тема для тех, кто ещё не выбирал сам */
 export const DEFAULT_THEME = (THEMES as string[]).includes(data.defaultTheme)
