@@ -87,3 +87,16 @@
     display: none;
   }
 }
+
+@media (min-width: 2560px) {
+  .trigger {
+    block-size: 44px;
+  }
+}
+
+@media (min-width: 3440px) {
+  .trigger {
+    block-size: 52px;
+    padding-inline: 16px;
+  }
+}

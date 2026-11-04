@@ -25,3 +25,15 @@
     font-size: 16px;
   }
 }
+
+@media (min-width: 2560px) {
+  .logo {
+    font-size: 23px;
+  }
+}
+
+@media (min-width: 3440px) {
+  .logo {
+    font-size: 28px;
+  }
+}

@@ -155,7 +155,7 @@
   }
 
   .title {
-    font-size: var(--type-h1);
+    font-size: min(var(--type-h1), calc((100vw - var(--bleed) * 2) * 0.15));
     line-height: 1;
   }
 

@@ -52,6 +52,14 @@
   filter: url(#engrave);
 }
 
+/* На телефоне тень размером с тонкий штрих буквы, заголовок двоится: там только светлая кромка */
+@media (max-width: 767px) {
+  [data-theme='steel'] :is(h1, h2) {
+    filter: none;
+    text-shadow: 0 1px 0 rgb(255 255 255 / 0.5);
+  }
+}
+
 [data-theme='steel'] :is(h1, h2),
 [data-theme='steel'] :is(h1, h2) * {
   color: #2b3135;

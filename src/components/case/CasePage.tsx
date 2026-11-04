@@ -18,6 +18,9 @@ import { Lightbox } from './Lightbox'
 import { Mood } from './Mood'
 import { NextCase } from './NextCase'
 
+/** Разделы, которые почти дословно повторяют блок «Коротко»: дважды одно и то же не показываем */
+const SAID: Record<string, number[]> = { 'meeting-rooms': [2], lotus: [0], 'tg-assistant': [0], 'ai-console': [0] }
+
 /** Страница кейса на любом языке */
 export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   const item = getCase(locale, slug)
@@ -38,6 +41,8 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
     const task = t.case.brief.task.toLowerCase()
     used.push(...item.sections.flatMap((s, i) => (s.title.toLowerCase() === task ? [i] : [])))
   }
+
+  used.push(...(SAID[slug] ?? []))
 
   return (
     <div

@@ -108,6 +108,7 @@
   :root {
     --container: 2240px;
     --bleed: 96px;
+    --nav-h: 88px;
     --section-y: 208px;
     --type-h1: 184px;
     --type-h2: 108px;
@@ -125,6 +126,7 @@
   :root {
     --container: 2960px;
     --bleed: 128px;
+    --nav-h: 104px;
     --section-y: 256px;
     --type-h1: 240px;
     --type-h2: 136px;
