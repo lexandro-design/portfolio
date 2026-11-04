@@ -1,11 +1,12 @@
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
+import { Steps } from './Steps'
 import styles from './Process.module.css'
 
-/** Пять шагов: крупная цифра контуром слева, шаг и описание справа */
+/** Пять шагов: крупная цифра контуром слева, шаг и описание справа. Цифра шага на середине экрана заливается */
 export function Process({ t }: { t: Dict['process'] }) {
   return (
-    <ol className={styles.list}>
+    <Steps className={styles.list}>
       {t.steps.map((step, i) => (
         <Reveal as="li" key={step.title} className={styles.step}>
           <span className={styles.number} aria-hidden="true">
@@ -20,6 +21,6 @@ export function Process({ t }: { t: Dict['process'] }) {
           </div>
         </Reveal>
       ))}
-    </ol>
+    </Steps>
   )
 }

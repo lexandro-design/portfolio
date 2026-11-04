@@ -8,6 +8,7 @@ import { features } from '@/content/site'
 import { LOCALES, type Locale } from '@/i18n/config'
 import { ThemeScript } from '@/components/layout/ThemeScript'
 import { Metrika } from '@/components/layout/Metrika'
+import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import './styles.css'
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         {features.palette && <CommandPalette index={paletteIndex} />}
         <Metrika />
+        <SmoothScroll />
       </body>
     </html>
   )

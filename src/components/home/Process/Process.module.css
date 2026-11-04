@@ -12,10 +12,14 @@
   letter-spacing: -0.05em;
   color: transparent;
   -webkit-text-stroke: 1px var(--fg-tertiary);
-  transition: -webkit-text-stroke-color var(--dur-slow) var(--ease-out-expo);
+  transition:
+    color var(--dur-slow) var(--ease-out-quart),
+    -webkit-text-stroke-color var(--dur-slow) var(--ease-out-quart);
 }
 
-.step:hover .number {
+.step:hover .number,
+.step[data-active] .number {
+  color: var(--fg-primary);
   -webkit-text-stroke-color: var(--fg-primary);
 }
 

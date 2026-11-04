@@ -1,23 +1,50 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-block: 1px solid var(--border-hair);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-block-size: 520px;
-  padding: 48px 40px;
-  transition: background-color var(--dur-slow) var(--ease-out-expo);
+  padding: 40px;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 28px;
+  background: var(--bg-elevated);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out-expo),
+    transform var(--dur-reveal) var(--ease-out-expo),
+    border-color var(--dur-slow) var(--ease-out-quart);
 }
 
-.card + .card {
-  border-inline-start: 1px solid var(--border-hair);
+/* Свет под курсором: круг гаснет раньше своего края и не даёт обреза */
+.card::before {
+  content: '';
+  position: absolute;
+  inset-block-start: var(--my, 50%);
+  inset-inline-start: var(--mx, 50%);
+  inline-size: 560px;
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--fg-primary) 9%, transparent), transparent);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--dur-slow) var(--ease-out-quart);
+  pointer-events: none;
+}
+
+.card > * {
+  position: relative;
 }
 
 .card:hover {
-  background: var(--bg-elevated);
+  border-color: var(--border-hover);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .meta {
@@ -86,20 +113,23 @@
 
 @media (max-width: 1023px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .card {
     min-block-size: 0;
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg);
   }
 
-  .card + .card {
-    border-inline-start: 0;
-    border-block-start: 1px solid var(--border-hair);
+  .tags {
+    margin-block: 0 var(--space-lg);
+    padding-block-start: var(--space-lg);
   }
+}
 
-  .card:hover {
-    background: none;
+@media (max-width: 767px) {
+  .card {
+    padding: var(--space-md);
+    border-radius: 22px;
   }
 }

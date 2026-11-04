@@ -110,7 +110,6 @@
 .sample {
   overflow: hidden;
   font-weight: 450;
-  animation: weight 4s var(--ease-in-out) calc(var(--i) * 0.3s) infinite;
   line-height: 1;
   letter-spacing: -0.03em;
   white-space: nowrap;
@@ -190,6 +189,7 @@
 .track {
   position: relative;
   block-size: 12px;
+  container-type: inline-size;
   border-block-end: 1px solid var(--border-hair);
 }
 
@@ -201,18 +201,27 @@
   block-size: 12px;
   border-radius: 50%;
   background: var(--signal-live);
+}
+
+/* Движение только пока блок на экране: насыщенность шрифта считается раскладкой */
+.grid[data-live] .sample {
+  animation: weight 4s var(--ease-in-out) calc(var(--i) * 0.3s) infinite;
+}
+
+.grid[data-live] .ball {
   animation: travel 2.6s var(--ease-out-expo) infinite;
 }
 
+/* Только transform: левый край заставлял браузер пересчитывать раскладку на каждом кадре */
 @keyframes travel {
   0%,
   8% {
-    inset-inline-start: 0;
+    transform: translateX(0);
   }
 
   60%,
   100% {
-    inset-inline-start: calc(100% - 12px);
+    transform: translateX(calc(100cqi - 12px));
   }
 }
 
@@ -236,7 +245,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sample {
+  .grid[data-live] .sample {
     animation: none;
   }
 }

@@ -1,0 +1,8 @@
+.text[data-armed] > span {
+  color: var(--fg-tertiary);
+  transition: color 500ms var(--ease-out-quart);
+}
+
+.text[data-armed] > span[data-lit] {
+  color: var(--fg-primary);
+}

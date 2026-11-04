@@ -1,0 +1,256 @@
+.stack {
+  --tile-h: clamp(460px, calc(100svh - var(--nav-h) - 48px), 720px);
+  display: grid;
+  gap: var(--space-md);
+  list-style: none;
+}
+
+/* Прилипают, только если плитка целиком влезает в экран */
+@media (min-height: 620px) {
+  .row {
+    position: sticky;
+    inset-block-start: calc(var(--nav-h) + 24px);
+  }
+}
+
+.tile {
+  --glow: var(--case-color, var(--signal-live));
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  block-size: var(--tile-h);
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  border-radius: 28px;
+  background: var(--bg-elevated);
+  box-shadow: 0 -24px 60px -36px rgb(0 0 0 / 0.55);
+  transform-origin: 50% 0;
+  transition: border-color var(--dur-slow) var(--ease-out-quart);
+}
+
+/* Свет цвета проекта внутри плитки: гаснет раньше её краёв, поэтому нигде не обрезан */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 34%;
+  inline-size: 110%;
+  aspect-ratio: 1;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--glow) 20%, transparent),
+    transparent
+  );
+  opacity: 0.7;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--dur-slow) var(--ease-out-quart);
+  pointer-events: none;
+}
+
+/* Плитка уходит вглубь: затемнение фоном темы */
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--bg-base);
+  opacity: var(--dim, 0);
+  pointer-events: none;
+}
+
+.tile:hover {
+  border-color: color-mix(in oklab, var(--glow) 45%, transparent);
+}
+
+.tile:hover::before {
+  opacity: 1;
+}
+
+.copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  padding: clamp(32px, 4vw, 56px);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.head {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-start: auto;
+}
+
+.title {
+  font-size: clamp(44px, 5vw, 72px);
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.tagline {
+  max-inline-size: 22em;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--fg-secondary);
+  text-wrap: pretty;
+}
+
+.nums {
+  display: flex;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-xl);
+}
+
+.num {
+  display: grid;
+  gap: 4px;
+  min-inline-size: 0;
+  max-inline-size: 15em;
+}
+
+.num dd {
+  order: -1;
+  font-size: 32px;
+  font-weight: 450;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: color-mix(in oklab, var(--glow) 70%, var(--fg-primary));
+}
+
+.num dt {
+  font-size: var(--type-body-sm);
+  line-height: 1.3;
+  color: var(--fg-secondary);
+}
+
+.read {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-block-start: var(--space-xl);
+  font-size: var(--type-body);
+  color: var(--fg-primary);
+}
+
+.read :global(svg) {
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.tile:hover .read :global(svg) {
+  transform: translateX(8px);
+}
+
+/* Кадр уходит за правый и нижний край плитки */
+.media {
+  position: relative;
+  margin-block-start: clamp(32px, 4vw, 56px);
+  overflow: hidden;
+  border-block-start: 1px solid var(--border-hair);
+  border-inline-start: 1px solid var(--border-hair);
+  border-start-start-radius: 18px;
+  background: var(--bg-subtle);
+  transition: transform 900ms var(--ease-out-expo);
+}
+
+.tile:hover .media {
+  transform: translate(-6px, -6px);
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: var(--focus, top left);
+}
+
+/* Планшет и телефон: кадр сверху, подпись снизу */
+@media (max-width: 1023px) {
+  .tile {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .tile::before {
+    inset-block-start: 30%;
+    inset-inline-start: 50%;
+  }
+
+  .media {
+    order: -1;
+    margin: var(--space-sm) var(--space-sm) 0;
+    border: 1px solid var(--border-hair);
+    border-radius: 16px;
+  }
+
+  .copy {
+    padding: var(--space-md);
+  }
+
+  .label {
+    display: none;
+  }
+
+  .head {
+    gap: 6px;
+    margin-block-start: 0;
+  }
+
+  .title {
+    font-size: clamp(30px, 8vw, 44px);
+  }
+
+  .tagline {
+    font-size: 17px;
+  }
+
+  .nums {
+    gap: var(--space-md);
+    margin-block-start: var(--space-sm);
+  }
+
+  .num dd {
+    font-size: 24px;
+  }
+
+  .num dt {
+    font-size: 13px;
+  }
+
+  .read {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .stack {
+    --tile-h: clamp(460px, calc(100svh - var(--nav-h) - 32px), 620px);
+    gap: var(--space-sm);
+  }
+
+  .tile {
+    border-radius: 22px;
+  }
+
+  .row {
+    inset-block-start: calc(var(--nav-h) + 12px);
+  }
+}
+
+@media (hover: none) {
+  .tile:hover .media {
+    transform: none;
+  }
+}

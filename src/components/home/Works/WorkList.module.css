@@ -107,6 +107,7 @@
   inset: 0;
   overflow: hidden;
   border: 1px solid var(--border-hair);
+  border-radius: 14px;
   background: var(--bg-elevated);
   box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.7);
   animation: floatIn 380ms var(--ease-out-expo) both;

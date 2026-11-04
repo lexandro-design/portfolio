@@ -20,6 +20,19 @@
   font-weight: 450;
   line-height: 1.05;
   letter-spacing: -0.035em;
+  /* Заголовок выезжает из-под нижней кромки; запас, чтобы не резало хвосты букв */
+  overflow: clip;
+  padding-block-end: 0.14em;
+  margin-block-end: -0.14em;
+}
+
+.titleIn {
+  display: block;
+  transition: transform 1100ms var(--ease-out-expo);
+}
+
+:global(.js) .header:not([data-visible]) .titleIn {
+  transform: translateY(112%);
 }
 
 @media (max-width: 767px) {

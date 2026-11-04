@@ -8,6 +8,7 @@ import { flowOf } from '@/content/flows'
 import { getShowcase } from '@/content/showcase'
 import { Brief } from './Brief/Brief'
 import { CaseBody } from './CaseBody'
+import { CaseCta } from './CaseCta'
 import { ChapterRail } from './ChapterRail'
 import { Showcase, chapterId } from './Showcase/Showcase'
 import { CaseHero } from './CaseHero'
@@ -49,6 +50,12 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
       {show && <Showcase data={show} item={item} t={t.case.show} />}
       <CaseBody item={item} t={t.case} used={used} />
       {chapters.length > 1 && <ChapterRail chapters={chapters} label={t.case.toc} />}
+      <CaseCta
+        title={t.case.cta}
+        primary={t.hero.primary}
+        write={t.nav.write}
+        href={localePath(locale, '/#contact')}
+      />
       <NextCase
         item={next}
         index={items.indexOf(next) + 1}

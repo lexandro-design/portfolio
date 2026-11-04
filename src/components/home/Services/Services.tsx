@@ -2,20 +2,18 @@ import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
 import { Reveal } from '@/components/ui/Reveal'
 import { FilterLink } from '../Works'
+import { Spotlight } from './Spotlight'
 import styles from './Services.module.css'
 
 /** Три направления карточками в одну линию, ссылка включает фильтр кейсов */
 export function Services({ items, more }: { items: Dict['services']; more: string }) {
   return (
-    <div className={styles.grid}>
+    <Spotlight className={styles.grid}>
       {items.map((s, i) => (
         <Reveal key={s.code} className={styles.card} delay={i * 80}>
           <div className={styles.meta}>
             <span>
               0{i + 1} / {s.code}
-            </span>
-            <span>
-              0{i + 1}/0{items.length}
             </span>
           </div>
           <h3 className={styles.title}>{s.title}</h3>
@@ -34,6 +32,6 @@ export function Services({ items, more }: { items: Dict['services']; more: strin
           </FilterLink>
         </Reveal>
       ))}
-    </div>
+    </Spotlight>
   )
 }

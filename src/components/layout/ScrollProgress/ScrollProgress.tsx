@@ -13,6 +13,7 @@ export function ScrollProgress() {
       frame = 0
       const max = document.documentElement.scrollHeight - window.innerHeight
       ref.current?.style.setProperty('--p', String(max > 0 ? window.scrollY / max : 0))
+      ref.current?.parentElement?.toggleAttribute('data-top', window.scrollY < 8)
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update)

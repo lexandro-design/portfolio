@@ -6,7 +6,10 @@ import type { Case, Direction } from '@/content/cases'
 import type { Flow } from '@/content/flows'
 import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
+import type { Brief } from '@/content/showcase'
 import { FILTER_EVENT } from './FilterLink'
+import { PICK } from './pick'
+import { PickStack } from './PickStack'
 import { WorkCard } from './WorkCard'
 import { WorkList } from './WorkList'
 import styles from './Works.module.css'
@@ -18,26 +21,25 @@ type Props = {
   items: Case[]
   /** Схема «как работает» по slug — у автоматизаций вместо картинки */
   flows: Record<string, Flow | null>
+  /** Цифры результата для подборки, по slug */
+  nums: Record<string, Brief['nums']>
   t: Dict['works']
   /** Префикс языка для ссылок на кейсы: '' или '/en' */
   base: string
 }
 
-/** Подборка на первом экране блока: самые показательные проекты разных направлений */
-const PICK = ['parfumeria', 'mimimibot', 'saldo', 'ai-office', 'otrx', 'haiku']
 const GROUPS: Case['group'][] = ['titan', 'entersales', 'freelance', 'own']
 
-const pad = (n: number) => String(n).padStart(2, '0')
 const order = (i: number) => ({ '--i': i }) as CSSProperties
 
 /**
- * Кейсы на главной. По умолчанию — подборка из шести проектов крупной
- * мозаикой, остальное открывается вкладками: все, по направлению, плюс
+ * Кейсы на главной. По умолчанию — подборка из шести проектов, по одному
+ * на экран, остальное открывается вкладками: все, по направлению, плюс
  * второй фильтр «где сделано» (ТИТАН-2, EnterSales, фриланс, свои) и вид
  * плиткой или списком. Список с превью под курсором — 37 кейсов за пару
  * экранов вместо двадцати. Номер кейса — его место в общем списке.
  */
-export function Works({ items, flows, t, base }: Props) {
+export function Works({ items, flows, nums, t, base }: Props) {
   const [tab, setTab] = useState<Tab>('pick')
   const [where, setWhere] = useState<Where>('any')
   const [view, setView] = useState<View>('grid')
@@ -96,9 +98,8 @@ export function Works({ items, flows, t, base }: Props) {
                 setWhere('any')
               }}
             >
-              <span className={styles.dot} />
               <span>{x.label}</span>
-              <span className={styles.count}>{pad(x.n)}</span>
+              <span className={styles.count}>{x.n}</span>
             </button>
           ))}
         </div>
@@ -147,33 +148,19 @@ export function Works({ items, flows, t, base }: Props) {
       <div role="tabpanel" key={key} className={styles.panel}>
         {tab === 'pick' && (
           <>
-            <div className={styles.bento}>
-              {shown.map(({ c, index }, i) => (
-                <WorkCard
-                  key={c.slug}
-                  item={c}
-                  index={index}
-                  href={href(c)}
-                  flow={flows[c.slug]}
-                  size={i === 0 ? 'hero' : i < 3 ? 'wide' : 'base'}
-                  style={order(i)}
-                  className={styles.cell}
-                />
-              ))}
-            </div>
+            <PickStack items={shown} flows={flows} nums={nums} href={href} read={t.read} />
             <div className={styles.more}>
               <button type="button" className={styles.moreAll} onClick={() => setTab('all')}>
-                <span>
-                  {t.showAll} <span className={styles.moreN}>{pad(items.length)}</span>
-                </span>
-                <Arrow />
+                {t.showAll} <span className={styles.moreN}>{items.length}</span>
+                <Arrow size={20} />
               </button>
-              {(Object.keys(t.directions) as Direction[]).map((d) => (
-                <button key={d} type="button" className={styles.moreDir} onClick={() => setTab(d)}>
-                  <span className={styles.moreN}>{pad(byTab(d).length)}</span>
-                  {t.directions[d]}
-                </button>
-              ))}
+              <div className={styles.moreDirs}>
+                {(Object.keys(t.directions) as Direction[]).map((d) => (
+                  <button key={d} type="button" className={styles.moreDir} onClick={() => setTab(d)}>
+                    {t.directions[d]} <span className={styles.chipCount}>{byTab(d).length}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </>
         )}

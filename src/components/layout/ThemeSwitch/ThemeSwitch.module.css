@@ -3,6 +3,7 @@
   gap: 2px;
   padding: 3px;
   border: 1px solid var(--border-hair);
+  border-radius: 999px;
 }
 
 .option {
@@ -10,6 +11,7 @@
   place-items: center;
   inline-size: 32px;
   block-size: 30px;
+  border-radius: 999px;
   color: var(--fg-tertiary);
   transition:
     color var(--dur-fast) var(--ease-out-quart),

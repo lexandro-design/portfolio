@@ -1,20 +1,32 @@
 .hero {
   position: relative;
-  overflow: hidden;
   padding-block: var(--space-2xl) var(--space-xl);
 }
 
-/* Мягкое свечение цвета кейса за оглавлением, медленно дрейфует */
+/* Свечение цвета кейса: заходит под полупрозрачную шапку и гаснет раньше края
+   своего круга, поэтому ни сверху, ни снизу нет обреза; по бокам страницу
+   держит overflow-x: clip у обёртки кейса */
 .hero::before {
   content: '';
   position: absolute;
-  inset-block-start: -20%;
-  inset-inline-end: -10%;
-  inline-size: 60vw;
+  inset-block-start: calc(var(--nav-h) * -1 - 26vw);
+  inset-inline-end: -18vw;
+  z-index: -1;
+  inline-size: max(72vw, 760px);
   aspect-ratio: 1;
-  background: radial-gradient(closest-side, color-mix(in oklab, var(--case-color) 22%, transparent), transparent);
-  filter: blur(20px);
+  background: var(--grain), color-mix(in oklab, var(--case-color) 30%, transparent);
+  mask-image: radial-gradient(
+    closest-side,
+    #000,
+    rgb(0 0 0 / 0.78) 18%,
+    rgb(0 0 0 / 0.5) 36%,
+    rgb(0 0 0 / 0.26) 54%,
+    rgb(0 0 0 / 0.1) 72%,
+    rgb(0 0 0 / 0.025) 88%,
+    transparent
+  );
   pointer-events: none;
+  will-change: transform;
   animation: drift 22s var(--ease-in-out) infinite alternate;
 }
 
@@ -24,7 +36,7 @@
 
 @keyframes drift {
   to {
-    transform: translate(-12%, 10%) scale(1.15);
+    transform: translate(-8%, 6%) scale(1.08);
   }
 }
 

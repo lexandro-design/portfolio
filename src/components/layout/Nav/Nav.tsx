@@ -35,7 +35,7 @@ export function Nav() {
   }, [locale])
 
   return (
-    <header className={styles.nav}>
+    <header className={styles.nav} data-top="">
       <div className={`container ${styles.inner}`}>
         <Logo href={localePath(locale, '/')} />
 

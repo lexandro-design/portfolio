@@ -16,24 +16,20 @@ type Props = {
   href: string
   /** Как работает автоматизация — живая схема вместо картинки */
   flow?: Flow | null
-  /** Ячейка мозаики: hero — крупная, wide — широкая, base — малая. Нет — обычная плитка сетки */
-  size?: 'hero' | 'wide' | 'base'
   style?: CSSProperties
   className?: string
 }
 
 /**
  * Плитка кейса: картинка или живая схема автоматизации сверху, на ней
- * метка направления; снизу номер, название и строка «что это». В мозаике крупная ячейка
- * показывает ещё и лид. Кликается целиком
+ * метка направления; снизу номер, название и строка «что это». Кликается целиком
  */
-export function WorkCard({ item, index, href, flow, size, style, className }: Props) {
+export function WorkCard({ item, index, href, flow, style, className }: Props) {
   const media = item.thumb ?? item.shots[0]
   const color = caseColor(item.slug)
   return (
     <article
       className={[styles.card, className].filter(Boolean).join(' ')}
-      data-size={size}
       style={color ? ({ ...style, '--case-color': color } as CSSProperties) : style}
     >
       <Link href={href} className={styles.link}>
@@ -60,7 +56,6 @@ export function WorkCard({ item, index, href, flow, size, style, className }: Pr
           </div>
           <h3 className={styles.title}>{item.title}</h3>
           <p className={styles.tagline}>{item.tagline}</p>
-          {size === 'hero' && <p className={styles.lead}>{item.lead}</p>}
           <span className={styles.arrow} aria-hidden="true">
             <Arrow size={18} />
           </span>
