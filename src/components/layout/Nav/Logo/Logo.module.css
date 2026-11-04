@@ -1,14 +1,20 @@
 .logo {
   display: inline-flex;
-  font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.01em;
+  transition: opacity var(--dur-base) var(--ease-out-quart);
+}
+
+.logo:hover {
+  opacity: 0.7;
+}
+
+.mark {
+  display: block;
+  block-size: 14px;
+  inline-size: auto;
 }
 
 @media (max-width: 767px) {
-  .logo {
-    font-size: 16px;
+  .mark {
+    block-size: 12px;
   }
 }

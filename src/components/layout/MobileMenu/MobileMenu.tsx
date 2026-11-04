@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { contacts } from '@/content/site'
 import { LOCALE_LABELS, LOCALES, localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
+import { LogoMark } from '../Nav/Logo'
 import styles from './MobileMenu.module.css'
 
 type Props = {
@@ -57,7 +58,7 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
         onClose={() => setOpen(false)}
       >
         <div className={`container ${styles.head}`}>
-          <span className={styles.logo}>LEXANDRO</span>
+          <LogoMark />
           <button
             type="button"
             className={styles.close}

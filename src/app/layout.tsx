@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
+import { Fonts } from '@/components/layout/Fonts'
 import { Footer } from '@/components/layout/Footer'
 import { Nav } from '@/components/layout/Nav'
 import { CommandPalette, type PaletteCase } from '@/components/layout/CommandPalette/CommandPalette'
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <Fonts />
       </head>
       <body>
         <Nav />

@@ -68,8 +68,6 @@
   --font-cjk-zh: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', sans-serif;
   --font-cjk-ja: 'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
-  /* Только логотип */
-  --font-display: 'Unbounded Variable', var(--font-sans);
   --type-h1: clamp(60px, 9.55vw, 190px);
   --type-h2: clamp(52px, 6.8vw, 128px);
   --type-h3: clamp(34px, 3.3vw, 56px);
