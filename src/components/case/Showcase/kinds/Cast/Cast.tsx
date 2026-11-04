@@ -5,8 +5,9 @@ import type { Cast as Data, CastBeat, CastMsg } from '@/content/casts'
 import { useInView, useReduced } from '../../hooks'
 import kit from '../kit.module.css'
 import styles from './Cast.module.css'
+import { View } from './Views'
 
-type Labels = { inside: string; play: string; pause: string; prev: string; next: string; step: string }
+type Labels = { inside: string; demo: string; play: string; pause: string; prev: string; next: string; step: string }
 
 /** Сколько держится шаг: длинную реплику надо успеть прочитать */
 const span = (b: CastBeat) => b.ms ?? Math.min(4600, Math.max(1700, 1100 + b.cap.length * 34))
@@ -93,6 +94,13 @@ function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: bool
           <span className={styles.bar} data-run={fresh || undefined} />
         </li>
       )
+    case 'diff':
+      return (
+        <li className={styles.in}>
+          <p className={styles.was}>{m.was}</p>
+          <p>{m.now}</p>
+        </li>
+      )
     case 'line':
       return (
         <li className={styles.line} data-tone={m.tone}>
@@ -142,6 +150,13 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
     return out
   }, [beats, cast.rows, shown])
   const hot = beats[shown].set?.row
+  const view = useMemo(() => {
+    if (!cast.view) return null
+    const out = cast.view.rows.map((r) => ({ ...r }))
+    beats.slice(0, shown + 1).forEach(({ v }) => v?.forEach(({ r, ...patch }) => Object.assign(out[r], patch)))
+    return { ...cast.view, rows: out }
+  }, [beats, cast.view, shown])
+  const talk = cast.screen === 'voice' ? list.slice(-2) : list
 
   useLayoutEffect(() => {
     const box = screen.current
@@ -195,9 +210,17 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
                 ))}
               </ul>
             )}
-            {list.length > 0 && (
+            {cast.screen === 'view' && view && <View view={view} />}
+            {cast.screen === 'voice' && (
+              <span className={styles.orb} aria-hidden="true">
+                {Array.from({ length: 40 }, (_, i) => (
+                  <i key={i} style={{ animationDelay: `${(i % 9) * -130}ms`, blockSize: `${24 + Math.abs(Math.sin(i * 0.9)) * 76}%` }} />
+                ))}
+              </span>
+            )}
+            {talk.length > 0 && (
               <ol className={styles.feed}>
-                {list.map(({ msg, pressed, key }) => (
+                {talk.map(({ msg, pressed, key }) => (
                   <Item key={key} m={msg} pressed={pressed} fresh={key === shown} />
                 ))}
               </ol>
@@ -206,16 +229,17 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
           </div>
         </div>
         <div className={styles.side}>
-          <span className={kit.mono}>{t.inside}</span>
+          <span className={kit.mono}>{(cast.screen !== 'view' && view?.title) || t.inside}</span>
+          {view && cast.screen !== 'view' && <View view={view} />}
           <ol className={styles.log}>
-            {logs.slice(-5).map((l) => (
+            {logs.slice(view && cast.screen !== 'view' ? -2 : -5).map((l) => (
               <li key={l.i} data-now={l.i === shown || undefined}>
                 {l.text}
               </li>
             ))}
           </ol>
           {big && (
-            <p key={big.v} className={styles.big}>
+            <p key={big.v} className={styles.big} data-long={big.v.length > 8 || undefined}>
               <b>{big.v}</b> {big.l}
             </p>
           )}
@@ -255,6 +279,7 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
           {clock(passed)} / {clock(total)}
         </span>
       </div>
+      <p className={styles.demo}>{t.demo}</p>
     </div>
   )
 }

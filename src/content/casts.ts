@@ -17,6 +17,15 @@ export type CastMsg =
   | { k: 'voice'; text: string }
   | { k: 'bar'; label: string }
   | { k: 'line'; text: string; tone?: 'ok' | 'dim' }
+  | { k: 'diff'; was: string; now: string }
+
+/** Что происходит внутри: у каждого кейса свой вид, шаги меняют его строки */
+export type CastView = {
+  kind: 'stages' | 'sheet' | 'card' | 'board' | 'slots' | 'rank' | 'desks' | 'chips' | 'lanes' | 'ticks' | 'sketch' | 'doc' | 'die'
+  title: string
+  cols?: string[]
+  rows: { c: string[]; s?: string; at?: number }[]
+}
 
 export type CastBeat = {
   /** Подпись под экраном: что сейчас произошло */
@@ -26,6 +35,8 @@ export type CastBeat = {
   msg?: CastMsg
   /** Экран со строками: какая строка меняет состояние */
   set?: { row: number; state: string; note?: string }
+  /** Какие строки вида меняет этот шаг */
+  v?: { r: number; s?: string; c?: string[]; at?: number }[]
   /** Крупная цифра итога */
   big?: { v: string; l: string }
   ms?: number
@@ -34,8 +45,9 @@ export type CastBeat = {
 export type Cast = {
   app: string
   sub: string
-  screen: 'chat' | 'rows' | 'term'
+  screen: 'chat' | 'rows' | 'term' | 'voice' | 'view'
   rows?: { name: string; note: string; state?: string }[]
+  view?: CastView
   beats: CastBeat[]
 }
 

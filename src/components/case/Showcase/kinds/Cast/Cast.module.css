@@ -85,7 +85,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  block-size: clamp(420px, 44vw, 560px);
+  block-size: clamp(400px, 33vw, 480px);
   overflow: hidden;
   padding: var(--space-sm);
 }
@@ -363,6 +363,56 @@
   color: var(--fg-primary);
 }
 
+.big[data-long] b {
+  font-size: clamp(36px, 3.6vw, 52px);
+  white-space: nowrap;
+}
+
+.was {
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+/* Голос: волна на весь экран, реплики крупно */
+.screen:has(.orb) {
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.orb {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 4px;
+  min-block-size: 0;
+  max-block-size: 150px;
+}
+
+.orb i {
+  flex: 1;
+  background: var(--case-color, var(--accent));
+  animation: talk 1100ms ease-in-out infinite alternate;
+}
+
+@keyframes talk {
+  from {
+    transform: scaleY(0.25);
+  }
+}
+
+.screen:has(.orb) .in,
+.screen:has(.orb) .out {
+  max-inline-size: 100%;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.demo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-tertiary);
+}
+
 .cap {
   min-block-size: 3em;
   max-inline-size: 62ch;
@@ -463,9 +513,29 @@
 }
 
 @media (max-width: 1023px) {
+  /* Шкала сразу под экраном: что бы ни менялось ниже, кнопки стоят на месте */
   .stage {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-sm);
+    display: contents;
+  }
+
+  .stage > :first-child {
+    order: 1;
+  }
+
+  .cap {
+    order: 2;
+  }
+
+  .controls {
+    order: 3;
+  }
+
+  .side {
+    order: 4;
+  }
+
+  .demo {
+    order: 5;
   }
 
   .screen {
@@ -507,6 +577,19 @@
     font-size: 48px;
   }
 
+  .big[data-long] b {
+    font-size: 34px;
+  }
+
+  .orb {
+    max-block-size: 96px;
+  }
+
+  .screen:has(.orb) .in,
+  .screen:has(.orb) .out {
+    font-size: 16px;
+  }
+
   .cap {
     min-block-size: 4.2em;
     font-size: 16px;
@@ -525,6 +608,7 @@
   .feed li,
   .log li,
   .big,
+  .orb i,
   .photos i,
   .bar[data-run]::after,
   .rec[data-on]::before {
