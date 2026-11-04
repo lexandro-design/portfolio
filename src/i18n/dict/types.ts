@@ -63,7 +63,44 @@ export type Dict = {
     tags: string[]
     filter: Direction
   }[]
-  servicesMore: string
+
+  /** Сборка продукта в разделе услуг: слои включает посетитель, цены берутся из services */
+  build: {
+    lead: string
+    layers: {
+      code: 'ux' | 'web' | 'back' | 'flow' | 'ai'
+      /** Какая услуга из services стоит за слоем */
+      service: string
+      filter: Direction
+      title: string
+      text: string
+      /** Кейсы, где эта часть правда делалась */
+      cases: string[]
+    }[]
+    more: string
+    demo: {
+      url: string
+      mock: string
+      brand: string
+      room: string
+      meta: string
+      book: string
+      booked: string
+      empty: string
+      db: string
+      dbOld: string
+      dbNew: string
+      bot: string
+      botText: string
+      ai: string
+      aiAsk: string
+      aiAnswer: string
+    }
+    /** Чего не хватает набору, от пустого до полного */
+    notes: { none: string; noScreen: string; mock: string; plain: string; noBack: string; noFlow: string; noAi: string; all: string }
+    discuss: string
+    write: string
+  }
 
   works: {
     all: string
@@ -151,6 +188,18 @@ export type Dict = {
     telegram: string
     location: string
     status: string
+    /** Три пути связи над заявкой */
+    ways: {
+      telegram: string
+      telegramNote: string
+      email: string
+      emailNote: string
+      copied: string
+      brief: string
+      briefValue: string
+      briefNote: string
+      time: string
+    }
     /** Конструктор заявки: услуги берутся из services, этапы — из process */
     brief: {
       label: string

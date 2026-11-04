@@ -1,10 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { contacts } from '@/content/site'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
 import styles from './Brief.module.css'
+
+/** Набор из раздела услуг: заявка открывается уже с отмеченными услугами */
+export const BRIEF_EVENT = 'brief:fill'
 
 /** Какой этап процесса добавляет услуга. Анализ и передача есть всегда */
 const STEP_FOR: Record<string, number> = { design: 1, web: 2, automation: 3 }
@@ -28,6 +31,14 @@ export function Brief({ t, services, steps }: Props) {
   const [about, setAbout] = useState('')
   const [note, setNote] = useState('')
 
+  useEffect(() => {
+    const fill = (e: Event) => setPicked((e as CustomEvent<string[]>).detail)
+    window.addEventListener(BRIEF_EVENT, fill)
+    return () => window.removeEventListener(BRIEF_EVENT, fill)
+  }, [])
+
+  /* Хватает услуги или пары слов: заявка не должна мешать написать */
+  const ready = picked.length > 0 || about.trim().length > 0
   const chosen = services.filter((s) => picked.includes(s.code))
   const route = [
     0,
@@ -50,7 +61,7 @@ export function Brief({ t, services, steps }: Props) {
     setPicked((p) => (p.includes(code) ? p.filter((c) => c !== code) : [...p, code]))
 
   const send = async () => {
-    if (!chosen.length) return setNote(t.empty)
+    if (!ready) return setNote(t.empty)
     try {
       await navigator.clipboard.writeText(message)
       setNote(t.copied)
@@ -144,14 +155,14 @@ export function Brief({ t, services, steps }: Props) {
               type="button"
               className={styles.primary}
               onClick={send}
-              aria-disabled={!chosen.length}
+              aria-disabled={!ready}
             >
               {t.telegram}
             </button>
             <a
               className={styles.secondary}
-              href={chosen.length ? mail : undefined}
-              onClick={() => !chosen.length && setNote(t.empty)}
+              href={ready ? mail : undefined}
+              onClick={() => !ready && setNote(t.empty)}
               role="button"
             >
               {t.email}

@@ -135,7 +135,6 @@
       "filter": "ai"
     }
   ],
-  "servicesMore": "查看相关案例",
   "works": {
     "all": "全部",
     "directions": {
@@ -334,11 +333,22 @@
       "telegram": "通过 telegram 发送",
       "email": "发邮件",
       "copied": "内容已复制。如果没有自动填入聊天，请粘贴",
-      "empty": "请至少选择一项服务",
+      "empty": "请勾选一项服务，或写几句任务说明",
       "hello": "您好！想和您讨论一个项目。",
       "need": "需要",
       "when": "时间",
       "task": "任务"
+    },
+    "ways": {
+      "telegram": "telegram",
+      "telegramNote": "最快的方式",
+      "email": "邮箱",
+      "emailNote": "点击复制",
+      "copied": "地址已复制",
+      "brief": "需求单",
+      "briefValue": "一分钟填好",
+      "briefNote": "服务、时间和几句话",
+      "time": "圣彼得堡时间"
     }
   },
   "footer": {
@@ -423,5 +433,96 @@
     },
     "copied": "邮箱已复制",
     "hint": "↑↓ 选择 · enter 打开 · esc 关闭"
+  },
+  "build": {
+    "lead": "一个产品由五层组成，这五层我都能做。勾选你需要的部分，再点示例里的按钮：预订会走完所有已开启的层。",
+    "layers": [
+      {
+        "code": "ux",
+        "service": "design",
+        "filter": "design",
+        "title": "UX/UI 设计",
+        "text": "场景、界面和设计系统：令牌、组件、所有状态。",
+        "cases": [
+          "parfumeria",
+          "otrx"
+        ]
+      },
+      {
+        "code": "web",
+        "service": "web",
+        "filter": "web",
+        "title": "网站",
+        "text": "按我自己的设计用 Next.js 或 Tilda 实现，每个屏幕都在所有宽度下核对。",
+        "cases": [
+          "svarnoy52",
+          "reckon"
+        ]
+      },
+      {
+        "code": "back",
+        "service": "web",
+        "filter": "web",
+        "title": "后端",
+        "text": "服务器、数据库和 API：订单、角色、支付、个人账户。",
+        "cases": [
+          "mimimibot",
+          "saldo"
+        ]
+      },
+      {
+        "code": "flow",
+        "service": "automation",
+        "filter": "ai",
+        "title": "自动化",
+        "text": "把产品接入 CRM、邮件和 Telegram，让重复工作无需人工。",
+        "cases": [
+          "mail-to-crm",
+          "packaging-bots"
+        ]
+      },
+      {
+        "code": "ai",
+        "service": "automation",
+        "filter": "ai",
+        "title": "AI 智能体",
+        "text": "助手和文档搜索，数据放在你需要的地方。",
+        "cases": [
+          "brain-search",
+          "rag-mentor"
+        ]
+      }
+    ],
+    "more": "全部案例",
+    "demo": {
+      "url": "rooms.demo",
+      "mock": "设计稿",
+      "brand": "会议室",
+      "room": "3 号会议室",
+      "meta": "今天 14:00，8 个座位",
+      "book": "预订",
+      "booked": "已预订",
+      "empty": "你的产品将显示在这里",
+      "db": "数据库",
+      "dbOld": "5 号会议室，11:00",
+      "dbNew": "3 号会议室，14:00",
+      "bot": "Telegram",
+      "botText": "14:00 有新预订，参会者已收到邮件",
+      "ai": "助手",
+      "aiAsk": "明天上午哪里有空？",
+      "aiAnswer": "3 号和 5 号会议室 12:00 前有空"
+    },
+    "notes": {
+      "none": "勾选需要的部分，产品就会在这里组装起来。",
+      "noScreen": "逻辑有了，却没有地方展示。",
+      "mock": "设计稿好了，但按钮只是画出来的。",
+      "plain": "能用，但看起来像九十年代的网站。",
+      "noBack": "关闭页面后，预订就消失了。",
+      "noFlow": "预订进了数据库，但没人知道。",
+      "noAi": "一切正常，只是问题还要人来回答。",
+      "all": "全部由一人完成，外包之间没有缝隙。"
+    },
+    "discuss": "讨论这个组合",
+    "write": "直接联系"
   }
 }

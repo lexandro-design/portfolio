@@ -179,6 +179,25 @@
   color: var(--fg-primary);
 }
 
+.frame {
+  display: block;
+  inline-size: min(280px, 100%);
+  block-size: auto;
+  object-fit: cover;
+  background: var(--bg-subtle);
+}
+
+.frames {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  inline-size: min(240px, 100%);
+}
+
+.frames .frame {
+  inline-size: 100%;
+}
+
 .photos {
   display: flex;
   flex-wrap: wrap;

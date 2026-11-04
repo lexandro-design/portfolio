@@ -135,7 +135,6 @@
       "filter": "ai"
     }
   ],
-  "servicesMore": "関連する実績",
   "works": {
     "all": "すべて",
     "directions": {
@@ -334,11 +333,22 @@
       "telegram": "telegram で送る",
       "email": "メールで",
       "copied": "コピーしました。チャットに入らなかった場合は貼り付けてください",
-      "empty": "サービスを 1 つ以上選んでください",
+      "empty": "サービスを選ぶか、内容をひとこと書いてください",
       "hello": "こんにちは。プロジェクトについてご相談したいです。",
       "need": "必要なもの",
       "when": "期間",
       "task": "タスク"
+    },
+    "ways": {
+      "telegram": "telegram",
+      "telegramNote": "いちばん早い方法",
+      "email": "メール",
+      "emailNote": "クリックでコピー",
+      "copied": "アドレスをコピーしました",
+      "brief": "依頼フォーム",
+      "briefValue": "一分で作成",
+      "briefNote": "サービス、時期、ひとこと",
+      "time": "サンクトペテルブルクの時刻"
     }
   },
   "footer": {
@@ -423,5 +433,96 @@
     },
     "copied": "メールをコピーしました",
     "hint": "↑↓ 選択 · enter 開く · esc 閉じる"
+  },
+  "build": {
+    "lead": "プロダクトは五つの層でできていて、そのすべてを私が担当します。必要な層にチェックを入れ、例のボタンを押すと、予約がオンの層をすべて通ります。",
+    "layers": [
+      {
+        "code": "ux",
+        "service": "design",
+        "filter": "design",
+        "title": "UX/UI デザイン",
+        "text": "シナリオ、画面、デザインシステム。トークン、コンポーネント、すべての状態。",
+        "cases": [
+          "parfumeria",
+          "otrx"
+        ]
+      },
+      {
+        "code": "web",
+        "service": "web",
+        "filter": "web",
+        "title": "Webサイト",
+        "text": "自分のデザインを Next.js や Tilda で実装し、すべての幅で画面を確認します。",
+        "cases": [
+          "svarnoy52",
+          "reckon"
+        ]
+      },
+      {
+        "code": "back",
+        "service": "web",
+        "filter": "web",
+        "title": "バックエンド",
+        "text": "サーバー、データベース、API。注文、権限、決済、マイページ。",
+        "cases": [
+          "mimimibot",
+          "saldo"
+        ]
+      },
+      {
+        "code": "flow",
+        "service": "automation",
+        "filter": "ai",
+        "title": "自動化",
+        "text": "プロダクトを CRM、メール、Telegram とつなぎ、定型作業を人の手から外します。",
+        "cases": [
+          "mail-to-crm",
+          "packaging-bots"
+        ]
+      },
+      {
+        "code": "ai",
+        "service": "automation",
+        "filter": "ai",
+        "title": "AI エージェント",
+        "text": "アシスタントと文書検索。データは必要な場所に置けます。",
+        "cases": [
+          "brain-search",
+          "rag-mentor"
+        ]
+      }
+    ],
+    "more": "すべての事例",
+    "demo": {
+      "url": "rooms.demo",
+      "mock": "デザイン",
+      "brand": "会議室",
+      "room": "会議室 3",
+      "meta": "今日 14:00、8 席",
+      "book": "予約する",
+      "booked": "予約済み",
+      "empty": "ここにプロダクトが現れます",
+      "db": "データベース",
+      "dbOld": "会議室 5、11:00",
+      "dbNew": "会議室 3、14:00",
+      "bot": "Telegram",
+      "botText": "14:00 に新しい予約、参加者にメールを送信",
+      "ai": "アシスタント",
+      "aiAsk": "明日の午前に空いている部屋は？",
+      "aiAnswer": "会議室 3 と 5 が 12:00 まで空いています"
+    },
+    "notes": {
+      "none": "必要なものにチェックを入れると、ここで組み上がります。",
+      "noScreen": "ロジックはありますが、見せる場所がありません。",
+      "mock": "デザインはできましたが、ボタンはまだ絵です。",
+      "plain": "動きますが、見た目は九十年代のサイトです。",
+      "noBack": "タブを閉じると予約は消えます。",
+      "noFlow": "予約はデータベースにありますが、誰も知りません。",
+      "noAi": "すべて動いています。質問にはまだ人が答えています。",
+      "all": "すべて一人の手で。外注間の継ぎ目はありません。"
+    },
+    "discuss": "この組み合わせを相談",
+    "write": "すぐに連絡"
   }
 }

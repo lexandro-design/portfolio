@@ -31,7 +31,14 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section id="services" className={styles.section}>
         <div className="container">
           <SectionHeader index={sectionIndex('services')} copy={t.sections.services} />
-          <Services items={t.services} more={t.servicesMore} />
+          <Services
+            t={t.build}
+            services={t.services}
+            hello={t.contact.brief.hello}
+            need={t.contact.brief.need}
+            titles={Object.fromEntries(items.map((c) => [c.slug, c.title]))}
+            base={base}
+          />
         </div>
       </section>
 

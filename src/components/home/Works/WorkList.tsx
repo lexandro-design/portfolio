@@ -55,7 +55,7 @@ export function WorkList({ items, flows, href, where }: Props) {
 
   const hover = active === null ? undefined : items[active]
   const current = hover?.c
-  const media = current ? (current.thumb ?? current.shots[0]) : undefined
+  const media = current ? (current.card ?? current.thumb ?? current.shots[0]) : undefined
 
   return (
     <div className={styles.root} onPointerLeave={() => setActive(null)}>

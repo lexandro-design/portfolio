@@ -5,6 +5,7 @@ import type { Cast as Data, CastBeat, CastMsg } from '@/content/casts'
 import { useInView, useReduced } from '../../hooks'
 import kit from '../kit.module.css'
 import styles from './Cast.module.css'
+import { Frame } from './Frame'
 import { View } from './Views'
 
 type Labels = { inside: string; demo: string; play: string; pause: string; prev: string; next: string; step: string }
@@ -70,20 +71,32 @@ function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: bool
     case 'shot':
       return (
         <li className={styles.in}>
-          <span className={styles.shot}>
-            <span>{m.label}</span>
-          </span>
+          {m.media ? (
+            <Frame media={m.media} />
+          ) : (
+            <span className={styles.shot}>
+              <span>{m.label}</span>
+            </span>
+          )}
           {btns}
         </li>
       )
     case 'photos':
       return (
         <li className={styles.out}>
-          <span className={styles.photos} aria-hidden="true">
-            {Array.from({ length: m.n }, (_, i) => (
-              <i key={i} style={{ animationDelay: `${i * 70}ms` }} />
-            ))}
-          </span>
+          {m.media ? (
+            <span className={styles.frames}>
+              {m.media.map((f) => (
+                <Frame key={f.src} media={f} />
+              ))}
+            </span>
+          ) : (
+            <span className={styles.photos} aria-hidden="true">
+              {Array.from({ length: m.n }, (_, i) => (
+                <i key={i} style={{ animationDelay: `${i * 70}ms` }} />
+              ))}
+            </span>
+          )}
           <p>{m.label}</p>
         </li>
       )

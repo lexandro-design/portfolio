@@ -11,12 +11,15 @@ import { overlay } from './showcase'
  * материалов кейса, примеры переписки условные
  */
 
+/** Настоящий кадр вместо условного: src картинка или постер, video беззвучная петля */
+export type CastMedia = { src: string; video?: string; ratio?: '16:10' | '1:1'; alt: string }
+
 export type CastMsg =
   | { k: 'in'; text: string; btns?: string[] }
   | { k: 'out'; text: string }
   | { k: 'tap'; btn: number }
-  | { k: 'shot'; label: string; btns?: string[] }
-  | { k: 'photos'; n: number; label: string }
+  | { k: 'shot'; label: string; btns?: string[]; media?: CastMedia }
+  | { k: 'photos'; n: number; label: string; media?: CastMedia[] }
   | { k: 'voice'; text: string }
   | { k: 'bar'; label: string }
   | { k: 'line'; text: string; tone?: 'ok' | 'dim' }
@@ -28,6 +31,8 @@ export type CastView = {
   title: string
   cols?: string[]
   rows: { c: string[]; s?: string; at?: number }[]
+  /** Рисунок: настоящие кадры вместо условных, первый работа, второй эталон */
+  media?: CastMedia[]
 }
 
 export type CastBeat = {

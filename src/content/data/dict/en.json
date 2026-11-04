@@ -136,7 +136,6 @@
       "filter": "ai"
     }
   ],
-  "servicesMore": "see projects",
   "works": {
     "all": "all",
     "directions": {
@@ -335,11 +334,22 @@
       "telegram": "send via telegram",
       "email": "by email",
       "copied": "Message copied. If it did not appear in the chat, paste it",
-      "empty": "Pick at least one service",
+      "empty": "Tick a service or write a few words about the task",
       "hello": "Hi! I would like to discuss a project.",
       "need": "Need",
       "when": "Timeline",
       "task": "Task"
+    },
+    "ways": {
+      "telegram": "telegram",
+      "telegramNote": "the fastest way",
+      "email": "email",
+      "emailNote": "click to copy",
+      "copied": "address copied",
+      "brief": "brief",
+      "briefValue": "put it together in a minute",
+      "briefNote": "services, timing, a few words",
+      "time": "time in St. Petersburg"
     }
   },
   "footer": {
@@ -424,5 +434,96 @@
     },
     "copied": "Email copied",
     "hint": "↑↓ select · enter open · esc close"
+  },
+  "build": {
+    "lead": "A product is built from five layers, and I handle all of them. Tick the ones you need and press the button in the example: the booking runs through everything that is on.",
+    "layers": [
+      {
+        "code": "ux",
+        "service": "design",
+        "filter": "design",
+        "title": "UX/UI design",
+        "text": "Scenarios, screens and a design system: tokens, components, every state.",
+        "cases": [
+          "parfumeria",
+          "otrx"
+        ]
+      },
+      {
+        "code": "web",
+        "service": "web",
+        "filter": "web",
+        "title": "Websites",
+        "text": "Built from my own layouts on Next.js or Tilda, every screen checked at every width.",
+        "cases": [
+          "svarnoy52",
+          "reckon"
+        ]
+      },
+      {
+        "code": "back",
+        "service": "web",
+        "filter": "web",
+        "title": "Backend",
+        "text": "Server, database and API: orders, roles, payments, user accounts.",
+        "cases": [
+          "mimimibot",
+          "saldo"
+        ]
+      },
+      {
+        "code": "flow",
+        "service": "automation",
+        "filter": "ai",
+        "title": "Automation",
+        "text": "I connect the product to CRM, email and Telegram, so routine runs without people.",
+        "cases": [
+          "mail-to-crm",
+          "packaging-bots"
+        ]
+      },
+      {
+        "code": "ai",
+        "service": "automation",
+        "filter": "ai",
+        "title": "AI agents",
+        "text": "Assistants and search across your documents, with your data kept where you need it.",
+        "cases": [
+          "brain-search",
+          "rag-mentor"
+        ]
+      }
+    ],
+    "more": "all cases",
+    "demo": {
+      "url": "rooms.demo",
+      "mock": "layout",
+      "brand": "Rooms",
+      "room": "Meeting room 3",
+      "meta": "today, 2:00 pm, 8 seats",
+      "book": "Book",
+      "booked": "Booked",
+      "empty": "Your product will appear here",
+      "db": "database",
+      "dbOld": "Room 5, 11:00 am",
+      "dbNew": "Room 3, 2:00 pm",
+      "bot": "Telegram",
+      "botText": "New booking for 2:00 pm, attendees have been emailed",
+      "ai": "assistant",
+      "aiAsk": "What is free tomorrow morning?",
+      "aiAnswer": "Rooms 3 and 5 are free until noon"
+    },
+    "notes": {
+      "none": "Tick what you need and the product builds itself here.",
+      "noScreen": "The logic is there, but nowhere to show it.",
+      "mock": "The layout is ready, but the button is only drawn.",
+      "plain": "It works, but it looks like a site from the nineties.",
+      "noBack": "The booking disappears as soon as you close the tab.",
+      "noFlow": "The booking is in the database, but nobody knows about it.",
+      "noAi": "Everything works. People still answer the questions.",
+      "all": "Everything in one pair of hands, with no gaps between contractors."
+    },
+    "discuss": "discuss this set",
+    "write": "message me now"
   }
 }

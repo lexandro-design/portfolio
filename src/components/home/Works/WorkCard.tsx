@@ -28,7 +28,7 @@ type Props = {
  * показывает ещё и лид. Кликается целиком
  */
 export function WorkCard({ item, index, href, flow, size, style, className }: Props) {
-  const media = item.thumb ?? item.shots[0]
+  const media = item.card ?? item.thumb ?? item.shots[0]
   const color = caseColor(item.slug)
   return (
     <article
