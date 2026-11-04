@@ -7,6 +7,7 @@ import { getDict } from '@/i18n/dict'
 import { flowOf } from '@/content/flows'
 import { paceOf } from '@/content/pace'
 import { getShowcase } from '@/content/showcase'
+import { getCast } from '@/content/casts'
 import { Brief } from './Brief/Brief'
 import { CaseBody } from './CaseBody'
 import { CaseCta } from './CaseCta'
@@ -26,6 +27,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   const index = items.findIndex((c) => c.slug === slug)
   const next = items[(index + 1) % items.length]
   const show = getShowcase(locale, slug)
+  const cast = getCast(locale, slug)
   const pace = paceOf(item, show)
   const chapters = (show?.blocks ?? []).map((b, i) => ({ id: chapterId(i), title: b.title }))
   // Разделы текста, ставшие пояснением к главам, в хвосте не повторяются
@@ -56,7 +58,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
       />
       {show && pace === 'show' && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="lead" />}
       {show && <Brief brief={show.brief} t={t.case.brief} />}
-      {show && <Showcase data={show} item={item} t={t.case.show} pace={pace} part={pace === 'show' ? 'rest' : 'all'} />}
+      {show && <Showcase data={show} item={item} t={t.case.show} pace={pace} part={pace === 'show' ? 'rest' : 'all'} cast={cast} />}
       <CaseBody item={item} t={t.case} used={used} />
       {chapters.length > 1 && <ChapterRail chapters={chapters} label={t.case.toc} />}
       <CaseCta

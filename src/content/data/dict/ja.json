@@ -383,6 +383,12 @@
       "prev": "前へ",
       "next": "次へ",
       "incoming": "受信",
+      "cast": {
+        "inside": "内部の動き",
+        "play": "再生",
+        "pause": "一時停止",
+        "step": "ステップ"
+      },
       "tracks": {
         "me": "自分",
         "them": "相手"

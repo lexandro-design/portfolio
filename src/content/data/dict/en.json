@@ -384,6 +384,12 @@
       "prev": "Previous",
       "next": "Next",
       "incoming": "incoming",
+      "cast": {
+        "inside": "under the hood",
+        "play": "Play",
+        "pause": "Pause",
+        "step": "Step"
+      },
       "tracks": {
         "me": "me",
         "them": "other side"
