@@ -19,10 +19,9 @@
 
 .title {
   font-family: var(--font-heading);
-  font-size: var(--type-h1);
+  font-size: var(--type-h2);
   font-weight: 300;
-  line-height: 0.98;
-  letter-spacing: -0.024em;
+  line-height: 1;
   transition: translate 1200ms var(--ease-out-expo);
 }
 

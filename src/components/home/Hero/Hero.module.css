@@ -147,7 +147,7 @@
 
 :global([data-theme='light']) .frame video,
 .frame .day {
-  object-position: 66% 50%;
+  object-position: 30% 50%;
 }
 
 .frame video {
