@@ -103,6 +103,8 @@ export type Dict = {
   }
 
   works: {
+    /** Метка на карточке с иллюстрацией вместо экрана */
+    illustration: string
     all: string
     directions: Record<Direction, string>
     read: string
@@ -237,6 +239,8 @@ export type Dict = {
   footer: { line: string; place: string }
 
   case: {
+    /** Галерея иллюстраций: подпись обязательна, это не результат работы */
+    mood: { title: string; note: string }
     back: string
     cta: string
     facts: { client: string; year: string; direction: string; stack: string; site: string }

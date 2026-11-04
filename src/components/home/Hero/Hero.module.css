@@ -33,13 +33,13 @@
 /* Заголовок и фото стоят на одной нижней линии */
 .main {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 296px;
+  grid-template-columns: minmax(0, 1fr) calc(var(--type-h1) * 2.47);
   align-items: end;
   gap: var(--space-2xl);
 }
 
 .title {
-  font-size: clamp(64px, 7.3vw, 106px);
+  font-size: clamp(64px, 7.3vw, calc(var(--type-h1) * 0.88));
   font-weight: 450;
   line-height: 0.95;
   letter-spacing: -0.045em;

@@ -155,6 +155,7 @@ export function Works({ items, flows, t, base }: Props) {
                   index={index}
                   href={href(c)}
                   flow={flows[c.slug]}
+                  note={t.illustration}
                   size={i === 0 ? 'hero' : i < 3 ? 'wide' : 'base'}
                   style={order(i)}
                   className={styles.cell}
@@ -189,6 +190,7 @@ export function Works({ items, flows, t, base }: Props) {
                 index={index}
                 href={href(c)}
                 flow={flows[c.slug]}
+                  note={t.illustration}
                 style={order(Math.min(i, 12))}
                 className={styles.cell}
               />

@@ -247,3 +247,15 @@
     font-size: var(--type-body-sm);
   }
 }
+
+.note {
+  position: absolute;
+  inset-block-end: 8px;
+  inset-inline-end: 8px;
+  z-index: 1;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  background: var(--overlay-tag);
+  color: #f5f5f2;
+}

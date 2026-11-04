@@ -72,7 +72,7 @@ function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: bool
       return (
         <li className={styles.in}>
           {m.media ? (
-            <Frame media={m.media} />
+            <Frame media={m.media} alt={m.label} />
           ) : (
             <span className={styles.shot}>
               <span>{m.label}</span>
@@ -87,7 +87,7 @@ function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: bool
           {m.media ? (
             <span className={styles.frames}>
               {m.media.map((f) => (
-                <Frame key={f.src} media={f} />
+                <Frame key={f.src} media={f} alt={m.label} />
               ))}
             </span>
           ) : (

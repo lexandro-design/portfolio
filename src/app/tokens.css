@@ -86,6 +86,58 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+/* Широкие мониторы: колонка и шрифты растут вместе с окном, иначе на 3440 сайт
+   стоит узкой полосой посередине, а по бокам больше тысячи пикселей пустоты */
+@media (min-width: 1920px) {
+  :root {
+    --container: 1720px;
+    --section-y: 168px;
+    --type-h1: 128px;
+    --type-h2: 84px;
+    --type-h3: 36px;
+    --type-h4: 24px;
+    --type-body-lg: 20px;
+    --type-body: 18px;
+    --type-body-sm: 16px;
+    --type-mono: 13px;
+    --type-mono-sm: 12px;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --container: 2240px;
+    --bleed: 96px;
+    --section-y: 208px;
+    --type-h1: 184px;
+    --type-h2: 108px;
+    --type-h3: 44px;
+    --type-h4: 28px;
+    --type-body-lg: 24px;
+    --type-body: 21px;
+    --type-body-sm: 18px;
+    --type-mono: 15px;
+    --type-mono-sm: 14px;
+  }
+}
+
+@media (min-width: 3440px) {
+  :root {
+    --container: 2960px;
+    --bleed: 128px;
+    --section-y: 256px;
+    --type-h1: 240px;
+    --type-h2: 136px;
+    --type-h3: 56px;
+    --type-h4: 34px;
+    --type-body-lg: 30px;
+    --type-body: 26px;
+    --type-body-sm: 22px;
+    --type-mono: 18px;
+    --type-mono-sm: 16px;
+  }
+}
+
 /* Планшет (Landing / Tablet 768): поля 32, секции 128, H1 88 */
 @media (max-width: 1023px) {
   :root {

@@ -10,7 +10,7 @@
   position: absolute;
   inset-block-start: -20%;
   inset-inline-end: -10%;
-  inline-size: min(60vw, 760px);
+  inline-size: min(60vw, calc(var(--container) * 0.53));
   aspect-ratio: 1;
   background: radial-gradient(closest-side, color-mix(in oklab, var(--case-color) 22%, transparent), transparent);
   filter: blur(20px);
@@ -63,7 +63,7 @@
 
 .title {
   max-inline-size: 16em;
-  font-size: clamp(var(--type-h2), 6.4vw, 96px);
+  font-size: clamp(var(--type-h2), 6.4vw, calc(var(--type-h2) * 1.33));
   font-weight: 450;
   line-height: 0.98;
   letter-spacing: -0.045em;

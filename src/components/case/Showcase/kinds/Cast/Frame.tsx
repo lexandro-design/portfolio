@@ -7,7 +7,7 @@ import styles from './Cast.module.css'
 const SIZE = { '16:10': [800, 500], '1:1': [640, 640] } as const
 
 /** Настоящий кадр или петля в записи экрана: место держит пропорция, видео грузится только на экране */
-export function Frame({ media }: { media: CastMedia }) {
+export function Frame({ media, alt = '' }: { media: CastMedia; alt?: string }) {
   const [width, height] = SIZE[media.ratio ?? '16:10']
   const style = { aspectRatio: `${width} / ${height}` } as CSSProperties
   if (media.video) {
@@ -19,7 +19,7 @@ export function Frame({ media }: { media: CastMedia }) {
         width={width}
         height={height}
         style={style}
-        label={media.alt}
+        label={media.alt ?? alt}
       />
     )
   }
@@ -28,7 +28,7 @@ export function Frame({ media }: { media: CastMedia }) {
     <img
       className={styles.frame}
       src={asset(media.src)}
-      alt={media.alt}
+      alt={media.alt ?? alt}
       width={width}
       height={height}
       style={style}

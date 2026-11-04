@@ -12,7 +12,7 @@ import { overlay } from './showcase'
  */
 
 /** Настоящий кадр вместо условного: src картинка или постер, video беззвучная петля */
-export type CastMedia = { src: string; video?: string; ratio?: '16:10' | '1:1'; alt: string }
+export type CastMedia = { src: string; video?: string; ratio?: '16:10' | '1:1'; alt?: string }
 
 export type CastMsg =
   | { k: 'in'; text: string; btns?: string[] }

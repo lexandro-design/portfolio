@@ -159,7 +159,8 @@
       "list": "list"
     },
     "showAll": "all cases",
-    "empty": "no cases for this combination"
+    "empty": "no cases for this combination",
+    "illustration": "illustration"
   },
   "system": {
     "intro": "This site is built the way I build products: colour, type, spacing and motion are tokens, and components refer to nothing else. Switch the theme on the right: token values change, and not a single component is touched.",
@@ -412,6 +413,10 @@
         "reel": "pick a scene",
         "console": "switches are clickable"
       }
+    },
+    "mood": {
+      "title": "Mood",
+      "note": "Illustration, mood only. Not a result or a client photo."
     }
   },
   "palette": {
