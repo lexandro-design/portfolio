@@ -5,13 +5,13 @@
     "caseTitle": "Alexey Sveshnikov"
   },
   "nav": {
-    "services": "Services",
-    "works": "Work",
-    "system": "System",
-    "about": "About",
-    "contact": "Contact",
+    "services": "services",
+    "works": "work",
+    "system": "system",
+    "about": "about",
+    "contact": "contact",
     "status": "open to projects",
-    "write": "Get in touch",
+    "write": "get in touch",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "theme": "Theme",
@@ -30,15 +30,15 @@
     ],
     "title": [
       "Design, code",
-      "and AI agents"
+      "and AI agents,",
+      "end to end,"
     ],
     "accent": [
-      "end to end,",
-      "in one pair of hands"
+      "in one pair of hands."
     ],
     "body": "I design the product and its design system, build a clean front end, write the back end, set up the database and server and wire in AI agents. The whole product, from idea to launch.",
-    "primary": "Discuss a project",
-    "secondary": "See the work",
+    "primary": "discuss a project",
+    "secondary": "see the work",
     "ticker": "end to end:",
     "tickerItems": [
       "analysis",
@@ -59,33 +59,33 @@
   "sections": {
     "services": {
       "label": "services",
-      "title": "What I do",
-      "aside": "Analysis, design, code, automation"
+      "title": "what I do",
+      "aside": "analysis · design · code · automation"
     },
     "works": {
       "label": "work",
-      "title": "Selected work",
+      "title": "selected work",
       "aside": "TITAN-2, EnterSales, freelance and my own products"
     },
     "system": {
       "label": "system",
-      "title": "What this site runs on",
-      "aside": "Two themes, one set of tokens"
+      "title": "what this site runs on",
+      "aside": "three themes · one set of tokens"
     },
     "process": {
       "label": "process",
-      "title": "How I work",
-      "aside": "End to end, one person"
+      "title": "how I work",
+      "aside": "end to end · one person"
     },
     "about": {
       "label": "about",
-      "title": "Who is behind it",
-      "aside": "Design and code in one pair of hands"
+      "title": "who is behind it",
+      "aside": "design and code in one pair of hands"
     },
     "principles": {
       "label": "principles",
-      "title": "How I think",
-      "aside": "Four rules"
+      "title": "how I think",
+      "aside": "four rules"
     },
     "contact": {
       "label": "let's talk"
@@ -98,11 +98,11 @@
       "text": "Design systems that work for the product: colour, type and spacing tokens, components with every state, grid rules. New screens are assembled from ready parts, and developers build without guessing.",
       "price": "from $600",
       "tags": [
-        "UX/UI",
-        "Design Systems",
-        "Design Tokens",
-        "Figma",
-        "Auto Layout"
+        "ux/ui",
+        "design systems",
+        "design tokens",
+        "figma",
+        "auto layout"
       ],
       "filter": "design"
     },
@@ -112,11 +112,11 @@
       "text": "Websites and web apps built on my own design: front end on Tilda or React and Next.js, back end, database and server. Every screen is checked against the design at every width.",
       "price": "from $1,200",
       "tags": [
-        "React",
-        "Next.js",
-        "Node.js",
-        "PostgreSQL",
-        "Tilda"
+        "react",
+        "next.js",
+        "node.js",
+        "postgresql",
+        "tilda"
       ],
       "filter": "web"
     },
@@ -126,40 +126,40 @@
       "text": "Telegram bots and AI assistants, CRM and payment integrations, databases, RAG search over documents. Can keep data and models in Russia under data law 152-FZ.",
       "price": "from $240",
       "tags": [
-        "JavaScript",
-        "PostgreSQL",
-        "RAG",
-        "AI Agents",
-        "Bitrix24",
+        "javascript",
+        "postgresql",
+        "rag",
+        "ai agents",
+        "bitrix24",
         "152-fz"
       ],
       "filter": "ai"
     }
   ],
-  "servicesMore": "See projects",
+  "servicesMore": "see projects",
   "works": {
-    "all": "All",
+    "all": "all",
     "directions": {
-      "design": "Design",
-      "web": "Web",
-      "ai": "Automation and AI"
+      "design": "design",
+      "web": "web",
+      "ai": "automation / ai"
     },
-    "read": "Read the case",
-    "rest": "Smaller automations",
-    "pick": "Selected",
+    "read": "read the case",
+    "rest": "smaller automations",
+    "pick": "selected",
     "where": {
-      "label": "Where",
-      "any": "Anywhere",
+      "label": "where",
+      "any": "anywhere",
       "titan": "TITAN-2",
       "entersales": "EnterSales",
-      "freelance": "Freelance",
-      "own": "Own products"
+      "freelance": "freelance",
+      "own": "own products"
     },
     "view": {
       "grid": "grid",
       "list": "list"
     },
-    "showAll": "All cases",
+    "showAll": "all cases",
     "empty": "no cases for this combination"
   },
   "system": {
@@ -168,7 +168,7 @@
     "type": "type",
     "spacing": "spacing",
     "motion": "motion",
-    "motionNote": "out-expo, 1200 ms, block reveal",
+    "motionNote": "out-expo · 900 ms · block reveal",
     "swatches": {
       "base": "background",
       "elevated": "surface",
@@ -312,28 +312,28 @@
     }
   ],
   "contact": {
-    "title": "Have a project in mind?",
-    "github": "GitHub",
-    "behance": "Behance",
-    "telegram": "Message on Telegram",
-    "location": "Saint petersburg, utc+3",
-    "status": "Open to projects",
+    "title": "have a project in mind?",
+    "github": "github",
+    "behance": "behance",
+    "telegram": "message on telegram",
+    "location": "saint petersburg, utc+3",
+    "status": "open to projects",
     "brief": {
-      "label": "Brief in a minute",
+      "label": "brief in a minute",
       "title": "Put the task together",
-      "pick": "What you need",
-      "route": "How the work goes",
-      "deadline": "Timeline",
+      "pick": "what you need",
+      "route": "how the work goes",
+      "deadline": "timeline",
       "deadlines": [
-        "Urgent",
-        "Within a month",
-        "No rush"
+        "urgent",
+        "within a month",
+        "no rush"
       ],
-      "about": "A few words about the task",
+      "about": "a few words about the task",
       "aboutPlaceholder": "For example: a store website and a bot that takes orders",
-      "preview": "Your message",
-      "telegram": "Send via telegram",
-      "email": "By email",
+      "preview": "your message",
+      "telegram": "send via telegram",
+      "email": "by email",
       "copied": "Message copied. If it did not appear in the chat, paste it",
       "empty": "Pick at least one service",
       "hello": "Hi! I would like to discuss a project.",
@@ -344,23 +344,22 @@
   },
   "footer": {
     "line": "LEXANDRO · ux/ui, design systems, development",
-    "place": "Alexey Sveshnikov, Saint Petersburg"
+    "place": "Alexey Sveshnikov · saint petersburg"
   },
   "case": {
-    "back": "All work",
-    "cta": "Let’s talk about your project",
+    "back": "all work",
     "facts": {
-      "client": "Client",
-      "year": "Year",
-      "direction": "Discipline",
-      "stack": "Stack",
-      "site": "Website"
+      "client": "client",
+      "year": "year",
+      "direction": "discipline",
+      "stack": "stack",
+      "site": "website"
     },
-    "screens": "All screens",
-    "scheme": "How it works",
-    "next": "Next case",
+    "screens": "all screens",
+    "scheme": "how it works",
+    "next": "next case",
     "viewer": "Screenshot viewer",
-    "close": "Close",
+    "close": "close",
     "prev": "Previous",
     "nextShot": "Next",
     "shotTheme": {
@@ -368,14 +367,14 @@
       "light": "light",
       "dark": "dark"
     },
-    "credit": "Front end by",
-    "story": "More on the project",
-    "toc": "In this case",
+    "credit": "front end by",
+    "story": "more on the project",
+    "toc": "in this case",
     "brief": {
       "label": "Project in brief",
-      "task": "Task",
-      "did": "What I did",
-      "result": "Result"
+      "task": "task",
+      "did": "what I did",
+      "result": "result"
     },
     "show": {
       "example": "example",

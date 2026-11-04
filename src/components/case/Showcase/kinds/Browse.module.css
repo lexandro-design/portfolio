@@ -8,7 +8,7 @@
 
 .count {
   flex: none;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
 }

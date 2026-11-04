@@ -1,27 +1,30 @@
 import Link from 'next/link'
-import { type Case } from '@/content/cases'
-import { Shot } from '@/components/ui/Shot'
+import type { Case } from '@/content/cases'
+import { Arrow } from '@/components/ui/Arrow'
 import styles from './NextCase.module.css'
 
-type Props = { item: Case; href: string; label: string }
+const pad = (n: number) => String(n).padStart(2, '0')
 
-/** Переход к следующему кейсу по кругу: название крупно и его кадр */
-export function NextCase({ item, href, label }: Props) {
-  const media = item.thumb ?? item.shots[0]
+type Props = { item: Case; index: number; total: number; href: string; label: string }
+
+/** Переход к следующему кейсу по кругу */
+export function NextCase({ item, index, total, href, label }: Props) {
   return (
-    <div className="container">
-      <Link href={href} className={styles.next}>
-        <div className={styles.copy}>
-          <span className={styles.label}>{label}</span>
-          <span className={styles.title}>{item.title}</span>
-          <span className={styles.tagline}>{item.tagline}</span>
+    <Link href={href} className={styles.next}>
+      <div className={`container ${styles.inner}`}>
+        <span className={styles.label}>
+          {label} · {pad(index)} / {pad(total)}
+        </span>
+        <div className={styles.row}>
+          <span className={styles.title}>
+            {item.title}
+            <span className={styles.tagline}> · {item.tagline}</span>
+          </span>
+          <span className={styles.arrow}>
+            <Arrow size={40} />
+          </span>
         </div>
-        {media && (
-          <div className={styles.media}>
-            <Shot shot={{ ...media, caption: item.title }} className={styles.image} />
-          </div>
-        )}
-      </Link>
-    </div>
+      </div>
+    </Link>
   )
 }

@@ -1,271 +1,165 @@
 .hero {
-  position: relative;
+  display: grid;
+  gap: var(--space-2xl);
+  padding-block: var(--space-2xl) var(--space-xl);
 }
 
-.head {
-  padding-block-start: clamp(40px, 5.2vw, 96px);
+.meta,
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.meta > div {
+  display: grid;
+  gap: 6px;
+}
+
+.meta > div > :last-child {
+  color: var(--fg-secondary);
+}
+
+.metaEnd {
+  justify-items: end;
+  text-align: end;
+}
+
+/* Заголовок и фото стоят на одной нижней линии */
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  align-items: end;
+  gap: var(--space-2xl);
 }
 
 .title {
-  font-size: var(--type-h1);
-  font-weight: 300;
-  line-height: 0.98;
-  letter-spacing: -0.024em;
-  text-wrap: initial;
+  font-size: clamp(64px, 7.3vw, 106px);
+  font-weight: 450;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
-.row {
-  display: block;
-}
-
-/* Русская фраза рассчитана на две полные строки, другие языки переносятся сами */
-:lang(ru) .row {
-  white-space: nowrap;
-}
-
-/* Днём заголовок выточен из малахита */
-:global([data-theme='light']) :lang(ru) .line,
-:global([data-theme='light']) :lang(en) .line {
-  background: url('../malachite.webp') 30% 40% / 1400px auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-:global([data-theme='light']) .title {
-  font-weight: 400;
-}
-
-/* Иероглифы шире и плотнее антиквы: тот же размер давил бы экран */
-.title:lang(zh),
-.title:lang(ja) {
-  font-size: clamp(38px, 6.2vw, 120px);
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: 0;
-}
-
-/* Старт почти с нуля, а не с нуля: браузер считает кадр отрисованным сразу */
 .line {
-  display: inline-block;
-  white-space: pre;
-  animation: rise 1500ms var(--ease-out-expo) both;
+  display: block;
+  animation: rise var(--dur-reveal) var(--ease-out-expo) both;
+}
+
+.line[data-accent] {
+  color: var(--fg-tertiary);
 }
 
 @keyframes rise {
   from {
-    opacity: 0.01;
-    transform: translateY(0.14em);
+    opacity: 0;
+    transform: translateY(40px);
   }
 }
 
-.under {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-lg) var(--space-3xl);
-  margin-block-start: clamp(32px, 3.6vw, 64px);
-  animation: settle 1400ms var(--ease-out-quart) 500ms both;
-}
-
-@keyframes settle {
-  from {
-    opacity: 0.01;
-  }
+.bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: end;
+  gap: var(--space-2xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 480ms both;
 }
 
 .lead {
-  max-inline-size: 36em;
+  max-inline-size: 34em;
   font-size: var(--type-body-lg);
   line-height: 1.55;
   color: var(--fg-secondary);
 }
 
 .actions {
+  display: grid;
+  gap: 12px;
+  min-inline-size: 0;
+}
+
+.buttons {
   display: flex;
-  align-items: center;
-  gap: var(--space-lg);
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 12px;
 }
 
-/* ---------- сцена ---------- */
-
-.stage {
-  --from: 0.68;
-  position: relative;
-  block-size: 200svh;
-  margin-block-start: clamp(24px, 3vw, 56px);
+.scroll {
+  display: inline-flex;
+  gap: 8px;
+  transition: color var(--dur-fast) var(--ease-out-quart);
 }
 
-.sticky {
-  position: sticky;
-  inset-block-start: 0;
-  block-size: 100svh;
-  overflow: hidden;
-  /* Прилипание создаёт свой слой: смешивание ночного кадра идёт с этим фоном */
-  background: var(--bg-base);
-}
-
-/* Кадр заканчивается под шапкой: крышка флакона не уходит под неё */
-.frame {
-  position: absolute;
-  inset: var(--nav-h) 0 0;
-  transform: scale(calc(var(--from) + (1 - var(--from)) * var(--p, 0)));
-  overflow: hidden;
-  transform-origin: 50% 0;
-  will-change: transform;
-}
-
-/* Ночью чёрный ролика растворяется в зелёном: остаётся только свет */
-:global([data-theme='dark']) .frame {
-  mix-blend-mode: screen;
-}
-
-/* Днём кадр настоящий: скругление уходит, когда он вырастает на весь экран */
-:global([data-theme='light']) .frame {
-  border-radius: calc((1 - var(--p, 0)) * 14px);
-}
-
-:global([data-theme='light']) .frame::after,
-:global([data-theme='light']) .night {
-  display: none;
-}
-
-:global([data-theme='dark']) .day {
-  display: none;
-}
-
-.frame img,
-.frame video {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-  object-position: 50% 55%;
-}
-
-:global([data-theme='light']) .frame video,
-.frame .day {
-  object-position: 30% 50%;
-}
-
-.frame video {
-  opacity: 0;
-  transition: opacity 1200ms var(--ease-out-quart);
-}
-
-.frame video[data-on] {
-  opacity: 1;
-}
-
-/* Края кадра уходят в чёрный страницы: рамки нет ни на одном шаге */
-.frame::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background:
-    linear-gradient(90deg, #000 1%, transparent 14%, transparent 86%, #000 99%),
-    linear-gradient(#000 1%, transparent 12%, transparent 74%, #000 99%);
-  pointer-events: none;
-}
-
-.caption {
-  position: absolute;
-  inset-block-end: clamp(24px, 3vw, 48px);
-  inset-inline: var(--bleed);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-md);
-  opacity: clamp(0, calc((var(--p, 0) - 0.72) * 5), 1);
-}
-
-.captionTitle {
-  font-family: var(--font-heading);
-  font-size: var(--type-h3);
-  line-height: 1;
-}
-
-.captionText {
-  color: var(--fg-secondary);
-  transition: color var(--dur-base) var(--ease-out-quart);
-}
-
-.caption:hover .captionText {
+.scroll:hover {
   color: var(--fg-primary);
 }
 
-@media (max-width: 767px) {
-  :lang(ru) .row {
-    white-space: normal;
+@media (max-width: 1199px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) 220px;
   }
 
-  .line {
-    display: block;
-    white-space: normal;
-  }
-
-  .under {
+  .bottom {
+    grid-template-columns: 1fr;
     gap: var(--space-lg);
   }
 
-  .actions {
-    gap: var(--space-md);
-  }
-
-  .stage {
-    block-size: auto;
-  }
-
-  .sticky {
-    position: relative;
-    block-size: auto;
-  }
-
-  .frame {
-    position: relative;
-    inset: auto;
-    aspect-ratio: 750 / 1180;
-    transform: none;
-    will-change: auto;
-  }
-
-  .frame::after {
-    background: linear-gradient(#000 1%, transparent 16%, transparent 72%, #000 99%);
-  }
-
-  .caption {
-    position: relative;
-    inset: auto;
-    display: grid;
-    gap: var(--space-2xs);
-    margin-block-start: calc(var(--space-2xl) * -1);
-    padding-inline: var(--bleed);
-    opacity: 1;
+  .buttons {
+    justify-content: start;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .line,
-  .under {
-    animation: none;
+/* Планшет: фото уже, заголовок меньше, строки заголовка не рвутся
+   внутри себя («Дизайн-» отдельной строкой выглядело случайно) */
+@media (min-width: 768px) {
+  .line {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) 176px;
+    gap: var(--space-lg);
   }
 
-  .stage {
-    block-size: auto;
+  .title {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    gap: var(--space-xl);
+    padding-block: var(--space-xl) var(--space-lg);
   }
 
-  .sticky {
-    position: relative;
+  .meta {
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .frame {
-    transform: none;
-    will-change: auto;
+  .metaEnd {
+    justify-items: start;
+    text-align: start;
   }
 
-  .caption {
-    opacity: 1;
+  .main {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .title {
+    font-size: var(--type-h1);
+    line-height: 1;
+  }
+
+  .buttons > * {
+    flex: 1 1 auto;
   }
 }

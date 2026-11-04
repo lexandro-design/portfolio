@@ -16,7 +16,7 @@
   inset: 0;
   overflow: hidden;
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--bg-elevated);
   box-shadow: 0 30px 60px -36px rgb(0 0 0 / 0.7);
   transform: translateX(calc(var(--d) * 3.2%)) scale(calc(1 - var(--d) * 0.06))

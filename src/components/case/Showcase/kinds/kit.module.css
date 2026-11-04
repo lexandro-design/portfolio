@@ -1,8 +1,10 @@
 /* Общие детали блоков раскрытия: окно приложения, вкладки, кадр, панель, моно-подписи */
 
 .mono {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
@@ -11,7 +13,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--bg-elevated);
   box-shadow: 0 40px 80px -48px rgb(0 0 0 / 0.6);
 }
@@ -46,7 +48,7 @@
   padding: 5px 12px;
   border-radius: 8px;
   background: var(--bg-base);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-secondary);
   text-overflow: ellipsis;
@@ -65,8 +67,10 @@
   padding: 0 16px;
   border: 1px solid var(--border-hair);
   border-radius: 999px;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--fg-secondary);
   cursor: pointer;
   transition:
@@ -101,7 +105,7 @@
   padding: 0 14px;
   border: 1px solid var(--border-hair);
   border-radius: 999px;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
   color: var(--fg-primary);
   cursor: pointer;
@@ -123,7 +127,7 @@
 
 .panel {
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--bg-elevated);
 }
 
@@ -132,8 +136,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--signal-live);
 }
 

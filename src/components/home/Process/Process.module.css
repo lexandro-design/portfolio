@@ -1,66 +1,69 @@
-.list {
-  display: grid;
-  gap: clamp(48px, 6vw, 112px);
-}
-
 .step {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: var(--space-md);
-}
-
-/* Шаг вне середины экрана тише, но остаётся читаемым */
-.title,
-.text {
-  color: var(--fg-tertiary);
-  transition: color var(--dur-slow) var(--ease-out-quart);
-}
-
-.step[data-active] .title {
-  color: var(--fg-primary);
-}
-
-.step[data-active] .text {
-  color: var(--fg-secondary);
+  grid-template-columns: 268px 1fr;
+  padding-block: var(--space-xl);
+  border-block-start: 1px solid var(--border-hair);
 }
 
 .number {
-  padding-block-start: 0.9em;
-  font-size: var(--type-body-sm);
-  color: var(--fg-tertiary);
-  font-variant-numeric: tabular-nums;
+  font-size: 120px;
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--fg-tertiary);
+  transition: -webkit-text-stroke-color var(--dur-slow) var(--ease-out-expo);
+}
+
+.step:hover .number {
+  -webkit-text-stroke-color: var(--fg-primary);
 }
 
 .body {
   display: grid;
-  gap: var(--space-sm);
+  gap: 10px;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
 }
 
 .title {
-  font-size: clamp(44px, 5vw, 92px);
-  font-weight: 300;
-  line-height: 1;
+  font-size: 40px;
+  font-weight: 450;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 
 .text {
-  max-inline-size: 34em;
-  font-size: var(--type-body-lg);
-  line-height: 1.5;
+  color: var(--fg-secondary);
+}
+
+@media (max-width: 1023px) {
+  .step {
+    grid-template-columns: 160px 1fr;
+  }
+
+  .number {
+    font-size: 88px;
+  }
 }
 
 @media (max-width: 767px) {
   .step {
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: var(--space-xs);
+    grid-template-columns: 72px 1fr;
+    padding-block: var(--space-lg);
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
+  .number {
+    font-size: 48px;
+  }
+
   .title {
-    color: var(--fg-primary);
-  }
-
-  .text {
-    color: var(--fg-secondary);
+    font-size: 28px;
   }
 }

@@ -20,7 +20,7 @@
   padding: 14px 16px 16px;
   overflow: hidden;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: 12px;
   text-align: start;
   color: var(--fg-tertiary);
   cursor: pointer;
@@ -46,7 +46,7 @@
 }
 
 .num {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
   padding-block-start: 3px;
 }

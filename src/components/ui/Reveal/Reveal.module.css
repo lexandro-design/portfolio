@@ -1,6 +1,6 @@
 :global(.js) .reveal:not([data-visible]) {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(40px);
 }
 
 .reveal {

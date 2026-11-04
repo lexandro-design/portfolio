@@ -1,65 +1,70 @@
 .next {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-xl);
-  align-items: end;
-  padding-block: var(--section-y);
+  display: block;
   border-block-start: 1px solid var(--border-hair);
+  transition: background-color var(--dur-slow) var(--ease-out-expo);
 }
 
-.copy {
+.next:hover {
+  background: var(--bg-elevated);
+}
+
+.inner {
   display: grid;
-  gap: var(--space-sm);
+  gap: var(--space-lg);
+  padding-block: var(--space-3xl);
 }
 
-.label,
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.title {
+  min-inline-size: 0;
+  font-size: var(--type-h2);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
 .tagline {
   color: var(--fg-secondary);
 }
 
-.title {
-  font-family: var(--font-heading);
-  font-size: var(--type-h2);
-  font-weight: 300;
-  line-height: 1;
-  transition: translate 1200ms var(--ease-out-expo);
+.arrow {
+  display: inline-flex;
+  flex: none;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
 }
 
-.next:hover .title {
-  translate: 12px 0;
-}
-
-.media {
-  overflow: hidden;
-  border-radius: var(--radius);
-  aspect-ratio: 4 / 3;
-  background: var(--bg-elevated);
-}
-
-.image {
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-  transition: scale 1600ms var(--ease-out-expo);
-}
-
-.next:hover .image {
-  scale: 1.03;
+.next:hover .arrow {
+  transform: translateX(12px);
 }
 
 @media (max-width: 767px) {
-  .next {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-lg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .next:hover .title {
-    translate: none;
+  .inner {
+    padding-block: var(--space-2xl);
   }
 
-  .next:hover .image {
-    scale: none;
+  .row {
+    gap: var(--space-md);
+  }
+
+  .title {
+    font-size: min(34px, 9vw);
+  }
+
+  .arrow svg {
+    inline-size: 24px;
   }
 }

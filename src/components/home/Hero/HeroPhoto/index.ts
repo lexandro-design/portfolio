@@ -1,0 +1,1 @@
+export { HeroPhoto } from './HeroPhoto'

@@ -1,22 +1,12 @@
 .root {
-  --flow-color: var(--case-color, var(--signal-live));
   position: relative;
   display: grid;
   block-size: 100%;
   overflow: hidden;
   background:
-    radial-gradient(120% 80% at 100% 0%, color-mix(in oklab, var(--flow-color) 10%, transparent), transparent 60%),
+    radial-gradient(120% 80% at 100% 0%, color-mix(in oklab, var(--signal-live) 10%, transparent), transparent 60%),
     var(--bg-elevated);
   container-type: size;
-}
-
-/* Большая схема стоит прямо на странице, без подложки */
-.root[data-size='big'] {
-  background: none;
-}
-
-.root[data-size='big'] .grid {
-  display: none;
 }
 
 /* Точечная сетка, как на монтажной схеме */
@@ -102,8 +92,9 @@
   border: 1px solid var(--border-hair);
   border-radius: 8px;
   background: color-mix(in oklab, var(--bg-base) 70%, transparent);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 0.86em;
+  letter-spacing: 0.02em;
   color: var(--fg-tertiary);
   transition:
     color 300ms var(--ease-out-quart),
@@ -142,7 +133,7 @@
 .tick {
   opacity: 0;
   font-size: 0.9em;
-  color: var(--flow-color);
+  color: var(--signal-live);
   transform: scale(0.6);
   transition:
     opacity 260ms,
@@ -154,17 +145,17 @@
 }
 
 .node[data-state='active'] {
-  border-color: var(--flow-color);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--flow-color) 16%, transparent);
+  border-color: var(--signal-live);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal-live) 16%, transparent);
 }
 
 .node[data-state]::before {
-  border-color: var(--flow-color);
-  background: var(--flow-color);
+  border-color: var(--signal-live);
+  background: var(--signal-live);
 }
 
 .node[data-state='active']::before {
-  box-shadow: 0 0 0 5px color-mix(in oklab, var(--flow-color) 25%, transparent);
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--signal-live) 25%, transparent);
   animation: ping 720ms var(--ease-out-quart);
 }
 
@@ -175,7 +166,7 @@
 
 @keyframes ping {
   from {
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--flow-color) 60%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal-live) 60%, transparent);
   }
 }
 
@@ -195,7 +186,7 @@
   inline-size: 8px;
   block-size: 8px;
   border-radius: 50%;
-  background: var(--flow-color);
+  background: var(--signal-live);
   opacity: 0;
 }
 
@@ -231,7 +222,7 @@
   border: 1px solid var(--border-hair);
   border-radius: 8px;
   background: color-mix(in oklab, var(--bg-base) 70%, transparent);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 0.78em;
   color: var(--fg-tertiary);
   transition:
@@ -242,6 +233,8 @@
 
 .lane .label {
   white-space: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .laneOut {
@@ -253,14 +246,14 @@
 }
 
 .lane[data-state='active'] {
-  border-color: var(--flow-color);
+  border-color: var(--signal-live);
   color: var(--fg-primary);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--flow-color) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal-live) 16%, transparent);
 }
 
 .lane[data-state='active'] .laneOut {
   opacity: 1;
-  color: var(--flow-color);
+  color: var(--signal-live);
 }
 
 /* Мелкая миниатюра (список на телефоне): только шаги, без реплик */

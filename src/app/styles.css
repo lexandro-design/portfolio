@@ -1,3 +1,6 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/unbounded';
 @import './tokens.css';
 
 *,
@@ -6,14 +9,8 @@
   box-sizing: border-box;
 }
 
-:root {
-  /* Мелкое зерно поверх мягких заливок: на тёмном фоне иначе видны кольца-полосы */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .14 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 html {
   -webkit-text-size-adjust: 100%;
-  font-variant-numeric: lining-nums;
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-h);
 }
@@ -26,16 +23,9 @@ body {
   font-size: var(--type-body);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--font-heading);
-  font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: -0.018em;
-  text-wrap: balance;
+  transition:
+    background-color var(--dur-base) var(--ease-out-quart),
+    color var(--dur-base) var(--ease-out-quart);
 }
 
 h1,
@@ -78,14 +68,13 @@ video {
 }
 
 :focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 4px;
-  border-radius: 2px;
+  outline: 1px solid var(--border-focus);
+  outline-offset: 3px;
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--fg-inverse);
+  color: #14140f;
 }
 
 img[data-zoom] {
@@ -95,14 +84,12 @@ img[data-zoom] {
 /* Китайский и японский: латиница остаётся в Inter, иероглифы берутся
    из системного шрифта. Отрицательный трекинг заголовков, рассчитанный
    на латиницу и кириллицу, иероглифы слепляет — у них его нет */
-:root:lang(zh) {
-  --font-sans: 'Inter Variable', var(--font-cjk-zh);
-  --font-heading: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'SimSun', serif;
+:lang(zh) {
+  font-family: 'Inter Variable', var(--font-cjk-zh);
 }
 
-:root:lang(ja) {
-  --font-sans: 'Inter Variable', var(--font-cjk-ja);
-  --font-heading: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif CJK JP', serif;
+:lang(ja) {
+  font-family: 'Inter Variable', var(--font-cjk-ja);
 }
 
 :is(:lang(zh), :lang(ja)) :is(h1, h2, h3) {
@@ -124,11 +111,6 @@ img[data-zoom] {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-/* Мягкую прокрутку ведёт Lenis, родная плавность ему мешает */
-html.lenis {
-  scroll-behavior: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -170,26 +152,17 @@ img[data-variant='dark'],
   display: block;
 }
 
+/* Неон: едва заметное свечение по краям фона, чтобы тёмный фиолетовый не был плоским */
+[data-theme='neon'] body {
+  background-image:
+    radial-gradient(1100px 620px at 88% -8%, rgb(157 140 255 / 0.13), transparent 62%),
+    radial-gradient(900px 520px at -8% 108%, rgb(198 255 61 / 0.05), transparent 60%);
+  background-attachment: fixed;
+}
+
 /* Цвет кейса: свой у каждого (CasePage ставит --case-color), смешан с цветом
    текста темы — на тёмной светлее, на светлой темнее, читается в любой */
 [data-case] {
-  position: relative;
-  /* Свой слой: свечение шапки лежит над фоном страницы, но под текстом */
-  isolation: isolate;
-  overflow-x: clip;
   --case-color: var(--signal-live);
   --case-accent: color-mix(in oklab, var(--case-color) 78%, var(--fg-primary));
-}
-
-/* Свет работы: цвет плавно перетекает при смене кейса */
-@property --light {
-  syntax: '<color>';
-  inherits: true;
-  initial-value: transparent;
-}
-
-/* Открыт просмотр или меню: страница под ними стоит */
-html:has(dialog[open]) {
-  overflow: hidden;
-  scrollbar-gutter: stable;
 }

@@ -81,7 +81,7 @@
 }
 
 .lines b {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
   font-weight: 500;
   color: var(--accent);

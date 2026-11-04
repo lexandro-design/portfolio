@@ -19,7 +19,7 @@
 .track {
   block-size: 14px;
   overflow: hidden;
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--border-hair);
 }
 
@@ -27,7 +27,7 @@
   display: block;
   block-size: 100%;
   inline-size: 0;
-  border-radius: var(--radius);
+  border-radius: 14px;
   background: var(--fg-primary);
 }
 

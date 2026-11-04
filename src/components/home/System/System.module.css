@@ -8,17 +8,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr 1fr;
-}
-
-/* Панель со своей палитрой: страница вокруг не меняется */
-.panel {
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--bg-elevated);
-  color: var(--fg-primary);
-  transition:
-    background-color var(--dur-slow) var(--ease-out-quart),
-    color var(--dur-slow) var(--ease-out-quart);
+  border-block: 1px solid var(--border-hair);
 }
 
 .cell {
@@ -34,18 +24,15 @@
 }
 
 .label {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
-.label::first-letter,
-.name::first-letter {
-  text-transform: uppercase;
-}
-
 .code {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
 }
@@ -61,36 +48,9 @@
 }
 
 .try {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs) var(--space-md);
-}
-
-.pick {
-  position: relative;
-  padding-block: 6px;
-  color: var(--fg-tertiary);
-  transition: color var(--dur-base) var(--ease-out-quart);
-}
-
-.pick:hover,
-.pick[aria-checked='true'] {
-  color: var(--fg-primary);
-}
-
-.pick::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 2px;
-  block-size: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-slow) var(--ease-out-expo);
-}
-
-.pick[aria-checked='true']::after {
-  transform: scaleX(1);
+  display: grid;
+  gap: 12px;
+  justify-items: start;
 }
 
 .dot {
@@ -114,7 +74,6 @@
 
 .chip {
   block-size: 64px;
-  border-radius: var(--radius);
   margin-block-end: 6px;
   border: 1px solid var(--border-hover);
   transition:
@@ -151,6 +110,7 @@
 .sample {
   overflow: hidden;
   font-weight: 450;
+  animation: weight 4s var(--ease-in-out) calc(var(--i) * 0.3s) infinite;
   line-height: 1;
   letter-spacing: -0.03em;
   white-space: nowrap;
@@ -230,7 +190,6 @@
 .track {
   position: relative;
   block-size: 12px;
-  container-type: inline-size;
   border-block-end: 1px solid var(--border-hair);
 }
 
@@ -242,27 +201,18 @@
   block-size: 12px;
   border-radius: 50%;
   background: var(--signal-live);
-}
-
-/* Движение только пока блок на экране: насыщенность шрифта считается раскладкой */
-.grid[data-live] .sample {
-  animation: weight 4s var(--ease-in-out) calc(var(--i) * 0.3s) infinite;
-}
-
-.grid[data-live] .ball {
   animation: travel 2.6s var(--ease-out-expo) infinite;
 }
 
-/* Только transform: левый край заставлял браузер пересчитывать раскладку на каждом кадре */
 @keyframes travel {
   0%,
   8% {
-    transform: translateX(0);
+    inset-inline-start: 0;
   }
 
   60%,
   100% {
-    transform: translateX(calc(100cqi - 12px));
+    inset-inline-start: calc(100% - 12px);
   }
 }
 
@@ -286,7 +236,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grid[data-live] .sample {
+  .sample {
     animation: none;
   }
 }

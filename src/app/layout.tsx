@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
-import { Fonts } from '@/components/layout/Fonts'
 import { Footer } from '@/components/layout/Footer'
 import { Nav } from '@/components/layout/Nav'
 import { CommandPalette, type PaletteCase } from '@/components/layout/CommandPalette/CommandPalette'
@@ -9,7 +8,6 @@ import { features } from '@/content/site'
 import { LOCALES, type Locale } from '@/i18n/config'
 import { ThemeScript } from '@/components/layout/ThemeScript'
 import { Metrika } from '@/components/layout/Metrika'
-import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import './styles.css'
 
 export const metadata: Metadata = {
@@ -18,7 +16,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#06120e',
+  themeColor: '#0a0a0a',
 }
 
 /* Один корневой layout на все языки: <html lang> для /en, /zh, /ja
@@ -43,7 +41,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" suppressHydrationWarning>
       <head>
         <ThemeScript />
-        <Fonts />
       </head>
       <body>
         <Nav />
@@ -51,7 +48,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         {features.palette && <CommandPalette index={paletteIndex} />}
         <Metrika />
-        <SmoothScroll />
       </body>
     </html>
   )

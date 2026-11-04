@@ -60,7 +60,7 @@
 .buttonKbd {
   padding: 2px 6px;
   border: 1px solid var(--border-hair);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
   white-space: nowrap;
@@ -76,8 +76,10 @@
 
 .group {
   padding: 12px 12px 6px;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
 }
 
@@ -125,8 +127,10 @@
 
 .tag {
   margin-inline-start: auto;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
   white-space: nowrap;
 }
@@ -144,7 +148,7 @@
 .foot {
   padding: 10px 20px;
   border-block-start: 1px solid var(--border-hair);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
 }
