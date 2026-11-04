@@ -23,6 +23,15 @@
   white-space: nowrap;
 }
 
+/* Иероглифы шире и плотнее антиквы: тот же размер давил бы экран */
+.title:lang(zh),
+.title:lang(ja) {
+  font-size: clamp(38px, 6.2vw, 120px);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
 /* Старт почти с нуля, а не с нуля: браузер считает кадр отрисованным сразу */
 .line {
   display: inline-block;
@@ -154,6 +163,7 @@
 
   .line {
     display: block;
+    white-space: normal;
   }
 
   .under {

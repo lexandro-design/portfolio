@@ -99,18 +99,19 @@ img[data-zoom] {
 /* Китайский и японский: латиница остаётся в Inter, иероглифы берутся
    из системного шрифта. Отрицательный трекинг заголовков, рассчитанный
    на латиницу и кириллицу, иероглифы слепляет — у них его нет */
-:lang(zh) {
-  font-family: 'Inter Variable', var(--font-cjk-zh);
+:root:lang(zh) {
+  --font-sans: 'Inter Variable', var(--font-cjk-zh);
+  --font-heading: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'SimSun', serif;
 }
 
-:lang(ja) {
-  font-family: 'Inter Variable', var(--font-cjk-ja);
+:root:lang(ja) {
+  --font-sans: 'Inter Variable', var(--font-cjk-ja);
+  --font-heading: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif CJK JP', serif;
 }
 
 :is(:lang(zh), :lang(ja)) :is(h1, h2, h3) {
   letter-spacing: 0;
   line-height: 1.18;
-  font-family: 'Songti SC', 'Noto Serif CJK SC', 'Yu Mincho', 'Hiragino Mincho ProN', var(--font-sans);
   font-weight: 500;
 }
 

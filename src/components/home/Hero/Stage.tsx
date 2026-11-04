@@ -23,6 +23,15 @@ export function Stage({ href, title, text }: Props) {
     if (!el || !v) return
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
     let raf = 0
+    let seen = false
+    // Ролик ждёт, пока страница загрузится: постер уже стоит, первому экрану он не мешает
+    const start = () => {
+      if (!calm && seen) v.play().catch(() => {})
+    }
+    const ready = () => {
+      if (document.readyState === 'complete') window.setTimeout(start, 600)
+      else addEventListener('load', ready, { once: true })
+    }
 
     const paint = () => {
       raf = 0
@@ -37,11 +46,13 @@ export function Stage({ href, title, text }: Props) {
 
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) {
-        if (!calm) v.play().catch(() => {})
+        seen = true
+        ready()
         addEventListener('scroll', queue, { passive: true })
         addEventListener('resize', queue)
         queue()
       } else {
+        seen = false
         v.pause()
         removeEventListener('scroll', queue)
         removeEventListener('resize', queue)
@@ -50,6 +61,7 @@ export function Stage({ href, title, text }: Props) {
     io.observe(el)
     return () => {
       io.disconnect()
+      removeEventListener('load', ready)
       removeEventListener('scroll', queue)
       removeEventListener('resize', queue)
       cancelAnimationFrame(raf)
@@ -62,7 +74,7 @@ export function Stage({ href, title, text }: Props) {
         <div className={styles.frame}>
           <picture>
             <source media="(max-width: 767px)" srcSet={asset('/cases/parfumeria/hero-mobile.jpg')} />
-            <img src={asset('/cases/parfumeria/hero.jpg')} alt="" width={1600} height={780} />
+            <img src={asset('/cases/parfumeria/hero.jpg')} alt="" width={1600} height={780} fetchPriority="high" />
           </picture>
           <video
             ref={video}

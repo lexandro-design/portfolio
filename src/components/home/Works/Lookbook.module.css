@@ -4,7 +4,6 @@
   inset: 0;
   z-index: -1;
   background:
-    var(--grain),
     radial-gradient(90% 62% at 50% 112%, color-mix(in oklab, var(--light) 36%, transparent), transparent 72%),
     radial-gradient(70% 46% at 50% -14%, color-mix(in oklab, var(--light) 16%, transparent), transparent 72%);
   opacity: 0;
@@ -16,6 +15,15 @@
 
 .light[data-on] {
   opacity: 1;
+}
+
+/* Зерно против полос в заливке: наложением, на чистом чёрном его нет */
+.light::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  mix-blend-mode: overlay;
 }
 
 .book {

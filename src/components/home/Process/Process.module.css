@@ -7,12 +7,21 @@
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
   gap: var(--space-md);
-  opacity: 0.34;
-  transition: opacity var(--dur-slow) var(--ease-out-quart);
 }
 
-.step[data-active] {
-  opacity: 1;
+/* Шаг вне середины экрана тише, но остаётся читаемым */
+.title,
+.text {
+  color: var(--fg-tertiary);
+  transition: color var(--dur-slow) var(--ease-out-quart);
+}
+
+.step[data-active] .title {
+  color: var(--fg-primary);
+}
+
+.step[data-active] .text {
+  color: var(--fg-secondary);
 }
 
 .number {
@@ -37,7 +46,6 @@
   max-inline-size: 34em;
   font-size: var(--type-body-lg);
   line-height: 1.5;
-  color: var(--fg-secondary);
 }
 
 @media (max-width: 767px) {
@@ -48,7 +56,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .step {
-    opacity: 1;
+  .title {
+    color: var(--fg-primary);
+  }
+
+  .text {
+    color: var(--fg-secondary);
   }
 }

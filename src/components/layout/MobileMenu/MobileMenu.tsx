@@ -99,14 +99,14 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
             ))}
           </div>
           <a href={contacts.telegram} target="_blank" rel="noreferrer">
-            telegram {contacts.telegramHandle}
+            Telegram {contacts.telegramHandle}
           </a>
           <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
           <a href={contacts.behance} target="_blank" rel="noreferrer">
-            behance
+            Behance
           </a>
           <a href={contacts.github} target="_blank" rel="noreferrer">
-            github
+            GitHub
           </a>
         </div>
       </dialog>
