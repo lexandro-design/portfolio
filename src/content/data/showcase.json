@@ -75,7 +75,6 @@
       },
       {
         "kind": "browse",
-        "section": 4,
         "title": "Магазин целиком",
         "pages": [
           {
@@ -134,7 +133,7 @@
       },
       {
         "kind": "deck",
-        "section": 5,
+        "section": 4,
         "title": "Телефон",
         "cards": [
           {
