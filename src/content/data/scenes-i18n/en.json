@@ -2811,13 +2811,13 @@
         "id": "upp",
         "page": "Moving off UPP",
         "title": "Old and new computer",
-        "text": "The move shown literally: data goes from the old machine to the new one."
+        "text": "The move shown literally: a floppy with the data goes from the old machine to the new one."
       },
       {
         "id": "diag",
         "page": "Diagnostic",
         "title": "Monitor with a scanner",
-        "text": "A frame passes over the screen, like a database check."
+        "text": "The scanner bar moves down the screen and marks with crosses what to check."
       },
       {
         "id": "erp",
