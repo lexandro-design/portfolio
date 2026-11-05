@@ -49,6 +49,8 @@ export function HeroPhoto({ alt, caption }: Props) {
   }, [current, next, tick])
 
   const shownIndex = next ?? current
+  /* В разметке только текущий кадр и следующий: остальные не грузятся, пока до них не дошла очередь */
+  const coming = (shownIndex + 1) % PHOTO.formats.length
 
   return (
     <figure className={styles.photo}>
@@ -58,6 +60,7 @@ export function HeroPhoto({ alt, caption }: Props) {
         data-glitch={next !== null || undefined}
       >
         {PHOTO.formats.map((format, i) => {
+          if (i !== current && i !== next && i !== coming) return null
           const state = i === next ? 'in' : i === current ? 'on' : undefined
           const src = asset(format.src)
 
@@ -77,7 +80,7 @@ export function HeroPhoto({ alt, caption }: Props) {
               className={styles.layer}
               data-state={state}
               src={src}
-              alt={i === 0 ? alt : ''}
+              alt={i === current ? alt : ''}
               width={PHOTO.w}
               height={PHOTO.h}
             />

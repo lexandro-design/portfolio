@@ -1,20 +1,21 @@
 'use client'
 
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { asset } from '@/lib/asset'
 import type { SceneProps } from '../types'
 import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Title, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
-/** Готовый кадр есть только у шаблона из сценария: остальные на стене просто шаблоны */
-type Tile = { id: string; src: string; you?: string }
+/** Готовый кадр есть только у шаблона из сценария: остальные на стене просто шаблоны. tall: кадр 9:16 целиком */
+type Tile = { id: string; src: string; you?: string; tall?: boolean }
 type Data = {
-  chat: { title: string; sub: string; typing: string }
+  chat: { title: string; sub: string; typing: string; menu: string; field: string }
   note: string
   wall: { title: string; note: string }
   tiles: Tile[]
   cols: string[][]
+  fill: string[][]
   tag: { look: string; pick: string; gen: string; you: string }
   selfies: string[]
   start: { time: string; text: string[]; pager: string[]; keys: string[]; more: { row: string[]; keys: string[] } }
@@ -30,7 +31,7 @@ type Data = {
 type State = 'idle' | 'look' | 'pick' | 'gen' | 'you'
 
 /** Шаги: старт, листание, выбор, селфи, генерация, готовый кадр, меню. Последний держится */
-const SPANS = [2800, 3000, 3000, 3200, 3000, 3200]
+const SPANS = [3600, 3000, 3000, 3200, 3000, 3200]
 
 /** Метки внутри шага, мс: «печатает» гаснет, ответ, продолжение, нажатие кнопки */
 const MARKS = [400, 600, 1300, 1800]
@@ -38,22 +39,40 @@ const MARKS = [400, 600, 1300, 1800]
 /** Условное время сообщений: идёт вперёд по сценарию */
 const CLOCK = ['12:01', '12:02', '12:03', '12:03', '12:05', '12:06']
 
+/** Проезд ленты, как в Telegram: новое снизу, старое уезжает вверх */
+const GLIDE = 'cubic-bezier(0.22, 1, 0.36, 1)'
+
 /** Какой плитке стены что происходит на каком шаге */
 function stateOf(id: string, step: number): State {
   if (id === 'red') return step === 0 ? 'idle' : step === 1 ? 'look' : step === 2 ? 'pick' : step === 3 ? 'gen' : 'you'
   return 'idle'
 }
 
-/** Кадр 3:4 в чате. Пустой alt: подпись и смысл несёт текст рядом */
-function Pic({ src, className, style }: { src: string; className?: string; style?: CSSProperties }) {
+/** Ширина плитки стены: четверть экрана на телефоне, восьмая на планшете, шестая на компьютере */
+const WALL_SIZES = '(max-width: 599px) 25vw, (max-width: 1099px) 13vw, 18vw'
+
+/** Кадр в чате и на стене. Пустой alt: подпись и смысл несёт текст рядом. У кадров стены два размера */
+function Pic({ src, className, style, lazy }: { src: string; className?: string; style?: CSSProperties; lazy?: boolean }) {
+  const set = src.endsWith('-960.webp') ? `${asset(src.replace('-960.webp', '-480.webp'))} 480w, ${asset(src)} 960w` : undefined
   return (
     // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет
-    <img className={className ?? styles.pic} src={asset(src)} alt="" width={600} height={800} style={style} decoding="async" />
+    <img
+      className={className}
+      src={asset(src)}
+      srcSet={set}
+      sizes={set ? WALL_SIZES : undefined}
+      alt=""
+      width={600}
+      height={800}
+      style={style}
+      decoding="async"
+      loading={lazy ? 'lazy' : undefined}
+    />
   )
 }
 
 /** Тире подставляется здесь: в json его держать нельзя (tools/check-content.mjs) */
-const DASH = '\u2014'
+const DASH = '—'
 
 /** Настоящие кадры бота: обложка и логотип. Надписи уже на обложке, поверх ничего не кладём */
 const COVER = '/cases/mimimibot/real/cover.webp'
@@ -80,11 +99,21 @@ function Pad({ rows }: { rows: { items: string[]; stack?: boolean; pressed?: num
   )
 }
 
+/** Высота всей ленты без учёта идущих анимаций: offsetTop transform не считает */
+function feedOf(box: HTMLElement | null) {
+  const ol = box?.querySelector('ol')
+  const items = ol ? ([...ol.children] as HTMLElement[]) : []
+  if (!ol || !items.length) return null
+  const end = items[items.length - 1]
+  return { ol, items, height: end.offsetTop + end.offsetHeight - items[0].offsetTop }
+}
+
 /**
  * MiMiMi AI. Сцена: стена шаблонов, как доска, живёт вокруг и позади чата.
  * Человек листает карусель, выбирает кадр, шлёт три селфи, идёт генерация,
  * и готовый кадр с лицом встаёт на место шаблона. Стена откликается на
- * каждый шаг: подсвечивает кадр из чата, показывает ожидание и результат
+ * каждый шаг: подсвечивает кадр из чата, показывает ожидание и результат.
+ * Лента как в настоящем Telegram: переписка копится, старое уезжает вверх
  */
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
@@ -109,19 +138,46 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const follow = past || n >= 3
   const press = past || n >= 4 ? 0 : undefined
   const said = (l: string[]) => l.map((x) => x.replace('{d}', DASH)).join('\n')
+  const now = (i: number) => (shown === i ? press : undefined)
 
-  const side = [d.cols[0], d.cols[1], d.cols[2], d.cols[3]]
-  const filler = [
-    [d.tiles[5].id, d.tiles[0].id],
-    [d.tiles[7].id, d.tiles[3].id],
-  ]
+  // Лента прижата к низу: новое сообщение сдвигает старые мгновенно, проезд возвращает им плавность
+  const phone = useRef<HTMLDivElement>(null)
+  const was = useRef(0)
+  useLayoutEffect(() => {
+    const feed = feedOf(phone.current)
+    if (!feed) return
+    const grew = feed.height - was.current
+    const first = was.current === 0
+    was.current = feed.height
+    if (first || grew <= 0 || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    feed.items.forEach((el) => el.animate([{ transform: `translateY(${grew}px)` }, { transform: 'none' }], { duration: 460, easing: GLIDE }))
+  }, [shown, follow])
+
+  // Первое сообщение выше окна: сначала видна обложка, потом лента сама едет к кнопкам, как при открытии чата. На паузе стоит на обложке
+  const atStart = step === 0 && (play.inView || play.stopped)
+  useEffect(() => {
+    if (!atStart) return
+    const feed = feedOf(phone.current)
+    if (!feed) return
+    const over = feed.height - feed.ol.clientHeight + 24
+    if (over <= 0) return
+    const frames = [{ transform: `translateY(${over}px)` }, { transform: 'none' }]
+    const hold = play.stopped || matchMedia('(prefers-reduced-motion: reduce)').matches
+    const runs = feed.items.map((el) =>
+      hold
+        ? el.animate([frames[0], frames[0]], { duration: 1, fill: 'forwards' })
+        : el.animate(frames, { duration: 1300, delay: 1500, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'backwards' }),
+    )
+    return () => runs.forEach((a) => a.cancel())
+  }, [atStart, play.stopped])
+
   const wall: { ids: string[]; hide?: boolean }[] = [
-    { ids: side[0] },
-    { ids: side[1] },
-    { ids: filler[0], hide: true },
-    { ids: filler[1], hide: true },
-    { ids: side[2] },
-    { ids: side[3] },
+    { ids: d.cols[0] },
+    { ids: d.cols[1] },
+    { ids: d.fill[0], hide: true },
+    { ids: d.fill[1], hide: true },
+    { ids: d.cols[2] },
+    { ids: d.cols[3] },
   ]
 
   const cur = d.steps[step]
@@ -133,16 +189,17 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         <Meta item={item} meta={meta} />
         <Title item={item} />
 
-        <div className={styles.stage}>
+        <div className={styles.stage} data-live={play.inView || undefined}>
           <div className={styles.wall} aria-hidden="true">
             {wall.map((col, ci) => (
               <div key={ci} className={styles.col} data-hide={col.hide || undefined} data-i={ci}>
-                {col.ids.map((id) => {
+                {col.ids.map((id, ti) => {
                   const tile = byId[id]
                   const s: State = col.hide ? 'idle' : stateOf(id, step)
+                  const extra = ti > 1
                   return (
-                    <div key={id} className={styles.tile} data-s={s}>
-                      <Pic src={tile.src} className={styles.base} />
+                    <div key={id} className={styles.tile} data-s={s} data-tall={tile.tall || undefined} data-extra={extra || undefined}>
+                      <Pic src={tile.src} className={styles.base} lazy={extra || col.hide} />
                       {tile.you && <Pic src={tile.you} className={styles.you} />}
                       {s === 'gen' && (
                         <span className={styles.gen}>
@@ -159,9 +216,18 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             ))}
           </div>
 
-          <div className={styles.phone}>
-            <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar={<Logo />} live={play.playing} className={styles.chat}>
-              {shown === 0 && (
+          <div ref={phone} className={styles.phone}>
+            <Chat
+              skin="tg"
+              title={d.chat.title}
+              sub={typing ? d.chat.typing : d.chat.sub}
+              busy={typing}
+              bar={{ menu: d.chat.menu, field: d.chat.field, hint: shown === 2 && !follow }}
+              avatar={<Logo />}
+              live={play.playing}
+              className={styles.chat}
+            >
+              {shown >= 0 && (
                 <>
                   <Msg side="in" time={d.start.time} tail={false} className={styles.first}>
                     <span className={styles.cover}>
@@ -172,23 +238,25 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   <Pad rows={[{ items: d.start.pager }, { items: d.start.keys, stack: true }, { items: d.start.more.row }, { items: d.start.more.keys, stack: true }]} />
                 </>
               )}
-              {shown === 1 && (
+              {shown >= 1 && (
                 <>
                   <Msg side="in" time={CLOCK[1]} tail={false} className={styles.first}>
-                    <Pic src={TEMPLATE} className={styles.pic} />
+                    <span className={styles.media} data-low>
+                      <Pic src={TEMPLATE} className={styles.shot} />
+                    </span>
                     <span className={styles.said}>{said(d.demo.text)}</span>
                   </Msg>
-                  <Pad rows={[{ items: d.demo.pager }, { items: d.demo.keys, stack: true, pressed: press }]} />
+                  <Pad rows={[{ items: d.demo.pager }, { items: d.demo.keys, stack: true, pressed: now(1) }]} />
                 </>
               )}
-              {shown === 2 && (
+              {shown >= 2 && (
                 <>
                   <Msg side="in" time={CLOCK[2]} tail={false} className={styles.first}>
                     <span className={styles.said}>{said(d.upload.text)}</span>
                   </Msg>
-                  <Pad rows={[{ items: d.upload.keys, stack: true, pressed: press }]} />
-                  {follow && (
-                    <Msg side="out" time={CLOCK[2]} status={press === 0 ? 'read' : 'sent'} className={styles.selfies}>
+                  <Pad rows={[{ items: d.upload.keys, stack: true, pressed: now(2) }]} />
+                  {(shown > 2 || follow) && (
+                    <Msg side="out" time={CLOCK[2]} status={shown > 2 || press === 0 ? 'read' : 'sent'} className={styles.selfies}>
                       <span className={styles.shots}>
                         {d.selfies.map((x, i) => (
                           <Pic key={x} src={x} className={styles.selfie} style={{ animationDelay: `${i * 320}ms` }} />
@@ -198,36 +266,46 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   )}
                 </>
               )}
-              {shown === 3 && (
+              {shown >= 3 && (
                 <>
                   <Msg side="in" time={CLOCK[3]} tail={false} className={styles.first}>
                     <span className={styles.said}>{said(d.gen.text)}</span>
-                    <Progress run={SPANS[3] - MARKS[1]} label={d.gen.eta} className={styles.prog} />
+                    {shown === 3 && <Progress run={SPANS[3] - MARKS[1]} label={d.gen.eta} className={styles.prog} />}
                   </Msg>
                   <Pad rows={[{ items: d.gen.pager }]} />
                 </>
               )}
-              {shown === 4 && (
+              {shown >= 4 && (
                 <>
                   <Msg side="in" tone="ok" time={CLOCK[4]} tail={false} className={styles.first}>
-                    <Pic src={byId.red.you ?? byId.red.src} className={styles.pic} />
+                    <span className={styles.media} data-glint>
+                      <Pic src={byId.red.you ?? byId.red.src} className={styles.shot} />
+                    </span>
                     <span className={styles.said}>{said(d.done.text)}</span>
                   </Msg>
-                  <Pad rows={[{ items: d.done.keys, stack: true, pressed: press }]} />
+                  <Pad rows={[{ items: d.done.keys, stack: true, pressed: now(4) }]} />
                 </>
               )}
-              {shown === 5 && (
+              {shown >= 5 && (
                 <>
                   <Msg side="in" time={CLOCK[5]} tail={false} className={styles.first}>
                     <span className={styles.said}>{d.menu.text}</span>
                   </Msg>
-                  <Pad rows={[{ items: d.menu.keys, stack: true, pressed: press }]} />
+                  <Pad rows={[{ items: d.menu.keys, stack: true, pressed: now(5) }]} />
                 </>
               )}
             </Chat>
 
             <div key={step} className={styles.dock} aria-hidden="true">
-              <Mono>{step === 0 ? d.speed.title : cur.log}</Mono>
+              {step === 0 ? <Mono>{d.speed.title}</Mono> : (
+                <ul className={styles.log}>
+                  {d.steps.slice(Math.max(1, step - 2), step + 1).map((x) => (
+                    <li key={x.log} data-now={x === cur || undefined}>
+                      <Mono>{x.log}</Mono>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {step === 0 && (
                 <ul className={styles.speed}>
                   {d.speed.rows.map((r) => (

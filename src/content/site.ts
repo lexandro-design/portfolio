@@ -54,12 +54,13 @@ export const sectionIndex = (id: (typeof SECTIONS)[number]) => SECTIONS.indexOf(
 export const PHOTO = {
   w: 720,
   h: 900,
-  formats: [
-    { id: 'photo', src: '/me/photo.jpg', mask: false },
-    { id: 'engraving', src: '/me/lines.png', mask: true },
-    { id: 'dither', src: '/me/dots.png', mask: true },
-    { id: 'ascii', src: '/me/ascii.png', mask: true },
-    { id: 'halftone', src: '/me/halftone.png', mask: true },
-    { id: 'pixels', src: '/me/pixels.jpg', mask: false },
-  ],
+  /* Снимки идут по очереди, каждый проходит все форматы. Новый снимок нарезает tools/me/photo-formats.py */
+  formats: data.heroPhotos.flatMap((dir) => [
+    { id: 'photo', src: `${dir}/photo.jpg`, mask: false },
+    { id: 'engraving', src: `${dir}/lines.png`, mask: true },
+    { id: 'dither', src: `${dir}/dots.png`, mask: true },
+    { id: 'ascii', src: `${dir}/ascii.png`, mask: true },
+    { id: 'halftone', src: `${dir}/halftone.png`, mask: true },
+    { id: 'pixels', src: `${dir}/pixels.jpg`, mask: false },
+  ]),
 }

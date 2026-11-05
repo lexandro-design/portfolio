@@ -1232,64 +1232,118 @@
     "chat": {
       "title": "Mimimi Bot - Neuro Photoshoot",
       "sub": "bot",
-      "typing": "typing…"
+      "typing": "typing…",
+      "menu": "Menu",
+      "field": "Message"
     },
-    "note": "The cover and templates are real, taken from the bot; the model in them is generated. Selfies and the finished shot are illustration, mood only. Not a result or a client photo. The heroine is fictional.",
+    "note": "The cover and templates are real, taken from the bot. The heroine is fictional: the selfies and the final frame show how the bot works, the same face and hair in the look of a template. This is not bot output or a client photo.",
     "wall": {
       "title": "template wall",
       "note": "the shots live in the database and change without code"
     },
     "tiles": [
       {
-        "id": "studio",
-        "src": "/cases/mimimibot/real/tpl-studio.webp"
-      },
-      {
-        "id": "dark",
-        "src": "/cases/mimimibot/real/tpl-dark.webp"
-      },
-      {
         "id": "red",
         "src": "/cases/mimimibot/real/tpl-red.webp",
         "you": "/cases/mimimibot/gen/you-red.webp"
       },
       {
-        "id": "lift",
-        "src": "/cases/mimimibot/real/tpl-lift.webp"
+        "id": "studio",
+        "src": "/cases/mimimibot/wall/studio-960.webp",
+        "tall": true
       },
       {
-        "id": "stairs",
-        "src": "/cases/mimimibot/real/tpl-stairs.webp"
+        "id": "gold",
+        "src": "/cases/mimimibot/wall/gold-960.webp"
+      },
+      {
+        "id": "grey",
+        "src": "/cases/mimimibot/wall/grey-960.webp"
+      },
+      {
+        "id": "dark",
+        "src": "/cases/mimimibot/wall/dark-960.webp"
       },
       {
         "id": "roses",
-        "src": "/cases/mimimibot/real/tpl-roses.webp"
+        "src": "/cases/mimimibot/wall/roses-960.webp",
+        "tall": true
+      },
+      {
+        "id": "stairs",
+        "src": "/cases/mimimibot/wall/stairs-960.webp"
       },
       {
         "id": "camera",
-        "src": "/cases/mimimibot/real/tpl-camera.webp"
+        "src": "/cases/mimimibot/wall/camera-960.webp"
+      },
+      {
+        "id": "bouquet",
+        "src": "/cases/mimimibot/wall/bouquet-960.webp",
+        "tall": true
       },
       {
         "id": "hall",
-        "src": "/cases/mimimibot/real/tpl-hall.webp"
+        "src": "/cases/mimimibot/wall/hall-960.webp"
+      },
+      {
+        "id": "lift",
+        "src": "/cases/mimimibot/wall/lift-960.webp",
+        "tall": true
+      },
+      {
+        "id": "halo",
+        "src": "/cases/mimimibot/wall/halo-960.webp"
+      },
+      {
+        "id": "smoke",
+        "src": "/cases/mimimibot/wall/smoke-960.webp"
+      },
+      {
+        "id": "pink",
+        "src": "/cases/mimimibot/wall/pink-960.webp"
+      },
+      {
+        "id": "mirror",
+        "src": "/cases/mimimibot/wall/mirror-960.webp"
+      },
+      {
+        "id": "cream",
+        "src": "/cases/mimimibot/wall/cream-960.webp"
       }
     ],
     "cols": [
       [
         "studio",
-        "stairs"
+        "gold",
+        "smoke"
       ],
       [
         "dark",
-        "roses"
+        "roses",
+        "stairs"
       ],
       [
         "camera",
+        "bouquet",
         "hall"
       ],
       [
         "red",
-        "lift"
+        "lift",
+        "halo"
+      ]
+    ],
+    "fill": [
+      [
+        "grey",
+        "pink",
+        "mirror"
+      ],
+      [
+        "cream",
+        "stairs",
+        "hall"
       ]
     ],
     "tag": {

@@ -7,6 +7,7 @@ import { getCases } from '@/content/cases-i18n'
 import { features } from '@/content/site'
 import { Steel } from '@/components/layout/Steel'
 import { Sky } from '@/components/layout/Sky'
+import { SkyGuard } from '@/components/layout/SkyGuard'
 import { LOCALES, type Locale } from '@/i18n/config'
 import { ThemeScript } from '@/components/layout/ThemeScript'
 import { Metrika } from '@/components/layout/Metrika'
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Nav />
         <main>{children}</main>
         <Footer />
+        <SkyGuard />
         {features.palette && <CommandPalette index={paletteIndex} />}
         <PauseOffscreen />
         <Metrika />

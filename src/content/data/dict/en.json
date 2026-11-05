@@ -1,4 +1,16 @@
 {
+  "sky": {
+    "title": "Take off for space?",
+    "text": "This theme renders the Moon and stars live in your browser. Phones and slower computers may stutter.",
+    "note": "One button in the corner brings you back.",
+    "enable": "Turn on",
+    "stay": "Stay on Earth",
+    "never": "Don’t ask again",
+    "lag": "Space is lagging on this device",
+    "slow": "Space is taking longer than usual to load",
+    "back": "Back to Earth",
+    "hide": "Hide"
+  },
   "meta": {
     "title": "Alexey Sveshnikov · design, code and AI end to end",
     "description": "Designer and developer: analysis, design systems and interfaces in Figma, websites built on that design and automation with AI agents. End to end, one pair of hands.",
@@ -492,10 +504,6 @@
         "reel": "pick a scene",
         "console": "switches are clickable"
       }
-    },
-    "mood": {
-      "title": "Mood",
-      "note": "Illustration, mood only. Not a result or a client photo."
     }
   },
   "palette": {

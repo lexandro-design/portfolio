@@ -24,6 +24,36 @@
   inset: 0;
 }
 
+/* Длинные страницы: кадр проезжает целиком от верха до низа, наведение ставит на паузу */
+.frame[data-long] img {
+  object-fit: cover;
+  object-position: 50% 0;
+  animation: pan var(--pan) var(--ease-in-out) infinite alternate paused;
+}
+
+.frame[data-long][data-play] img {
+  animation-play-state: running;
+}
+
+.frame[data-long]:hover img {
+  animation-play-state: paused;
+}
+
+@keyframes pan {
+  to {
+    object-position: 50% 100%;
+  }
+}
+
+/* Без движения длинный кадр стоит вписанным: виден весь */
+@media (prefers-reduced-motion: reduce) {
+  .frame[data-long] img {
+    object-fit: contain;
+    object-position: center;
+    animation: none;
+  }
+}
+
 /* Правая половина — новая версия, обрезана слева по положению шторки */
 .after {
   position: absolute;
