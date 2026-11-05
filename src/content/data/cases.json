@@ -418,7 +418,13 @@
       "w": 2624,
       "h": 1280
     },
-    "note": "Концепт: данные в макетах вымышленные."
+    "note": "Концепт: данные в макетах вымышленные.",
+    "card": {
+      "src": "/cases/saldo/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
+    }
   },
   {
     "slug": "meeting-rooms",
@@ -541,7 +547,13 @@
       "w": 2624,
       "h": 1280
     },
-    "note": "Все скриншоты на демо-данных."
+    "note": "Все скриншоты на демо-данных.",
+    "card": {
+      "src": "/cases/meeting-rooms/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
+    }
   },
   {
     "slug": "mimimibot",
@@ -605,10 +617,11 @@
       ]
     },
     "card": {
-      "src": "/cases/mimimibot/gen/card-16x10.webp",
-      "w": 1600,
-      "h": 1000,
-      "caption": "MiMiMi AI"
+      "src": "/cases/mimimibot/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "illustration": true
     }
   },
   {
@@ -711,6 +724,13 @@
         "надзор напоминает о молчащем столе",
         "публикации, деньги и необратимое: вопросом мне на телефон"
       ]
+    },
+    "card": {
+      "src": "/cases/ai-office/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -827,7 +847,13 @@
       "w": 2624,
       "h": 1280
     },
-    "note": "Все скриншоты на демо-данных."
+    "note": "Все скриншоты на демо-данных.",
+    "card": {
+      "src": "/cases/otrx/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
+    }
   },
   {
     "slug": "food-assistants",
@@ -897,6 +923,13 @@
         }
       ],
       "bot": "FoodMarket_bot"
+    },
+    "card": {
+      "src": "/cases/food-assistants/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -991,6 +1024,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/haiku/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -1100,6 +1140,12 @@
       "caption": "",
       "w": 2624,
       "h": 1280
+    },
+    "card": {
+      "src": "/cases/meg-site/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -1204,6 +1250,12 @@
       "caption": "",
       "w": 2624,
       "h": 1280
+    },
+    "card": {
+      "src": "/cases/osq/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -1279,7 +1331,13 @@
       "w": 2624,
       "h": 1280
     },
-    "note": "Все скриншоты на демо-данных."
+    "note": "Все скриншоты на демо-данных.",
+    "card": {
+      "src": "/cases/ai-translator/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
+    }
   },
   {
     "slug": "svarnoy52",
@@ -1403,6 +1461,12 @@
     "link": {
       "href": "https://svarnoy52.ru",
       "label": "svarnoy52.ru"
+    },
+    "card": {
+      "src": "/cases/svarnoy52/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -1464,6 +1528,13 @@
         }
       ],
       "bot": "Osq_bot"
+    },
+    "card": {
+      "src": "/cases/packaging-bots/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -1550,7 +1621,13 @@
       "w": 2624,
       "h": 1280
     },
-    "note": "Все скриншоты на демо-данных."
+    "note": "Все скриншоты на демо-данных.",
+    "card": {
+      "src": "/cases/pix-bi/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
+    }
   },
   {
     "slug": "ubiray-rf",
@@ -1634,6 +1711,12 @@
       "caption": "",
       "w": 2624,
       "h": 1280
+    },
+    "card": {
+      "src": "/cases/ubiray-rf/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -1696,7 +1779,8 @@
       "src": "/cases/resort-bot/gen/card-16x10.webp",
       "w": 1600,
       "h": 1000,
-      "caption": "AI-бот для базы отдыха"
+      "caption": "AI-бот для базы отдыха",
+      "illustration": true
     }
   },
   {
@@ -1777,7 +1861,13 @@
       "w": 2624,
       "h": 1280
     },
-    "note": "Все скриншоты на демо-данных."
+    "note": "Все скриншоты на демо-данных.",
+    "card": {
+      "src": "/cases/vacation-plan/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
+    }
   },
   {
     "slug": "lotus",
@@ -1928,6 +2018,13 @@
           "to": 0
         }
       ]
+    },
+    "card": {
+      "src": "/cases/mail-to-crm/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -2007,6 +2104,12 @@
       "caption": "",
       "w": 2624,
       "h": 1280
+    },
+    "card": {
+      "src": "/cases/tetrasis/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -2092,6 +2195,12 @@
     "credit": {
       "href": "https://github.com/zeawale",
       "handle": "zeawale"
+    },
+    "card": {
+      "src": "/cases/reckon/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -2171,6 +2280,12 @@
     "link": {
       "href": "https://www.titan2.ru/studprofi/",
       "label": "titan2.ru/studprofi"
+    },
+    "card": {
+      "src": "/cases/prof-study/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -2289,6 +2404,12 @@
     "link": {
       "href": "https://svarprom-nn.ru/main",
       "label": "svarprom-nn.ru"
+    },
+    "card": {
+      "src": "/cases/svarprom-nn/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -2661,6 +2782,12 @@
       "caption": "",
       "w": 1216,
       "h": 860
+    },
+    "card": {
+      "src": "/cases/garden-td/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
@@ -2719,7 +2846,8 @@
       "src": "/cases/art-school/gen/card-16x10.webp",
       "w": 1600,
       "h": 1000,
-      "caption": "AI-ассистент художественной школы"
+      "caption": "AI-ассистент художественной школы",
+      "illustration": true
     }
   },
   {
@@ -2758,6 +2886,13 @@
         "чат · сортировка по цене",
         "сессия · карточка товара"
       ]
+    },
+    "card": {
+      "src": "/cases/brain-search/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -2854,6 +2989,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/tg-assistant/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -2925,6 +3067,13 @@
           "note": "расход и календарь рядом"
         }
       ]
+    },
+    "card": {
+      "src": "/cases/ai-console/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -3009,6 +3158,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/call-recorder/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -3108,6 +3264,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/channel-pipeline/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -3203,6 +3366,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/lead-agent/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -3299,6 +3469,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/rag-mentor/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -3393,6 +3570,13 @@
           }
         ]
       }
+    },
+    "card": {
+      "src": "/cases/uni-bot/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
     }
   },
   {
@@ -3435,7 +3619,8 @@
       "src": "/cases/salon-booking/gen/card-16x10.webp",
       "w": 1600,
       "h": 1000,
-      "caption": "Онлайн-запись в салоны и клиники"
+      "caption": "Онлайн-запись в салоны и клиники",
+      "illustration": true
     }
   },
   {
@@ -3473,7 +3658,14 @@
         "сводка месяца"
       ]
     },
-    "minor": true
+    "minor": true,
+    "card": {
+      "src": "/cases/team-reports/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
+    }
   },
   {
     "slug": "fitness-bot",
@@ -3511,7 +3703,14 @@
         "вечерний отчёт"
       ]
     },
-    "minor": true
+    "minor": true,
+    "card": {
+      "src": "/cases/fitness-bot/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
+    }
   },
   {
     "slug": "dice-bots",
@@ -3548,7 +3747,14 @@
         "приз"
       ]
     },
-    "minor": true
+    "minor": true,
+    "card": {
+      "src": "/cases/dice-bots/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
+    }
   },
   {
     "slug": "media-to-rag",
@@ -3585,6 +3791,13 @@
         "база знаний"
       ]
     },
-    "minor": true
+    "minor": true,
+    "card": {
+      "src": "/cases/media-to-rag/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860,
+      "perLocale": true
+    }
   }
 ]
