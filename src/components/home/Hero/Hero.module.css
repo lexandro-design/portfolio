@@ -1,9 +1,6 @@
 .hero {
-  position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
   gap: var(--space-2xl);
-  min-block-size: calc(100svh - var(--nav-h));
   padding-block: var(--space-2xl) var(--space-xl);
 }
 
@@ -33,44 +30,12 @@
   text-align: end;
 }
 
-/* Заголовок поверх тёмной стороны Луны: шар стоит за ним, в верстке места не занимает */
+/* Заголовок и фото стоят на одной нижней линии */
 .main {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(var(--type-h1) * 2.47);
   align-items: end;
-}
-
-/* Текст и кнопки над блоком Луны: мимо них её можно крутить, по ним нажатие идёт как обычно */
-.title,
-.meta,
-.bottom,
-.foot {
-  position: relative;
-  z-index: 1;
-}
-
-.title {
-  inline-size: fit-content;
-}
-
-.moon {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: var(--bleed);
-  inline-size: min(78svh, 50%);
-  aspect-ratio: 1;
-  transform: translateY(-52%);
-  cursor: grab;
-  touch-action: pan-y;
-}
-
-:global([data-theme='moon']) .moon {
-  pointer-events: none;
-}
-
-/* Над горизонтом чёрное небо, подпись на нём светлая */
-:global([data-theme='moon']) .meta,
-:global([data-theme='moon']) .meta > div > :last-child {
-  color: #dcdcd6;
+  gap: var(--space-2xl);
 }
 
 .title {
@@ -124,11 +89,6 @@
   gap: 12px;
 }
 
-/* Вторая кнопка стоит на шаре: без подложки подпись теряется на светлой стороне */
-.buttons > :last-child:not(:first-child) {
-  background: var(--bg-scrim);
-}
-
 .scroll {
   display: inline-flex;
   gap: 8px;
@@ -140,6 +100,10 @@
 }
 
 @media (max-width: 1199px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+
   .bottom {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
@@ -159,13 +123,13 @@
 }
 
 @media (max-width: 1023px) {
-  .title {
-    font-size: 56px;
+  .main {
+    grid-template-columns: minmax(0, 1fr) 176px;
+    gap: var(--space-lg);
   }
 
-  .moon {
-    inline-size: min(62svh, 58%);
-    inset-block-start: 36%;
+  .title {
+    font-size: 56px;
   }
 }
 
@@ -186,14 +150,8 @@
   }
 
   .main {
+    grid-template-columns: 1fr;
     gap: var(--space-lg);
-  }
-
-  .moon {
-    position: static;
-    inline-size: 88%;
-    margin-inline-start: auto;
-    transform: none;
   }
 
   .title {
@@ -203,5 +161,78 @@
 
   .buttons > * {
     flex: 1 1 auto;
+  }
+}
+
+/* Темы Луна и Космос: вместо фото шар на общем холсте, его место задаёт блок data-moon.
+   В остальных темах этого блока просто нет */
+.moon {
+  display: none;
+}
+
+:global(:is([data-theme='moon'], [data-theme='space'])) .hero {
+  position: relative;
+  grid-template-rows: auto 1fr auto auto;
+  min-block-size: calc(100svh - var(--nav-h));
+}
+
+:global(:is([data-theme='moon'], [data-theme='space'])) .main {
+  grid-template-columns: 1fr;
+}
+
+:global(:is([data-theme='moon'], [data-theme='space'])) .photo {
+  display: none;
+}
+
+/* Текст и кнопки выше блока Луны: мимо них её можно крутить, по ним нажатие идёт как обычно */
+:global(:is([data-theme='moon'], [data-theme='space'])) :is(.title, .meta, .bottom, .foot) {
+  position: relative;
+  z-index: 1;
+}
+
+:global(:is([data-theme='moon'], [data-theme='space'])) .title {
+  inline-size: fit-content;
+}
+
+:global(:is([data-theme='moon'], [data-theme='space'])) .buttons > :last-child:not(:first-child) {
+  background: var(--bg-scrim);
+}
+
+:global(:is([data-theme='moon'], [data-theme='space'])) .moon {
+  display: block;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--bleed);
+  inline-size: min(78svh, 50%);
+  aspect-ratio: 1;
+  transform: translateY(-52%);
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+:global([data-theme='moon']) .moon {
+  cursor: auto;
+  pointer-events: none;
+}
+
+/* Над горизонтом чёрное небо, подпись на нём светлая */
+:global([data-theme='moon']) .meta,
+:global([data-theme='moon']) .meta > div > :last-child {
+  color: #dcdcd6;
+}
+
+@media (max-width: 1023px) {
+  :global(:is([data-theme='moon'], [data-theme='space'])) .moon {
+    inline-size: min(62svh, 58%);
+    inset-block-start: 36%;
+  }
+}
+
+@media (max-width: 767px) {
+  :global(:is([data-theme='moon'], [data-theme='space'])) .moon {
+    position: static;
+    inline-size: 88%;
+    margin-inline-start: auto;
+    transform: none;
   }
 }

@@ -10,9 +10,10 @@
   "features": {
     "brief": true,
     "palette": false,
-    "sandbox": false
+    "sandbox": false,
+    "steel": true
   },
-  "defaultTheme": "space",
+  "defaultTheme": "dark",
   "sandbox": {
     "accents": [
       "#c6ff3d",

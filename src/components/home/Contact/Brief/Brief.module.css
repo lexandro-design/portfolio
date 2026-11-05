@@ -250,17 +250,17 @@
 }
 
 /* В светлой теме бежевый акцент сливается с фоном — кнопка и галочки тёмные, как главная кнопка сайта */
-:global([data-theme='moon']) .primary {
+:global(:is([data-theme='light'], [data-theme='moon'])) .primary {
   background: var(--fg-primary);
   color: var(--fg-inverse);
 }
 
-:global([data-theme='moon']) .service[aria-pressed='true'] .check {
+:global(:is([data-theme='light'], [data-theme='moon'])) .service[aria-pressed='true'] .check {
   border-color: var(--fg-primary);
   background: var(--fg-primary);
 }
 
-:global([data-theme='moon']) .service[aria-pressed='true'] .check::after {
+:global(:is([data-theme='light'], [data-theme='moon'])) .service[aria-pressed='true'] .check::after {
   border-color: var(--fg-inverse);
 }
 

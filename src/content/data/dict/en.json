@@ -16,8 +16,11 @@
     "menuClose": "Close menu",
     "theme": "Theme",
     "themes": {
-      "space": "Space",
-      "moon": "Moon"
+      "dark": "Dark theme",
+      "light": "Light theme",
+      "steel": "Steel theme",
+      "moon": "Moon theme",
+      "space": "Space theme"
     },
     "language": "Language",
     "search": "Search and commands"
@@ -270,7 +273,7 @@
         },
         {
           "title": "Background",
-          "text": "The Moon and the stars run on WebGL2. A script bakes the map of seas and craters, no photo involved."
+          "text": "Steel, Moon and Space run on WebGL. A script bakes the map of seas and craters, no photo involved."
         }
       ],
       "numbers": {

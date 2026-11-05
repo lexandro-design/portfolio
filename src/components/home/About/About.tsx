@@ -1,19 +1,13 @@
 import type { Case } from '@/content/cases'
 import type { Dict } from '@/i18n/dict'
-import { HeroPhoto } from '@/components/home/Hero/HeroPhoto'
 import { Reveal } from '@/components/ui/Reveal'
 import { Sources } from './Sources'
 import styles from './About.module.css'
 
-type Props = {
-  t: Dict['about']
-  photo: { alt: string; caption: string }
-  where: Dict['works']['where']
-  counts: { group: Case['group']; n: number }[]
-}
+type Props = { t: Dict['about']; where: Dict['works']['where']; counts: { group: Case['group']; n: number }[] }
 
-/** Обо мне: подход крупным текстом и фото слева, опыт строками справа */
-export function About({ t, photo, where, counts }: Props) {
+/** Обо мне: подход крупным текстом слева, опыт строками справа */
+export function About({ t, where, counts }: Props) {
   return (
     <>
     <div className={styles.grid}>
@@ -24,9 +18,6 @@ export function About({ t, photo, where, counts }: Props) {
             {p}
           </p>
         ))}
-        <div className={styles.photo}>
-          <HeroPhoto alt={photo.alt} caption={photo.caption} />
-        </div>
       </Reveal>
 
       <ol className={styles.timeline}>

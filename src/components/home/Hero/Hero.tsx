@@ -4,13 +4,15 @@ import type { Dict } from '@/i18n/dict'
 import { Button } from '@/components/ui/Button'
 import { Clock } from '@/components/ui/Clock'
 import { Ticker } from '@/components/ui/Ticker'
+import { HeroPhoto } from './HeroPhoto'
 import styles from './Hero.module.css'
 
 type Props = { t: Dict['hero']; locale: Locale }
 
 /**
- * Первый экран: мета по краям, заголовок слева, справа Луна. Сам блок пустой:
- * по его месту и размеру компонент Sky ставит сферу на общий холст
+ * Первый экран: мета по краям, заголовок слева и фото справа, под ними
+ * описание и действия. Высота по содержимому, а не на весь экран:
+ * растянутый первый экран давал дыру между метой и заголовком.
  */
 export function Hero({ t, locale }: Props) {
   const lines = [
@@ -45,6 +47,9 @@ export function Hero({ t, locale }: Props) {
           ))}
         </h1>
 
+        <div className={styles.photo}>
+          <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
+        </div>
         <div className={styles.moon} data-moon="" aria-hidden="true" />
       </div>
 

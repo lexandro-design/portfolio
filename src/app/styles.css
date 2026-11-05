@@ -2,6 +2,8 @@
 @import '@fontsource-variable/jetbrains-mono';
 @import '@fontsource-variable/unbounded';
 @import './tokens.css';
+@import './theme-steel.css';
+@import './theme-sky.css';
 @import './xray.css';
 
 *,

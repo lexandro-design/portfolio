@@ -17,11 +17,6 @@
   letter-spacing: -0.02em;
 }
 
-.photo {
-  inline-size: min(100%, 360px);
-  margin-block-start: var(--space-md);
-}
-
 .p {
   max-inline-size: 36em;
   color: var(--fg-secondary);

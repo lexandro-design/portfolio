@@ -1,0 +1,36 @@
+/* Темы Луна и Космос: фон обеих рисует сцена Sky, здесь только цвета поверх неё */
+[data-theme='space'] {
+  --bg-base: #000;
+  --bg-elevated: #0e0f12;
+  --bg-subtle: #17181c;
+  --fg-primary: #f5f5f2;
+  --fg-secondary: #b4b4af;
+  --fg-tertiary: #84847f;
+  --border-hair: rgb(245 245 242 / 0.12);
+  --border-hover: rgb(245 245 242 / 0.28);
+  --signal-live: #4ade80;
+  --border-focus: #dddec7;
+  --bg-scrim: rgb(0 0 0 / 0.72);
+  --overlay-tag: rgb(0 0 0 / 0.55);
+  --fg-inverse: #000;
+  --accent: #dddec7;
+  color-scheme: dark;
+}
+
+[data-theme='moon'] {
+  --bg-base: #989690;
+  --bg-elevated: #aeaca6;
+  --bg-subtle: #a09e98;
+  --fg-primary: #0b0b0a;
+  --fg-secondary: #1f1f1c;
+  --fg-tertiary: #34342f;
+  --border-hair: rgb(11 11 10 / 0.26);
+  --border-hover: rgb(11 11 10 / 0.56);
+  --signal-live: #0d6b34;
+  --border-focus: #0b0b0a;
+  --bg-scrim: rgb(152 150 144 / 0.84);
+  --overlay-tag: rgb(0 0 0 / 0.66);
+  --fg-inverse: #f5f5f2;
+  --accent: #0b0b0a;
+  color-scheme: light;
+}

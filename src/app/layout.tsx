@@ -5,6 +5,7 @@ import { Nav } from '@/components/layout/Nav'
 import { CommandPalette, type PaletteCase } from '@/components/layout/CommandPalette/CommandPalette'
 import { getCases } from '@/content/cases-i18n'
 import { features } from '@/content/site'
+import { Steel } from '@/components/layout/Steel'
 import { Sky } from '@/components/layout/Sky'
 import { LOCALES, type Locale } from '@/i18n/config'
 import { ThemeScript } from '@/components/layout/ThemeScript'
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#0a0a0a',
 }
 
 /* Один корневой layout на все языки: <html lang> для /en, /zh, /ja
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeScript />
       </head>
       <body>
+        {features.steel && <Steel />}
         <Sky />
         <Nav />
         <main>{children}</main>
