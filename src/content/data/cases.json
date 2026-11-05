@@ -319,31 +319,31 @@
         "src": "/cases/prosoft/pain.webp",
         "caption": "«Узнаёте себя?»: ситуация и что делаем.",
         "w": 1600,
-        "h": 782
+        "h": 895
       },
       {
         "src": "/cases/prosoft/erp.webp",
         "caption": "Подбор ERP или КА по трём вопросам.",
         "w": 1600,
-        "h": 840
+        "h": 951
       },
       {
         "src": "/cases/prosoft/report.webp",
         "caption": "Образец отчёта диагностики. На образце подписано: данные условные.",
         "w": 1600,
-        "h": 1031
+        "h": 1143
       },
       {
         "src": "/cases/prosoft/audit.webp",
         "caption": "Аудит базы: образец отчёта с условными данными.",
         "w": 1600,
-        "h": 1382
+        "h": 1494
       },
       {
         "src": "/cases/prosoft/quiz.webp",
         "caption": "Квиз из пяти вопросов, второй шаг.",
         "w": 1600,
-        "h": 789
+        "h": 845
       },
       {
         "src": "/cases/prosoft/mobile.webp",
