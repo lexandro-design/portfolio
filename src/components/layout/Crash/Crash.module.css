@@ -1,0 +1,401 @@
+/* Авария идёт один раз: сбой, падение, удар, отчёт */
+.page {
+  --hit: 0.5s;
+  --fall: 0.95s;
+  --fix: 0.7s;
+  --crash: #ff4a2b;
+  --g: clamp(170px, 31vw, 500px);
+  position: relative;
+  min-block-size: calc(100svh - var(--nav-h));
+  overflow: clip;
+  animation: jolt 0.34s steps(5) calc(var(--hit) + var(--fall) * 0.62) both;
+}
+
+@keyframes jolt {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: translate(-7px, 9px);
+  }
+  45% {
+    transform: translate(6px, -5px);
+  }
+  70% {
+    transform: translate(-3px, 3px);
+  }
+}
+
+/* Шапка держится на левом углу: кнопки в ней работают */
+:global(html:not([data-theme='calm'])) :global(body):has(.page) header {
+  transform: rotate(1.3deg);
+  transform-origin: 0 0;
+  animation: sag var(--fall-nav, 0.9s) cubic-bezier(0.5, 0, 0.3, 1.6) 0.75s both;
+}
+
+:global(html:not([data-theme='calm'])) :global(body):has(.page[data-fixing]) header {
+  transform: none;
+  transition: transform 0.7s var(--ease-out-expo);
+  animation: none;
+}
+
+@keyframes sag {
+  from {
+    transform: none;
+  }
+}
+
+.debris {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.piece {
+  position: absolute;
+  display: block;
+  transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0deg));
+  animation: fall var(--fall) cubic-bezier(0.5, 0, 0.9, 0.6) calc(var(--hit) + var(--d, 0s)) both;
+  will-change: transform;
+}
+
+@keyframes fall {
+  from {
+    transform: none;
+  }
+  68% {
+    transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r, 0deg));
+    animation-timing-function: ease-out;
+  }
+  82% {
+    transform: translate(var(--x, 0), calc(var(--y, 0px) - 2.6vh)) rotate(calc(var(--r, 0deg) * 0.86));
+    animation-timing-function: ease-in;
+  }
+}
+
+.page[data-fixing] .piece {
+  transform: none;
+  transition: transform var(--fix) var(--ease-out-expo);
+  animation: none;
+}
+
+.four,
+.zero {
+  font-size: var(--g);
+  font-weight: 450;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  color: var(--fg-primary);
+}
+
+.first {
+  --x: -3vw;
+  --y: calc(100svh - var(--nav-h) - var(--g) * 0.86);
+  --r: -13deg;
+  --d: 0.1s;
+  inset-block-start: 3vh;
+  inset-inline-start: 7%;
+}
+
+.zero {
+  inset-block-start: 3vh;
+  inset-inline-start: 36%;
+}
+
+/* Трещина делит ноль: две половины падают порознь */
+.zeroTop {
+  --x: 13vw;
+  --y: calc(100svh - var(--nav-h) - var(--g) * 1.02);
+  --r: 21deg;
+  --d: 0.2s;
+  clip-path: polygon(0 0, 100% 0, 100% 44%, 72% 52%, 58% 44%, 40% 58%, 24% 50%, 0 60%);
+}
+
+.zeroLow {
+  --x: 3vw;
+  --y: calc(100svh - var(--nav-h) - var(--g) * 0.94);
+  --r: -6deg;
+  --d: 0s;
+  clip-path: polygon(0 60%, 24% 50%, 40% 58%, 58% 44%, 72% 52%, 100% 44%, 100% 100%, 0 100%);
+}
+
+/* Последняя цифра не упала: висит на проводе и покачивается */
+.hung {
+  --r: 19deg;
+  inset-block-start: 3vh;
+  inset-inline-start: 65%;
+  transform-origin: 82% 0;
+  transform: rotate(var(--r));
+  animation: swing 3.4s ease-out var(--hit) both;
+  color: var(--crash);
+}
+
+@keyframes swing {
+  from {
+    transform: none;
+  }
+  18% {
+    transform: rotate(31deg);
+  }
+  40% {
+    transform: rotate(11deg);
+  }
+  62% {
+    transform: rotate(23deg);
+  }
+  82% {
+    transform: rotate(17deg);
+  }
+}
+
+.wire {
+  position: absolute;
+  inset-block-start: -2vh;
+  inset-inline-start: calc(65% + var(--g) * 0.46);
+  inline-size: 1px;
+  block-size: 6vh;
+  background: var(--crash);
+}
+
+.photo {
+  --x: 2vw;
+  --y: calc(100svh - var(--nav-h) - 3vh - min(30vw, 300px));
+  --r: 11deg;
+  --d: 0.32s;
+  inset-block-start: 4vh;
+  inset-inline-end: 6%;
+  inline-size: min(19vw, 220px);
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 30px 60px rgb(0 0 0 / 0.5);
+}
+
+.photo img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.photo svg {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: none;
+  stroke: rgb(255 255 255 / 0.8);
+  stroke-width: 0.5;
+  animation: show 0.01s linear calc(var(--hit) + var(--fall) * 0.8) both;
+  opacity: 0;
+}
+
+.chip,
+.strip,
+.tag {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  white-space: nowrap;
+}
+
+.chip {
+  --x: -6vw;
+  --y: calc(100svh - var(--nav-h) - 19vh);
+  --r: -24deg;
+  --d: 0.26s;
+  inset-block-start: 2vh;
+  inset-inline-end: 34%;
+  padding: 12px 18px;
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+}
+
+.strip {
+  --x: 3vw;
+  --y: calc(100svh - var(--nav-h) - 14vh);
+  --r: 5deg;
+  --d: 0.36s;
+  inset-block-start: 6vh;
+  inset-inline-start: 38%;
+  padding: 10px 16px;
+  border: 1px solid var(--border-hover);
+  background: var(--bg-elevated);
+  color: var(--fg-secondary);
+}
+
+.tag {
+  --x: 10vw;
+  --y: calc(100svh - var(--nav-h) - 8vh);
+  --r: -9deg;
+  --d: 0.42s;
+  inset-block-start: 3vh;
+  inset-inline-start: 6%;
+  color: var(--fg-tertiary);
+}
+
+.cracks {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: none;
+  stroke: var(--border-hover);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  animation: show 0.01s linear calc(var(--hit) + var(--fall) * 0.64) both;
+}
+
+.page[data-fixing] .cracks,
+.page[data-fixing] .wire,
+.page[data-fixing] .report,
+.page[data-fixing] .photo svg {
+  opacity: 0;
+  animation: none;
+  transition: opacity 0.2s;
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Отчёт о падении появляется, когда всё легло */
+.report {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: start;
+  max-inline-size: 760px;
+  padding-block: var(--space-lg);
+  padding-inline: var(--bleed);
+  animation: report 0.5s var(--ease-out-expo) calc(var(--hit) + var(--fall) + 0.1s) both;
+}
+
+@keyframes report {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.log {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  line-height: 1.6;
+  color: var(--fg-secondary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.log b {
+  display: block;
+  font-weight: 500;
+  color: var(--crash);
+}
+
+.title {
+  font-size: var(--type-h2);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.text {
+  color: var(--fg-secondary);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-block-start: var(--space-xs);
+}
+
+.fix {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-block-size: 44px;
+  padding-inline: 20px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  background: var(--crash);
+  color: #140502;
+  transition: opacity var(--dur-base) var(--ease-out-quart);
+}
+
+.fix:hover {
+  opacity: 0.85;
+}
+
+.fix:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .page {
+    --g: 46vw;
+  }
+
+  .report {
+    max-inline-size: none;
+  }
+
+  .photo {
+    --y: calc(100svh - var(--nav-h) - 3vh - 46vw);
+    inline-size: 34vw;
+  }
+
+  .chip {
+    --y: calc(100svh - var(--nav-h) - 24vh);
+  }
+
+  .strip {
+    display: none;
+  }
+
+  /* Висит справа от отчёта и не заходит на текст */
+  .hung {
+    font-size: 30vw;
+    inset-inline-start: 66%;
+  }
+
+  .wire {
+    inset-inline-start: calc(66% + 14vw);
+  }
+
+  .log {
+    padding-inline-end: 30vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .piece,
+  .hung,
+  .cracks,
+  .report {
+    animation: none;
+  }
+
+  .cracks,
+  .photo svg {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* Спокойный вид: без аварии, только текст и кнопки */
+:global([data-theme='calm']) .debris,
+:global([data-theme='calm']) .log {
+  display: none;
+}
+
+:global([data-theme='calm']) .fix {
+  background: var(--cta-bg);
+  color: var(--fg-inverse);
+}
