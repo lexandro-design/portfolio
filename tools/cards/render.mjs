@@ -139,7 +139,7 @@ const ogHome = (t, l = OG_HOME.ru) =>
   )
 
 const ogCase = (t, c) => {
-  const cover = c.shots[0]
+  const cover = c.card ?? c.thumb ?? c.shots[0]
   const media = cover
     ? `<div style="position:absolute;left:600px;top:120px;width:680px;height:560px;border:1px solid ${t.hair};background:${t.el}"><img class="shot" src="/public${cover.src}"></div>`
     : `<span class="num" style="position:absolute;right:-20px;bottom:-90px;font-size:520px">${pad(c.index)}</span>`
