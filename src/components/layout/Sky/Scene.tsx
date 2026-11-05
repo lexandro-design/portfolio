@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { QUAD, SCENE, STAR_F, STAR_V } from './shader'
 import styles from './Sky.module.css'
 
@@ -56,11 +56,17 @@ function skyMatrix(yaw: number, pitch: number) {
  */
 export default function Scene() {
   const canvas = useRef<HTMLCanvasElement>(null)
+  const [gen, setGen] = useState(0)
 
   useEffect(() => {
     const el = canvas.current
     const gl = el?.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'low-power' })
     if (!el || !gl) return
+    /* Повторный монтаж на том же холсте (StrictMode в dev): контекст уже потерян, берём новый холст */
+    if (gl.isContextLost()) {
+      setGen((g) => g + 1)
+      return
+    }
 
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
     const nav = navigator as Nav
@@ -346,7 +352,7 @@ export default function Scene() {
       removeEventListener('pointerup', release)
       removeEventListener('pointercancel', release)
     }
-  }, [])
+  }, [gen])
 
-  return <canvas ref={canvas} className={styles.plate} aria-hidden="true" />
+  return <canvas key={gen} ref={canvas} className={styles.plate} aria-hidden="true" />
 }
