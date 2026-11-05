@@ -31,15 +31,9 @@
         ]
       },
       {
-        "title": "the site from the layout",
-        "body": [
-          "To check the design in a browser, I built the site from my own layout: home, catalog with filters, product page with volume options, cart, sign-in, account and checkout. Every screen is checked against the layout at 1440, 768 and 375."
-        ]
-      },
-      {
         "title": "a real catalog",
         "body": [
-          "The layout and the site are filled with a real assortment, not placeholders. I put together a catalog export from the store’s test site: 951 products, 56 brands, photos, prices and volumes. Products are arranged sensibly: perfumes in perfumery, only that brand on a brand page, a discount only where the catalog has one."
+          "The layout is filled with a real assortment, not placeholders. I put together a catalog export from the store’s test site: 951 products, 56 brands, photos, prices and volumes. Products are arranged sensibly: perfumes in perfumery, only that brand on a brand page, a discount only where the catalog has one."
         ]
       }
     ],
