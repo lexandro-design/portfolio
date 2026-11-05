@@ -683,35 +683,45 @@
     block-size: 360px;
   }
 
-  .drawer {
-    min-block-size: 360px;
+  /* Панель одной высоты на всех шагах (замер 390): фрагменты на телефоне плотнее, поэтому самое высокое состояние ниже */
+  .drawer,
+  .drawer[data-step] {
+    min-block-size: 330px;
   }
 
-  .drawer[data-step='4'],
-  .drawer[data-step='5'] {
-    min-block-size: 600px;
-  }
-
-  .drawer[data-step='6'] {
-    min-block-size: 420px;
-  }
-
-  .drawer[data-step='7'],
-  .drawer[data-step='8'] {
-    min-block-size: 280px;
+  .frag {
+    gap: 4px;
+    padding: 8px 10px;
   }
 
   .lanes {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
+  /* Фрагменты лентой с горизонтальной прокруткой, как полка выше: три карточки в столбик
+     делали панель вдвое выше остальных шагов */
   .frags,
   .frags[data-weak] {
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    margin-inline: -16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .frags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .frag {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
   }
 
   .frag p {
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
   }
 
   .meter {
@@ -750,5 +760,13 @@
   .gap,
   .reply {
     animation: none;
+  }
+}
+
+/* Самый узкий телефон: списки поиска переносятся плотнее (замер 360) */
+@media (max-width: 380px) {
+  .drawer,
+  .drawer[data-step] {
+    min-block-size: 356px;
   }
 }

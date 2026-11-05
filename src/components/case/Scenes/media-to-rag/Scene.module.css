@@ -499,3 +499,14 @@
     transition: none;
   }
 }
+
+/* Телефон: карточка файла с подписью стадии выше на 5 px, высоту держим по ней; подпись шага до трёх строк */
+@media (max-width: 767px) {
+  .fcard {
+    min-block-size: 86px;
+  }
+
+  .cap {
+    min-block-size: 4.5em;
+  }
+}

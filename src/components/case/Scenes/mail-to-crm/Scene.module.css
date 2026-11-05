@@ -38,18 +38,19 @@
   grid-area: inbox;
 }
 
+/* Высоту панелей держим под самое полное состояние цикла (замер 1024-1440): шаги не двигают страницу */
 .panel {
   grid-area: panel;
   display: flex;
   flex-direction: column;
-  min-block-size: 400px;
+  min-block-size: 475px;
 }
 
 .board {
   grid-area: board;
   display: flex;
   flex-direction: column;
-  min-block-size: 400px;
+  min-block-size: 475px;
 }
 
 .bar {
@@ -200,6 +201,7 @@
 }
 
 .body {
+  min-block-size: 120px;
   padding: 12px 14px;
   border: 1px dashed var(--border-hair);
   font-size: var(--type-body-sm);
@@ -551,13 +553,16 @@
       'board';
   }
 
-  .panel,
-  .board {
-    min-block-size: 0;
+  .panel {
+    min-block-size: 380px;
   }
 
-  .panel {
-    min-block-size: 340px;
+  .board {
+    min-block-size: 450px;
+  }
+
+  .body {
+    min-block-size: 76px;
   }
 
   .under {
@@ -616,8 +621,17 @@
     scroll-snap-align: start;
   }
 
+  /* Ниже 768 строки переносятся плотнее: высота растёт к узкому экрану (замер 390 и 767) */
   .panel {
-    min-block-size: 360px;
+    min-block-size: clamp(375px, calc(465px - (100vw - 390px) * 0.24), 470px);
+  }
+
+  .board {
+    min-block-size: clamp(450px, calc(590px - (100vw - 390px) * 0.37), 600px);
+  }
+
+  .body {
+    min-block-size: clamp(76px, calc(122px - (100vw - 390px) * 0.12), 128px);
   }
 
   .cols {

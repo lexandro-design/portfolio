@@ -68,6 +68,8 @@
 }
 
 .log {
+  /* Строк в журнале от одной до четырёх (по ширине колонки): место держим под самую длинную */
+  min-block-size: 3lh;
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   line-height: 1.5;
@@ -102,22 +104,22 @@
   animation-delay: 220ms;
 }
 
+/* Место под полосу разбора занято всегда: поля не сдвигаются, когда она появляется */
+.slot {
+  min-block-size: 4px;
+}
+
 .parse {
   inline-size: 100%;
 }
 
-/* Сводка выезжает снизу, когда месяц закрыт */
+/* Сводка стоит на месте пустым макетом и загорается, когда месяц закрыт: только opacity, высота не меняется */
 .summary {
-  overflow: hidden;
-  max-block-size: 0;
-  opacity: 0;
-  transition:
-    max-block-size 700ms var(--ease-out-expo),
-    opacity 500ms var(--ease-out-quart);
+  opacity: 0.35;
+  transition: opacity 500ms var(--ease-out-quart);
 }
 
 .summary[data-on] {
-  max-block-size: 200px;
   opacity: 1;
 }
 
@@ -154,7 +156,26 @@
   margin-block-start: 0;
 }
 
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .log {
+    min-block-size: 4lh;
+  }
+}
+
 @media (max-width: 1023px) {
+  .log {
+    min-block-size: 2lh;
+  }
+
+  /* Таблицы в столбце: высота по самому плотному шагу (замер 390 и 768) */
+  .sheet {
+    min-block-size: 274px;
+  }
+
+  .summary {
+    min-block-size: 156px;
+  }
+
   .stage {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: 440px auto;

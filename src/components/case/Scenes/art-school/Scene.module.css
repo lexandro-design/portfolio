@@ -483,6 +483,8 @@
   gap: 8px;
   align-items: baseline;
   min-inline-size: 150px;
+  /* Высота цифры держится и до оценки: подпись не прыгает, когда она появляется */
+  min-block-size: 44px;
   color: var(--fg-tertiary);
 }
 

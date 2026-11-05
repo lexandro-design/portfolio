@@ -112,7 +112,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   </li>
                 ))}
               </ul>
-              {rows.length > 0 && step <= 2 && <Progress key={`${step}:${rows.length}`} run={1100} className={styles.parse} />}
+              <div className={styles.slot}>
+                {rows.length > 0 && step <= 2 && <Progress key={`${step}:${rows.length}`} run={1100} className={styles.parse} />}
+              </div>
               <p key={step} className={styles.log}>
                 {d.steps[step].log}
               </p>

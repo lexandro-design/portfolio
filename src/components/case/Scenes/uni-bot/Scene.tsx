@@ -220,8 +220,6 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             sub={d.phone.sub}
             tone="tg"
             live={play.playing}
-            fit
-            minHeight={300}
             className={styles.phone}
             avatar="🎓"
           >

@@ -23,7 +23,8 @@ export type Play = {
  * ref вешается на корень сцены: шаги идут, только пока сцена на экране
  */
 export function usePlay(spans: number[], { hold = 3200, loop = true } = {}): [ReturnType<typeof useInView<HTMLElement>>[0], Play] {
-  const [ref, inView] = useInView<HTMLElement>()
+  // Шапка сцены на телефоне выше 4 экранов: доля видимого там меньше порога, поэтому смотрим, заходит ли она в середину окна
+  const [ref, inView] = useInView<HTMLElement>('-30% 0px')
   const still = useReduced()
   const last = spans.length - 1
   const [at, setAt] = useState(0)

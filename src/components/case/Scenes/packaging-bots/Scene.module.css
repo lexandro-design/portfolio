@@ -905,6 +905,56 @@
   }
 }
 
+/* Высота сцены не зависит от шага: держим под самое полное состояние цикла (замер на 390-1440).
+   Раскрытая карточка выше полки с тремя карточками, а чат растёт с репликами, поэтому чат
+   не диктует высоту строки (contain: size), а лента сидит в окне фиксированной высоты */
+.chat {
+  contain: size;
+}
+
+.stage {
+  min-block-size: clamp(843px, calc(1037px - (100vw - 1024px) * 0.467), 1037px);
+}
+
+.shelf {
+  align-content: stretch;
+}
+
+@media (max-width: 1279px) {
+  .rail {
+    min-block-size: 460px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    min-block-size: 0;
+  }
+
+  .desk {
+    min-block-size: 720px;
+  }
+
+  .rail {
+    min-block-size: 730px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Подпись шага до трёх строк: кнопки под ней не прыгают */
+  .cap {
+    min-block-size: 4.5em;
+  }
+
+  .desk {
+    min-block-size: clamp(1290px, calc(1290px + (100vw - 600px) * 1.02), 1465px);
+  }
+
+  .rail {
+    min-block-size: clamp(1235px, calc(1420px - (100vw - 390px) * 0.5), 1425px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .table,
   .skel,

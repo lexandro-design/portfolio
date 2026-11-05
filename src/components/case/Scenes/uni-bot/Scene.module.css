@@ -213,8 +213,10 @@
   margin-block-start: var(--space-xl);
 }
 
+/* Окно чата фиксированной высоты: реплики прижаты к низу, старые уходят вверх, страница не растёт с лентой */
 .phone {
   grid-area: phone;
+  block-size: 440px;
 }
 
 .keys {
@@ -229,6 +231,25 @@
   gap: var(--space-md);
   align-content: start;
   align-items: start;
+}
+
+/* Карточки держат высоту самого полного состояния (замер 390-1440): «пусто» и список не меняют страницу */
+.card:nth-child(1) {
+  min-block-size: 196px;
+}
+
+.card:nth-child(2) {
+  min-block-size: 306px;
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .card:nth-child(1) {
+    min-block-size: 238px;
+  }
+
+  .card:nth-child(2) {
+    min-block-size: 366px;
+  }
 }
 
 .card {
@@ -541,5 +562,12 @@
   .flag,
   .pair {
     transition: none;
+  }
+}
+
+/* Узкий телефон: счётчики уходят под часы, когда название дня длинное; место держим под две строки (замер 360 и 390) */
+@media (max-width: 430px) {
+  .axHead {
+    min-block-size: 128px;
   }
 }

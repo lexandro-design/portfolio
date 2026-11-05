@@ -326,8 +326,9 @@
   align-items: stretch;
   padding-block-start: var(--space-sm);
   border-block-start: 1px dashed var(--border-hover);
-  opacity: 0;
-  transform: translateY(12px);
+  /* До первого предложения бота кадры базы бледным намёком: место занято, пустой рамки нет */
+  opacity: 0.22;
+  transform: none;
   transition:
     opacity var(--dur-slow) var(--ease-out-quart),
     transform 700ms var(--ease-out-expo);

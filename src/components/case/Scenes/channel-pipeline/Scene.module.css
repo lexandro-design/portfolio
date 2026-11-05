@@ -249,7 +249,8 @@
   flex-direction: column;
   gap: var(--space-sm);
   min-inline-size: 0;
-  min-block-size: 450px;
+  /* Лист держит высоту самого высокого шага (замер 360-1280): живёт линейно от планшета к десктопу */
+  min-block-size: clamp(480px, calc(605px - (100vw - 768px) * 0.31), 605px);
   padding: var(--space-md);
   border: 1px solid var(--border-hair);
   background: var(--bg-elevated);
@@ -1078,5 +1079,31 @@
   .travel,
   .key {
     transition: none;
+  }
+}
+
+/* Телефон: пара «было / стало» в три строки. Вместо пустой рамки под неё полоса и пара стоят друг под другом,
+   пара бледная, пока правки не вернулись автору: высота рамки не меняется и пустоты нет */
+@media (max-width: 767px) {
+  .loop {
+    gap: var(--space-xs);
+  }
+
+  .loop > * {
+    grid-area: auto;
+  }
+
+  .pairWrap {
+    opacity: 0.4;
+  }
+
+  .loop[data-on] .loopBar {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .paper {
+    min-block-size: 580px;
   }
 }

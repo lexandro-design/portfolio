@@ -483,3 +483,34 @@
     display: none;
   }
 }
+
+/* Строка воронки после первого шага получает пояснение (.out) и выше; высоту строк держим по ней
+   (замер 360-767), поэтому шаг 0 не короче остальных и страница не сдвигается */
+@media (max-width: 767px) {
+  .row:nth-child(1),
+  .row:nth-child(5) {
+    min-block-size: 104px;
+  }
+
+  .row:nth-child(2),
+  .row:nth-child(3),
+  .row:nth-child(4) {
+    min-block-size: 93px;
+  }
+
+  .row:nth-child(6) {
+    min-block-size: 104px;
+  }
+}
+
+@media (max-width: 480px) {
+  .row:nth-child(1),
+  .row:nth-child(5) {
+    min-block-size: 124px;
+  }
+
+  .row:nth-child(3),
+  .row:nth-child(4) {
+    min-block-size: 113px;
+  }
+}

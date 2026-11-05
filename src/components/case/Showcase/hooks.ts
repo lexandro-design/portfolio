@@ -23,16 +23,16 @@ export function useReduced() {
  * демо крутятся, только пока блок на экране, и встают на паузу, когда
  * его пролистали
  */
-export function useInView<T extends Element>(): [RefObject<T | null>, boolean] {
+export function useInView<T extends Element>(rootMargin?: string): [RefObject<T | null>, boolean] {
   const ref = useRef<T>(null)
   const [inView, setInView] = useState(false)
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.2 })
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), rootMargin ? { rootMargin } : { threshold: 0.2 })
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [rootMargin])
   return [ref, inView]
 }
 

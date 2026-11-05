@@ -299,6 +299,12 @@
     min-block-size: 420px;
   }
 
+  /* Лента чата растёт с репликами, но окно держит строку сетки: не раздвигает страницу */
+  .chat {
+    contain: size;
+    min-block-size: 0;
+  }
+
   .under,
   .intro {
     grid-template-columns: minmax(0, 1fr);
@@ -306,6 +312,17 @@
 
   .cap {
     grid-row: auto;
+  }
+}
+
+/* Планшет: на последнем шаге счётчик и правила переносятся длиннее (замер 768 и 1023) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .board {
+    min-block-size: calc(288px - (100vw - 768px) * 0.105);
+  }
+
+  .rules {
+    min-block-size: calc(464px - (100vw - 768px) * 0.173);
   }
 }
 
@@ -353,6 +370,11 @@
 
   .fine {
     display: none;
+  }
+
+  /* Подпись шага до четырёх строк: счётчик и правила под ней не прыгают */
+  .cap {
+    min-block-size: 6em;
   }
 }
 
