@@ -244,11 +244,9 @@
         "footer": "demo interface from the sandbox"
       }
     },
-    "xray": {
-      "title": "X-ray of this page",
-      "lead": "Turn it on and scroll: sections get their component names, a grid appears, and the cursor shows the component, size and font of any element.",
-      "on": "turn on x-ray",
-      "off": "turn off x-ray",
+    "stack": {
+      "title": "What this site is built from",
+      "lead": "The stack layers and numbers come from the site's own data.",
       "layers": [
         {
           "title": "Hosting",

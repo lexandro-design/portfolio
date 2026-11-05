@@ -7,7 +7,7 @@ import { ThemeSwitch } from '@/components/layout/ThemeSwitch'
 import { THEME_EVENT } from '@/components/layout/ThemeSwitch/ThemeSwitch'
 import { features } from '@/content/site'
 import { Sandbox } from './Sandbox'
-import { Xray } from './Xray'
+import { Stack } from './Stack'
 import styles from './System.module.css'
 
 const SWATCHES = [
@@ -158,7 +158,7 @@ export function System({ t, themes, numbers }: Props) {
         </Reveal>
       </div>
 
-      <Xray t={t.xray} numbers={numbers} />
+      <Stack t={t.stack} numbers={numbers} />
 
       {features.sandbox && <Sandbox t={t.sandbox} themeLabels={themes.labels} copied={t.copied} />}
     </>

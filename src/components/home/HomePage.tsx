@@ -35,7 +35,7 @@ export function HomePage({ locale }: { locale: Locale }) {
   // Автоматизации в карточках показывают, как работают, — схема из их же демо
   const flows = Object.fromEntries(items.map((c) => [c.slug, previewOf(c, getShowcase(locale, c.slug), getCast(locale, c.slug))]))
 
-  const n = t.system.xray.numbers
+  const n = t.system.stack.numbers
   const numbers = [
     { v: items.length, l: n.cases },
     { v: LOCALES.length, l: n.langs },
