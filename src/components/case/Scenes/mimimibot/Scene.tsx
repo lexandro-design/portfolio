@@ -7,7 +7,8 @@ import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, N
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
-type Tile = { id: string; src: string; you: string }
+/** Готовый кадр есть только у шаблона из сценария: остальные на стене просто шаблоны */
+type Tile = { id: string; src: string; you?: string }
 type Data = {
   chat: { title: string; sub: string; typing: string }
   note: string
@@ -141,7 +142,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   return (
                     <div key={id} className={styles.tile} data-s={s}>
                       <Pic src={tile.src} className={styles.base} />
-                      <Pic src={tile.you} className={styles.you} />
+                      {tile.you && <Pic src={tile.you} className={styles.you} />}
                       {s === 'gen' && (
                         <span className={styles.gen}>
                           <i className={styles.sweep} />
@@ -226,7 +227,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   {reply && (
                     <>
                       <Msg side="in" tone="ok" time={CLOCK[4]} tail={false} className={styles.first}>
-                        <Pic src={byId.red.you} className={styles.pic} />
+                        <Pic src={byId.red.you ?? byId.red.src} className={styles.pic} />
                         <span className={styles.said}>{said(d.done.text)}</span>
                       </Msg>
                       <Pad rows={[{ items: d.done.keys, stack: true, pressed: press }]} />
