@@ -9,8 +9,8 @@ type V3 = [number, number, number]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 /** Сколько пикселей считаем за кадр: на широком мониторе холст рисуется мельче и растягивается */
-const BUDGET = 2_400_000
-const BUDGET_WEAK = 620_000
+const BUDGET = 4_200_000
+const BUDGET_WEAK = 1_000_000
 /** Медленное вращение рисуем раз в 33 мс: за кадр Луна сдвигается меньше пикселя. Курсор, скролл и жест рисуются на каждом кадре */
 const FRAME = 33
 /** Градусов в секунду: вращение едва заметное */
@@ -148,7 +148,7 @@ export default function Scene() {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-        if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 2 : 4)
+        if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 4 : 8)
         waiting -= 1
         wake()
       }
