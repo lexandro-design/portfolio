@@ -74,7 +74,7 @@ vec3 moon(vec3 d, vec3 P) {
       float t = float(i) * float(i) * .0006;
       block = max(block, (relief(q + sd * t) - h) - rise * t * 60.);
     }
-    shade = 1. - smoothstep(.0, .13, block) * .6 * uView;
+    shade = 1. - smoothstep(.02, .22, block) * .38 * uView;
     /* Вблизи морей не видно: пятна альбедо читались бы кляксами, остаётся мелкий рельеф */
     alb = mix(alb, .34 * (.86 + h * .28), uView * .9);
   }

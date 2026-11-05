@@ -34,3 +34,12 @@
   --accent: #0b0b0a;
   color-scheme: light;
 }
+
+/* На серой поверхности цвета кейсов сливаются с текстом на кнопках: метка одна, как у Стали */
+[data-theme='moon'] [style*='--case-color'] {
+  --case-color: #0b0b0a !important;
+}
+
+[data-theme='moon'] :is([data-screen], [data-variant]) {
+  --case-color: #0b0b0a;
+}
