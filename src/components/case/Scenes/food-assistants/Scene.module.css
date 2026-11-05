@@ -76,16 +76,12 @@
   background: var(--bg-subtle);
 }
 
-/* Логотип клиента на светлой плашке: чёрный текст на тёмной теме не виден */
 .logo {
+  --logo-size: 30px;
   position: absolute;
   inset-block-start: 12px;
   inset-inline-end: 14px;
-  inline-size: 72px;
-  block-size: auto;
-  padding: 4px 8px;
-  box-sizing: content-box;
-  background: #f4f3ef;
+  color: var(--fg-primary);
 }
 
 .log {

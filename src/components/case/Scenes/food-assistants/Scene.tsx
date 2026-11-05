@@ -1,12 +1,12 @@
 'use client'
 
 import { Fragment } from 'react'
-import { asset } from '@/lib/asset'
 import type { SceneProps } from '../types'
 import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, Typing, usePlay } from '../kit'
 import { beat, marksOf, schedule, useBeats } from '../packaging-bots/useBeats'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
+import { ClientLogo } from '@/components/ui/ClientLogo'
 
 type Line = { k: 'out' | 'in' | 'sys'; text: string; d?: number }
 type Step = {
@@ -34,7 +34,6 @@ type Data = {
 /** Шаги: телефон клиента, каталог, база знаний, готовый ответ, сотрудник, передача менеджеру, итог */
 const SPANS = [3600, 3000, 3000, 3000, 3000, 4200, 3000]
 
-const LOGO = '/cases/food-assistants/real/logo.webp'
 
 const pad = (n: number) => String(n + 1).padStart(2, '0')
 
@@ -147,8 +146,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           {side('left')}
 
           <div className={styles.head}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
-            <img className={styles.logo} src={asset(LOGO)} alt="" width={500} height={200} decoding="async" />
+            {item.logo && <ClientLogo logo={item.logo} className={styles.logo} />}
             <Mono>{d.head.title}</Mono>
             <p key={step} className={styles.log}>
               {all ? d.head.all : cur.log || d.head.idle}

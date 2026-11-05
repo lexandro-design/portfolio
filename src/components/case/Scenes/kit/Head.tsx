@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { Arrow } from '@/components/ui/Arrow'
+import { ClientLogo } from '@/components/ui/ClientLogo'
 import type { SceneProps } from '../types'
 import hero from '@/components/case/CaseHero/CaseHero.module.css'
 import styles from './Head.module.css'
@@ -27,7 +28,10 @@ export function Meta({ item, meta, className }: Pick<SceneProps, 'item' | 'meta'
       <span>
         case {pad(meta.index)} / {pad(meta.total)} · {item.label}
       </span>
-      <span>{item.year}</span>
+      <span className={hero.metaEnd}>
+        {item.logo && <ClientLogo logo={item.logo} label={item.client} className={hero.logo} />}
+        {item.year}
+      </span>
     </div>
   )
 }

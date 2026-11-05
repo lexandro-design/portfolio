@@ -61,13 +61,9 @@
   gap: 12px;
 }
 
-/* Логотип клиента на светлой плашке: серый знак не читается на тёмной теме */
 .logo {
-  block-size: 22px;
-  inline-size: auto;
-  padding: 5px 9px;
-  box-sizing: content-box;
-  background: #f4f3ef;
+  --logo-size: 24px;
+  color: var(--fg-primary);
 }
 
 .chipBar {

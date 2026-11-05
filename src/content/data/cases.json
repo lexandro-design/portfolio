@@ -226,6 +226,11 @@
     "label": "design",
     "group": "freelance",
     "client": "фриланс · интегратор 1С",
+    "logo": {
+      "src": "/logos/prosoft.svg",
+      "w": 691,
+      "h": 190
+    },
     "year": "2026",
     "stack": [
       "Figma",
@@ -395,6 +400,11 @@
     "label": "design",
     "group": "own",
     "client": "собственный концепт",
+    "logo": {
+      "src": "/logos/saldo.webp",
+      "w": 369,
+      "h": 112
+    },
     "year": "2026",
     "stack": [
       "Figma",
@@ -941,6 +951,11 @@
     "label": "automation · ai",
     "group": "freelance",
     "client": "фриланс · FoodMarket, дистрибуция продуктов питания",
+    "logo": {
+      "src": "/logos/food-market.webp",
+      "w": 467,
+      "h": 193
+    },
     "year": "2025",
     "stack": [
       "JavaScript",
@@ -1119,6 +1134,11 @@
     "label": "design",
     "group": "titan",
     "client": "ООО «Макс Инжиниринг Групп»",
+    "logo": {
+      "src": "/logos/meg.webp",
+      "w": 429,
+      "h": 219
+    },
     "year": "2026",
     "stack": [
       "Figma",
@@ -1234,6 +1254,11 @@
     "label": "design",
     "group": "entersales",
     "client": "EnterSales · OSQ Group, упаковка для еды",
+    "logo": {
+      "src": "/logos/osq.svg",
+      "w": 176,
+      "h": 58
+    },
     "year": "2025",
     "stack": [
       "Figma",
@@ -1426,6 +1451,11 @@
     "label": "design · web",
     "group": "freelance",
     "client": "фриланс · сварочное оборудование",
+    "logo": {
+      "src": "/logos/svarnoy52.webp",
+      "w": 791,
+      "h": 173
+    },
     "year": "2025–2026",
     "stack": [
       "Figma",
@@ -1555,6 +1585,11 @@
     "label": "automation · ai",
     "group": "entersales",
     "client": "EnterSales · OSQ Group, упаковка для еды",
+    "logo": {
+      "src": "/logos/osq.svg",
+      "w": 176,
+      "h": 58
+    },
     "year": "2025",
     "stack": [
       "JavaScript",
@@ -1715,6 +1750,11 @@
     "label": "design",
     "group": "entersales",
     "client": "EnterSales · Убирай.рф, маркетплейс клининга",
+    "logo": {
+      "src": "/logos/ubiray.svg",
+      "w": 236,
+      "h": 45
+    },
     "year": "2025",
     "stack": [
       "Figma",
@@ -2113,6 +2153,11 @@
     "label": "design",
     "group": "entersales",
     "client": "EnterSales · Тетрасис, бытовая техника",
+    "logo": {
+      "src": "/logos/tetrasis.webp",
+      "w": 519,
+      "h": 203
+    },
     "year": "2025",
     "stack": [
       "Figma",
@@ -2375,6 +2420,11 @@
     "label": "design · web",
     "group": "freelance",
     "client": "фриланс · сварочное оборудование",
+    "logo": {
+      "src": "/logos/svarprom-nn.svg",
+      "w": 1780,
+      "h": 491
+    },
     "year": "2025–2026",
     "stack": [
       "Figma",

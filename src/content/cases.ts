@@ -99,6 +99,8 @@ export type Case = {
   label: string
   group: 'titan' | 'entersales' | 'freelance' | 'own'
   client: string
+  /** Логотип клиента без фона: красится цветом текста темы */
+  logo?: { src: string; w: number; h: number }
   year: string
   stack: string[]
   sections: CaseSection[]

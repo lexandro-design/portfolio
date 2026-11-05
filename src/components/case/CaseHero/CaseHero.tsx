@@ -3,6 +3,7 @@ import type { Case } from '@/content/cases'
 import type { Flow } from '@/content/flows'
 import type { Dict } from '@/i18n/dict'
 import { Arrow } from '@/components/ui/Arrow'
+import { ClientLogo } from '@/components/ui/ClientLogo'
 import { FlowCard } from '@/components/ui/FlowCard'
 import styles from './CaseHero.module.css'
 
@@ -65,7 +66,10 @@ export function CaseHero({ item, index, total, t, directions, backHref, chapters
           <span>
             case {pad(index)} / {pad(total)} · {item.label}
           </span>
-          <span>{item.year}</span>
+          <span className={styles.metaEnd}>
+            {item.logo && <ClientLogo logo={item.logo} label={item.client} className={styles.logo} />}
+            {item.year}
+          </span>
         </div>
 
         <h1 className={styles.title}>

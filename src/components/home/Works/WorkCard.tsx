@@ -4,6 +4,7 @@ import { caseColor, type Case } from '@/content/cases'
 import type { Flow } from '@/content/flows'
 import { Arrow } from '@/components/ui/Arrow'
 import { CasePreview } from '@/components/ui/CasePreview'
+import { ClientLogo } from '@/components/ui/ClientLogo'
 import { FlowCard } from '@/components/ui/FlowCard'
 import { Shot } from '@/components/ui/Shot'
 import styles from './WorkCard.module.css'
@@ -53,6 +54,7 @@ export function WorkCard({ item, index, href, flow, note, size, style, className
             />
           )}
           <span className={styles.chip}>{item.label}</span>
+          {item.card && item.logo && <ClientLogo logo={item.logo} className={styles.logo} />}
           {item.card?.illustration && note && <span className={styles.note}>{note}</span>}
         </div>
 

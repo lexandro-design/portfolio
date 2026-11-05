@@ -76,7 +76,7 @@ const STAGE = {
     w: 1500,
     glow: '#f77106',
     cuts: [
-      { src: 'prosoft-dev.webp', left: 782, top: 22, w: 390 },
+      { src: 'prosoft-dev.webp', left: 566, top: 22, w: 390 },
       { src: 'prosoft-erp.webp', left: 664, top: 490, w: 530 },
     ],
   },
