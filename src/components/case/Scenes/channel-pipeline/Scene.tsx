@@ -245,12 +245,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <section className={styles.axis} aria-label={d.axis.title}>
             <Mono>{d.axis.title}</Mono>
             <div className={styles.scale}>
-              {d.axis.bands.map((b) => (
+              {d.axis.bands.map((b, bi) => (
                 <span
                   key={b.label}
                   className={styles.band}
                   data-low={b.low || undefined}
-                  data-hit={(b.label === 'совет' && step >= 4) || undefined}
+                  data-hit={(bi === 1 && step >= 4) || undefined}
                   style={{ insetInlineStart: `${at(b.from)}%`, inlineSize: `${at(b.to) - at(b.from)}%` }}
                 >
                   <i>{b.label}</i>

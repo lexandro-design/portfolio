@@ -23,7 +23,8 @@ function sameShape(ref, val, where) {
   if (type(ref) !== type(val)) return fail(where, `ожидался ${type(ref)}, а тут ${type(val)}`)
   if (Array.isArray(ref)) {
     if (!ref.length) return
-    val.forEach((item, i) => sameShape(ref[0], item, `${where}[${i}]`))
+    // перевод накладывается по индексам, поэтому элемент сверяется со своим русским, а не с первым
+    val.forEach((item, i) => sameShape(i < ref.length ? ref[i] : ref[0], item, `${where}[${i}]`))
   } else if (type(ref) === 'object') {
     for (const k of Object.keys(ref)) {
       if (!(k in val)) fail(where, `нет ключа «${k}»`)
