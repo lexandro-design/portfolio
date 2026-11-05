@@ -1,0 +1,27 @@
+/* Заходит на левый нижний угол фото: связывает снимок с заголовком и не касается текста */
+.chrome {
+  position: absolute;
+  inset-block-end: -5%;
+  inset-inline-start: -19%;
+  z-index: 1;
+  inline-size: 46%;
+  block-size: auto;
+  pointer-events: none;
+  animation: appear var(--dur-reveal) var(--ease-out-expo) both;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Одна колонка: фото на всю ширину, узел в правом нижнем углу */
+@media (max-width: 767px) {
+  .chrome {
+    inset-inline: auto 3%;
+    inset-block-end: 7%;
+    inline-size: 34%;
+  }
+}

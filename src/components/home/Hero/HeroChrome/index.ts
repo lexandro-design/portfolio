@@ -1,0 +1,1 @@
+export { HeroChrome } from './HeroChrome'

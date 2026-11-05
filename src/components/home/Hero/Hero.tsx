@@ -1,10 +1,11 @@
-import { COORDS, SECTION_COUNT } from '@/content/site'
+import { COORDS, features, SECTION_COUNT } from '@/content/site'
 import { localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
 import { Button } from '@/components/ui/Button'
 import { Clock } from '@/components/ui/Clock'
 import { Ticker } from '@/components/ui/Ticker'
 import { CalmToggle } from '@/components/layout/CalmToggle'
+import { HeroChrome } from './HeroChrome'
 import { HeroPhoto } from './HeroPhoto'
 import styles from './Hero.module.css'
 
@@ -50,6 +51,7 @@ export function Hero({ t, calm, locale }: Props) {
 
         <div className={styles.photo}>
           <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
+          {features.chrome && <HeroChrome />}
         </div>
         <div className={styles.moon} data-moon="" aria-hidden="true" />
       </div>
