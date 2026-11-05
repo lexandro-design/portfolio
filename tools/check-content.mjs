@@ -122,6 +122,7 @@ cases.forEach((c, i) => {
   else c.shots.forEach((s, j) => checkShot(s, `${at}.shots[${j}]`))
   if (c.thumb) checkShot(c.thumb, `${at}.thumb`)
   if (c.card) checkShot(c.card, `${at}.card`)
+  if (c.logo && !existsSync(`public${c.logo.src}`)) fail(`${at}.logo`, `нет файла ${c.logo.src}`)
   if (c.cover) checkShot(c.cover, `${at}.cover`)
   checkPreview(c.preview, `${at}.preview`)
   checkScheme(c.scheme, `${at}.scheme`)

@@ -7,6 +7,7 @@ import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, P
 import { beat, marksOf, schedule, useBeats } from './useBeats'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
+import { ClientLogo } from '@/components/ui/ClientLogo'
 
 type Msgs = { at: number; side: 'in' | 'out' | 'sys'; text: string; link?: string }
 type Data = {
@@ -50,7 +51,6 @@ const LIT = [2, 4, 4, -1, -1, -1]
 const CLOCK = ['10:41', '10:42', '10:43', '10:43', '10:44', '10:44', '', '10:47', '10:47', '']
 
 const PHOTO = '/cases/osq/real/product-box.webp'
-const LOGO = '/cases/osq/real/logo.svg'
 
 const css = (v: Record<string, string | number>) => v as CSSProperties
 
@@ -113,8 +113,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <section className={styles.desk} aria-label={d.shelf.title}>
             <div className={styles.dhead}>
               <span className={styles.brand}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
-                <img className={styles.logo} src={asset(LOGO)} alt="" height={22} />
+                {item.logo && <ClientLogo logo={item.logo} className={styles.logo} />}
                 <Mono>{d.pipe.title}</Mono>
               </span>
               <p key={step} className={styles.log}>

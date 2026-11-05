@@ -16,6 +16,7 @@
 }
 
 .media {
+  container-type: inline-size;
   position: relative;
   /* Пропорция обложек 1216x860: кадр входит целиком */
   aspect-ratio: 1216 / 860;
@@ -70,7 +71,19 @@
   object-fit: contain;
 }
 
-.link:hover .media > :not(.chip) {
+/* Логотип клиента в цветной полосе над окном плитки: размер от ширины плитки, правый край по окну */
+.logo {
+  --logo-size: 4.8cqi;
+  position: absolute;
+  inset-block-start: 6.1cqi;
+  inset-inline-end: 7.2cqi;
+  z-index: 1;
+  color: #fff;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.link:hover .media > :not(.chip, .logo) {
   transform: scale(1.03);
 }
 

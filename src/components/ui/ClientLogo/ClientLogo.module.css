@@ -1,0 +1,9 @@
+.logo {
+  display: inline-block;
+  flex: none;
+  block-size: calc(var(--logo-size, 28px) * var(--k));
+  aspect-ratio: var(--ratio);
+  background: currentColor;
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}

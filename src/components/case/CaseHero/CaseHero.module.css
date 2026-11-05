@@ -61,6 +61,18 @@
   margin-block: var(--space-3xl) var(--space-lg);
 }
 
+/* Логотип клиента справа в строке меты, красится цветом текста темы */
+.metaEnd {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.logo {
+  --logo-size: 30px;
+  color: var(--fg-primary);
+}
+
 .title {
   max-inline-size: 16em;
   font-size: clamp(var(--type-h2), 6.4vw, calc(var(--type-h2) * 1.33));
