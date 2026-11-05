@@ -331,7 +331,7 @@
   },
   "mimimibot": {
     "brief": {
-      "task": "My own product: Pinterest-style shots with the person’s face right in Telegram, with payment inside the bot.",
+      "task": "Built for a client: Pinterest-style shots with the person’s face right in Telegram, with payment inside the bot.",
       "did": [
         "A carousel of ready-made shots, 3–5 of your own photos, a shot in one tap",
         "Four linked processes: request, generation queue, payment through YooKassa, delivery",
@@ -573,7 +573,7 @@
       "task": "Customers wait for an answer in chat, the warehouse searches a large catalog by hand, managers spend time on leads. By law the data must be stored in Russia.",
       "did": [
         "\"Andrey\" answers customers in the CRM chat and fills in the lead himself",
-        "\"Sofia\" searches the catalog and procedures for the warehouse and managers",
+        "“Sofia” searches the catalogue and knowledge base for the warehouse and managers",
         "Routing by intent: SQL on the catalog, a ready answer, the model on the knowledge base, or a manager"
       ],
       "result": "The model is brought in only where you can’t do without it: products are found in the catalog, standard topics are covered by ready text.",
@@ -940,10 +940,10 @@
   },
   "packaging-bots": {
     "brief": {
-      "task": "Managers spent their time on first-line sales, onboarding new staff and going through calls by hand.",
+      "task": "Managers spent their time on first-line sales: understanding what the client packs and picking the packaging.",
       "did": [
         "The client bot picks packaging from a vector base and creates a lead in the CRM",
-        "The internal bot trains employees on procedures, access by department",
+        "Client details are collected in stages, the Bitrix24 lead updates itself",
         "Calls are turned into text, the contact and the deal fill themselves in"
       ],
       "result": "Three scenarios run on one stack, and in each the bot takes over the routine.",
@@ -966,10 +966,10 @@
           },
           {
             "label": "training",
-            "out": "answer from procedures"
+            "out": "product card"
           },
           {
-            "label": "calls",
+            "label": "summary",
             "out": "deal filled in"
           }
         ],
@@ -979,11 +979,11 @@
             "lane": 0
           },
           {
-            "text": "How do I work by the department procedure?",
+            "text": "I need packaging for takeaway sushi",
             "lane": 1
           },
           {
-            "text": "Call recording: name, phone, what they asked for",
+            "text": "Conversation summary into the lead card after an hour and a half",
             "lane": 2
           },
           {
@@ -1522,7 +1522,7 @@
       "did": [
         "The bot finds the teacher’s nearest reference",
         "A model with image recognition compares the work with the reference",
-        "A grade from 0 to 100 and a breakdown by five criteria"
+        "A score from 0 to 100, a breakdown by four criteria and an overall impression"
       ],
       "result": "The student sees what to fix and can show a new version as many times as they like.",
       "nums": [
@@ -1557,7 +1557,7 @@
           },
           {
             "text": "feedback",
-            "note": "by five criteria"
+            "note": "by four criteria"
           }
         ],
         "out": "Grade: 72 out of 100"
@@ -2103,7 +2103,7 @@
     "brief": {
       "task": "Mini-games with prizes in Telegram group chats.",
       "did": [
-        "Games on built-in emoji: slot, dice, bowling, darts, ball",
+        "Games on built-in emoji: slot, dice, bowling, darts, basketball",
         "A counter of the day’s wins and prize tables",
         "A request to the admin about a new winner"
       ],

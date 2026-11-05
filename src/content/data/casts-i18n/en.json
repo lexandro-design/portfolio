@@ -543,7 +543,7 @@
     }
    },
    {
-    "cap": "The bot doesn't nag: the same question comes at most once every half hour, and only urgent ones at night.",
+    "cap": "The bot doesn’t nag: the same question comes at most once every half hour.",
     "log": "no repeat sooner than 30 minutes",
     "big": {
      "v": "30 min",
@@ -1812,7 +1812,7 @@
     "cap": "The bot doesn't make things up and says who to go to. The question goes to the training specialist on its own.",
     "log": "a gap in the training specialist panel",
     "msg": {
-     "text": "The base doesn't have this. Ask the shift lead."
+     "text": "The base doesn’t have this. I’ve passed the question to the methodologist."
     }
    },
    {
@@ -2210,7 +2210,7 @@
     }
    },
    {
-    "cap": "Dice, bowling, darts and ball work the same way, each game has its own prizes.",
+    "cap": "Dice, bowling, darts and basketball work the same way, each game has its own prizes.",
     "log": "the prizes live in probability tables"
    },
    {
