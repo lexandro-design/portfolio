@@ -12,6 +12,12 @@ export const BRIEF_EVENT = 'brief:fill'
 /** Какой этап процесса добавляет услуга. Анализ и передача есть всегда */
 const STEP_FOR: Record<string, number> = { design: 1, web: 2, automation: 3 }
 
+/** Номера этапов процесса, которые пройдёт набор услуг */
+export const routeOf = (codes: string[], total: number) =>
+  [0, ...codes.map((c) => STEP_FOR[c]).filter((i) => i !== undefined), total - 1]
+    .filter((i, n, all) => i < total && all.indexOf(i) === n)
+    .sort((a, b) => a - b)
+
 type Props = {
   t: Dict['contact']['brief']
   services: Dict['services']
@@ -40,13 +46,10 @@ export function Brief({ t, services, steps }: Props) {
   /* Хватает услуги или пары слов: заявка не должна мешать написать */
   const ready = picked.length > 0 || about.trim().length > 0
   const chosen = services.filter((s) => picked.includes(s.code))
-  const route = [
-    0,
-    ...chosen.map((s) => STEP_FOR[s.code]).filter((i) => i !== undefined),
-    steps.length - 1,
-  ]
-    .filter((i, n, all) => steps[i] && all.indexOf(i) === n)
-    .sort((a, b) => a - b)
+  const route = routeOf(
+    chosen.map((s) => s.code),
+    steps.length,
+  )
 
   const message = [
     t.hello,
