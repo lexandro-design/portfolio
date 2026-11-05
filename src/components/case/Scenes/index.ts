@@ -26,7 +26,7 @@ export const SCENES: Record<string, ComponentType<SceneProps>> = {
   'lead-agent': dynamic(() => import('./lead-agent/Scene').then((m) => m.Scene)),
   // 'channel-pipeline': dynamic(() => import('./channel-pipeline/Scene').then((m) => m.Scene)),
   'media-to-rag': dynamic(() => import('./media-to-rag/Scene').then((m) => m.Scene)),
-  // 'tg-assistant': dynamic(() => import('./tg-assistant/Scene').then((m) => m.Scene)),
+  'tg-assistant': dynamic(() => import('./tg-assistant/Scene').then((m) => m.Scene)),
 }
 
 export const hasScene = (slug: string) => slug in SCENES
