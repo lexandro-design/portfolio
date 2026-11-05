@@ -39,6 +39,9 @@ export function Compare({ block, shots, drag }: Props) {
   const a = shots[p.a]
   const bShot = shots[p.b]
   const bSrc = p.dark && bShot.dark ? bShot.dark : bShot.src
+  // Длинная страница вписанной стала бы полоской: обе версии едут сверху вниз вместе, как в Browse
+  const tall = Math.max(a.h / a.w, bShot.h / bShot.w)
+  const long = tall > 1
 
   const move = (e: PointerEvent) => {
     const r = frame.current?.getBoundingClientRect()
@@ -75,7 +78,9 @@ export function Compare({ block, shots, drag }: Props) {
       <div
         ref={frame}
         className={styles.frame}
-        style={{ '--x': `${x}%` } as CSSProperties}
+        data-long={long || undefined}
+        data-play={inView || undefined}
+        style={{ '--x': `${x}%`, '--pan': `${Math.min(24, 6 + tall * 3)}s` } as CSSProperties}
         data-drag={dragging || undefined}
         onPointerDown={(e) => {
           setDragging(true)

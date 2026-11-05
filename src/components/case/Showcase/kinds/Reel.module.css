@@ -14,7 +14,7 @@
   inline-size: 100%;
   block-size: auto;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* Одна сцена — в своей пропорции и не во всю ширину, чтобы не раздувать её */
@@ -69,7 +69,8 @@
   inline-size: 100%;
   block-size: auto;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
+  object-fit: contain;
+  background: #050505;
   border: 1px solid var(--border-hair);
   opacity: 0.55;
   transition:
