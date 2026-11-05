@@ -75,7 +75,7 @@ export function System({ t, themes, numbers }: Props) {
         <p className={styles.intro}>{t.intro}</p>
         <div className={styles.try}>
           <span className={styles.label}>{t.tryTheme}</span>
-          <ThemeSwitch label={themes.label} labels={themes.labels} />
+          <ThemeSwitch full label={themes.label} labels={themes.labels} />
         </div>
       </Reveal>
 

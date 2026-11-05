@@ -43,17 +43,22 @@ export function applyTheme(next: Theme) {
   }
 }
 
-type Props = { label: string; labels: Record<Theme, string> }
+type Props = {
+  label: string
+  labels: Record<Theme, string>
+  /** Все кнопки и на узком телефоне: в блоке «Система» места хватает, это не шапка */
+  full?: boolean
+}
 
 /** Переключатель тем из THEMES. Выбор помнится */
-export function ThemeSwitch({ label, labels }: Props) {
+export function ThemeSwitch({ label, labels, full }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
   const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
 
   return (
     <>
-      <div className={styles.switch} role="radiogroup" aria-label={label}>
+      <div className={styles.switch} data-full={full || undefined} role="radiogroup" aria-label={label}>
         {THEMES.map((id) => (
           <button
             key={id}
@@ -74,6 +79,7 @@ export function ThemeSwitch({ label, labels }: Props) {
       <button
         type="button"
         className={styles.cycle}
+        data-full={full || undefined}
         aria-label={`${label}: ${labels[theme]}`}
         title={labels[next]}
         onClick={() => applyTheme(next)}

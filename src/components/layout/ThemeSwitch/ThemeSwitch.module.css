@@ -53,11 +53,15 @@
 
 /* Узкий телефон: вместо пяти кнопок по 23 px одна на 44 px */
 @media (max-width: 419px) {
-  .switch {
+  .switch:not([data-full]) {
     display: none;
   }
 
-  .cycle {
+  .switch[data-full] .option {
+    inline-size: 44px;
+  }
+
+  .cycle:not([data-full]) {
     display: grid;
     place-items: center;
     inline-size: 44px;

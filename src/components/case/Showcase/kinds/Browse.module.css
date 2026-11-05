@@ -54,7 +54,8 @@
   will-change: auto;
 }
 
-/* Поля вокруг вписанной страницы: её же цвета, а не чёрные полосы */
+/* Поля вокруг вписанной страницы: цвет её верхнего угла, а не чёрные полосы.
+   Угол, а не середина: иначе герой кадра расплывается серым пятном по светлой странице */
 .fill {
   position: absolute;
   inset: 0;
@@ -62,7 +63,8 @@
   block-size: 100%;
   object-fit: cover;
   filter: blur(28px);
-  transform: scale(1.2);
+  transform: scale(3);
+  transform-origin: 0 0;
   pointer-events: none;
 }
 
