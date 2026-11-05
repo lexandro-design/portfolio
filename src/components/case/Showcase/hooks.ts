@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react'
+import { stillMotion } from '@/lib/still'
 
 const QUERY = '(prefers-reduced-motion: reduce)'
-const reduced = () => typeof window !== 'undefined' && window.matchMedia(QUERY).matches
+const reduced = stillMotion
 
 /** Просил ли человек меньше движения. На сервере — нет, в браузере следит за настройкой */
 export function useReduced() {
@@ -11,7 +12,11 @@ export function useReduced() {
     (cb) => {
       const mq = window.matchMedia(QUERY)
       mq.addEventListener('change', cb)
-      return () => mq.removeEventListener('change', cb)
+      window.addEventListener('themechange', cb)
+      return () => {
+        mq.removeEventListener('change', cb)
+        window.removeEventListener('themechange', cb)
+      }
     },
     reduced,
     () => false,

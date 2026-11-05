@@ -7,6 +7,7 @@ import { asset } from '@/lib/asset'
 import { useInView } from '../hooks'
 import kit from './kit.module.css'
 import styles from './Compare.module.css'
+import { stillMotion } from '@/lib/still'
 
 type Props = { block: Extract<Block, { kind: 'compare' }>; shots: Shot[]; drag: string }
 
@@ -25,7 +26,7 @@ export function Compare({ block, shots, drag }: Props) {
   const frame = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!inView || hinted.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!inView || hinted.current || stillMotion()) return
     hinted.current = true
     const t = [
       window.setTimeout(() => setX(72), 300),

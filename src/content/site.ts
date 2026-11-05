@@ -9,16 +9,21 @@ export const contacts = data.contacts
 
 export const COORDS = data.coords
 
-export type Theme = 'dark' | 'light' | 'steel' | 'space'
+export type Theme = 'dark' | 'light' | 'steel' | 'space' | 'calm'
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
-export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean }
+export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean; calm: boolean }
 
 /** Стандартные темы. Остальные дополнительные, в переключателе стоят за чертой */
 export const BASE_THEMES: Theme[] = ['dark', 'light']
 
-/** Порядок кнопок в переключателе. Сталь отключается своим флагом */
-export const THEMES: Theme[] = [...BASE_THEMES, ...(features.steel ? (['steel'] as const) : []), 'space']
+/** Порядок кнопок в переключателе. Сталь и спокойный вид отключаются своими флагами */
+export const THEMES: Theme[] = [
+  ...BASE_THEMES,
+  ...(features.steel ? (['steel'] as const) : []),
+  'space',
+  ...(features.calm ? (['calm'] as const) : []),
+]
 
 /** Темы, у которых фон рисует сцена Sky: её код и текстуры грузятся только при выборе такой темы */
 export const SKY_THEMES: Theme[] = ['space']

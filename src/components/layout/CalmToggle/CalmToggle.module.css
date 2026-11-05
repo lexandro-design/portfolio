@@ -1,0 +1,83 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--fg-primary);
+  white-space: nowrap;
+}
+
+.toggle[data-place='nav'] {
+  block-size: 38px;
+  padding-inline: 12px;
+  border: 1px solid var(--border-hover);
+  font-size: var(--type-body-sm);
+  transition: background-color var(--dur-fast) var(--ease-out-quart);
+}
+
+.toggle[data-place='nav']:hover {
+  background: var(--bg-subtle);
+}
+
+.toggle[data-place='hero'] {
+  flex-wrap: wrap;
+  min-block-size: 44px;
+  font-size: var(--type-body-sm);
+  text-align: start;
+  white-space: normal;
+}
+
+.toggle[data-place='hero'] .name {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.hint {
+  color: var(--fg-secondary);
+}
+
+.toggle[data-place='menu'] {
+  min-block-size: 44px;
+  font-size: var(--type-body);
+}
+
+/* Шапка узкая: остаётся значок на 44 px, подпись есть на первом экране и в меню */
+@media (max-width: 1359px) {
+  .toggle[data-place='nav'] {
+    justify-content: center;
+    inline-size: 44px;
+    block-size: 44px;
+    padding: 0;
+  }
+
+  .toggle[data-place='nav'] .name {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+/* В спокойном виде кнопка назад всегда с подписью */
+:global([data-theme='calm']) .toggle[data-place='nav'] {
+  inline-size: auto;
+  padding-inline: 12px;
+}
+
+:global([data-theme='calm']) .toggle[data-place='nav'] .name {
+  position: static;
+  inline-size: auto;
+  block-size: auto;
+  clip-path: none;
+}
+
+/* Обратный путь в шапке, строка на первом экране не нужна */
+:global([data-theme='calm']) .toggle[data-place='hero'] {
+  display: none;
+}
+
+@media (max-width: 419px) {
+  :global([data-theme='calm']) .toggle[data-place='nav'] svg {
+    display: none;
+  }
+}

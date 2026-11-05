@@ -11,7 +11,8 @@
     "brief": true,
     "palette": false,
     "sandbox": false,
-    "steel": true
+    "steel": true,
+    "calm": true
   },
   "defaultTheme": "dark",
   "heroPhotos": ["/me"],

@@ -55,6 +55,25 @@ export function leaveSky() {
   applyTheme(usable.find((t) => t === back) ?? usable.find((t) => t === DEFAULT_THEME) ?? usable[0])
 }
 
+/** Спокойный вид включается и выключается одной кнопкой: выключение возвращает тему, с которой включили */
+const CALM_BACK = 'calm-back'
+
+export function toggleCalm() {
+  if (readTheme() !== 'calm') {
+    try {
+      localStorage.setItem(CALM_BACK, readTheme())
+    } catch {}
+    applyTheme('calm')
+    return
+  }
+  let back: string | null = null
+  try {
+    back = localStorage.getItem(CALM_BACK)
+  } catch {}
+  const usable = THEMES.filter((t) => t !== 'calm' && !SKY_THEMES.includes(t))
+  applyTheme(usable.find((t) => t === back) ?? usable.find((t) => t === DEFAULT_THEME) ?? usable[0])
+}
+
 /** Сменить тему сайта: шапка, блок «Система» и палитра команд подписаны на событие */
 export function applyTheme(next: Theme) {
   const root = document.documentElement
@@ -100,13 +119,15 @@ type Props = {
 export function ThemeSwitch({ label, labels, full }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
-  const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
-  const afterNext = THEMES[(THEMES.indexOf(next) + 1) % THEMES.length]
+  /* У спокойного вида своя кнопка с подписью (CalmToggle), здесь только в полном списке */
+  const list = full ? THEMES : THEMES.filter((t) => t !== 'calm')
+  const next = list[(list.indexOf(theme) + 1) % list.length]
+  const afterNext = list[(list.indexOf(next) + 1) % list.length]
 
   return (
     <>
       <div className={styles.switch} data-full={full || undefined} role="radiogroup" aria-label={label}>
-        {THEMES.map((id) => (
+        {list.map((id) => (
           <button
             key={id}
             type="button"
@@ -122,7 +143,7 @@ export function ThemeSwitch({ label, labels, full }: Props) {
           </button>
         ))}
       </div>
-      {/* Узкий телефон: пять кнопок в шапку не влезают пальцу, одна нормального размера листает темы по кругу */}
+      {/* Узкая шапка: четыре кнопки в шапку не влезают пальцу, одна нормального размера листает темы по кругу */}
       <button
         type="button"
         className={styles.cycle}
@@ -142,6 +163,12 @@ export function ThemeIcon({ id }: { id: Theme }) {
 }
 
 function Icon({ id }: { id: Theme }) {
+  if (id === 'calm')
+    return (
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M2 4.500h10M2 7h10M2 9.500h6" stroke="currentColor" strokeWidth="1.3" />
+      </svg>
+    )
   if (id === 'dark')
     return (
       <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">

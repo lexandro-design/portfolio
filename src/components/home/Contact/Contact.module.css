@@ -211,3 +211,19 @@
     flex-direction: column;
   }
 }
+
+/* Спокойный вид: заголовок размером с остальные, без счётчика разделов */
+:global([data-theme='calm']) .label {
+  display: none;
+}
+
+:global([data-theme='calm']) .title {
+  max-inline-size: none;
+  margin-block: 0 var(--space-xl);
+  font-size: var(--type-h2);
+  line-height: 1.15;
+}
+
+:global([data-theme='calm']) .title::first-letter {
+  text-transform: uppercase;
+}

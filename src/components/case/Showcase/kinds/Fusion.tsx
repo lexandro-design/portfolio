@@ -5,6 +5,7 @@ import type { Block } from '@/content/showcase'
 import { useInView, useScript } from '../hooks'
 import kit from './kit.module.css'
 import styles from './Fusion.module.css'
+import { stillMotion } from '@/lib/still'
 
 type Props = { block: Extract<Block, { kind: 'fusion' }> }
 
@@ -20,7 +21,7 @@ export function Fusion({ block }: Props) {
   const [typed, setTyped] = useState(block.query.length)
 
   useEffect(() => {
-    if (phase !== 0 || !inView || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (phase !== 0 || !inView || stillMotion()) return
     // Набор по буквам: сколько букв видно — от времени с начала фазы
     const t0 = performance.now()
     const id = window.setInterval(

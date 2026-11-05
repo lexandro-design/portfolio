@@ -31,7 +31,13 @@
       "dark": "Dark theme",
       "light": "Light theme",
       "steel": "Steel theme",
-      "space": "Space theme"
+      "space": "Space theme",
+      "calm": "Calm view"
+    },
+    "calm": {
+      "on": "Calm view",
+      "off": "Standard view",
+      "hint": "Larger text, less motion"
     },
     "language": "Language",
     "search": "Search and commands"

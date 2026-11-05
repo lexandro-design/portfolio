@@ -170,3 +170,11 @@
     font-size: 28px;
   }
 }
+
+/* Спокойный вид: номер обычной цифрой, без контура */
+:global([data-theme='calm']) .number {
+  -webkit-text-stroke: 0;
+  color: var(--fg-secondary);
+  font-size: var(--type-h3);
+  font-weight: 500;
+}

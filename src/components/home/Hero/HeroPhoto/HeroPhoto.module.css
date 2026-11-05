@@ -300,3 +300,8 @@
     margin-block-start: 12px;
   }
 }
+
+/* Спокойный вид: подпись без счётчика форматов */
+:global([data-theme='calm']) .format {
+  display: none;
+}

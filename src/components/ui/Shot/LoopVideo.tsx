@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, type CSSProperties } from 'react'
+import { stillMotion } from '@/lib/still'
 
 type Props = {
   src: string
@@ -25,7 +26,7 @@ export function LoopVideo({ src, poster, width, height, className, style, label,
 
   useEffect(() => {
     const video = ref.current
-    if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!video || stillMotion()) return
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

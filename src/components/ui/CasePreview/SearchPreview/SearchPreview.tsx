@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from 'react'
 import styles from './SearchPreview.module.css'
+import { stillMotion } from '@/lib/still'
 
 type Props = { query: string; results: string[] }
 
@@ -20,7 +21,7 @@ export function SearchPreview({ query, results }: Props) {
   const [t, setT] = useState(total - 1)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (stillMotion()) return
     const timer = window.setInterval(() => setT((x) => (x + 1) % total), TICK)
     return () => window.clearInterval(timer)
   }, [total])

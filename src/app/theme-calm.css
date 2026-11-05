@@ -1,0 +1,100 @@
+/* Спокойный вид: светлая страница, крупный текст, воздух, ничего не двигается.
+   Включается кнопкой в шапке или сам, если система просит меньше движения. Выключить флагом features.calm */
+[data-theme='calm'] {
+  --bg-base: #ffffff;
+  --bg-elevated: #f6f6f4;
+  --bg-subtle: #ececea;
+  --fg-primary: #15181d;
+  --fg-secondary: #3f444d;
+  --fg-tertiary: #565c66;
+  --border-hair: rgb(21 24 29 / 0.14);
+  --border-hover: rgb(21 24 29 / 0.36);
+  --signal-live: #1f7a48;
+  --border-focus: #1d4f91;
+  --bg-scrim: rgb(21 24 29 / 0.5);
+  --overlay-tag: rgb(21 24 29 / 0.78);
+  --fg-inverse: #ffffff;
+  --accent: #1d4f91;
+  --cta-bg: #1d4f91;
+  --cta-hover: #163e73;
+  --font-mono: var(--font-sans);
+  --type-body-lg: 21px;
+  --type-body: 19px;
+  --type-body-sm: 17px;
+  --type-mono: 15px;
+  --type-mono-sm: 14px;
+  --type-h4: 24px;
+  --type-h3: 32px;
+  --type-h2: 52px;
+  --type-h1: 96px;
+  color-scheme: light;
+}
+
+@media (max-width: 767px) {
+  [data-theme='calm'] {
+    --type-body-lg: 19px;
+    --type-body: 18px;
+    --type-body-sm: 16px;
+    --type-h2: 36px;
+    --type-h1: 56px;
+  }
+}
+
+/* Подписи обычным текстом: без разрядки и заглавных */
+[data-theme='calm'] body * {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Неподвижно: анимации сразу приходят к концу, ролики стоят на постере (stillMotion) */
+[data-theme='calm'] *,
+[data-theme='calm'] *::before,
+[data-theme='calm'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0s !important;
+}
+
+html[data-theme='calm'] {
+  scroll-behavior: auto;
+}
+
+/* Шапка без размытия */
+[data-theme='calm'] header[class*='Nav-module'] {
+  background: var(--bg-base);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Технический блок о сборке сайта здесь лишний: кто я, что делаю, работы, цены, контакты */
+[data-theme='calm'] a[href$='#system'],
+[data-theme='calm'] #system,
+[data-theme='calm'] [class*='ScrollProgress-module'] {
+  display: none;
+}
+
+/* Разделы в шапке и кнопки с заглавной буквы */
+[data-theme='calm'] header[class*='Nav-module'] a[class*='__link']:not([href$='#system']) {
+  display: inline-block;
+}
+
+[data-theme='calm'] header[class*='Nav-module'] a[class*='__link']::first-letter,
+[data-theme='calm'] [class*='Button-module'] > span:first-child::first-letter {
+  text-transform: uppercase;
+}
+
+[data-theme='calm'] [class*='Button-module__'][class*='__button'] {
+  font-size: var(--type-body-sm);
+}
+
+/* В шапке только путь назад: выбор остальных тем здесь лишний */
+[data-theme='calm'] header[class*='Nav-module'] [class*='ThemeSwitch-module'] {
+  display: none;
+}
+
+/* Свечение за заголовком кейса */
+[data-theme='calm'] [class*='CaseHero-module'][class*='__hero']::before {
+  display: none;
+}
