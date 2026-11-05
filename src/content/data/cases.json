@@ -2,13 +2,12 @@
   {
     "slug": "parfumeria",
     "title": "Parfumeria.by",
-    "tagline": "дизайн-система, 3D и сайт",
-    "lead": "Интернет-магазин парфюмерии и косметики из Беларуси: дизайн-система, макет больше 450 экранов на три размера, 3D-видеобаннеры для главной и сайт, собранный по макету.",
+    "tagline": "дизайн-система и 3D",
+    "lead": "Интернет-магазин парфюмерии и косметики из Беларуси: дизайн-система, макет больше 450 экранов на три размера и 3D-видеобаннеры для главной.",
     "directions": [
-      "design",
-      "web"
+      "design"
     ],
-    "label": "design · web · 3d",
+    "label": "design · 3d",
     "group": "freelance",
     "client": "Parfumeria.by · e-commerce, Беларусь",
     "year": "2026",
@@ -19,8 +18,7 @@
       "Auto Layout",
       "Прототип",
       "Blender",
-      "Cycles",
-      "Next.js"
+      "Cycles"
     ],
     "sections": [
       {
@@ -1569,6 +1567,7 @@
     },
     "card": {
       "src": "/cases/svarnoy52/tile.jpg",
+      "video": "/cases/svarnoy52/tile.mp4",
       "caption": "",
       "w": 1216,
       "h": 860

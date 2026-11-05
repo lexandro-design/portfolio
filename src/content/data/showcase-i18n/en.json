@@ -5,9 +5,9 @@
       "did": [
         "Design system: colour and type in variables, a component library",
         "450+ screens at 1440, 768 and 375 with every state",
-        "3D video banners in Blender and a site built from the design"
+        "3D video banners in Blender"
       ],
-      "result": "Every store flow is drawn down to empty states and errors, and both the design and the site are filled with the real catalog.",
+      "result": "Every store flow is drawn down to empty states and errors, and the design is filled with the real catalog.",
       "nums": [
         {
           "v": "450+",

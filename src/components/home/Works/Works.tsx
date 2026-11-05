@@ -23,8 +23,8 @@ type Props = {
   base: string
 }
 
-/** Подборка на первом экране блока: самые сложные и сильные работы. Концепты и небольшие инструменты сюда не ставим */
-const PICK = ['parfumeria', 'prosoft', 'garden-td', 'otrx', 'svarka-3d', 'meeting-rooms', 'mimimibot', 'ai-office']
+/** Подборка на первом экране блока: самые сложные работы и сданные проекты настоящих заказчиков. Концепты и личные инструменты сюда не ставим */
+const PICK = ['parfumeria', 'prosoft', 'garden-td', 'otrx', 'meeting-rooms', 'mimimibot', 'osq', 'svarnoy52']
 const GROUPS: Case['group'][] = ['titan', 'entersales', 'freelance', 'own']
 
 const pad = (n: number) => String(n).padStart(2, '0')
