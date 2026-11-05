@@ -1,13 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import demo from '@/content/data/parfumeria-demo.json'
 import { contacts } from '@/content/site'
 import type { Dict } from '@/i18n/dict'
 import { asset } from '@/lib/asset'
 import { Arrow } from '@/components/ui/Arrow'
-import { useReduced } from '@/components/case/Showcase/hooks'
+import { useReduced, useReserve } from '@/components/case/Showcase/hooks'
 import { BRIEF_EVENT } from '../Contact/Brief/Brief'
 import styles from './Services.module.css'
 
@@ -45,6 +45,9 @@ export function Services({ t, services, hello, need, titles, base }: Props) {
   const [size, setSize] = useState(0)
   const [cart, setCart] = useState(0)
   const [off, setOff] = useState<string[]>([])
+  const list = useRef<HTMLOListElement>(null)
+  // Пояснение раскрыто у одного этапа: высоту списка держим под самое длинное, страница ниже не прыгает
+  useReserve(list)
 
   const chosen = services.filter((s) => !off.includes(s.code))
   const message = [hello, chosen.length ? `${need}: ${chosen.map((s) => s.title).join(', ')}` : ''].filter(Boolean).join('\n')
@@ -60,14 +63,18 @@ export function Services({ t, services, hello, need, titles, base }: Props) {
     <div className={styles.grid}>
       <div className={styles.left}>
         <p className={styles.lead}>{t.lead}</p>
-        <ol className={styles.steps}>
+        <ol ref={list} className={styles.steps}>
           {t.steps.map((s, i) => (
             <li key={s.code} className={styles.step} data-on={s.code === step || undefined}>
               <button type="button" className={styles.head} aria-expanded={s.code === step} onClick={() => open(s.code)}>
                 <span className={styles.index}>{i + 1}</span>
                 <span className={styles.title}>{s.title}</span>
               </button>
-              {s.code === step && <p className={styles.text}>{s.text}</p>}
+              <div className={styles.fold}>
+                <div className={styles.inner} data-more>
+                  <p className={styles.text}>{s.text}</p>
+                </div>
+              </div>
             </li>
           ))}
         </ol>
@@ -81,15 +88,31 @@ export function Services({ t, services, hello, need, titles, base }: Props) {
         <div className={styles.stage}>
           <div className={styles.bar}>
             <span>{t.project}</span>
-            {chips.length > 0 && (
-              <div className={styles.chips} role="group" aria-label={active.title}>
-                {chips.map((label, i) => (
-                  <button key={label} type="button" aria-pressed={i === chip} onClick={() => setChip(i)}>
-                    {label}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Переключатели всех этапов лежат стопкой в одной ячейке: полоса держит высоту самого длинного ряда */}
+            <div className={styles.chipsStack}>
+              {t.steps.map((s) => {
+                const labels = s.code === '3d' ? REELS.map((r) => r.name) : s.chips
+                const on = s.code === step
+                return (
+                  labels.length > 0 && (
+                    <div
+                      key={s.code}
+                      className={styles.chips}
+                      data-on={on || undefined}
+                      role="group"
+                      aria-label={s.title}
+                      aria-hidden={!on}
+                    >
+                      {labels.map((label, i) => (
+                        <button key={label} type="button" aria-pressed={on && i === chip} onClick={() => setChip(i)}>
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  )
+                )
+              })}
+            </div>
           </div>
 
           <div className={styles.view}>
@@ -156,7 +179,13 @@ export function Services({ t, services, hello, need, titles, base }: Props) {
             )}
           </div>
 
-          <p className={styles.fact}>{active.fact}</p>
+          <div className={styles.facts}>
+            {t.steps.map((s) => (
+              <p key={s.code} className={styles.fact} data-on={s.code === step || undefined} aria-hidden={s.code !== step}>
+                {s.fact}
+              </p>
+            ))}
+          </div>
         </div>
 
         <div className={styles.beyond}>

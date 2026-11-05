@@ -12,6 +12,7 @@ import { Compare } from './kinds/Compare'
 import { Console } from './kinds/Console'
 import { Deck } from './kinds/Deck'
 import { Diff } from './kinds/Diff'
+import { Frames } from './kinds/Frames'
 import { Fusion } from './kinds/Fusion'
 import { Notify } from './kinds/Notify'
 import { Queue } from './kinds/Queue'
@@ -47,6 +48,7 @@ const hint = (b: Block, t: T) => {
       return t.hint.console
     case 'wide':
     case 'speed':
+    case 'frames':
       return null
     default:
       return t.example
@@ -93,11 +95,13 @@ function Kind({ block: b, shots, t }: { block: Block; shots: Case['shots']; t: T
       return <Diff block={b} />
     case 'speed':
       return <Speed rows={b.rows} />
+    case 'frames':
+      return <Frames block={b} shots={shots} />
   }
 }
 
 /** Демо, которым тесно в узкой колонке: им — сцена на всю ширину, текст строкой над ними */
-const STAGE = new Set<Block['kind']>(['browse', 'compare', 'steps', 'deck', 'reel', 'wide', 'board', 'transcript', 'sort'])
+const STAGE = new Set<Block['kind']>(['browse', 'compare', 'steps', 'deck', 'reel', 'wide', 'board', 'transcript', 'sort', 'frames'])
 
 /** Единственная глава этих демо стоит зеркально: текст справа, демо слева */
 const MIRROR = new Set<Block['kind']>(['notify', 'console', 'timeline', 'cards', 'diff'])

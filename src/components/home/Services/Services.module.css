@@ -64,6 +64,28 @@
   padding-inline-start: 32px;
 }
 
+/* Пояснения всех этапов лежат в вёрстке, скрыт лишний: высоту списка держит useReserve */
+.fold {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease-out-expo);
+}
+
+.step[data-on] .fold {
+  grid-template-rows: 1fr;
+}
+
+.inner {
+  min-block-size: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility var(--dur-slow);
+}
+
+.step[data-on] .inner {
+  visibility: visible;
+}
+
 .whole {
   display: inline-flex;
   align-items: center;
@@ -103,10 +125,21 @@
   border-block-end: 1px solid var(--border-hair);
 }
 
+.chipsStack {
+  display: grid;
+  min-inline-size: 0;
+}
+
 .chips {
+  grid-area: 1 / 1;
   display: flex;
   flex-wrap: wrap;
   gap: 2px;
+  visibility: hidden;
+}
+
+.chips[data-on] {
+  visibility: visible;
 }
 
 .chips button,
@@ -197,7 +230,6 @@
 
 .buy {
   display: grid;
-  align-content: center;
   justify-items: start;
   gap: 8px;
   padding: var(--space-md);
@@ -246,11 +278,21 @@
   white-space: pre-wrap;
 }
 
+.facts {
+  display: grid;
+  border-block-start: 1px solid var(--border-hair);
+}
+
 .fact {
+  grid-area: 1 / 1;
+  visibility: hidden;
   padding: 10px var(--space-sm);
   font-size: var(--type-body-sm);
   color: var(--fg-secondary);
-  border-block-start: 1px solid var(--border-hair);
+}
+
+.fact[data-on] {
+  visibility: visible;
 }
 
 .beyond {
@@ -414,6 +456,33 @@
 
   .state {
     display: none;
+  }
+
+  .whole {
+    min-block-size: 44px;
+    margin-block-start: var(--space-xs);
+  }
+
+  .prices {
+    gap: 0;
+  }
+
+  .prices button {
+    min-block-size: 44px;
+  }
+
+  .links {
+    gap: 0 var(--space-md);
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  .actions {
+    gap: var(--space-xs);
   }
 
   .primary,

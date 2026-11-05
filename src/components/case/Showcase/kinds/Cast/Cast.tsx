@@ -170,8 +170,19 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
   }, [at, inView, stopped, beats, last])
 
   const list = useMemo(() => feed(beats, shown), [beats, shown])
-  const logs = useMemo(() => beats.slice(0, shown + 1).flatMap((b, i) => (b.log ? [{ i, text: b.log }] : [])), [beats, shown])
-  const big = useMemo(() => beats.slice(0, shown + 1).reverse().find((b) => b.big)?.big, [beats, shown])
+  const inSide = Boolean(cast.view) && cast.screen !== 'view'
+  // Боковая панель на шаге n: последние строки журнала и крупное число
+  const sideAt = (n: number) => ({
+    logs: beats
+      .slice(0, n + 1)
+      .flatMap((b, i) => (b.log ? [{ i, text: b.log }] : []))
+      .slice(inSide ? -2 : -5),
+    big: beats
+      .slice(0, n + 1)
+      .reverse()
+      .find((b) => b.big)?.big,
+  })
+  const side = sideAt(shown)
   const rows = useMemo(() => {
     const out = (cast.rows ?? []).map((r) => ({ ...r }))
     beats.slice(0, shown + 1).forEach(({ set }) => {
@@ -182,12 +193,13 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
     return out
   }, [beats, cast.rows, shown])
   const hot = beats[shown].set?.row
-  const view = useMemo(() => {
+  const viewAt = (n: number) => {
     if (!cast.view) return null
     const out = cast.view.rows.map((r) => ({ ...r }))
-    beats.slice(0, shown + 1).forEach(({ v }) => v?.forEach(({ r, ...patch }) => Object.assign(out[r], patch)))
+    beats.slice(0, n + 1).forEach(({ v }) => v?.forEach(({ r, ...patch }) => Object.assign(out[r], patch)))
     return { ...cast.view, rows: out }
-  }, [beats, cast.view, shown])
+  }
+  const view = viewAt(shown)
   const talk = cast.screen === 'voice' ? list.slice(-2) : list
   const lastSlides = [...list].reverse().find((m) => m.msg.k === 'shot' && m.msg.slides)?.key
 
@@ -271,22 +283,53 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
         </div>
         <div className={styles.side}>
           <span className={kit.mono}>{(cast.screen !== 'view' && view?.title) || t.inside}</span>
-          {view && cast.screen !== 'view' && <View view={view} />}
-          <ol className={styles.log}>
-            {logs.slice(view && cast.screen !== 'view' ? -2 : -5).map((l) => (
-              <li key={l.i} data-now={l.i === shown || undefined}>
-                {l.text}
-              </li>
-            ))}
-          </ol>
-          {big && (
-            <p key={big.v} className={styles.big} data-long={big.v.length > 8 || undefined}>
-              <b>{big.v}</b> {big.l}
-            </p>
-          )}
+          {/* Журнал и число лежат стопкой по всем шагам в одной ячейке: панель держит высоту самого полного шага и не двигает страницу */}
+          <div className={styles.dyn}>
+            <div className={styles.layer}>
+              {inSide && view && <View view={view} />}
+              <ol className={styles.log}>
+                {side.logs.map((l) => (
+                  <li key={l.i} data-now={l.i === shown || undefined}>
+                    {l.text}
+                  </li>
+                ))}
+              </ol>
+              {side.big && (
+                <p key={side.big.v} className={styles.big} data-long={side.big.v.length > 8 || undefined}>
+                  <b>{side.big.v}</b> {side.big.l}
+                </p>
+              )}
+            </div>
+            {beats.map((_, n) => {
+              const g = sideAt(n)
+              const gv = inSide ? viewAt(n) : null
+              return (
+                <div key={n} className={styles.layer} data-ghost aria-hidden="true">
+                  {gv && <View view={gv} />}
+                  <ol className={styles.log}>
+                    {g.logs.map((l) => (
+                      <li key={l.i}>{l.text}</li>
+                    ))}
+                  </ol>
+                  {g.big && (
+                    <p className={styles.big} data-long={g.big.v.length > 8 || undefined}>
+                      <b>{g.big.v}</b> {g.big.l}
+                    </p>
+                  )}
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
-      <p className={styles.cap}>{beats[shown].cap}</p>
+      {/* Подписи стопкой в одной ячейке: подпись в три строки не двигает шкалу и текст ниже */}
+      <div className={styles.cap}>
+        {beats.map((b, i) => (
+          <p key={i} data-on={i === shown || undefined} aria-hidden={i !== shown}>
+            {b.cap}
+          </p>
+        ))}
+      </div>
       <div className={styles.controls}>
         <button type="button" className={styles.ctl} onClick={() => go(shown - 1)} aria-label={t.prev} disabled={shown === 0}>
           ←

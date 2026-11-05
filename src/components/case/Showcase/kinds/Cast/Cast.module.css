@@ -376,6 +376,25 @@
   border-block-start: 1px solid var(--border-hair);
 }
 
+.dyn {
+  display: grid;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.layer {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.layer[data-ghost] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .log {
   display: grid;
   gap: 10px;
@@ -465,11 +484,20 @@
 }
 
 .cap {
-  min-block-size: 3em;
+  display: grid;
   max-inline-size: 62ch;
   font-size: 18px;
   line-height: 1.4;
   color: var(--fg-primary);
+}
+
+.cap p {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.cap p[data-on] {
+  visibility: visible;
 }
 
 .controls {
