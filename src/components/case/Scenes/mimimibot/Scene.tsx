@@ -17,10 +17,10 @@ type Data = {
   tag: { look: string; pick: string; gen: string; you: string }
   selfies: string[]
   start: { time: string; text: string[]; pager: string[]; keys: string[] }
-  demo: { text: string; keys: string[] }
-  upload: { text: string; keys: string[]; count: string }
-  gen: { text: string; eta: string }
-  done: { text: string; keys: string[] }
+  demo: { text: string[]; pager: string[]; keys: string[] }
+  upload: { text: string[]; keys: string[] }
+  gen: { text: string[]; pager: string[]; eta: string }
+  done: { text: string[]; keys: string[] }
   menu: { text: string; keys: string[] }
   speed: { title: string; rows: { label: string; value: string; ms: number }[] }
   steps: { cap: string; log: string }[]
@@ -29,20 +29,17 @@ type Data = {
 type State = 'idle' | 'look' | 'pick' | 'gen' | 'you'
 
 /** Шаги: старт, листание, выбор, селфи, генерация, готовый кадр, меню. Последний держится */
-const SPANS = [2800, 2200, 3000, 3000, 3200, 3200, 3400]
+const SPANS = [2800, 3000, 3000, 3200, 3000, 3200]
 
 /** Метки внутри шага, мс: «печатает» гаснет, ответ, продолжение, нажатие кнопки */
 const MARKS = [400, 600, 1300, 1800]
 
 /** Условное время сообщений: идёт вперёд по сценарию */
-const CLOCK = ['12:01', '12:01', '12:02', '12:03', '12:03', '12:05', '12:06']
+const CLOCK = ['12:01', '12:02', '12:03', '12:03', '12:05', '12:06']
 
 /** Какой плитке стены что происходит на каком шаге */
 function stateOf(id: string, step: number): State {
-  if (id === 'studio') return step === 0 ? 'look' : step === 6 ? 'you' : 'idle'
-  if (id === 'nyc') return step === 1 ? 'look' : 'idle'
-  if (id === 'terrace') return step < 2 ? 'idle' : step < 4 ? 'pick' : step === 4 ? 'gen' : 'you'
-  if (id === 'car') return step === 6 ? 'you' : 'idle'
+  if (id === 'terrace') return step === 0 ? 'idle' : step === 1 ? 'look' : step === 2 ? 'pick' : step === 3 ? 'gen' : 'you'
   return 'idle'
 }
 
@@ -82,6 +79,17 @@ function Cover({ src, c, type }: { src: string; c: Data['cover']; type: boolean 
   )
 }
 
+/** Кнопки под сообщением бота, как у настоящего: отдельными рядами под пузырём */
+function Pad({ rows }: { rows: { items: string[]; stack?: boolean; pressed?: number }[] }) {
+  return (
+    <li className={styles.real}>
+      {rows.map((r, i) => (
+        <Keys key={i} items={r.items} stack={r.stack} pressed={r.pressed} />
+      ))}
+    </li>
+  )
+}
+
 /**
  * MiMiMi AI. Сцена: стена шаблонов, как доска, живёт вокруг и позади чата.
  * Человек листает карусель, выбирает кадр, шлёт три селфи, идёт генерация,
@@ -103,13 +111,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   }, [step, play.inView, play.stopped])
   const n = play.stopped ? MARKS.length : ph.step === step ? ph.n : 0
   // Первый экран и листание не ждут: сообщение бота уже на месте, обложка и кнопки видны с первой секунды
-  const quiet = step <= 1
+  const quiet = step === 0
   const typing = !quiet && n < 2
   const leaving = n === 1
   const reply = quiet || n >= 2
   const follow = n >= 3
   const press = n >= 4 ? 0 : undefined
-  const lines = d.start.text.map((l) => l.replace('{d}', DASH)).join('\n')
+  const said = (l: string[]) => l.map((x) => x.replace('{d}', DASH)).join('\n')
 
   const side = [d.cols[0], d.cols[1], d.cols[2], d.cols[3]]
   const filler = [
@@ -125,7 +133,6 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
     { ids: side[3] },
   ]
 
-  const carousel = step === 0 ? byId.studio : byId.nyc
   const cur = d.steps[step]
 
   return (
@@ -162,27 +169,48 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           </div>
 
           <div className={styles.phone}>
-            <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar="M" live={play.playing} fit minHeight={160} className={styles.chat}>
-              {step <= 1 && (
+            <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar="M" live={play.playing} className={styles.chat}>
+              {step === 0 && (
                 <>
                   <Msg side="in" time={d.start.time} tail={false} className={styles.first}>
-                    <Cover src={carousel.src} c={d.cover} type={step === 0} />
-                    <span className={styles.said}>{lines}</span>
+                    <Cover src={byId.studio.src} c={d.cover} type />
+                    <span className={styles.said}>{said(d.start.text)}</span>
                   </Msg>
-                  <li className={styles.real}>
-                    <Keys items={d.start.pager} pressed={step === 1 && n >= 1 ? 2 : undefined} />
-                    <Keys items={d.start.keys} stack />
-                  </li>
+                  <Pad rows={[{ items: d.start.pager }, { items: d.start.keys, stack: true }]} />
+                </>
+              )}
+              {step === 1 && (
+                <>
+                  {typing && <Typing leaving={leaving} />}
+                  {reply && (
+                    <>
+                      <Msg side="in" time={CLOCK[1]} tail={false} className={styles.first}>
+                        <Pic src={byId.terrace.src} className={styles.pic} />
+                        <span className={styles.said}>{said(d.demo.text)}</span>
+                      </Msg>
+                      <Pad rows={[{ items: d.demo.pager }, { items: d.demo.keys, stack: true, pressed: press }]} />
+                    </>
+                  )}
                 </>
               )}
               {step === 2 && (
                 <>
                   {typing && <Typing leaving={leaving} />}
                   {reply && (
-                    <Msg side="in" time={CLOCK[2]} className={styles.wide}>
-                      <Pic src={byId.terrace.src} />
-                      {d.demo.text}
-                      <Keys items={d.demo.keys} pressed={press} stack />
+                    <>
+                      <Msg side="in" time={CLOCK[2]} tail={false} className={styles.first}>
+                        <span className={styles.said}>{said(d.upload.text)}</span>
+                      </Msg>
+                      <Pad rows={[{ items: d.upload.keys, stack: true, pressed: press }]} />
+                    </>
+                  )}
+                  {follow && (
+                    <Msg side="out" time={CLOCK[2]} status={press === 0 ? 'read' : 'sent'} className={styles.selfies}>
+                      <span className={styles.shots}>
+                        {d.selfies.map((x, i) => (
+                          <Pic key={x} src={x} className={styles.selfie} style={{ animationDelay: `${i * 320}ms` }} />
+                        ))}
+                      </span>
                     </Msg>
                   )}
                 </>
@@ -191,20 +219,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <>
                   {typing && <Typing leaving={leaving} />}
                   {reply && (
-                    <Msg side="in" time={CLOCK[2]} tail={false}>
-                      {d.upload.text}
-                      <Keys items={d.upload.keys} pressed={press} />
-                    </Msg>
-                  )}
-                  {follow && (
-                    <Msg side="out" time={CLOCK[3]} status={press === 0 ? 'read' : 'sent'} className={styles.selfies}>
-                      <span className={styles.shots}>
-                        {d.selfies.map((x, i) => (
-                          <Pic key={x} src={x} className={styles.selfie} style={{ animationDelay: `${i * 320}ms` }} />
-                        ))}
-                      </span>
-                      {d.upload.count}
-                    </Msg>
+                    <>
+                      <Msg side="in" time={CLOCK[3]} tail={false} className={styles.first}>
+                        <span className={styles.said}>{said(d.gen.text)}</span>
+                        <Progress run={SPANS[3] - MARKS[1]} label={d.gen.eta} className={styles.prog} />
+                      </Msg>
+                      <Pad rows={[{ items: d.gen.pager }]} />
+                    </>
                   )}
                 </>
               )}
@@ -212,10 +233,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <>
                   {typing && <Typing leaving={leaving} />}
                   {reply && (
-                    <Msg side="in" time={CLOCK[4]}>
-                      {d.gen.text}
-                      <Progress run={SPANS[4] - MARKS[1]} label={d.gen.eta} className={styles.prog} />
-                    </Msg>
+                    <>
+                      <Msg side="in" tone="ok" time={CLOCK[4]} tail={false} className={styles.first}>
+                        <Pic src={byId.terrace.you} className={styles.pic} />
+                        <span className={styles.said}>{said(d.done.text)}</span>
+                      </Msg>
+                      <Pad rows={[{ items: d.done.keys, stack: true, pressed: press }]} />
+                    </>
                   )}
                 </>
               )}
@@ -223,22 +247,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <>
                   {typing && <Typing leaving={leaving} />}
                   {reply && (
-                    <Msg side="in" tone="ok" time={CLOCK[5]} className={styles.wide}>
-                      <Pic src={byId.terrace.you} />
-                      {d.done.text}
-                      <Keys items={d.done.keys} pressed={press} stack />
-                    </Msg>
-                  )}
-                </>
-              )}
-              {step === 6 && (
-                <>
-                  {typing && <Typing leaving={leaving} />}
-                  {reply && (
-                    <Msg side="in" time={CLOCK[6]}>
-                      {d.menu.text}
-                      <Keys items={d.menu.keys} pressed={n >= 4 ? 2 : undefined} stack />
-                    </Msg>
+                    <>
+                      <Msg side="in" time={CLOCK[5]} tail={false} className={styles.first}>
+                        <span className={styles.said}>{d.menu.text}</span>
+                      </Msg>
+                      <Pad rows={[{ items: d.menu.keys, stack: true, pressed: press }]} />
+                    </>
                   )}
                 </>
               )}

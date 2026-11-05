@@ -1251,7 +1251,11 @@
       "sub": "bot",
       "typing": "typing…"
     },
-    "cover": { "a": "MIMIMI", "b": "BOT", "c": "PINTEREST+" },
+    "cover": {
+      "a": "MIMIMI",
+      "b": "BOT",
+      "c": "PINTEREST+"
+    },
     "wall": {
       "title": "template wall",
       "note": "the shots live in the database and change without code"
@@ -1337,42 +1341,79 @@
         "Scroll and see what I can do 👇"
       ],
       "time": "12:01",
-      "pager": ["⏪", "1/1", "⏩"],
-      "keys": ["TEMPLATES [ LITE model ] (20⚡)", "TEMPLATES [ ART model] (6⚡)"]
+      "pager": [
+        "⏪",
+        "1/1",
+        "⏩"
+      ],
+      "keys": [
+        "TEMPLATES [ LITE model ] (20⚡️)",
+        "TEMPLATES [ ART model] (6⚡️)",
+        "TEMPLATES [ PRO model ] (40⚡️)",
+        "Pinterest+",
+        "MAGIC+"
+      ]
     },
     "demo": {
-      "text": "Browse the carousel, pick the shot that speaks to you most and tap the button below. 👇",
+      "text": [
+        "We've collected the prettiest Pinterest trends. Browse the carousel, pick the shot that speaks to you most and tap the button below. 👇"
+      ],
+      "pager": [
+        "⏪",
+        "1/3",
+        "⏩"
+      ],
       "keys": [
         "Generate this exact shot",
+        "Can I upload my own photo?",
         "Do I need prompts?"
       ]
     },
     "upload": {
-      "text": "Great choice! Now upload 3-5 of your photos and I'll generate a character for you.",
+      "text": [
+        "Great choice! Now upload 3-5 of your photos and I'll generate a character for you. ",
+        "⚠️ PERFECT CHARACTER: see the instructions above.",
+        "",
+        "I'm waiting for your photos right here in the chat (tap the paperclip and upload from your gallery) ",
+        "",
+        "When you're done, tap the \"I've uploaded all the photos\" button ⬇️."
+      ],
       "keys": [
         "I've uploaded all the photos"
-      ],
-      "count": "Uploaded 3/5"
+      ]
     },
     "gen": {
-      "text": "Great! Generation started. It takes about 1-2 minutes.",
+      "text": [
+        "Great! Generation started. It takes about 1-2 minutes. ",
+        "",
+        "DID YOU KNOW: our bot has more than 300 trending collections. We update them every week.",
+        "",
+        "Swipe to see them!!! 👇"
+      ],
+      "pager": [
+        "⏪",
+        "1/3",
+        "⏩"
+      ],
       "eta": "about 1-2 minutes"
     },
     "done": {
-      "text": "Your shot is ready! That was a free trial generation.",
+      "text": [
+        "Your shot is ready!",
+        "",
+        "That was a free trial generation. To continue {d} unlock the full version! 💕"
+      ],
       "keys": [
         "See pricing",
         "Damn, doesn't look much like me..."
       ]
     },
     "menu": {
-      "text": "Thanks for the payment! ✨",
+      "text": "Pinterest mode. Choose a model.",
       "keys": [
-        "LITE TEMPLATES",
-        "ART TEMPLATES",
-        "PRO TEMPLATES",
-        "Pinterest+",
-        "MAGIC+"
+        "LITE model (10⚡️)",
+        "PRO model (15⚡️)",
+        "Main menu"
       ]
     },
     "speed": {
@@ -1396,11 +1437,7 @@
         "log": "dialog start"
       },
       {
-        "cap": "Slides flip inside the same message: the bot edits it.",
-        "log": "one message, slides change inside it"
-      },
-      {
-        "cap": "Pick a shot and tap \"Generate this exact shot\".",
+        "cap": "A newcomer gets a carousel of trends first.",
         "log": "trial-shot flag in the database"
       },
       {
@@ -1412,11 +1449,11 @@
         "log": "status polled every 10 seconds"
       },
       {
-        "cap": "The same shot, with their face, replaces the template.",
+        "cap": "The trial shot is free: the result replaces the template.",
         "log": "delivering the result: one shot per tap"
       },
       {
-        "cap": "Then pricing, in-bot payment and the model menu.",
+        "cap": "Then model choice: LITE or PRO.",
         "log": "tokens are deducted atomically, returned on failure"
       }
     ]

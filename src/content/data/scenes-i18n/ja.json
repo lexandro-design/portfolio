@@ -834,27 +834,91 @@
     ]
   },
   "mimimibot": {
-    "chat": { "title": "Mimimi Bot - ニューロフォトセッション", "sub": "ボット", "typing": "入力中…" },
-    "cover": { "a": "MIMIMI", "b": "BOT", "c": "PINTEREST+" },
-    "wall": { "title": "テンプレートの壁", "note": "ショットはデータベースにあり、コードなしで変えられます" },
+    "chat": {
+      "title": "Mimimi Bot - ニューロフォトセッション",
+      "sub": "ボット",
+      "typing": "入力中…"
+    },
+    "cover": {
+      "a": "MIMIMI",
+      "b": "BOT",
+      "c": "PINTEREST+"
+    },
+    "wall": {
+      "title": "テンプレートの壁",
+      "note": "ショットはデータベースにあり、コードなしで変えられます"
+    },
     "tiles": [
-      { "id": "studio", "src": "/cases/mimimibot/gen/tpl-studio.webp", "you": "/cases/mimimibot/gen/you-studio.webp" },
-      { "id": "nyc", "src": "/cases/mimimibot/gen/tpl-nyc.webp", "you": "/cases/mimimibot/gen/you-nyc.webp" },
-      { "id": "terrace", "src": "/cases/mimimibot/gen/tpl-terrace.webp", "you": "/cases/mimimibot/gen/you-terrace.webp" },
-      { "id": "car", "src": "/cases/mimimibot/gen/tpl-car.webp", "you": "/cases/mimimibot/gen/you-car.webp" },
-      { "id": "beach", "src": "/cases/mimimibot/gen/tpl-beach.webp", "you": "/cases/mimimibot/gen/you-beach.webp" },
-      { "id": "mirror", "src": "/cases/mimimibot/gen/tpl-mirror.webp", "you": "/cases/mimimibot/gen/you-mirror.webp" },
-      { "id": "cafe", "src": "/cases/mimimibot/gen/tpl-cafe.webp", "you": "/cases/mimimibot/gen/you-cafe.webp" },
-      { "id": "roof", "src": "/cases/mimimibot/gen/tpl-roof.webp", "you": "/cases/mimimibot/gen/you-roof.webp" }
+      {
+        "id": "studio",
+        "src": "/cases/mimimibot/gen/tpl-studio.webp",
+        "you": "/cases/mimimibot/gen/you-studio.webp"
+      },
+      {
+        "id": "nyc",
+        "src": "/cases/mimimibot/gen/tpl-nyc.webp",
+        "you": "/cases/mimimibot/gen/you-nyc.webp"
+      },
+      {
+        "id": "terrace",
+        "src": "/cases/mimimibot/gen/tpl-terrace.webp",
+        "you": "/cases/mimimibot/gen/you-terrace.webp"
+      },
+      {
+        "id": "car",
+        "src": "/cases/mimimibot/gen/tpl-car.webp",
+        "you": "/cases/mimimibot/gen/you-car.webp"
+      },
+      {
+        "id": "beach",
+        "src": "/cases/mimimibot/gen/tpl-beach.webp",
+        "you": "/cases/mimimibot/gen/you-beach.webp"
+      },
+      {
+        "id": "mirror",
+        "src": "/cases/mimimibot/gen/tpl-mirror.webp",
+        "you": "/cases/mimimibot/gen/you-mirror.webp"
+      },
+      {
+        "id": "cafe",
+        "src": "/cases/mimimibot/gen/tpl-cafe.webp",
+        "you": "/cases/mimimibot/gen/you-cafe.webp"
+      },
+      {
+        "id": "roof",
+        "src": "/cases/mimimibot/gen/tpl-roof.webp",
+        "you": "/cases/mimimibot/gen/you-roof.webp"
+      }
     ],
     "cols": [
-      ["studio", "beach"],
-      ["nyc", "mirror"],
-      ["cafe", "roof"],
-      ["terrace", "car"]
+      [
+        "studio",
+        "beach"
+      ],
+      [
+        "nyc",
+        "mirror"
+      ],
+      [
+        "cafe",
+        "roof"
+      ],
+      [
+        "terrace",
+        "car"
+      ]
     ],
-    "tag": { "look": "チャット内", "pick": "選択", "gen": "生成", "you": "あなたのショット" },
-    "selfies": ["/cases/mimimibot/gen/selfie-1.webp", "/cases/mimimibot/gen/selfie-2.webp", "/cases/mimimibot/gen/selfie-3.webp"],
+    "tag": {
+      "look": "チャット内",
+      "pick": "選択",
+      "gen": "生成",
+      "you": "あなたのショット"
+    },
+    "selfies": [
+      "/cases/mimimibot/gen/selfie-1.webp",
+      "/cases/mimimibot/gen/selfie-2.webp",
+      "/cases/mimimibot/gen/selfie-3.webp"
+    ],
     "start": {
       "text": [
         "こんにちは！MIMIMI だよ。あの Pinterest 風の写真を作るニューラルネットワーク。",
@@ -865,32 +929,94 @@
         "めくって、できることを見てね 👇"
       ],
       "time": "12:01",
-      "pager": ["⏪", "1/1", "⏩"],
-      "keys": ["テンプレート [ LITE モデル ] (20⚡)", "テンプレート [ ART モデル] (6⚡)"]
+      "pager": [
+        "⏪",
+        "1/1",
+        "⏩"
+      ],
+      "keys": [
+        "テンプレート [ LITE モデル ] (20⚡️)",
+        "テンプレート [ ART モデル] (6⚡️)",
+        "テンプレート [ PRO モデル ] (40⚡️)",
+        "Pinterest+",
+        "マジック+"
+      ]
     },
     "demo": {
-      "text": "カルーセルを見て、いちばん気に入ったショットを選び、下のボタンを押してね。👇",
-      "keys": ["このショットを生成", "プロンプトは必要？"]
+      "text": [
+        "Pinterest の素敵なトレンドを集めました。カルーセルを見て、いちばん気に入ったショットを選び、下のボタンを押してね。👇"
+      ],
+      "pager": [
+        "⏪",
+        "1/3",
+        "⏩"
+      ],
+      "keys": [
+        "このショットを生成",
+        "自分の写真もアップロードできる？",
+        "プロンプトは必要？"
+      ]
     },
     "upload": {
-      "text": "いい選択！あなたの写真を 3-5 枚アップロードして。キャラクターを生成するね。",
-      "keys": ["写真を全部アップロードした"],
-      "count": "3/5 枚アップロード済み"
+      "text": [
+        "いい選択！あなたの写真を 3-5 枚アップロードして。キャラクターを生成するね。 ",
+        "⚠️ 完璧なキャラクター：上の説明を見てね。",
+        "",
+        "写真はこのチャットにそのまま送ってね（クリップを押してギャラリーから） ",
+        "",
+        "送り終えたら「写真を全部アップロードした」ボタンを押してね ⬇️。"
+      ],
+      "keys": [
+        "写真を全部アップロードした"
+      ]
     },
-    "gen": { "text": "いいね！生成を始めました。1-2 分ほどかかります。", "eta": "1-2 分ほど" },
+    "gen": {
+      "text": [
+        "いいね！生成を始めました。1-2 分ほどかかります。 ",
+        "",
+        "知ってた？このボットには 300 以上のトレンド特集があり、毎週更新しています。",
+        "",
+        "めくって見てね！！！ 👇"
+      ],
+      "pager": [
+        "⏪",
+        "1/3",
+        "⏩"
+      ],
+      "eta": "1-2 分ほど"
+    },
     "done": {
-      "text": "ショットができました！これは無料のお試し生成でした。",
-      "keys": ["料金プランを見る", "うーん、あまり似てない…"]
+      "text": [
+        "ショットができました！",
+        "",
+        "これは無料のお試し生成でした。続けるには {d} フル版を解放してね！ 💕"
+      ],
+      "keys": [
+        "料金プランを見る",
+        "うーん、あまり似てない…"
+      ]
     },
     "menu": {
-      "text": "お支払いありがとう！✨",
-      "keys": ["テンプレート LITE", "テンプレート ART", "テンプレート PRO", "Pinterest+", "マジック+"]
+      "text": "Pinterest モード。モデルを選んでね。",
+      "keys": [
+        "LITE モデル (10⚡️)",
+        "PRO モデル (15⚡️)",
+        "メインメニュー"
+      ]
     },
     "speed": {
       "title": "会話の開始",
       "rows": [
-        { "label": "データベースへのクエリ 3 回連続", "value": "≈ 2 秒", "ms": 2000 },
-        { "label": "PostgreSQL の関数 1 つ", "value": "60 ミリ秒", "ms": 60 }
+        {
+          "label": "データベースへのクエリ 3 回連続",
+          "value": "≈ 2 秒",
+          "ms": 2000
+        },
+        {
+          "label": "PostgreSQL の関数 1 つ",
+          "value": "60 ミリ秒",
+          "ms": 60
+        }
       ]
     },
     "steps": [
@@ -899,11 +1025,7 @@
         "log": "会話の開始"
       },
       {
-        "cap": "スライドは同じメッセージの中でめくれ、ボットが書き換えます。",
-        "log": "メッセージは 1 つ、スライドはその中で切り替わる"
-      },
-      {
-        "cap": "ショットを選び、「このショットを生成」を押します。",
+        "cap": "初めての人には、まずトレンドのカルーセル。",
         "log": "お試しショットのフラグをDBへ"
       },
       {
@@ -915,11 +1037,11 @@
         "log": "ステータスを 10 秒ごとに確認"
       },
       {
-        "cap": "同じショットに本人の顔が入り、テンプレートの場所に収まります。",
+        "cap": "お試しショットは無料。完成したショットがテンプレートの場所に入ります。",
         "log": "結果の送信：1 回の操作で 1 ショット"
       },
       {
-        "cap": "その先は料金プラン、ボット内の支払い、モデルのメニュー。",
+        "cap": "その先はモデル選び：LITE か PRO。",
         "log": "トークンはアトミックに消費、失敗時は返却"
       }
     ]

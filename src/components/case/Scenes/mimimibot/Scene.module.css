@@ -6,7 +6,8 @@
 .stage {
   --g: 16px;
   position: relative;
-  min-block-size: 880px;
+  --chat-h: 720px;
+  min-block-size: calc(var(--chat-h) + 140px);
   margin-block-start: var(--space-xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) both;
 }
@@ -196,8 +197,17 @@
 }
 
 .chat {
-  block-size: 560px;
-  transition: block-size 600ms var(--ease-out-expo);
+  block-size: var(--chat-h);
+}
+
+/* Окно фиксированной высоты: шаги не двигают страницу, лента от верха */
+.chat > ol {
+  justify-content: flex-start;
+}
+
+
+.first .pic {
+  aspect-ratio: 1;
 }
 
 .pic {
@@ -232,8 +242,8 @@
 
 .said {
   display: block;
-  font-size: 14px;
-  line-height: 19px;
+  font-size: 13px;
+  line-height: 17px;
   text-align: start;
   white-space: pre-wrap;
 }
@@ -247,12 +257,20 @@
 
 .real > span {
   margin-block-start: 0;
+  gap: 3px;
+}
+
+.real > span > span {
+  padding: 5px 8px;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: normal;
 }
 
 .cover {
   position: relative;
   display: block;
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 2;
   margin: -10px -14px 8px;
   overflow: hidden;
   border-radius: var(--bub-r) var(--bub-r) 0 0;
@@ -264,7 +282,7 @@
   block-size: 100%;
   aspect-ratio: auto;
   margin: 0;
-  object-position: 50% 12%;
+  object-position: 50% 14%;
 }
 
 /* Надпись поверх кадра: чёрный и розовый на светлом, не зависит от темы сайта */
@@ -334,7 +352,9 @@
 .dock {
   display: grid;
   gap: 8px;
-  min-block-size: 68px;
+  block-size: 128px;
+  align-content: start;
+  overflow: hidden;
   padding: 12px 14px;
   border: 1px solid var(--border-hair);
   background: var(--bg-elevated);
@@ -406,6 +426,7 @@
 /* Планшет и телефон: стена превращается в ленту над чатом */
 @media (max-width: 1099px) {
   .stage {
+    --chat-h: 750px;
     display: grid;
     gap: var(--space-md);
     justify-items: center;
@@ -453,6 +474,7 @@
 
 @media (max-width: 599px) {
   .stage {
+    --chat-h: 700px;
     margin-block-start: var(--space-lg);
   }
 
