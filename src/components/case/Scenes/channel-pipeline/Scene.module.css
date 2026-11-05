@@ -874,8 +874,10 @@
   margin-block-start: var(--space-md);
 }
 
+/* Подпись шага в одну строку на широком экране */
 .cap {
-  grid-row: 1 / 3;
+  grid-column: 1 / -1;
+  min-block-size: 1.5em;
   font-size: var(--type-body-lg);
 }
 
@@ -922,7 +924,8 @@
   }
 
   .cap {
-    grid-row: auto;
+    min-block-size: 3em;
+    font-size: var(--type-body);
   }
 }
 

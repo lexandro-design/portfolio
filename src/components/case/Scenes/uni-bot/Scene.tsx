@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { SceneProps } from '../types'
 import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, useReduced, usePlay } from '../kit'
 import scene from '../Scene.module.css'
@@ -39,25 +39,27 @@ const PAIRS = [
  * day: какой из четырёх дней сцены (обычный, задание, за 3 дня, за сутки)
  */
 const EVENTS = [
-  { id: 'webinar', day: 0, step: 1, slot: 13 }, // 09:15, окно «за 45 минут до начала»
-  { id: 'evening', day: 0, step: 2, slot: 56 }, // 20:00, пары на завтра
-  { id: 'task', day: 1, step: 3, slot: 34 }, // 14:30
-  { id: 'd3', day: 2, step: 5, slot: 48 }, // 18:00
-  { id: 'd1', day: 3, step: 6, slot: 48 },
+  { id: 'webinar', day: 0, step: 0, slot: 13 }, // 09:15, окно «за 45 минут до начала»
+  { id: 'evening', day: 0, step: 1, slot: 56 }, // 20:00, пары на завтра
+  { id: 'task', day: 1, step: 2, slot: 34 }, // 14:30
+  { id: 'd3', day: 2, step: 3, slot: 48 }, // 18:00
+  { id: 'd1', day: 3, step: 4, slot: 48 },
 ]
 
 /** Каждый шаг: какой день и по каким проверкам пробегает бегунок */
 const PLAN = [
-  { day: 0, from: 0, to: 11 },
-  { day: 0, from: 11, to: 15 },
+  { day: 0, from: 0, to: 15 },
   { day: 0, from: 15, to: 71 },
-  { day: 1, from: 0, to: 36 },
-  { day: 1, from: 36, to: 71 },
+  { day: 1, from: 0, to: 71 },
   { day: 2, from: 0, to: 50 },
   { day: 3, from: 0, to: 50 },
 ]
 
-const SPANS = [2800, 3200, 4000, 3400, 4000, 3200, 4200]
+/**
+ * Пять шагов на 16 с вместо семи на 24,8 с: тишина и вебинар склеены,
+ * задание и следующие проверки без повторов тоже
+ */
+const SPANS = [3000, 3400, 3800, 2800, 3000]
 
 /** Бегунок по проверкам: на каждом шаге пробегает из from в to, без движения встаёт сразу в конец */
 function useSweep(step: number, from: number, to: number, still: boolean) {
@@ -89,8 +91,6 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const still = useReduced()
   const { step } = play
   const plan = PLAN[step]
-  const wrap = useRef<HTMLDivElement>(null)
-  const [h, setH] = useState(300)
   const slot = useSweep(step, plan.from, plan.to, still)
 
   const fired = (e: (typeof EVENTS)[number]) => step > e.step || (step === e.step && slot >= e.slot)
@@ -102,23 +102,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const sentCount = shown.length
   const checks = Math.min(SLOTS, slot + 1)
 
-  // Высота телефона по содержимому ленты: от 300 до 520
-  useEffect(() => {
-    const feed = wrap.current?.querySelector('ol')
-    const top = feed?.previousElementSibling as HTMLElement | null
-    if (!feed || !top) return
-    const id = window.requestAnimationFrame(() => {
-      const next = Math.max(300, Math.min(520, Math.ceil(top.offsetHeight + feed.scrollHeight + 2)))
-      setH((p) => (p === next ? p : next))
-    })
-    return () => window.cancelAnimationFrame(id)
-  })
-
   // Дедлайн: появляется вместе с сообщением о задании и меняет цвет по сроку
   const taskOn = fired(EVENTS[2])
   const dl = d.deadlines
-  const dlState = dl.states[step >= 6 ? 2 : step >= 5 ? 1 : 0]
-  const dupN = step === 3 || step === 4 ? slot - EVENTS[2].slot : 0
+  const dlState = dl.states[step >= 4 ? 2 : step >= 3 ? 1 : 0]
+  const dupN = step === 2 ? slot - EVENTS[2].slot : 0
 
   return (
     <header ref={ref} className={`${scene.scene} ${styles.root}`}>
@@ -177,8 +165,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         </section>
 
         <div className={styles.stage}>
-          <div ref={wrap} className={styles.phoneWrap} style={{ blockSize: h }}>
-          <Chat title={d.phone.title} sub={d.phone.sub} tone="tg" live={play.playing} className={styles.phone} avatar="🎓">
+          <Chat title={d.phone.title} sub={d.phone.sub} tone="tg" live={play.playing} fit minHeight={300} className={styles.phone} avatar="🎓">
             {shown.length === 0 && <Sys key={`q${plan.day}`}>{d.phone.quiet}</Sys>}
             {shown.map((e) => {
               const m = d.messages[e.id]
@@ -195,7 +182,6 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             })}
             {trailing && <Sys key={`a${plan.day}`}>{d.phone.after}</Sys>}
           </Chat>
-          </div>
 
           <div className={styles.side}>
             <div className={styles.card}>
@@ -259,12 +245,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.under}>
-          <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
-          <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
-          <Note>{t.show.cast.demo}</Note>
+          <div className={styles.under}>
+            <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
+            <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
+            <Note>{t.show.cast.demo}</Note>
+          </div>
         </div>
 
         <Reveal className={styles.intro}>

@@ -8,7 +8,11 @@
   grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 6fr);
   gap: var(--space-md);
   align-items: stretch;
-  block-size: 560px;
+  block-size: 480px;
+}
+
+/* Сцена и подпись с панелью под ней: на телефоне подпись идёт сразу за чатом */
+.table {
   margin-block-start: var(--space-2xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
@@ -87,6 +91,19 @@
 
 .sheet {
   min-block-size: 0;
+}
+
+/* Строки въезжают одна за другой, а не разом */
+.sheet li[data-s='on']:nth-child(even) {
+  animation-delay: 180ms;
+}
+
+.summary li[data-s='on']:nth-child(2) {
+  animation-delay: 220ms;
+}
+
+.parse {
+  inline-size: 100%;
 }
 
 /* Сводка выезжает снизу, когда месяц закрыт */
@@ -172,15 +189,34 @@
 }
 
 @media (max-width: 767px) {
-  .stage {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto;
+  .table {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-sm);
     margin-block-start: var(--space-lg);
   }
 
+  /* Ячейки по порядку: чат, подпись с панелью, бот, таблицы */
+  .stage {
+    display: contents;
+  }
+
   .chat {
-    block-size: 380px;
+    order: 1;
+    block-size: 360px;
+  }
+
+  .under {
+    order: 2;
+    margin-block-start: 0;
+  }
+
+  .parser {
+    order: 3;
+  }
+
+  .sheets {
+    order: 4;
   }
 
   .parser {
@@ -211,7 +247,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage,
+  .table,
   .fields[data-on] li,
   .log {
     animation: none;

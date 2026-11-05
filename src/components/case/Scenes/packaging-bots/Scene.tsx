@@ -1,13 +1,17 @@
 'use client'
 
-import type { CSSProperties, ReactNode } from 'react'
+import { Fragment, type CSSProperties, type ReactNode } from 'react'
+import { asset } from '@/lib/asset'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Sys, Title, Typing, usePlay } from '../kit'
+import { beat, marksOf, schedule, useBeats } from './useBeats'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
 type Msgs = { at: number; side: 'in' | 'out' | 'sys'; text: string; link?: string }
 type Data = {
+  typing: string
+  photoNote: string
   chat: { title: string; sub: string }
   pipe: { title: string; chips: { k: string; v: string }[]; intents: string[]; phrases: string[][] }
   shelf: {
@@ -32,11 +36,21 @@ type Data = {
   steps: { cap: string; log: string }[]
 }
 
-/** Шаги: вопрос, поиск, полка, карточка, анкета, лид, менеджер, саммари, ночная сверка */
-const SPANS = [2800, 3200, 3400, 3800, 3400, 3800, 3400, 4600, 4200]
+/**
+ * Шаги: вопрос с поиском, полка, карточка, анкета с лидом, менеджер с саммари, ночная сверка.
+ * В json реплики и поля размечены прежними девятью шагами, N переводит их в эти шесть
+ */
+const SPANS = [3000, 3200, 3800, 3800, 4200, 3400]
+const N = [0, 0, 1, 2, 3, 3, 4, 4, 5]
 
 /** До какой фишки конвейера дошёл поиск на каждом шаге (-1: конвейер стоит) */
-const LIT = [0, 2, 4, 4, -1, -1, -1, -1, -1]
+const LIT = [2, 4, 4, -1, -1, -1]
+
+/** Условное время реплик по порядку в json (монотонное), у строк системы времени нет */
+const CLOCK = ['10:41', '10:42', '10:43', '10:43', '10:44', '10:44', '', '10:47', '10:47', '']
+
+const PHOTO = '/cases/osq/real/product-box.webp'
+const LOGO = '/cases/osq/real/logo.svg'
 
 const css = (v: Record<string, string | number>) => v as CSSProperties
 
@@ -64,12 +78,28 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const { step } = play
 
   const lit = LIT[step]
-  const intent = step <= 2 ? d.pipe.intents[0] : d.pipe.intents[1]
-  const phrases = step === 3 ? d.pipe.phrases[1] : step === 1 || step === 2 ? d.pipe.phrases[0] : []
-  const open = step >= 3
-  const cards = step >= 2
-  const msgs = d.messages.filter((m) => m.at <= step)
-  const status = step >= 5
+  const intent = step <= 1 ? d.pipe.intents[0] : d.pipe.intents[1]
+  const phrases = step === 2 ? d.pipe.phrases[1] : step <= 1 ? d.pipe.phrases[0] : []
+  const open = step >= 2
+  const cards = step >= 1
+  const status = step >= 3
+  const at = (v: number) => N[v]
+
+  // Чат: реплики прошлых шагов целиком, у текущего своя очередь: «печатает», ответ
+  const all = d.messages.map((m, k) => ({ ...m, k, s: N[m.at] }))
+  const now = all.filter((m) => m.s === step)
+  const times = schedule(now.map((m) => m.side))
+  const marks = now.flatMap((m, i) => marksOf(times[i], m.side === 'in'))
+  const clock = useBeats(step, play.inView && !play.stopped, marks)
+  const beats = now.map((m, i) => beat(clock, times[i], m.side === 'in'))
+  const shown = (k: number) => {
+    const m = all[k]
+    if (!m) return false
+    if (m.s < step) return true
+    const i = now.findIndex((x) => x.k === k)
+    return i >= 0 && beats[i].shown
+  }
+  const typingNow = beats.some((b) => b.typing || b.leaving)
 
   return (
     <header ref={ref} className={`${scene.scene} ${styles.root}`}>
@@ -78,10 +108,15 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         <Meta item={item} meta={meta} />
         <Title item={item} />
 
-        <div className={styles.stage} data-late={step >= 7 || undefined}>
+        <div className={styles.table}>
+        <div className={styles.stage} data-late={step >= 4 || undefined}>
           <section className={styles.desk} aria-label={d.shelf.title}>
             <div className={styles.dhead}>
-              <Mono>{d.pipe.title}</Mono>
+              <span className={styles.brand}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
+                <img className={styles.logo} src={asset(LOGO)} alt="" height={22} />
+                <Mono>{d.pipe.title}</Mono>
+              </span>
               <p key={step} className={styles.log}>
                 {d.steps[step].log}
               </p>
@@ -91,9 +126,10 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
               {d.pipe.chips.map((c, i) => {
                 const on = i <= lit
                 return (
-                  <li key={`${c.k}-${on ? step : 'off'}`} className={styles.chip} data-on={(on && step <= 3) || undefined} data-done={(on && step > 3) || undefined} style={css({ '--i': i })}>
+                  <li key={`${c.k}-${on ? step : 'off'}`} className={styles.chip} data-on={(on && step <= 2) || undefined} data-done={(on && step > 2) || undefined} style={css({ '--i': i })}>
                     <b>{c.k}</b>
                     <span>{i === 1 ? (on ? intent : '') : c.v}</span>
+                    {i === 0 && step === 0 && play.playing && <Progress run={SPANS[0] - 500} label={c.v} className={styles.chipBar} />}
                   </li>
                 )
               })}
@@ -109,21 +145,36 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
             <div className={styles.shelfHead}>
               <Mono>{d.shelf.title}</Mono>
-              <span className={styles.src} data-on={(step >= 1 && step <= 3) || undefined}>
+              <span className={styles.src} data-on={(step <= 2) || undefined}>
                 {d.shelf.src}
               </span>
             </div>
 
             <div className={styles.shelf} data-open={(cards && open) || undefined}>
-              {!cards && <p className={styles.empty}>{d.shelf.empty}</p>}
+              {!cards && (
+                <>
+                  {[0, 1, 2].map((i) => (
+                    <div key={i} className={styles.skel} style={css({ '--i': i })} aria-hidden="true">
+                      <i />
+                      <b />
+                      <b />
+                    </div>
+                  ))}
+                  <p className={styles.empty}>{d.shelf.empty}</p>
+                </>
+              )}
               {cards &&
                 d.shelf.cards.map((c, i) => {
                   const isOpen = open && i === 0
                   const dim = open && i > 0
                   return (
                     <article key={c.name} className={styles.card} data-open={isOpen || undefined} data-dim={dim || undefined} style={css({ '--i': i })}>
-                      <div className={styles.thumb}>
-                        <Mono>{d.shelf.thumb}</Mono>
+                      <div className={styles.thumb} data-photo={isOpen || undefined}>
+                        {isOpen && (
+                          // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет
+                          <img className={styles.photo} src={asset(PHOTO)} alt="" width={400} height={400} decoding="async" />
+                        )}
+                        <Mono>{isOpen ? d.photoNote : d.shelf.thumb}</Mono>
                         {isOpen && <span className={styles.link}>{d.shelf.spec.photo}</span>}
                       </div>
                       <div className={styles.cbody}>
@@ -163,39 +214,56 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             </div>
           </section>
 
-          <Chat title={d.chat.title} sub={d.chat.sub} avatar="◐" live={play.playing} className={styles.chat}>
-            {msgs.map((m, i) =>
-              m.side === 'sys' ? (
-                <Sys key={i}>{m.text}</Sys>
-              ) : (
-                <Msg key={i} side={m.side} className={m.side === 'in' ? styles.late : undefined}>
-                  {m.text}
-                  {m.link && <span className={styles.chatLink}>{m.link}</span>}
-                </Msg>
-              ),
-            )}
+          <Chat title={d.chat.title} sub={typingNow ? d.typing : d.chat.sub} avatar="◐" live={play.playing} className={styles.chat}>
+            {all
+              .filter((m) => m.s <= step)
+              .map((m) => {
+                const i = now.findIndex((x) => x.k === m.k)
+                const bt = i >= 0 ? beats[i] : undefined
+                const visible = m.s < step || Boolean(bt?.shown)
+                return (
+                  <Fragment key={m.k}>
+                    {bt && (bt.typing || bt.leaving) && <Typing text={d.typing} leaving={bt.leaving} />}
+                    {visible &&
+                      (m.side === 'sys' ? (
+                        <Sys>{m.text}</Sys>
+                      ) : (
+                        <Msg side={m.side} time={CLOCK[m.k]} status={m.side === 'out' ? (all[m.k + 1]?.side === 'in' && shown(m.k + 1) ? 'read' : 'sent') : undefined}>
+                          {m.text}
+                          {m.link && (
+                            <span className={styles.preview}>
+                              {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
+                              <img src={asset(PHOTO)} alt="" width={120} height={120} decoding="async" />
+                              <small>{m.link}</small>
+                            </span>
+                          )}
+                        </Msg>
+                      ))}
+                  </Fragment>
+                )
+              })}
           </Chat>
         </div>
 
         <div className={styles.rail}>
-          <Panel title={d.anketa.title} sub={d.anketa.sub} live={step >= 3 && step <= 5}>
+          <Panel title={d.anketa.title} sub={d.anketa.sub} live={step >= 2 && step <= 3}>
             <ul className={styles.rows}>
               {d.anketa.fields.map((f) => (
-                <li key={f.k} data-on={step >= f.at || undefined} data-new={step === f.at || undefined}>
+                <li key={f.k} data-on={step >= at(f.at) || undefined} data-new={step === at(f.at) || undefined}>
                   <span>{f.k}</span>
-                  <b key={step >= f.at ? 'v' : 'x'}>{step >= f.at ? f.v : '···'}</b>
+                  <b key={step >= at(f.at) ? 'v' : 'x'}>{step >= at(f.at) ? f.v : '···'}</b>
                 </li>
               ))}
             </ul>
             <p className={styles.rule}>{d.anketa.rule}</p>
           </Panel>
 
-          <Panel title={d.lead.title} sub={d.lead.sub} live={step >= 3 && step <= 6}>
+          <Panel title={d.lead.title} sub={d.lead.sub} live={step >= 2 && step <= 4}>
             <ul className={styles.rows}>
-              {d.lead.fields.map(([k, v, at]) => (
-                <li key={k} data-on={step >= at || undefined} data-new={step === at || undefined}>
+              {d.lead.fields.map(([k, v, a]) => (
+                <li key={k} data-on={step >= at(a) || undefined} data-new={step === at(a) || undefined}>
                   <span>{k}</span>
-                  <b key={step >= at ? 'v' : 'x'}>{step >= at ? v : '···'}</b>
+                  <b key={step >= at(a) ? 'v' : 'x'}>{step >= at(a) ? v : '···'}</b>
                 </li>
               ))}
             </ul>
@@ -205,9 +273,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             </p>
           </Panel>
 
-          <Panel title={d.summary.title} sub={d.summary.sub} live={step === 7}>
+          <Panel title={d.summary.title} sub={d.summary.sub} live={step === 4}>
             <div className={styles.timeline} aria-hidden="true">
-              <div className={styles.track}>{step >= 7 && <i className={styles.fill} />}</div>
+              <div className={styles.track}>{step >= 4 && <i className={styles.fill} />}</div>
               <ol>
                 {d.summary.scale.map((s) => (
                   <li key={s}>{s}</li>
@@ -215,7 +283,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
               </ol>
               <small>{d.summary.unit}</small>
             </div>
-            {step >= 7 ? (
+            {step >= 4 ? (
               <div className={styles.note}>
                 <p className={styles.said}>{d.summary.text}</p>
                 <ul className={styles.where}>
@@ -229,18 +297,18 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             )}
           </Panel>
 
-          <Panel title={d.sync.title} live={step === 8}>
+          <Panel title={d.sync.title} live={step === 5}>
             <div className={styles.sync}>
               <p className={styles.sk}>
                 <b>{d.sync.docs.k}</b>
                 <span>{d.sync.docs.when}</span>
               </p>
-              <ul data-on={step === 8 || undefined}>
+              <ul data-on={step === 5 || undefined}>
                 {d.sync.docs.rows.map(([a, b, c], i) => (
-                  <li key={`${a}-${step === 8}`} style={css({ '--i': i })}>
+                  <li key={`${a}-${step === 5}`} style={css({ '--i': i })}>
                     <span>{a}</span>
-                    <span>{step === 8 ? b : '···'}</span>
-                    <b>{step === 8 ? c : '···'}</b>
+                    <span>{step === 5 ? b : '···'}</span>
+                    <b>{step === 5 ? c : '···'}</b>
                   </li>
                 ))}
               </ul>
@@ -248,11 +316,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <b>{d.sync.sheet.k}</b>
                 <span>{d.sync.sheet.when}</span>
               </p>
-              <ul data-on={step === 8 || undefined}>
+              <ul data-on={step === 5 || undefined}>
                 {d.sync.sheet.rows.map(([a, c], i) => (
-                  <li key={`${a}-${step === 8}`} data-two style={css({ '--i': i + 3 })}>
+                  <li key={`${a}-${step === 5}`} data-two style={css({ '--i': i + 3 })}>
                     <span>{a}</span>
-                    <b>{step === 8 ? c : '···'}</b>
+                    <b>{step === 5 ? c : '···'}</b>
                   </li>
                 ))}
               </ul>
@@ -264,6 +332,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
           <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
           <Note>{t.show.cast.demo}</Note>
+        </div>
         </div>
 
         <Reveal className={styles.intro}>

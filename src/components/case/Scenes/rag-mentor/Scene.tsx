@@ -1,8 +1,8 @@
 'use client'
 
-import type { CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Title, Typing, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -10,6 +10,7 @@ type Doc = { id: string; title: string; bars: number; locked?: boolean }
 type Frag = { n: number; doc: string; ref: string; head: string; text: string; id: string }
 type Data = {
   chat: { title: string; sub: string }
+  typing: string
   shelf: { title: string; role: string; locked: string; fresh: string }
   docs: Doc[]
   fresh: { title: string; bars: number }
@@ -31,10 +32,22 @@ type Data = {
   }
 }
 
-/** Шаги: вход, вопрос, роль, поиск, фрагменты, ответ, пустой поиск, честный отказ, ответ методиста */
-const SPANS = [2800, 2200, 3000, 3400, 3600, 3800, 3200, 3400, 4200]
+/**
+ * Шаги: вопрос и роль, поиск, фрагменты, ответ, пустой поиск с отказом, ответ методиста.
+ * Было девять шагов на 29,6 с: вход, вопрос и роль, а также пустой поиск и отказ склеены
+ */
+const SPANS = [3200, 3000, 3200, 3400, 3600, 3400]
 
-/** Какая стадия ленты справа горит на каком шаге */
+/** Внутри шага, мс: роль закрывает документы и «печатает» гаснет, затем ответ бота */
+const MARKS = [1500, 1700]
+
+/** Прежний номер шага для логики панели и полки: у разных состояний свой набор документов и панель */
+const OLD = [1, 3, 4, 5, 6, 8]
+
+/** Условное время сообщений: идёт вперёд по сценарию */
+const CLOCK = ['09:12', '09:12', '09:13', '09:14', '09:16', '09:20']
+
+/** Какая стадия ленты справа горит на каком старом шаге */
 const STAGE = [0, 0, 1, 2, 3, 4, 5, 5, 6]
 
 /** Какой по счёту отрезок документа подсвечивается, когда из него взят фрагмент (условно, как пункт) */
@@ -54,9 +67,24 @@ const LANE = [92, 70, 52]
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
   const [ref, play] = usePlay(SPANS)
-  const { step } = play
+  const nstep = play.step
   const m = d.messages
   const dr = d.drawer
+
+  // Внутри шага: набор бота, ответ. Пауза и reduced-motion показывают итог
+  const [ph, setPh] = useState({ step: -1, n: 0 })
+  useEffect(() => {
+    if (!play.inView || play.stopped) return
+    const ids = MARKS.map((ms, i) => window.setTimeout(() => setPh({ step: nstep, n: i + 1 }), ms))
+    return () => ids.forEach((id) => window.clearTimeout(id))
+  }, [nstep, play.inView, play.stopped])
+  const n = play.stopped ? MARKS.length : ph.step === nstep ? ph.n : 0
+  const typing = n < 2
+  const leaving = n === 1
+  const reply = n >= 2
+
+  // Прежний номер шага: по нему полка, панель и лента стадий
+  const step = nstep === 0 ? (n >= 1 ? 2 : 1) : nstep === 4 ? (reply ? 7 : 6) : OLD[nstep]
 
   const hitIds = step >= 3 && step <= 5 ? d.fragments.map((f) => f.id) : []
   const weakIds = step === 6 ? d.weakFragments.map((f) => f.id) : []
@@ -108,24 +136,25 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           <div className={styles.main}>
             <Chat title={d.chat.title} sub={d.chat.sub} tone="tg" live={play.playing} className={styles.chat}>
-              <Msg side="in">
+              <Msg side="in" time={CLOCK[0]}>
                 {m.greet}
                 <span className={styles.keysWrap}>
                   <Keys items={m.menu} />
                 </span>
               </Msg>
               {asked && (
-                <Msg side="out" key="q1">
+                <Msg side="out" key="q1" time={CLOCK[1]} status={step >= 5 ? 'read' : 'sent'} delay={nstep === 0 ? 700 : undefined}>
                   {m.q1}
                 </Msg>
               )}
               {(step === 3 || step === 4) && (
-                <Msg side="in" key="scan">
+                <Msg side="in" key="scan" time={CLOCK[2]}>
                   <span className={styles.scan}>{m.search}</span>
                 </Msg>
               )}
-              {step >= 5 && (
-                <Msg side="in" key="a">
+              {nstep === 3 && typing && <Typing key="ta" text={d.typing} leaving={leaving} />}
+              {step >= 5 && (nstep > 3 || reply) && (
+                <Msg side="in" key="a" time={CLOCK[3]}>
                   {m.answer.map((s, i) => (
                     <span key={i}>
                       {s}
@@ -141,17 +170,18 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 </Msg>
               )}
               {step >= 6 && (
-                <Msg side="out" key="q2">
+                <Msg side="out" key="q2" time={CLOCK[4]} status={step >= 7 ? 'read' : 'sent'}>
                   {m.q2}
                 </Msg>
               )}
+              {nstep === 4 && typing && <Typing key="tm" text={d.typing} leaving={leaving} delay={400} />}
               {step >= 7 && (
-                <Msg side="in" key="miss" tone={undefined}>
+                <Msg side="in" key="miss" time={CLOCK[4]}>
                   {m.miss}
                 </Msg>
               )}
               {step >= 8 && (
-                <Msg side="in" key="notify" tone="ok">
+                <Msg side="in" key="notify" tone="ok" time={CLOCK[5]} delay={600}>
                   {m.notify}
                 </Msg>
               )}
@@ -161,7 +191,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
               <div className={styles.drawerHead}>
                 <Mono>{dr.title}</Mono>
                 <span className={styles.log} key={step}>
-                  {d.steps[step].log}
+                  {d.steps[nstep].log}
                 </span>
               </div>
               <div className={styles.drawerBody} key={step}>
@@ -275,10 +305,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 </li>
               ))}
             </ol>
-            <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
+          </aside>
+
+          <Cap className={styles.cap}>{d.steps[nstep].cap}</Cap>
+          <div className={styles.ctl}>
             <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
             <Note>{t.show.cast.demo}</Note>
-          </aside>
+          </div>
         </div>
 
         <Reveal className={styles.intro}>

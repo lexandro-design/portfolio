@@ -1,7 +1,10 @@
 'use client'
 
+import { Fragment } from 'react'
+import { asset } from '@/lib/asset'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, Typing, usePlay } from '../kit'
+import { beat, marksOf, schedule, useBeats } from '../packaging-bots/useBeats'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -17,6 +20,8 @@ type Step = {
   right?: Line[]
 }
 type Data = {
+  typing: string
+  photoNote: string
   left: { title: string; sub: string }
   right: { title: string; sub: string }
   idle: string
@@ -26,19 +31,34 @@ type Data = {
   steps: Step[]
 }
 
-/** Шаги: вход клиента, три дорожки для клиента, две для сотрудника, передача человеку, итог */
-const SPANS = [3000, 2600, 3800, 3400, 3200, 3600, 3600, 4400, 4000, 4600]
+/** Шаги: телефон клиента, каталог, база знаний, готовый ответ, сотрудник, передача менеджеру, итог */
+const SPANS = [3600, 3000, 3000, 3000, 3000, 4200, 3000]
+
+const LOGO = '/cases/food-assistants/real/logo.webp'
 
 const pad = (n: number) => String(n + 1).padStart(2, '0')
+
+/** Условное время: у каждого диалога своя точка отсчёта, минуты идут вперёд по шагам и репликам */
+const BASE: Record<string, [number, number]> = { left: [14, 2], right: [14, 40] }
+const BASE_RESET: [number, number] = [15, 37]
+const stamp = ([h, m]: [number, number], plus: number) => {
+  const t = h * 60 + m + plus
+  return `${String(Math.floor(t / 60) % 24).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`
+}
+
+type Row = Line & { key: string; cur: boolean; old: boolean; step: number; j: number; time: string }
 
 /** Лента окна: с последнего сброса (новый диалог) до текущего шага */
 function feed(steps: Step[], step: number, side: 'left' | 'right', fresh: string) {
   let from = 0
   for (let i = 0; i <= step; i++) if (steps[i].reset === side) from = i
-  const out: (Line & { key: string; cur: boolean; old: boolean })[] = []
+  const base = side === 'left' && from > 0 ? BASE_RESET : BASE[side]
+  const out: Row[] = []
   for (let i = 0; i <= step; i++) {
-    if (i === from && from > 0) out.push({ k: 'sys', text: fresh, key: `new-${i}`, cur: i === step, old: false })
-    ;(steps[i][side] ?? []).forEach((m, j) => out.push({ ...m, key: `${i}-${j}`, cur: i === step, old: i < from }))
+    if (i === from && from > 0) out.push({ k: 'sys', text: fresh, key: `new-${i}`, cur: false, old: false, step: i, j: -1, time: '' })
+    ;(steps[i][side] ?? []).forEach((m, j) =>
+      out.push({ ...m, key: `${i}-${j}`, cur: i === step, old: i < from, step: i, j, time: stamp(base, i - from + (j >= 2 ? 1 : 0)) }),
+    )
   }
   return out
 }
@@ -59,29 +79,48 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   // Название ИИ-инструмента в фактах не показываем
   const safeFacts = facts.map((f) => ({ ...f, value: f.value.replace(/\s*[,·/]\s*GigaChat/gi, '').replace(/GigaChat\s*[,·/]\s*/gi, '') }))
 
+  const act = cur.who === 'right' ? 'right' : 'left'
+  const curLines = (cur[act] ?? []) as Line[]
+  const times = schedule(curLines.map((m) => m.k))
+  const clock = useBeats(step, play.inView && !play.stopped, curLines.flatMap((m, i) => marksOf(times[i], m.k === 'in')))
+  const beats = curLines.map((m, i) => beat(clock, times[i], m.k === 'in'))
+  const typing = beats.some((b) => b.typing || b.leaving)
+
   const side = (s: 'left' | 'right') => {
     const dim = !all && cur.who !== s
     return (
       <div className={`${styles.col} ${styles[s]}`}>
       <Chat
         title={d[s].title}
-        sub={d[s].sub}
+        sub={typing && s === act ? d.typing : d[s].sub}
         tone="tg"
         live={play.playing && (all || cur.who === s)}
         className={styles.chat}
         style={{ opacity: dim ? 0.5 : 1 }}
       >
-        {feed(d.steps, step, s, d.newDialog).map((m) =>
-          m.k === 'sys' ? (
-            <li key={m.key} className={`${styles.sys} ${m.cur ? styles[`d${m.d ?? 0}`] : ''} ${m.old ? styles.old : ''}`}>
-              {m.text}
-            </li>
-          ) : (
-            <Msg key={m.key} side={m.k} className={[m.cur && m.d ? styles[`d${m.d}`] : '', m.old ? styles.old : ''].filter(Boolean).join(' ') || undefined}>
-              {m.text}
-            </Msg>
-          ),
-        )}
+        {(() => {
+          const rows = feed(d.steps, step, s, d.newDialog)
+          return rows.map((m, idx) => {
+            if (m.k === 'sys' && m.j < 0) return <Sys key={m.key}>{m.text}</Sys>
+            const bt = m.cur && s === act ? beats[m.j] : undefined
+            const visible = !m.cur || s !== act || Boolean(bt?.shown)
+            const next = rows[idx + 1]
+            const read = m.k === 'out' && next && (next.step > m.step || (next.k === 'in' && (!next.cur || Boolean(beats[next.j]?.shown))))
+            return (
+              <Fragment key={m.key}>
+                {bt && (bt.typing || bt.leaving) && <Typing text={d.typing} leaving={bt.leaving} />}
+                {visible &&
+                  (m.k === 'sys' ? (
+                    <Sys>{m.text}</Sys>
+                  ) : (
+                    <Msg side={m.k} time={m.time} status={m.k === 'out' ? (read ? 'read' : 'sent') : undefined} className={m.old ? styles.old : undefined}>
+                      {m.text}
+                    </Msg>
+                  ))}
+              </Fragment>
+            )
+          })
+        })()}
       </Chat>
       </div>
     )
@@ -103,10 +142,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         <Meta item={item} meta={meta} />
         <Title item={item} />
 
+        <div className={styles.table}>
         <div className={styles.stage} data-who={cur.who} data-final={all || undefined}>
           {side('left')}
 
           <div className={styles.head}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
+            <img className={styles.logo} src={asset(LOGO)} alt="" width={500} height={200} decoding="async" />
             <Mono>{d.head.title}</Mono>
             <p key={step} className={styles.log}>
               {all ? d.head.all : cur.log || d.head.idle}
@@ -147,6 +189,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <Cap className={styles.cap}>{cur.cap}</Cap>
           <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
           <Note>{t.show.cast.demo}</Note>
+        </div>
         </div>
 
         <Reveal className={styles.intro}>

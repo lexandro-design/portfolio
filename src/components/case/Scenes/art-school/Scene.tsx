@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Title, Typing, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import { Art } from './Art'
 import styles from './Scene.module.css'
 
 type Data = {
+  typing: string
   board: string
   chat: { title: string; sub: string; idle: string }
   layers: { student: string; etalon: string; etalonHead: string; caption: string; captionText: string }
@@ -21,11 +22,17 @@ type Data = {
   steps: { cap: string; log: string }[]
 }
 
-/** Шаги: эталон, фото, описание, поиск эталона, сравнение, отзыв, вторая сдача */
-const SPANS = [3000, 2400, 3000, 3200, 3800, 4600, 4600]
+/** Шаги: фото и описание, поиск эталона, сравнение, отзыв, вторая сдача. Эталон преподавателя уже в базе */
+const SPANS = [3200, 2600, 3400, 4200, 4200]
+
+/** Метки внутри шага, мс: описание работы, «печатает» гаснет, ответ бота */
+const MARKS = [700, 1100, 1300]
+
+/** Условное время сообщений чата по порядку: фото, отзыв, второе фото, второй отзыв */
+const CLOCK = ['16:40', '16:41', '16:52', '16:53']
 
 /** Где стоит шторка (доля работы ученика слева) на каждом шаге */
-const WIPE = [0, 100, 100, 100, 50, 100, 100]
+const WIPE = [100, 100, 50, 100, 100]
 
 /** Рамки пометок на листе в процентах: [слева, сверху, ширина, высота] и сторона подписи */
 const BOXES: { box: [number, number, number, number]; side: 'in' | 'right' | 'bottom' | 'left' }[] = [
@@ -44,15 +51,27 @@ const BOXES: { box: [number, number, number, number]; side: 'in' | 'right' | 'bo
  */
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
-  const [ref, play] = usePlay(SPANS)
+  const [ref, play] = usePlay(SPANS, { hold: 1800 })
   const { step } = play
+
+  // Внутри шага: описание, набор бота, ответ. Пауза и reduced-motion показывают итог
+  const [ph, setPh] = useState({ step: -1, n: 0 })
+  useEffect(() => {
+    if (!play.inView || play.stopped) return
+    const ids = MARKS.map((ms, i) => window.setTimeout(() => setPh({ step, n: i + 1 }), ms))
+    return () => ids.forEach((id) => window.clearTimeout(id))
+  }, [step, play.inView, play.stopped])
+  const n = play.stopped ? MARKS.length : ph.step === step ? ph.n : 0
   const [drag, setDrag] = useState<{ step: number; v: number } | null>(null)
 
   const dragging = drag?.step === step
   const w = dragging ? drag.v : WIPE[step]
-  const fixed = step >= 6
-  const reviewed = step >= 5
-  const score = fixed ? 84 : reviewed ? 72 : null
+  const fixed = step >= 4
+  const reply = n >= 3
+  const reviewed = step >= 4 || (step === 3 && reply)
+  const done = step === 4 && reply
+  const typing = (step === 3 || step === 4) && n <= 2
+  const score = done ? 84 : reviewed ? 72 : null
 
   return (
     <header ref={ref} className={`${scene.scene} ${styles.root}`}>
@@ -61,6 +80,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         <Meta item={item} meta={meta} />
         <Title item={item} />
 
+        <div className={styles.table}>
         <div className={styles.easel}>
           <section className={styles.board} aria-label={d.board}>
             <div className={styles.rail}>
@@ -79,17 +99,17 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <Art key={fixed ? 'f' : 's'} variant={fixed ? 'fixed' : 'student'} className={styles.art} />
               </div>
 
-              <div className={styles.seam} style={{ left: `${w}%` }} data-on={(step >= 4 && w > 0 && w < 100) || undefined} aria-hidden="true">
+              <div className={styles.seam} style={{ left: `${w}%` }} data-on={(step === 2 && w > 0 && w < 100) || undefined} aria-hidden="true">
                 <i />
               </div>
-              <span className={styles.who} data-side="l" data-on={(step >= 1 && step < 5 && w > 18) || undefined} aria-hidden="true">
+              <span className={styles.who} data-side="l" data-on={(step < 3 && w > 18) || undefined} aria-hidden="true">
                 {d.layers.student}
               </span>
-              <span className={styles.who} data-side="r" data-on={(step === 0 || (step >= 4 && w < 82)) || undefined} aria-hidden="true">
-                {step === 0 ? d.layers.etalonHead : d.layers.etalon}
+              <span className={styles.who} data-side="r" data-on={(step >= 2 && w < 82) || undefined} aria-hidden="true">
+                {d.layers.etalon}
               </span>
 
-              {step >= 4 && (
+              {step >= 2 && (
                 <input
                   type="range"
                   min={0}
@@ -101,14 +121,8 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 />
               )}
 
-              {/* Шаг 0: подпись преподавателя к эталону */}
-              <div className={styles.capt} data-on={step === 0 || undefined} aria-hidden="true">
-                <Mono>{d.layers.caption}</Mono>
-                <span>{d.layers.captionText}</span>
-              </div>
-
-              {/* Шаг 2: описание работы */}
-              <ul className={styles.tags} data-on={step === 2 || undefined} aria-hidden="true">
+              {/* Шаг 0: описание работы */}
+              <ul className={styles.tags} data-on={(step === 0 && n >= 1) || undefined} aria-hidden="true">
                 {d.tags.map((g, i) => (
                   <li key={g.k} style={{ transitionDelay: `${i * 140}ms` }}>
                     <small>{g.k}</small>
@@ -117,8 +131,8 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 ))}
               </ul>
 
-              {/* Шаг 3: выбор ближайшего эталона */}
-              <div className={styles.match} data-on={step === 3 || undefined} aria-hidden="true">
+              {/* Шаг 1: выбор ближайшего эталона */}
+              <div className={styles.match} data-on={step === 1 || undefined} aria-hidden="true">
                 <Mono>{d.match.title}</Mono>
                 <Art variant="etalon" className={styles.mini} />
                 <dl>
@@ -133,10 +147,10 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 </dl>
               </div>
 
-              {/* Шаги 5-6: пометки разбора */}
+              {/* Шаги 3-4: пометки разбора */}
               {d.pins.map((p, i) => {
                 const b = BOXES[i]
-                const ok = fixed && Boolean(p.ok)
+                const ok = done && Boolean(p.ok)
                 return (
                   <div
                     key={p.k}
@@ -178,7 +192,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
             <ol className={styles.legend}>
               {d.pins.map((p, i) => {
-                const ok = fixed && Boolean(p.ok)
+                const ok = done && Boolean(p.ok)
                 return (
                   <li key={p.k} data-on={reviewed || undefined} data-ok={ok || undefined}>
                     <b>{ok ? '✓' : i + 1}</b>
@@ -192,26 +206,33 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             </ol>
           </section>
 
-          <Chat title={d.chat.title} sub={d.chat.sub} live={play.playing} className={styles.chat}>
-            {step === 0 && <Sys>{d.chat.idle}</Sys>}
-            {step >= 1 && (
-              <Msg side="out">
-                <span className={styles.photo}>
-                  <Art variant="student" className={styles.thumb} />
-                </span>
-                {d.msgs.photo1}
+          <Chat title={d.chat.title} sub={typing ? d.typing : d.chat.sub} live={play.playing} fit minHeight={160} className={styles.chat}>
+            <Msg side="out" time={CLOCK[0]} status={step >= 1 ? 'read' : 'sent'}>
+              <span className={styles.photo}>
+                <Art variant="student" className={styles.thumb} />
+              </span>
+              {d.msgs.photo1}
+            </Msg>
+            {step === 3 && typing && <Typing text={d.typing} leaving={n === 2} delay={150} />}
+            {(step === 4 || (step === 3 && reply)) && (
+              <Msg side="in" time={CLOCK[1]}>
+                {d.msgs.review1}
               </Msg>
             )}
-            {reviewed && <Msg side="in">{d.msgs.review1}</Msg>}
-            {fixed && (
-              <Msg side="out">
+            {step === 4 && (
+              <Msg side="out" time={CLOCK[2]} status={reply ? 'read' : 'sent'}>
                 <span className={styles.photo}>
                   <Art variant="fixed" className={styles.thumb} />
                 </span>
                 {d.msgs.photo2}
               </Msg>
             )}
-            {fixed && <Msg side="in">{d.msgs.review2}</Msg>}
+            {step === 4 && typing && <Typing text={d.typing} leaving={n === 2} delay={150} />}
+            {done && (
+              <Msg side="in" time={CLOCK[3]}>
+                {d.msgs.review2}
+              </Msg>
+            )}
           </Chat>
         </div>
 
@@ -219,6 +240,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
           <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
           <Note>{t.show.cast.demo}</Note>
+        </div>
         </div>
 
         <Reveal className={styles.intro}>

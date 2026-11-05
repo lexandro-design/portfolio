@@ -74,31 +74,23 @@
     },
     "steps": [
       {
-        "cap": "The teacher sends the bot a photo of the reference with a caption. The bot saves the drawing embedding and the caption in the database.",
-        "log": "reference and caption to the database"
-      },
-      {
-        "cap": "The student sends a photo of their drawing to the chat.",
-        "log": "drawing photo received"
-      },
-      {
-        "cap": "The bot describes the work: subject, style, technique, level. The description and the drawing embedding go to the database.",
+        "cap": "The student sends a drawing photo; the bot describes the work.",
         "log": "work description to the database"
       },
       {
-        "cap": "The closest of the teacher's references is picked: the drawing embedding weighs 0.6, the description 0.4.",
+        "cap": "The closest of the teacher's references is picked.",
         "log": "closest reference found"
       },
       {
-        "cap": "The reference counts as 100 points. The work is compared with it, and only the deviation is scored.",
+        "cap": "The reference is 100 points; only the deviation is scored.",
         "log": "comparing two images"
       },
       {
-        "cap": "The review arrives in the chat: a score and a breakdown by criteria, based on drawing textbooks.",
+        "cap": "The review reaches the chat: a score and criteria breakdown.",
         "log": "review sent to the student"
       },
       {
-        "cap": "The student revises and sends it again. Every photo is scored anew.",
+        "cap": "The student revised and resent it: a new score.",
         "log": "new score"
       }
     ]
@@ -145,42 +137,34 @@
     "steps": [
       {
         "head": "topic",
-        "cap": "The topic comes first. News goes only with a primary source, a tip is taken from a narrow hook. The post's form rotates so the posts don't look alike.",
         "foot": ""
       },
       {
         "head": "author writes",
-        "cap": "The author offers three angles, takes the sharpest and writes a draft for it.",
         "foot": ""
       },
       {
         "head": "code check",
-        "cap": "Code reads the draft without a model: clichés, \"in my opinion\", a template question at the end, dashes, length and opening. It fixes dashes itself and passes the rest to the editor.",
         "foot": "3 remarks found, code fixed one itself"
       },
       {
         "head": "editor by checklist",
-        "cap": "The editor scores on a scale from 1 to 10 and rewrites. If it can't be pulled above 6, the post is dropped. Then code checks again.",
         "foot": "above the threshold of 6, code: no remarks"
       },
       {
         "head": "ready to show",
-        "cap": "The finished draft arrives in my bot, the slot time is already set.",
         "foot": ""
       },
       {
         "head": "decision",
-        "cap": "I approve with one button.",
         "foot": ""
       },
       {
         "head": "channel",
-        "cap": "The post is queued. The bot checks the clock every minute and sends it to the channel in its slot.",
         "foot": ""
       },
       {
         "head": "learning",
-        "cap": "Every edit of mine and every reason for rejection is saved as a \"was → now\" pair and teaches the next drafts.",
         "foot": ""
       }
     ],
@@ -365,7 +349,15 @@
         "queued": "queued",
         "out": "published"
       }
-    }
+    },
+    "caps": [
+      "A topic with a source or a hook, the author takes the sharpest thesis.",
+      "Code without a model catches clichés, length and dashes, fixes the dash itself.",
+      "The editor scores 1 to 10 and rewrites, a weak post is pulled.",
+      "The draft arrives in the control bot, I approve with one button.",
+      "The post waits for its slot in the rubric window and goes out itself.",
+      "Each of my edits is saved as a before → after pair and teaches drafts."
+    ]
   },
   "dice-bots": {
     "chat": {
@@ -654,47 +646,27 @@
     },
     "steps": [
       {
-        "cap": "In the morning the bot writes first, at the time the person chose: a short message before the workout.",
-        "log": "morning message at the chosen time"
+        "cap": "The bot writes first in the morning, then everything is buttons.",
+        "log": "morning message and the section menu"
       },
       {
-        "cap": "Everything is on buttons: meals, workouts, parameters, reminders. The person opens meals.",
-        "log": "section menu and the meals section"
+        "cap": "Food by photo: the bot names the dish, the person picks the weight.",
+        "log": "photo to recognition, three weight buttons"
       },
       {
-        "cap": "A meal is logged by photo.",
-        "log": "the photo goes to dish recognition"
-      },
-      {
-        "cap": "The bot suggests a dish and asks if it's right. If not, it shows more options.",
-        "log": "up to three dish options from the photo"
-      },
-      {
-        "cap": "The dish is confirmed. The portion weight is picked with one of three buttons.",
-        "log": "three portion weight buttons"
-      },
-      {
-        "cap": "Calories and macros are calculated and saved in the diary. There's an undo button under the message.",
+        "cap": "Calories and macros are counted and saved to the diary.",
         "log": "calories and macros in the person's database"
       },
       {
-        "cap": "A workout is written in one line: exercise, weight, reps, sets.",
-        "log": "the line is parsed into exercise, weight, reps, sets"
+        "cap": "A workout as one line, parameters by commas, with undo.",
+        "log": "lines are parsed and saved with a date"
       },
       {
-        "cap": "Parameters are entered with commas: weight, height, age, sex. The entry can be undone.",
-        "log": "parameters are saved with a date"
+        "cap": "Progress compares weight; a reminder is set from a phrase.",
+        "log": "first and last weight entries, reminder checks"
       },
       {
-        "cap": "\"Current progress\" compares the first and last weight entries and writes a conclusion from the difference.",
-        "log": "first and last weight entries"
-      },
-      {
-        "cap": "The person sets a reminder with the phrase \"remind me in 2 hours, text\". The bot checks the database on a schedule.",
-        "log": "checking reminders on a schedule"
-      },
-      {
-        "cap": "In the evening, at the chosen time, a report arrives: meals and workouts for the day.",
+        "cap": "In the evening a report: meals and workouts for the day.",
         "log": "evening report at the chosen time"
       }
     ],
@@ -810,9 +782,9 @@
     ],
     "steps": [
       {
-        "cap": "A new customer writes in the CRM chat. The bot starts with the phone: without a number it goes no further, it's needed for the lead.",
-        "log": "new customer without a phone",
-        "lead": "Bitrix24 lead: waiting for a phone",
+        "cap": "The bot asks a new client for a phone number, the lead needs it.",
+        "log": "phone saved to the lead",
+        "lead": "Bitrix24 lead: phone is in",
         "who": "left",
         "lane": -1,
         "left": [
@@ -824,16 +796,7 @@
             "k": "in",
             "d": 1,
             "text": "Hi! I'm Andrey from the company. Please leave a phone number so we can reach you."
-          }
-        ]
-      },
-      {
-        "cap": "The number goes into the Bitrix24 lead. The bot will ask about the city and business type later, a few messages on.",
-        "log": "phone saved to the lead",
-        "lead": "Bitrix24 lead: phone is in",
-        "who": "left",
-        "lane": -1,
-        "left": [
+          },
           {
             "k": "out",
             "text": "+7 900 000-00-00"
@@ -841,7 +804,7 @@
         ]
       },
       {
-        "cap": "The customer is looking for a product. The bot understands the intent, goes to the catalog with a direct query and builds the answer in code, without a neural network.",
+        "cap": "Product search: a direct catalog query, no neural net.",
         "log": "intent: product",
         "lead": "Bitrix24 lead: phone is in, city and business later",
         "who": "left",
@@ -859,7 +822,7 @@
         ]
       },
       {
-        "cap": "A general question goes to the company knowledge base. The model words the answer from the fragments found.",
+        "cap": "A general question goes to the knowledge base, a model answers.",
         "log": "intent: question",
         "lead": "",
         "who": "left",
@@ -877,7 +840,7 @@
         ]
       },
       {
-        "cap": "Typical topics are covered by canned text: a catalog link, halal. No model needed.",
+        "cap": "A standard topic gets a ready text, no model needed.",
         "log": "intent: halal",
         "lead": "",
         "who": "left",
@@ -895,7 +858,7 @@
         ]
       },
       {
-        "cap": "An employee writes to Sofia in the next window. A SKU goes down the same lane: catalog and product card.",
+        "cap": "An employee asks Sofia: an article number takes the same lane.",
         "log": "SKU: catalog search",
         "lead": "",
         "who": "right",
@@ -913,25 +876,7 @@
         ]
       },
       {
-        "cap": "The employee's question goes to the knowledge base. If it's empty there, Sofia says so and suggests asking a supervisor.",
-        "log": "intent: question",
-        "lead": "",
-        "who": "right",
-        "lane": 1,
-        "right": [
-          {
-            "k": "out",
-            "text": "How do you make a hot dog?"
-          },
-          {
-            "k": "in",
-            "d": 1,
-            "text": "Colleague, I put together an answer from the knowledge base. If there's nothing there, I'll say so and send you to a supervisor."
-          }
-        ]
-      },
-      {
-        "cap": "Another customer. The bot didn't find a product twice in a row, and that's already a reason to call a human: the dialog goes to a manager.",
+        "cap": "Two misses in a row: the dialog goes to a manager.",
         "log": "nothing found twice in a row",
         "lead": "",
         "who": "left",
@@ -965,31 +910,7 @@
         ]
       },
       {
-        "cap": "An order is always placed by a human. The manager gets a card: customer, lead, reason, order and time.",
-        "log": "intent: call a manager",
-        "lead": "",
-        "who": "left",
-        "lane": 3,
-        "reset": "left",
-        "left": [
-          {
-            "k": "out",
-            "text": "I want to place an order"
-          },
-          {
-            "k": "in",
-            "d": 1,
-            "text": "Ivan, great! I'm passing your request to a manager to place the order."
-          },
-          {
-            "k": "sys",
-            "d": 1,
-            "text": "dialog passed to a manager"
-          }
-        ]
-      },
-      {
-        "cap": "Two windows, one analysis. Where a request goes is decided by the intent, not by who wrote it.",
+        "cap": "Two windows, one parser: intent decides the route.",
         "log": "",
         "lead": "",
         "who": "both",
@@ -1058,7 +979,8 @@
     "phone": {
       "title": "Order search",
       "sub": "bot, whole team",
-      "empty": "Quiet. The bot doesn't write until there are suitable orders."
+      "empty": "Quiet. The bot doesn't write until there are suitable orders.",
+      "drafting": "Writing a draft, about 15 seconds…"
     },
     "card": {
       "head": "🟢 86 · Kwork · website",
@@ -1086,14 +1008,12 @@
       "by": "Ivanov I."
     },
     "steps": [
-      "Every 15 minutes the agent reads the chosen channels and the Kwork feed. New posts drop into the stream.",
-      "The first sieve works without a model: ads, in-house jobs, old posts and duplicates are cut at once.",
-      "The rest is scored against the price list and cases, in batches. Below 50 points there will be no card.",
-      "A suitable order arrives as a card to the whole team: budget, a range from the price list, buttons.",
-      "The draft of the first message is prepared on a button, not in advance. Prices only from the price list, cases only from the database.",
-      "The bot doesn't write to clients. A person writes, then marks it with a button, and the card changes for everyone.",
-      "The client replied, marked with a button. The status is visible to the whole team, so two people don't write to one client.",
-      "The outcome is marked with a button too: taken, too expensive or declined. All transitions stay in the database."
+      "Every 15 minutes the agent reads channels and Kwork; posts drop into the stream.",
+      "Ads and in-house jobs are cut without a model, the rest gets scored.",
+      "A suitable order arrives as a card for the whole team.",
+      "The draft is written on a button, prices only from the price list.",
+      "A person writes to the client and marks it with a button, all see the status.",
+      "Replied, won: each step is a button, everything stays in the base."
     ],
     "rules": [
       "prices only from the price list",
@@ -1143,28 +1063,24 @@
     },
     "steps": [
       {
-        "cap": "An email arrives at the shared mailbox, Bitrix24 creates a deal from it and pings the bot. Deals not from mail are skipped by the bot.",
-        "log": "webhook: new deal, source EMAIL"
+        "cap": "A letter arrives, Bitrix24 opens a deal, the model names the type.",
+        "log": "webhook: new deal from email → type and \"processed\" flag"
       },
       {
-        "cap": "The bot takes the deal's latest email, cleans HTML and the quote, trims to a thousand characters. The model answers in one word.",
+        "cap": "An invoice from an outside company: type \"supplier\".",
         "log": "in the deal: type field and \"processed\" flag"
       },
       {
-        "cap": "An offer or invoice from an outside company gets the type \"supplier\".",
+        "cap": "Not about buying, not from a supplier: spam, deal to rejection.",
+        "log": "in the deal: rejection stage, no flag"
+      },
+      {
+        "cap": "A customer gets the mark again: type and flag in the deal.",
         "log": "in the deal: type field and \"processed\" flag"
       },
       {
-        "cap": "Anything that isn't about a purchase or from a supplier counts as spam. So does anything doubtful.",
-        "log": "in the deal: rejected stage, no flag"
-      },
-      {
-        "cap": "A customer gets the mark again: the deal has a type and a flag that the email is processed.",
-        "log": "in the deal: type field and \"processed\" flag"
-      },
-      {
-        "cap": "Managers open deals with the type already set, and spam already sits in the rejected stage.",
-        "log": "type field and flag in the deal, spam to rejected"
+        "cap": "Managers open ready deals; spam is already in rejection.",
+        "log": "type field and flag in the deal, spam to rejection"
       }
     ],
     "letters": [
@@ -1316,34 +1232,26 @@
     "chunksLabel": "chunks",
     "steps": [
       {
-        "cap": "At night, on a schedule, the bot looks at the folder on the Disk. Only doc, docx, txt and pdf are taken, the rest is skipped."
+        "cap": "At night the bot takes doc, docx, txt and pdf from the folder and cuts them into chunks."
       },
       {
-        "cap": "Clean text is extracted from each file."
+        "cap": "Each chunk gets a vector and lands in the database, the counter grows."
       },
       {
-        "cap": "The text is cut into chunks of 1024 characters with an overlap of 100. A context line is added to each chunk: which section it belongs to."
+        "cap": "A new file goes down the track on its own, old ones are checked by md5 and skipped."
       },
       {
-        "cap": "A vector is computed for each chunk."
-      },
-      {
-        "cap": "Chunks with metadata (path, md5) go into the vector database. The counter grows."
-      },
-      {
-        "cap": "The next night there's a new file in the folder. Old ones are checked by md5: unchanged, so they're skipped. The new one goes down the lane."
-      },
-      {
-        "cap": "The price list was updated. The md5 is different: the file's old chunks are deleted, and it goes down the lane again."
+        "cap": "The file changed: old chunks go, and it runs the track again."
       }
     ]
   },
   "mimimibot": {
     "chat": {
-      "title": "MiMiMi AI",
-      "sub": "Telegram bot",
+      "title": "Mimimi Bot - Neuro Photoshoot",
+      "sub": "bot",
       "typing": "typing…"
     },
+    "cover": { "a": "MIMIMI", "b": "BOT", "c": "PINTEREST+" },
     "wall": {
       "title": "template wall",
       "note": "the shots live in the database and change without code"
@@ -1420,11 +1328,17 @@
       "/cases/mimimibot/gen/selfie-3.webp"
     ],
     "start": {
-      "cmd": "/start",
-      "text": "MIMIMI: a neural network that makes those Pinterest photos. No prompts, everything in one click! Scroll and see what I can do 👇",
-      "keys": [
-        "Try for free"
-      ]
+      "text": [
+        "Hi!  I'm MIMIMI {d} a neural network that makes those Pinterest photos.",
+        "I move you into perfect studio shots and Insta trends.",
+        "",
+        "No prompts, everything in one click! Or upload any photo you want to recreate.",
+        "",
+        "Scroll and see what I can do 👇"
+      ],
+      "time": "12:01",
+      "pager": ["⏪", "1/1", "⏩"],
+      "keys": ["TEMPLATES [ LITE model ] (20⚡)", "TEMPLATES [ ART model] (6⚡)"]
     },
     "demo": {
       "text": "Browse the carousel, pick the shot that speaks to you most and tap the button below. 👇",
@@ -1478,31 +1392,31 @@
     },
     "steps": [
       {
-        "cap": "The person taps /start. A carousel of ready-made shots comes first, and the wall highlights the one that's in the chat right now.",
+        "cap": "The bot opens with a cover and templates, no prompts needed.",
         "log": "dialog start"
       },
       {
-        "cap": "The slides flip in the same message: the bot edits it instead of sending a new one. Shots and captions live in the database.",
+        "cap": "Slides flip inside the same message: the bot edits it.",
         "log": "one message, slides change inside it"
       },
       {
-        "cap": "The bot shows demo shots. The person stops at the terrace and taps \"Generate this exact shot\". The trial is given once.",
+        "cap": "Pick a shot and tap \"Generate this exact shot\".",
         "log": "trial-shot flag in the database"
       },
       {
-        "cap": "To get their own face in the shot, the bot asks for photos right in the chat. The person sends three selfies and confirms with the button.",
+        "cap": "Three selfies straight into the chat, confirm with a button.",
         "log": "at least 3 photos, at most 5"
       },
       {
-        "cap": "The request goes to the generation queue: the shot's prompt from the database and the person's photos. The bot polls the status itself and waits until the shot is ready.",
+        "cap": "The request is queued, the bot waits for the shot itself.",
         "log": "status polled every 10 seconds"
       },
       {
-        "cap": "The same shot, but with the person's face, takes the template's place. It arrives as a file, uncompressed.",
+        "cap": "The same shot, with their face, replaces the template.",
         "log": "delivering the result: one shot per tap"
       },
       {
-        "cap": "Next come pricing, payment inside the bot and the model menu. The face holds across shots, and \"Pinterest+\" builds a shot from a reference you send.",
+        "cap": "Then pricing, in-bot payment and the model menu.",
         "log": "tokens are deducted atomically, returned on failure"
       }
     ]
@@ -1880,39 +1794,27 @@
     },
     "steps": [
       {
-        "cap": "A customer writes in the Bitrix24 chat. The bot waits 15 seconds: if something else arrives, it merges everything into one request.",
-        "log": "messages merged into one"
+        "cap": "The bot waits 15 seconds, glues messages together and writes search phrases.",
+        "log": "messages glued, phrases ready"
       },
       {
-        "cap": "The bot understands the question is about products and comes up with at least ten search wordings: names, synonyms, spelling variants.",
-        "log": "general question about products"
+        "cap": "Searches by meaning and by name and puts the finds on the shelf.",
+        "log": "results of both searches merged"
       },
       {
-        "cap": "It searches both by meaning and by name, merges the results, picks the suitable ones itself and lays them on the shelf: a name and a couple of characteristics.",
-        "log": "results of two searches merged"
+        "cap": "Asked about one item: the full card opens, the photo goes as a link.",
+        "log": "one item: full card"
       },
       {
-        "cap": "Asked about one product: the bot opens the full card, the rest fade out. Asked for a photo, and the customer gets the link from the \"Image\" field.",
-        "log": "specific product: full card"
+        "cap": "The customer sent the form: the bot split it into fields and updated the Bitrix24 lead.",
+        "log": "fields saved to profile and lead"
       },
       {
-        "cap": "The conversation goes in stages: first name and phone. They want a quote or an order, and the bot offers a short form.",
-        "log": "customer wants a quote: data collection is on"
+        "cap": "Asks for a quote: a manager joins, and 1.5 hours later the bot adds a summary.",
+        "log": "chat with the manager, summary saved"
       },
       {
-        "cap": "The form came in. The bot parsed the text into fields, wrote them into the empty ones and updated the Bitrix24 lead. Everything is collected, the lead moves to \"Approved, to a deal\".",
-        "log": "fields written to the profile and the lead"
-      },
-      {
-        "cap": "The bot can't cope or the customer asks for a human: a live manager joins the chat, and the bot says so.",
-        "log": "chat passed to a manager"
-      },
-      {
-        "cap": "After 1.5 hours the second scenario makes a dialog summary and puts it as a comment on the lead card, with a copy in the customer profile.",
-        "log": "summary written to the lead and the database"
-      },
-      {
-        "cap": "Knowledge doesn't go stale: at night the bot checks the files on the Disk by MD5 and replaces changed ones, and products are checked against the table.",
+        "cap": "At night the bot checks files by MD5 and products against the table.",
         "log": "scheduled sync"
       }
     ]
@@ -2060,44 +1962,32 @@
     ],
     "steps": [
       {
-        "cap": "A newcomer signs in with an invitation code from HR. The bot knows the role and the workday, with a menu at the bottom.",
-        "log": "the code links the account and the role"
+        "cap": "A plain-words question. Search sees only the role's documents.",
+        "log": "question and role, closed documents dim"
       },
       {
-        "cap": "The newcomer asks about a work situation in plain words.",
-        "log": "the question and a few previous messages"
-      },
-      {
-        "cap": "The role comes first. A cashier isn't shown warehouse procedures: locked documents on the shelf go dark.",
-        "log": "the role filters before ranking"
-      },
-      {
-        "cap": "Search runs two ways at once: by the meaning of the phrase and by exact words. The results merge into one list.",
+        "cap": "Search runs by meaning and by words at once, lists are merged.",
         "log": "by meaning + by words, merge"
       },
       {
-        "cap": "Documents are pre-cut by headings, a fragment equals a clause of the procedure. Up to five best go into the answer, each with a number and a source.",
+        "cap": "Documents are cut by clause: the best go to the answer, numbered.",
         "log": "fragments numbered [1], [2], [3]"
       },
       {
-        "cap": "Facts only from the base: every thought in the answer has a link to a fragment number.",
+        "cap": "The answer comes only from the base: every claim cites a fragment.",
         "log": "answer with citations"
       },
       {
-        "cap": "Second pass. A question with nothing suitable in the base: the best match is below the threshold.",
-        "log": "below the threshold, no answer in the base"
+        "cap": "No match: the bot says so honestly, the question goes to a methodologist.",
+        "log": "below the threshold, gap logged"
       },
       {
-        "cap": "The bot doesn't make things up. It honestly says the base doesn't have this and suggests who to go to. The question goes to the methodologist by itself.",
-        "log": "gap recorded, the methodologist sees it"
-      },
-      {
-        "cap": "The methodologist answers in the panel, the answer becomes a document on the shelf, and the bot writes to the person who asked.",
-        "log": "answer in the base, notification sent"
+        "cap": "The methodologist replies, it joins the shelf, the bot writes the asker.",
+        "log": "answer in the base, notice sent"
       }
     ],
     "messages": {
-      "greet": "Hi! I'm Max, a mentor for new employees. Ask anything about work, I'll answer from the procedures and show where it comes from.",
+      "greet": "Hi! I'm a mentor for new employees. Ask anything about work, I'll answer from the procedures and show where it comes from.",
       "menu": [
         "Training",
         "Simulator",
@@ -2105,7 +1995,7 @@
         "In plain words"
       ],
       "q1": "How do I process a return without a receipt?",
-      "search": "Searching the company base",
+      "search": "Searching the procedures: «return without a receipt»",
       "answer": [
         "No receipt: not a reason to refuse",
         "Returns are handled by the Service Desk, walk the customer there",
@@ -2122,8 +2012,13 @@
   "resort-bot": {
     "typing": "typing…",
     "photoNote": "Photos: the resort's website",
+    "place": {
+      "label": "Example from the resort's catalog",
+      "name": "Teremok",
+      "note": "4 main beds and up to 2 extra, 2 bedrooms, a living room with a fireplace and a river view"
+    },
     "chat": {
-      "title": "Holiday resort",
+      "title": "Laguna Yug",
       "sub": "Open Channel"
     },
     "calendar": {
@@ -2253,27 +2148,23 @@
     },
     "steps": [
       {
-        "cap": "The guest writes however they like, no forms. \"The weekend\" without numbers isn't a date, so the bot gets acquainted first.",
+        "cap": "The guest writes freely, no forms. The bot asks for a name",
         "log": "first message in the Open Channel"
       },
       {
-        "cap": "One phrase from the guest is parsed into fields: name, dates, adults, children by age, bedrooms. The calendar highlights the interval.",
+        "cap": "The phrase becomes fields, the bot asks about a cot",
         "log": "dates and guests parsed into fields"
       },
       {
-        "cap": "A child under two: the bot asks the right question itself. The guest answers and leaves contacts at once.",
-        "log": "under 2 a cot, under 5 a bed"
-      },
-      {
-        "cap": "All fields are in: the request goes to Bitrix24. Availability and price are confirmed by a manager.",
+        "cap": "All fields are in: the request goes to Bitrix24",
         "log": "lead and deal in Bitrix24"
       },
       {
-        "cap": "The question isn't about a booking but about the resort. The bot looks for the answer in the documents and takes only what it finds.",
+        "cap": "A resort question: the bot searches the documents",
         "log": "search in the resort's documents"
       },
       {
-        "cap": "A corporate event, a big group: the bot honestly says it's not its level and passes the request to a human.",
+        "cap": "A corporate event: the bot hands over to a human",
         "log": "complex cases go to a manager"
       }
     ],
@@ -2306,22 +2197,22 @@
       {
         "side": "in",
         "text": "Thank you for contacting us! I'm checking room availability. I'll get back to you shortly.",
-        "at": 3
+        "at": 2
       },
       {
         "side": "out",
         "text": "And what time is check-in?",
-        "at": 4
+        "at": 3
       },
       {
         "side": "out",
         "text": "There will be 20 of us, a corporate event",
-        "at": 5
+        "at": 4
       },
       {
         "side": "in",
         "text": "Sorry, I'm an intern, this question is above my level of competence. I've passed your request to a colleague, she will definitely reply during working hours.",
-        "at": 5
+        "at": 4
       }
     ]
   },
@@ -2404,31 +2295,15 @@
     ],
     "steps": [
       {
-        "cap": "The client writes to the bot.",
-        "log": "new client"
-      },
-      {
-        "cap": "The bot shows services as buttons.",
+        "cap": "The client writes to the bot, which shows services as buttons.",
         "log": "services"
       },
       {
-        "cap": "The client picks a service.",
-        "log": "service picked"
-      },
-      {
-        "cap": "Then the coming days.",
+        "cap": "Service picked; the bot offers days with free slots.",
         "log": "only days with free slots"
       },
       {
-        "cap": "One tap on a day.",
-        "log": "day picked"
-      },
-      {
-        "cap": "The bot shows only free times.",
-        "log": "only free slots"
-      },
-      {
-        "cap": "The client picks a slot, and it closes for others.",
+        "cap": "Day picked, only free times, and the slot closes.",
         "log": "time closed for others"
       },
       {
@@ -2470,27 +2345,23 @@
     },
     "steps": [
       {
-        "cap": "An employee writes to the work group with a plain message: a surname and lines \"material - weight\".",
-        "log": "the WhatsApp gateway passes the message to the bot"
+        "cap": "An employee posts a report; the bot puts its lines in the sheet.",
+        "log": "WhatsApp gateway → bot: name, material, weight, date → rows"
       },
       {
-        "cap": "The bot parses the text into lines and writes each to the sheet. It doesn't reply in the chat, to avoid noise.",
-        "log": "name, material, weight, date → new rows"
-      },
-      {
-        "cap": "A second report. If the material isn't repeated, the bot fills it in from the line above.",
+        "cap": "Second report: no material repeated, so the bot takes the one above.",
         "log": "the material is remembered for the next lines"
       },
       {
-        "cap": "The employee corrected the message. The row in the sheet updated itself, by message id.",
+        "cap": "The message was edited; the sheet row updated itself.",
         "log": "editing a message updates the rows"
       },
       {
-        "cap": "The message was deleted. Its rows disappear from the sheet too.",
+        "cap": "The message was deleted, and its rows left the sheet.",
         "log": "deleting a message deletes the rows"
       },
       {
-        "cap": "At the end of the month, a summary: number of entries and weight per person. The sheet is cleared for the new month.",
+        "cap": "Month end summary: entries and weight per person.",
         "log": "the summary is run manually"
       }
     ],
@@ -2640,44 +2511,32 @@
     },
     "steps": [
       {
-        "cap": "A desk has stopped: it can't go on without your decision. The question flies to Telegram at once, with buttons.",
-        "log": "a ❓ line from the office → bot → phone"
+        "cap": "A desk is stuck without you: the question flies to Telegram with buttons, you tap Yes.",
+        "log": "question from the office → bot → phone, reply → the web desk"
       },
       {
-        "cap": "You tap \"Yes\". The buttons vanish, the answer goes to the dispatcher, and the dispatcher passes it to the desk.",
-        "log": "answer → dispatcher's inbox → the \"web\" desk"
+        "cap": "An irreversible step goes only through you: one tap and the desk goes on.",
+        "log": "the desk reads the permission within seconds"
       },
       {
-        "cap": "Another desk needs an action it can't do itself. A request arrives with two buttons.",
-        "log": "irreversible steps only through you"
-      },
-      {
-        "cap": "One tap, and the desk continues. The bot marks the decision under the request.",
-        "log": "the desk reads the permission in a couple of seconds"
-      },
-      {
-        "cap": "The thought is long, so you dictate it by voice. The bot transcribes it on your computer and passes it on as text.",
+        "cap": "A long thought can be dictated: the bot transcribes it and passes it as text.",
         "log": "voice → transcription on the GPU → text"
       },
       {
-        "cap": "The desk finished and sends the result. The \"screenshot:\" line in the message turns into a picture.",
+        "cap": "The desk is done: the \"screenshot:\" line arrives as a picture.",
         "log": "a file from the \"screenshot:\" line arrives as a photo"
       },
       {
-        "cap": "You can just write in your own words. The text goes as is, with the task number if there is one.",
-        "log": "text → dispatcher → the right desk"
+        "cap": "Write in your own words or show an edit with a photo and a caption.",
+        "log": "text and photo → dispatcher → the right desk"
       },
       {
-        "cap": "And an edit is easier to show. The photo goes with a caption, and the dispatcher opens the file.",
-        "log": "the photo is saved, the caption and path go to the inbox"
-      },
-      {
-        "cap": "The /office command shows the board: who is waiting for you, who is working and who is free.",
+        "cap": "The /office command shows the board: who waits for you, who works.",
         "log": "the board is built from the desks' state"
       },
       {
-        "cap": "If you answered at the computer first, the buttons on the phone go dark with a note. Nothing is lost or duplicated.",
-        "log": "closed on the computer → buttons removed"
+        "cap": "Answered at the PC first: the buttons on the phone fade with a note.",
+        "log": "closed at the PC → buttons removed"
       }
     ],
     "rule": {
@@ -2727,25 +2586,19 @@
     ],
     "steps": [
       {
-        "cap": "A cloud function wakes up every 15 minutes from 06:00 to 23:45 and looks at the portal. Nothing new, and the bot stays silent."
+        "cap": "A check every 15 minutes. Nothing new: silence. A link before the webinar."
       },
       {
-        "cap": "Shortly before a webinar one message arrives with a join button. No earlier than 45 minutes before the start."
+        "cap": "After 20:00, tomorrow's classes, once. The checks after it stay silent."
       },
       {
-        "cap": "After 20:00 the bot sends tomorrow's classes, once. Checks go on but send nothing."
+        "cap": "A task appears in the portal: one message, no repeats."
       },
       {
-        "cap": "Another day: an assignment appeared in the portal. The nearest check finds it and sends one message."
+        "cap": "Three days before the deadline, a reminder about unsubmitted work, once."
       },
       {
-        "cap": "The following checks see the same assignment, but the mark is already set. Silence until the end of the day."
-      },
-      {
-        "cap": "Three days before the deadline, a reminder about unsubmitted work. Also once."
-      },
-      {
-        "cap": "A day before, a second reminder, then silence. The bot doesn't touch submitted work."
+        "cap": "A day before, a second reminder, then silence. Submitted work is left alone."
       }
     ],
     "events": {

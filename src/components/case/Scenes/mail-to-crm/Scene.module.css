@@ -11,6 +11,10 @@
     'inbox inbox'
     'panel board';
   gap: var(--space-sm) var(--space-md);
+}
+
+/* Сцена и подпись с панелью под ней: на телефоне подпись идёт сразу за письмом */
+.table {
   margin-block-start: var(--space-2xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
@@ -270,12 +274,22 @@
   }
 }
 
+.wait {
+  display: block;
+  padding-block-start: var(--space-xs);
+  transition: opacity 300ms var(--ease-out-quart);
+}
+
+.wait[data-off] {
+  opacity: 0;
+}
+
 .answer {
   display: flex;
   align-items: baseline;
   gap: var(--space-sm);
   padding-block-start: var(--space-xs);
-  animation: pop 500ms var(--ease-out-expo) 1200ms both;
+  animation: pop 500ms var(--ease-out-expo) 1300ms both;
 }
 
 @keyframes pop {
@@ -313,7 +327,7 @@
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
-  animation: pop 500ms var(--ease-out-expo) 1400ms both;
+  animation: pop 500ms var(--ease-out-expo) 1500ms both;
 }
 
 .idle,
@@ -557,8 +571,33 @@
 
 /* Телефон: лента листается вбок, доска остаётся двумя колонками */
 @media (max-width: 767px) {
-  .stage {
+  .table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
     margin-block-start: var(--space-lg);
+  }
+
+  /* Ячейки по порядку: лента, письмо, подпись с панелью, доска */
+  .stage {
+    display: contents;
+  }
+
+  .inbox {
+    order: 1;
+  }
+
+  .panel {
+    order: 2;
+  }
+
+  .under {
+    order: 3;
+    margin-block-start: 0;
+  }
+
+  .board {
+    order: 4;
   }
 
   .ribbon {
@@ -599,7 +638,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage,
+  .table,
   .mail,
   .card,
   .flag,

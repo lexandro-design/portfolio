@@ -1,7 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Controls, Facts, Keys, Lead, Meta, Mono, Note, Reveal, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Sys, Title, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -11,7 +12,7 @@ type Data = {
   posts: Post[]
   tags: { low: string; card: string; won: string }
   totals: string[]
-  phone: { title: string; sub: string; empty: string }
+  phone: { title: string; sub: string; empty: string; drafting: string }
   card: { head: string; title: string; summary: string; money: string; note: string; draft: string }
   keys: Record<'open' | 'draft' | 'wrote' | 'pass' | 'answered' | 'silent' | 'won' | 'expensive' | 'lost', string>
   status: { replied: string; answered: string; won: string; by: string }
@@ -19,8 +20,17 @@ type Data = {
   rules: string[]
 }
 
-/** Шаги: поток, первое сито, оценка, карточка, черновик, три отметки воронки */
-const SPANS = [3000, 3200, 3600, 3400, 3600, 3400, 3200, 4200]
+/**
+ * Шаги: поток, сито и оценка, карточка, черновик, «написал», «ответил и взял».
+ * Прежде было восемь шагов на 28 с, сито и оценка склеены, две отметки воронки тоже
+ */
+const SPANS = [2600, 3000, 2800, 3600, 3000, 3600]
+
+/** Условное время карточки в чате */
+const STAMP = '12:40'
+
+/** Внутри последнего шага: «ответил» нажата, дальше «взял»; пауза и reduced-motion сразу итог */
+const LATE_MS = 1500
 const THRESHOLD = 50
 
 type Row = { items: string[]; pressed?: number; leave?: boolean; enter?: boolean }
@@ -40,16 +50,27 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const cutCount = d.posts.filter((p) => p.cut).length
   const lowCount = d.posts.filter((p) => !p.cut && (p.score ?? 0) < THRESHOLD).length
   const cardCount = d.posts.length - cutCount - lowCount
-  const counts = [d.posts.length, step >= 1 ? cutCount : null, step >= 2 ? lowCount : null, step >= 3 ? cardCount : null]
+  const counts = [d.posts.length, step >= 1 ? cutCount : null, step >= 1 ? lowCount : null, step >= 2 ? cardCount : null]
+
+  // Вторая половина последнего шага: «ответил» нажата, дальше «взял»
+  const [lateAt, setLateAt] = useState(-1)
+  useEffect(() => {
+    if (!play.inView || play.stopped) return
+    const id = window.setTimeout(() => setLateAt(step), LATE_MS)
+    return () => window.clearTimeout(id)
+  }, [step, play.inView, play.stopped])
+  const late = play.stopped || lateAt === step
 
   // Кнопки карточки по шагу: что нажато и что приходит на смену
   const rows: Row[] = [{ items: [k.open] }]
-  if (step === 3) rows.push({ items: [k.draft] }, { items: [k.wrote, k.pass] })
-  if (step === 4) rows.push({ items: [k.draft], pressed: 0, leave: true }, { items: [k.wrote, k.pass] })
-  if (step === 5) rows.push({ items: [k.wrote, k.pass], pressed: 0, leave: true }, { items: [k.answered, k.silent], enter: true })
-  if (step === 6) rows.push({ items: [k.answered, k.silent], pressed: 0, leave: true }, { items: [k.won, k.expensive, k.lost], enter: true })
-  if (step === 7) rows.push({ items: [k.won, k.expensive, k.lost], pressed: 0, leave: true })
-  const status = step === 5 ? d.status.replied : step === 6 ? d.status.answered : step === 7 ? d.status.won : null
+  if (step === 2) rows.push({ items: [k.draft] }, { items: [k.wrote, k.pass] })
+  if (step === 3) rows.push({ items: [k.draft], pressed: 0, leave: true }, { items: [k.wrote, k.pass] })
+  if (step === 4) rows.push({ items: [k.wrote, k.pass], pressed: 0, leave: true }, { items: [k.answered, k.silent], enter: true })
+  if (step === 5 && !late) rows.push({ items: [k.answered, k.silent], pressed: 0, leave: true })
+  if (step === 5 && late) rows.push({ items: [k.won, k.expensive, k.lost], pressed: 0 })
+  const status = step === 4 ? d.status.replied : step === 5 ? (late ? d.status.won : d.status.answered) : null
+  const drafting = step === 3 && !late
+  const showDraft = step >= 4 || (step === 3 && late)
 
   return (
     <header ref={ref} className={`${scene.scene} ${styles.root}`}>
@@ -73,10 +94,10 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             <ol className={styles.rows}>
               {d.posts.map((p, i) => {
                 const cut = step >= 1 && p.cut !== null
-                const scored = step >= 2 && !p.cut
+                const scored = step >= 1 && !p.cut
                 const low = scored && (p.score ?? 0) < THRESHOLD
                 const pass = scored && !low
-                const won = pass && step >= 7
+                const won = pass && step >= 5 && late
                 return (
                   <li
                     key={p.src + p.text}
@@ -124,24 +145,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           {/* Телефон: сюда падает только то, что прошло оба сита */}
           <div className={styles.phone} aria-label={d.phone.title}>
-            <div className={styles.top}>
-              <span className={styles.ava} aria-hidden="true">
-                {d.phone.title.slice(0, 1)}
-              </span>
-              <span className={styles.who}>
-                {d.phone.title}
-                <small>{d.phone.sub}</small>
-              </span>
-              <span className={styles.dot} data-on={play.playing || undefined} aria-hidden="true" />
-            </div>
-            <div className={styles.feed}>
-              {step < 3 ? (
-                <p className={styles.empty}>{d.phone.empty}</p>
+            <Chat title={d.phone.title} sub={d.phone.sub} live={play.playing} className={styles.chat}>
+              {step < 2 ? (
+                <Sys key="empty">{d.phone.empty}</Sys>
               ) : (
-                <div className={styles.card}>
-                  <div className={styles.bubble}>
+                <Msg side="in" time={STAMP} className={styles.card}>
+                  <span key={status ?? 'none'} className={styles.stack}>
                     {status && (
-                      <b key={status} className={styles.status} data-late>
+                      <b className={styles.status} data-late>
                         {status} · {d.status.by}
                       </b>
                     )}
@@ -150,22 +161,28 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                     <span>{d.card.summary}</span>
                     <span className={styles.money}>{d.card.money}</span>
                     <span className={styles.money}>{d.card.note}</span>
-                    {step >= 4 && (
-                      <pre key={step >= 4 ? 'draft' : 'none'} className={styles.draft} data-late={step === 4 || undefined}>
+                    {showDraft && (
+                      <pre key="draft" className={styles.draft} data-late={step === 3 || undefined}>
                         {d.card.draft}
                       </pre>
                     )}
-                  </div>
-                  <div className={styles.keys}>
+                  </span>
+                  {drafting && (
+                    <span className={styles.drafting}>
+                      {d.phone.drafting}
+                      <Progress run={LATE_MS} label={d.phone.drafting} />
+                    </span>
+                  )}
+                  <span className={styles.keys}>
                     {rows.map((r) => (
-                      <div key={r.items.join('|')} className={styles.keyrow} data-leave={r.leave || undefined} data-enter={r.enter || undefined}>
+                      <span key={r.items.join('|')} className={styles.keyrow} data-leave={r.leave || undefined} data-enter={r.enter || undefined}>
                         <Keys items={r.items} pressed={r.pressed} />
-                      </div>
+                      </span>
                     ))}
-                  </div>
-                </div>
+                  </span>
+                </Msg>
               )}
-            </div>
+            </Chat>
           </div>
         </div>
 

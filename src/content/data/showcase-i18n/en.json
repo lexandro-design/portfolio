@@ -2182,5 +2182,91 @@
         ]
       }
     ]
+  },
+  "prosoft": {
+    "brief": {
+      "task": "A 1C integrator's site had to explain in a minute what a visitor needs and lead to a request for a diagnostic.",
+      "did": [
+        "Grid, a design system with variables and components",
+        "Desktop pages, quiz states and mobile versions",
+        "Tool screens instead of decoration and a prototype in Figma"
+      ],
+      "result": "The layout and prototype are built, approval with the client is under way. The site itself is developed separately.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "The stage ribbon",
+        "items": [
+          {
+            "shot": 0,
+            "title": "Term, result and payment condition of a stage in one table"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 2,
+        "title": "Choosing a situation and an ERP or KA",
+        "items": [
+          {
+            "shot": 1,
+            "title": "\"Do you recognise yourself?\": situation and what we do"
+          },
+          {
+            "shot": 3,
+            "title": "Three questions and a comparison of configurations"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "What the client gets",
+        "items": [
+          {
+            "shot": 2,
+            "title": "A sample diagnostic report, conditional data"
+          },
+          {
+            "shot": 8,
+            "title": "A base audit: a sample report, conditional data"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Process map and quiz",
+        "items": [
+          {
+            "shot": 4,
+            "title": "A process map: area and subsystem"
+          },
+          {
+            "shot": 5,
+            "title": "A five-question quiz, step two"
+          },
+          {
+            "shot": 6,
+            "title": "Quiz result: a scenario and a request form"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "narrow",
+        "title": "Phone",
+        "items": [
+          {
+            "shot": 7,
+            "title": "Home, choice of situation and stage ribbon on mobile components"
+          }
+        ]
+      }
+    ]
   }
 }

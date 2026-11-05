@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Controls, Facts, Lead, Meta, Mono, Note, Reveal, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Controls, Facts, Lead, Meta, Mono, Note, Progress, Reveal, Title, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -18,10 +18,10 @@ type Data = {
   letters: Letter[]
 }
 
-/** Шаги: письма приходят, четыре разбора по одному письму, итог */
-const SPANS = [3000, 4200, 3800, 3800, 3800, 4200]
+/** Шаги: четыре разбора по одному письму (письма приходят в первом), итог */
+const SPANS = [4000, 3400, 3400, 3000, 3600]
 /** Через сколько после начала разбора ответ модели доходит до сделки, мс */
-const SETTLE = 1700
+const SETTLE = 1500
 
 /**
  * Почта сама раскладывается в CRM. Сцена: сверху лента входящих писем, под ней
@@ -31,7 +31,7 @@ const SETTLE = 1700
  */
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
-  const [ref, play] = usePlay(SPANS)
+  const [ref, play] = usePlay(SPANS, { hold: 1800 })
   const { step } = play
 
   // Ответ модели доходит до сделки не сразу: карточка меняется после разбора письма
@@ -46,15 +46,15 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const ribbon = useRef<HTMLOListElement>(null)
   useEffect(() => {
     const el = ribbon.current
-    const tile = el?.children[step - 1] as HTMLElement | undefined
+    const tile = el?.children[Math.min(step, 3)] as HTMLElement | undefined
     if (!el || !tile || el.scrollWidth <= el.clientWidth) return
     el.scrollTo({ left: tile.offsetLeft - el.offsetLeft, behavior: 'smooth' })
   }, [step])
 
-  const active = step >= 1 && step <= 4 ? step - 1 : -1
-  const final = step === 5
+  const active = step <= 3 ? step : -1
+  const final = step === 4
   // Письмо i разобрано, когда прошёл его шаг (или ответ уже дошёл до сделки)
-  const known = (i: number) => step > i + 1 || (step === i + 1 && late)
+  const known = (i: number) => step > i || (step === i && late)
   const cards = d.letters.map((l, i) => ({ ...l, i, typed: known(i), out: known(i) && l.type === 'spam' }))
   const open = active >= 0 ? d.letters[active] : null
 
@@ -65,6 +65,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         <Meta item={item} meta={meta} />
         <Title item={item} />
 
+        <div className={styles.table}>
         <div className={styles.stage} data-final={final || undefined}>
           {/* Лента входящих: письма приходят по одному */}
           <section className={styles.inbox} aria-label={d.inbox.title}>
@@ -119,6 +120,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                     </li>
                   ))}
                 </ol>
+                <span className={styles.wait} data-off={late || undefined}>
+                  <Progress run={SETTLE - 200} label={d.panel.chain[2]} />
+                </span>
                 <p className={styles.answer} data-kind={open.type}>
                   <span>{d.panel.answer}</span>
                   <b>{d.types[open.type].toUpperCase()}</b>
@@ -185,6 +189,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
           <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
           <Note>{t.show.cast.demo}</Note>
+        </div>
         </div>
 
         <Reveal className={styles.intro}>

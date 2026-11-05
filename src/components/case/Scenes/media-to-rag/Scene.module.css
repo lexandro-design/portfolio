@@ -9,6 +9,7 @@
   margin-block-start: var(--space-2xl);
   border: 1px solid var(--border-hair);
   background: var(--bg-elevated);
+  box-shadow: 0 40px 80px -52px rgb(0 0 0 / 0.55);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
 
@@ -31,6 +32,7 @@
 }
 
 .head {
+  position: relative;
   display: grid;
   align-content: start;
   gap: 8px;
@@ -48,6 +50,15 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-secondary);
+}
+
+/* Прогресс стадии: тонкая полоса по низу шапки колонки, пока файл в работе */
+.run {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -1px;
+  block-size: 2px;
+  background: transparent;
 }
 
 .dot {
@@ -257,6 +268,7 @@
   padding: 12px 14px;
   border: 1px solid var(--border-hair);
   border-block-start: 0;
+  background: var(--bg-subtle);
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   letter-spacing: 0.08em;
@@ -270,14 +282,8 @@
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   color: var(--fg-primary);
-  animation: bump 500ms var(--ease-out-expo) both;
-}
-
-@keyframes bump {
-  from {
-    opacity: 0.2;
-    transform: translateY(8px);
-  }
+  min-inline-size: 2ch;
+  text-align: end;
 }
 
 @keyframes capIn {
@@ -336,74 +342,141 @@
   }
 }
 
-/* Телефон: стадии идут сверху вниз, в каждой файлы в столбик */
+/* Телефон: вместо пяти колонок карточки файлов, у каждой своя шкала из пяти стадий */
+.cards {
+  display: none;
+  list-style: none;
+}
+
 @media (max-width: 767px) {
   .board {
-    grid-template-columns: minmax(0, 1fr);
-    margin-block-start: var(--space-lg);
-  }
-
-  .col {
-    grid-template-rows: auto auto;
-    border-inline-end: 0;
-    border-block-end: 1px solid var(--border-hair);
-  }
-
-  .col:last-child {
-    border-block-end: 0;
-  }
-
-  .head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 12px;
-    padding: 10px 14px;
-  }
-
-  .cells {
-    grid-template-rows: none;
-    grid-auto-rows: 48px;
-  }
-
-  .cell {
-    padding: 0 14px;
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
-
-  .tiles {
-    flex-wrap: wrap;
-    max-block-size: 36px;
-    overflow: hidden;
-  }
-
-  .tiles i {
-    inline-size: 8px;
-    block-size: 12px;
-  }
-
-  .lines {
-    max-inline-size: 120px;
-  }
-
-  .cell[data-next]::after {
     display: none;
   }
 
-  /* Без колонок файл подписан в самой строке */
-  .cell[data-name]::before {
-    content: attr(data-name);
-    flex: 0 0 112px;
+  .cards {
+    display: grid;
+    margin-block-start: var(--space-lg);
+    border: 1px solid var(--border-hair);
+    background: var(--bg-elevated);
+    box-shadow: 0 32px 64px -44px rgb(0 0 0 / 0.55);
+    animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+  }
+
+  .fcard {
+    display: grid;
+    gap: 8px;
+    padding: 12px 14px;
+    border-block-end: 1px solid var(--border-hair);
+    transition: background var(--dur-slow);
+  }
+
+  .fcard:last-child {
+    border-block-end: 0;
+  }
+
+  .fcard[data-now] {
+    background: color-mix(in srgb, var(--case-color, var(--accent)) 8%, transparent);
+    box-shadow: inset 2px 0 0 var(--case-color, var(--accent));
+  }
+
+  .fcard[data-none] .fname {
+    opacity: 0.35;
+  }
+
+  .fhead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg-primary);
+  }
+
+  .fname {
+    min-inline-size: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .fname b {
+    font-weight: 400;
+    color: var(--case-color, var(--accent));
+  }
+
+  .fnum {
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+    color: var(--case-color, var(--accent));
+    animation: capIn 400ms var(--ease-out-quart) both;
+  }
+
+  .seg {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+  }
+
+  .seg i {
+    display: block;
+    block-size: 3px;
+    background: var(--border-hair);
+  }
+
+  .seg i[data-on] {
+    background: var(--case-color, var(--accent));
+    transform-origin: left;
+    animation: grow 600ms var(--ease-out-expo) calc(var(--k) * 70ms) both;
+  }
+
+  .seg i[data-cur] {
+    animation:
+      grow 600ms var(--ease-out-expo) calc(var(--k) * 70ms) both,
+      pulse 1.4s var(--ease-in-out) 600ms infinite;
+  }
+
+  .fstage {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    min-block-size: 16px;
+    font-family: var(--font-mono);
     font-size: var(--type-mono-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--fg-tertiary);
+  }
+
+  .fstage span {
+    animation: capIn 400ms var(--ease-out-quart) both;
+  }
+
+  .fstage em {
+    font-style: normal;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    animation: capIn 400ms var(--ease-out-quart) 200ms both;
+  }
+
+  .fstage em[data-tone='hot'] {
+    color: var(--case-color, var(--accent));
+  }
+
+  .fcard[data-skip] .fstage span {
+    text-decoration: line-through;
+    text-decoration-color: var(--border-hover);
   }
 
   .total b {
     font-size: 28px;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
   }
 }
 
@@ -413,7 +486,11 @@
   .tag,
   .lines i,
   .tiles i,
-  .total b {
+  .cards,
+  .seg i,
+  .fnum,
+  .fstage span,
+  .fstage em {
     animation: none;
   }
 

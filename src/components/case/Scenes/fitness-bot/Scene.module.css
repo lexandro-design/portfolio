@@ -320,15 +320,6 @@
   mask-image: linear-gradient(to bottom, transparent 0, #000 48px);
 }
 
-/* Ответы бота приходят чуть позже реплики человека */
-.phone .late1 {
-  animation-delay: 1000ms;
-}
-
-.phone .late2 {
-  animation-delay: 1900ms;
-}
-
 .phone b {
   display: block;
   font-weight: 600;

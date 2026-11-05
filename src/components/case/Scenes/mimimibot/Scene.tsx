@@ -10,12 +10,13 @@ import styles from './Scene.module.css'
 type Tile = { id: string; src: string; you: string }
 type Data = {
   chat: { title: string; sub: string; typing: string }
+  cover: { a: string; b: string; c: string }
   wall: { title: string; note: string }
   tiles: Tile[]
   cols: string[][]
   tag: { look: string; pick: string; gen: string; you: string }
   selfies: string[]
-  start: { cmd: string; text: string; keys: string[] }
+  start: { time: string; text: string[]; pager: string[]; keys: string[] }
   demo: { text: string; keys: string[] }
   upload: { text: string; keys: string[]; count: string }
   gen: { text: string; eta: string }
@@ -28,13 +29,13 @@ type Data = {
 type State = 'idle' | 'look' | 'pick' | 'gen' | 'you'
 
 /** Шаги: старт, листание, выбор, селфи, генерация, готовый кадр, меню. Последний держится */
-const SPANS = [3400, 3000, 3600, 3600, 4000, 4200, 4400]
+const SPANS = [2800, 2200, 3000, 3000, 3200, 3200, 3400]
 
 /** Метки внутри шага, мс: «печатает» гаснет, ответ, продолжение, нажатие кнопки */
-const MARKS = [700, 900, 1800, 2400]
+const MARKS = [400, 600, 1300, 1800]
 
 /** Условное время сообщений: идёт вперёд по сценарию */
-const CLOCK = ['12:04', '12:04', '12:05', '12:05', '12:06', '12:08', '12:09']
+const CLOCK = ['12:01', '12:01', '12:02', '12:03', '12:03', '12:05', '12:06']
 
 /** Какой плитке стены что происходит на каком шаге */
 function stateOf(id: string, step: number): State {
@@ -53,6 +54,34 @@ function Pic({ src, className, style }: { src: string; className?: string; style
   )
 }
 
+/** Тире подставляется здесь: в json его держать нельзя (tools/check-content.mjs) */
+const DASH = '\u2014'
+
+/**
+ * Обложка первого сообщения: наш кадр 1:1, поверх вёрсткой МИМИМИ / БОТ / PINTEREST+ чёрным и розовым,
+ * как у настоящего бота. Три строки одной ширины: textLength тянет буквы, а не меняет кегль
+ */
+function Cover({ src, c, type }: { src: string; c: Data['cover']; type: boolean }) {
+  return (
+    <span className={styles.cover}>
+      <Pic key={src} src={src} className={styles.coverPic} />
+      {type && (
+        <svg className={styles.coverType} viewBox="0 0 100 56" aria-hidden="true" focusable="false">
+          <text className={styles.tA} x="0" y="9" textLength="100" lengthAdjust="spacingAndGlyphs">
+            {c.a}
+          </text>
+          <text className={styles.tB} x="0" y="37" textLength="100" lengthAdjust="spacingAndGlyphs">
+            {c.b}
+          </text>
+          <text className={styles.tC} x="0" y="51" textLength="100" lengthAdjust="spacingAndGlyphs">
+            {c.c}
+          </text>
+        </svg>
+      )}
+    </span>
+  )
+}
+
 /**
  * MiMiMi AI. Сцена: стена шаблонов, как доска, живёт вокруг и позади чата.
  * Человек листает карусель, выбирает кадр, шлёт три селфи, идёт генерация,
@@ -61,7 +90,7 @@ function Pic({ src, className, style }: { src: string; className?: string; style
  */
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
-  const [ref, play] = usePlay(SPANS)
+  const [ref, play] = usePlay(SPANS, { hold: 1400 })
   const { step } = play
   const byId = Object.fromEntries(d.tiles.map((x) => [x.id, x])) as Record<string, Tile>
 
@@ -73,12 +102,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
     return () => ids.forEach((id) => window.clearTimeout(id))
   }, [step, play.inView, play.stopped])
   const n = play.stopped ? MARKS.length : ph.step === step ? ph.n : 0
-  const quiet = step === 1
+  // Первый экран и листание не ждут: сообщение бота уже на месте, обложка и кнопки видны с первой секунды
+  const quiet = step <= 1
   const typing = !quiet && n < 2
   const leaving = n === 1
   const reply = quiet || n >= 2
   const follow = n >= 3
   const press = n >= 4 ? 0 : undefined
+  const lines = d.start.text.map((l) => l.replace('{d}', DASH)).join('\n')
 
   const side = [d.cols[0], d.cols[1], d.cols[2], d.cols[3]]
   const filler = [
@@ -134,17 +165,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar="M" live={play.playing} fit minHeight={160} className={styles.chat}>
               {step <= 1 && (
                 <>
-                  <Msg side="out" time={CLOCK[0]} status={reply ? 'read' : 'sent'}>
-                    {d.start.cmd}
+                  <Msg side="in" time={d.start.time} tail={false} className={styles.first}>
+                    <Cover src={carousel.src} c={d.cover} type={step === 0} />
+                    <span className={styles.said}>{lines}</span>
                   </Msg>
-                  {typing && <Typing leaving={leaving} delay={300} />}
-                  {reply && (
-                    <Msg side="in" time={CLOCK[1]} className={styles.wide}>
-                      <Pic key={carousel.id} src={carousel.src} />
-                      {d.start.text}
-                      <Keys items={d.start.keys} pressed={step === 1 ? press : undefined} />
-                    </Msg>
-                  )}
+                  <li className={styles.real}>
+                    <Keys items={d.start.pager} pressed={step === 1 && n >= 1 ? 2 : undefined} />
+                    <Keys items={d.start.keys} stack />
+                  </li>
                 </>
               )}
               {step === 2 && (

@@ -44,8 +44,17 @@ type Data = {
   cmds: { c: string; t: string }[]
 }
 
-/** Шаги: вопрос, кнопка, запрос разрешения, разрешение, голос, скрин, текст, фото, табло, закрыто на компе */
-const SPANS = [3400, 3200, 3200, 2800, 4000, 3400, 3200, 3400, 3800, 4200]
+/**
+ * Шаги: вопрос и «Да», запрос и разрешение, голос, скрин, текст и фото, табло, закрыто на компе.
+ * Было десять шагов на 34,6 с: нажатие склеено с вопросом, разрешение с запросом, текст с фото
+ */
+const SPANS = [3200, 3200, 3000, 2800, 3600, 3000, 3200]
+
+/** Внутри шага, мс: кнопка нажата, затем ответ бота и разрешение. Пауза и reduced-motion показывают итог */
+const MARKS = [1100, 1900]
+
+/** Условное время сообщений по прежним номерам шагов: идёт вперёд по сценарию */
+const CLOCK = ['10:02', '10:02', '10:15', '10:15', '10:21', '10:24', '10:26', '10:27', '10:31', '10:40']
 
 /** Что летит между столом и телефоном на каждом шаге: стол, направление, значок */
 const FLY: ({ desk: DeskId; dir: 'in' | 'out'; glyph: string } | null)[] = [
@@ -106,16 +115,20 @@ function Wave({ live }: { live: boolean }) {
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
   const [ref, play] = usePlay(SPANS)
-  const { step } = play
+  const nstep = play.step
   const m = d.msgs
 
-  // Вторая половина шага: бот дочитал, расшифровал, дописал пометку
-  const [lateAt, setLateAt] = useState(-1)
+  // Внутри шага: кнопка нажата, ответ бота. n: сколько меток прошло
+  const [ph, setPh] = useState({ step: -1, n: 0 })
   useEffect(() => {
-    const id = window.setTimeout(() => setLateAt(step), 1900)
-    return () => window.clearTimeout(id)
-  }, [step])
-  const late = lateAt === step
+    if (!play.inView || play.stopped) return
+    const ids = MARKS.map((ms, i) => window.setTimeout(() => setPh({ step: nstep, n: i + 1 }), ms))
+    return () => ids.forEach((id) => window.clearTimeout(id))
+  }, [nstep, play.inView, play.stopped])
+  const n = play.stopped ? MARKS.length : ph.step === nstep ? ph.n : 0
+  // Прежний номер шага и «вторая половина»: по ним собираются сообщения и состояние столов
+  const step = [n >= 1 ? 1 : 0, n >= 1 ? 3 : 2, 4, 5, n >= 2 ? 7 : 6, 8, 9][nstep]
+  const late = n >= 2
 
   const fly = FLY[step]
   const permKeysOn = (n: number) => step === n || (step === n + 1 && !late)
@@ -125,7 +138,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
     switch (i) {
       case 0:
         return [
-          <Msg key="0a" side="in" className={styles.d2}>
+          <Msg key="0a" side="in" time={CLOCK[0]} className={styles.d2}>
             {m.ask}
             <span className={styles.hint}>{m.hint}</span>
             {(step === 0 || (step === 1 && !late)) && (
@@ -138,14 +151,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         ]
       case 1:
         return [
-          <Msg key="1a" side="in" tone={late ? 'ok' : undefined} className={styles.d1}>
+          <Msg key="1a" side="in" time={CLOCK[1]} tone={late ? 'ok' : undefined} className={styles.d1}>
             {m.ack}
             {late && <span className={styles.hint}>{m.read}</span>}
           </Msg>,
         ]
       case 2:
         return [
-          <Msg key="2a" side="in" className={styles.d2}>
+          <Msg key="2a" side="in" time={CLOCK[2]} className={styles.d2}>
             {m.perm}
             {step >= 3 && (step > 3 || late) && <span className={styles.note}>{m.allowed}</span>}
             {permKeysOn(2) && <Keys items={[d.keys.allow, d.keys.deny]} pressed={step === 3 ? 0 : undefined} />}
@@ -155,45 +168,45 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         return []
       case 4:
         return [
-          <Msg key="4a" side="out" className={styles.d0}>
+          <Msg key="4a" side="out" time={CLOCK[4]} status="read" className={styles.d0}>
             <Wave live={step === 4 && !late} />
           </Msg>,
-          <Msg key="4b" side="in" className={styles.d1}>
+          <Msg key="4b" side="in" time={CLOCK[4]} className={styles.d1}>
             {step === 4 && !late ? m.decoding : m.decoded}
           </Msg>,
         ]
       case 5:
         return [
-          <Msg key="5a" side="in" className={styles.d2}>
+          <Msg key="5a" side="in" time={CLOCK[5]} className={styles.d2}>
             {m.done}
             <Shot label={m.shot} />
           </Msg>,
         ]
       case 6:
         return [
-          <Msg key="6a" side="out" className={styles.d0}>
+          <Msg key="6a" side="out" time={CLOCK[6]} status="read" className={styles.d0}>
             {m.text}
           </Msg>,
-          <Msg key="6b" side="in" tone="ok" className={styles.d1}>
+          <Msg key="6b" side="in" time={CLOCK[6]} tone="ok" className={styles.d1}>
             {m.textAck}
           </Msg>,
         ]
       case 7:
         return [
-          <Msg key="7a" side="out" className={styles.d0}>
+          <Msg key="7a" side="out" time={CLOCK[7]} status="read" className={styles.d0}>
             <Shot label="" small />
             {m.photoCap}
           </Msg>,
-          <Msg key="7b" side="in" tone="ok" className={styles.d1}>
+          <Msg key="7b" side="in" time={CLOCK[7]} tone="ok" className={styles.d1}>
             {m.photoAck}
           </Msg>,
         ]
       case 8:
         return [
-          <Msg key="8a" side="out" className={styles.d0}>
+          <Msg key="8a" side="out" time={CLOCK[8]} status="read" className={styles.d0}>
             <span className={styles.cmd}>{m.office}</span>
           </Msg>,
-          <Msg key="8b" side="in" className={styles.d1}>
+          <Msg key="8b" side="in" time={CLOCK[8]} className={styles.d1}>
             <span className={styles.board}>
               <b>{m.busy}</b>
               {m.boardBusy.map((r) => (
@@ -206,7 +219,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         ]
       default:
         return [
-          <Msg key="9a" side="in" className={styles.d2}>
+          <Msg key="9a" side="in" time={CLOCK[9]} className={styles.d2}>
             {m.perm}
             {late && <span className={styles.note}>{m.onPc}</span>}
             {!late && <Keys items={[d.keys.allow, d.keys.deny]} />}
@@ -279,11 +292,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         </div>
 
         <div className={styles.under}>
-          <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
+          <Cap className={styles.cap}>{d.steps[nstep].cap}</Cap>
           <div className={styles.side}>
             <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} />
-            <p key={step} className={styles.log}>
-              {d.steps[step].log}
+            <p key={nstep} className={styles.log}>
+              {d.steps[nstep].log}
             </p>
             <Note>{t.show.cast.demo}</Note>
           </div>

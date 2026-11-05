@@ -1677,5 +1677,47 @@
         ]
       }
     }
+  },
+  "prosoft": {
+    "tagline": "design of an IT integrator's site",
+    "lead": "A Figma layout for a 1C integrator's site: eight pages, seven mobile versions, a design system and a prototype. The site is about services, not a catalog.",
+    "client": "freelance · 1C integrator",
+    "sections": [
+      {
+        "title": "the task",
+        "body": [
+          "The company's two one-page sites are merged into one, only about 1C: moving off UPP, ERP and KA implementation, customization, support. A visitor should understand what they need and leave a request for a diagnostic."
+        ]
+      },
+      {
+        "title": "what I did",
+        "body": [
+          "Grid and rhythm, a design system with variables, components, all pages and states, mobile versions and a prototype in Figma. The palette comes from the company: blue, dark blue and an orange accent, Onest typeface."
+        ]
+      },
+      {
+        "title": "decisions",
+        "body": [
+          "Instead of decoration, the screens carry tools: a stage ribbon with acceptance and payment points, \"Do you recognise yourself?\" with a choice of situation, an ERP or KA picker in three questions, a sample diagnostic report, a five-question quiz."
+        ]
+      },
+      {
+        "title": "boundaries",
+        "body": [
+          "This is a layout and a prototype in Figma. Research, copy and site development are done by other people; the data in the samples is conditional."
+        ]
+      }
+    ],
+    "captions": [
+      "The stage ribbon: term, result and payment condition in one table.",
+      "\"Do you recognise yourself?\": choose a situation and see what we do.",
+      "A sample diagnostic report. The sample itself says the data is conditional.",
+      "An ERP or KA picker in three questions.",
+      "A process map: area, subsystem and what the company gets.",
+      "A five-question quiz, step two.",
+      "Quiz result: a scenario and a request form.",
+      "Phone: home, choice of situation, stage ribbon.",
+      "A base audit: a sample report with conditional data."
+    ]
   }
 }

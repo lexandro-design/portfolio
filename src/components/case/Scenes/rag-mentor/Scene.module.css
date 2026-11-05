@@ -8,7 +8,9 @@
   grid-template-columns: minmax(0, 1fr) 320px;
   grid-template-areas:
     'shelf shelf'
-    'main rail';
+    'main rail'
+    'cap cap'
+    'ctl ctl';
   gap: var(--space-lg) var(--space-xl);
   margin-block-start: var(--space-2xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
@@ -596,10 +598,23 @@
   background: var(--case-color, var(--accent));
 }
 
+/* Подпись шага в одну строку под чатом и панелью, управление сразу за ней */
 .cap {
-  margin-block-start: var(--space-xs);
+  grid-area: cap;
+  margin-block-start: calc(var(--space-xs) * -1);
   font-size: var(--type-body-lg);
-  min-block-size: 6.6em;
+  min-block-size: 1.5em;
+}
+
+.ctl {
+  grid-area: ctl;
+  display: grid;
+  gap: var(--space-xs);
+  margin-block-start: calc(var(--space-sm) * -1);
+}
+
+.ctl > :first-child {
+  max-inline-size: 560px;
 }
 
 .intro {
@@ -618,6 +633,8 @@
     grid-template-areas:
       'shelf'
       'main'
+      'cap'
+      'ctl'
       'rail';
     gap: var(--space-md);
   }
@@ -628,7 +645,13 @@
   }
 
   .cap {
-    min-block-size: 4.4em;
+    min-block-size: 3em;
+    font-size: var(--type-body);
+    margin-block-start: 0;
+  }
+
+  .ctl {
+    margin-block-start: 0;
   }
 }
 

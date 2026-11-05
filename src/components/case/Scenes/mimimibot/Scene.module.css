@@ -6,9 +6,9 @@
 .stage {
   --g: 16px;
   position: relative;
-  min-block-size: 720px;
+  min-block-size: 880px;
   margin-block-start: var(--space-xl);
-  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+  animation: rise var(--dur-reveal) var(--ease-out-expo) both;
 }
 
 @keyframes rise {
@@ -68,7 +68,7 @@
 }
 
 .tile[data-s='idle'] {
-  opacity: 0.5;
+  opacity: 0.72;
   filter: saturate(0.7);
 }
 
@@ -222,6 +222,81 @@
 
 .selfies {
   max-inline-size: 70%;
+}
+
+/* Первое сообщение как у настоящего бота: обложка во всю ширину пузыря, текст как в оригинале, кнопки под ним */
+.first {
+  inline-size: 94%;
+  max-inline-size: 94%;
+}
+
+.said {
+  display: block;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: start;
+  white-space: pre-wrap;
+}
+
+.real {
+  display: grid;
+  gap: 4px;
+  inline-size: 94%;
+  align-self: flex-start;
+}
+
+.real > span {
+  margin-block-start: 0;
+}
+
+.cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  margin: -10px -14px 8px;
+  overflow: hidden;
+  border-radius: var(--bub-r) var(--bub-r) 0 0;
+  background: #d9b48c;
+}
+
+.cover .coverPic {
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+  object-position: 50% 12%;
+}
+
+/* Надпись поверх кадра: чёрный и розовый на светлом, не зависит от темы сайта */
+.coverType {
+  position: absolute;
+  inset-block-start: 6%;
+  inset-inline-start: 6%;
+  inline-size: 31%;
+  block-size: auto;
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.tA,
+.tB {
+  fill: #0b0b0b;
+}
+
+.tA {
+  font-size: 11px;
+}
+
+.tB {
+  font-size: 34px;
+}
+
+.tC {
+  fill: #e2569d;
+  font-size: 9px;
+  font-weight: 600;
 }
 
 .shots {

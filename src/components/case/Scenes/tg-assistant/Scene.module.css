@@ -530,18 +530,26 @@
 .under {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-md) var(--space-3xl);
+  gap: var(--space-xs) var(--space-3xl);
   align-items: start;
   margin-block-start: var(--space-lg);
 }
 
+/* Подпись шага в одну строку на широком экране, панель под ней */
 .cap {
+  grid-column: 1 / -1;
+  min-block-size: 1.5em;
   font-size: var(--type-body-lg);
 }
 
 .side {
+  grid-column: 1 / -1;
   display: grid;
   gap: var(--space-xs);
+}
+
+.side > :first-child {
+  max-inline-size: 560px;
 }
 
 .log {
@@ -688,6 +696,11 @@
 
   .under {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    min-block-size: 3em;
+    font-size: var(--type-body);
   }
 
   .rule {

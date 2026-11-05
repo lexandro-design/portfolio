@@ -2182,5 +2182,91 @@
         ]
       }
     ]
+  },
+  "prosoft": {
+    "brief": {
+      "task": "1C 集成商的网站要在一分钟内让访客明白自己需要什么，并引导到诊断申请。",
+      "did": [
+        "网格、带变量的设计系统和组件",
+        "桌面页面、问卷状态和移动版本",
+        "用工具画面代替装饰，并制作 Figma 原型"
+      ],
+      "result": "设计稿和原型已完成，正与客户确认。网站开发另行进行。",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "阶段条",
+        "items": [
+          {
+            "shot": 0,
+            "title": "一张表里写清阶段周期、结果和付款条件"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 2,
+        "title": "选择情境与 ERP 或 KA 选型",
+        "items": [
+          {
+            "shot": 1,
+            "title": "“你是这样吗？”：情境与我们的做法"
+          },
+          {
+            "shot": 3,
+            "title": "三个问题与配置对比"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "客户拿到什么",
+        "items": [
+          {
+            "shot": 2,
+            "title": "诊断报告样例，数据为示意"
+          },
+          {
+            "shot": 8,
+            "title": "数据库审计：报告样例，数据为示意"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "流程地图与问卷",
+        "items": [
+          {
+            "shot": 4,
+            "title": "流程地图：环节与子系统"
+          },
+          {
+            "shot": 5,
+            "title": "五个问题的问卷，第二步"
+          },
+          {
+            "shot": 6,
+            "title": "问卷结果：方案与申请表单"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "narrow",
+        "title": "手机",
+        "items": [
+          {
+            "shot": 7,
+            "title": "移动组件上的首页、情境选择和阶段条"
+          }
+        ]
+      }
+    ]
   }
 }

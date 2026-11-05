@@ -2,12 +2,20 @@
   padding-block-end: 0;
 }
 
+/* Стол: сцена, рейка и подпись с панелью; на телефоне подпись идёт сразу за чатом */
+.table {
+  display: block;
+}
+
 /* Сцена: слева «полка» каталога, справа узкий чат, под ними рейка с тем, что бот делает с клиентом */
 .stage {
   display: grid;
   grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
   gap: var(--space-md);
   align-items: stretch;
+}
+
+.table {
   margin-block-start: var(--space-2xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
@@ -45,6 +53,26 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-xs) var(--space-sm);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Логотип клиента на светлой плашке: серый знак не читается на тёмной теме */
+.logo {
+  block-size: 22px;
+  inline-size: auto;
+  padding: 5px 9px;
+  box-sizing: content-box;
+  background: #f4f3ef;
+}
+
+.chipBar {
+  block-size: 2px;
+  margin-block-start: 4px;
 }
 
 .log {
@@ -175,12 +203,44 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.skel {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 8px;
+  align-content: start;
+  min-block-size: 190px;
+  padding: 0 0 14px;
+  border: 1px dashed var(--border-hair);
+  animation: skel 1.6s var(--ease-in-out) calc(var(--i) * 160ms) infinite;
+}
+
+.skel i {
+  display: block;
+  aspect-ratio: 16 / 7;
+  background: repeating-linear-gradient(135deg, transparent 0 7px, var(--border-hair) 7px 8px);
+}
+
+.skel b {
+  display: block;
+  block-size: 8px;
+  margin-inline: 16px;
+  background: var(--border-hair);
+}
+
+.skel b:last-child {
+  inline-size: 55%;
+}
+
+@keyframes skel {
+  50% {
+    opacity: 0.45;
+  }
+}
+
 .empty {
   grid-column: 1 / -1;
   display: grid;
   place-items: center;
-  min-block-size: 220px;
-  border: 1px dashed var(--border-hair);
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   color: var(--fg-tertiary);
@@ -215,6 +275,37 @@
   padding: 8px 12px;
   border-block-end: 1px solid var(--border-hair);
   background: repeating-linear-gradient(135deg, transparent 0 7px, var(--border-hair) 7px 8px);
+}
+
+/* Настоящий кадр: контейнер на светлой плашке, появляется, когда карточка раскрыта */
+.thumb[data-photo] {
+  position: relative;
+  overflow: hidden;
+  background: #f4f3ef;
+}
+
+.thumb[data-photo] > :global(*) {
+  position: relative;
+}
+
+.photo {
+  position: absolute !important;
+  inset: 8px 8px 22px;
+  inline-size: calc(100% - 16px);
+  block-size: calc(100% - 30px);
+  object-fit: contain;
+  animation: photoIn 700ms var(--ease-out-expo) both;
+}
+
+@keyframes photoIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.thumb[data-photo] span:not(.link) {
+  color: #6b6a66;
 }
 
 .link {
@@ -350,19 +441,32 @@
   padding-block: 10px;
 }
 
-.late {
-  animation-delay: 1100ms;
+/* Превью ссылки в чате: кадр товара и подпись */
+.preview {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin-block: 8px 2px;
+  padding: 6px;
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--fg-primary) 5%, transparent);
+  box-shadow: inset 2px 0 0 var(--case-color, var(--accent));
 }
 
-.chatLink {
-  display: block;
-  inline-size: fit-content;
-  margin-block: 6px 2px;
-  padding: 2px 8px;
-  border: 1px solid var(--case-color, var(--accent));
+.preview img {
+  inline-size: 64px;
+  block-size: 48px;
+  border-radius: 4px;
+  background: #f4f3ef;
+  object-fit: contain;
+}
+
+.preview small {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
-  color: var(--fg-primary);
+  line-height: 1.3;
+  color: var(--fg-secondary);
 }
 
 /* Рейка: четыре панели о том, что происходит с клиентом и с базой */
@@ -630,7 +734,7 @@
 .under {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-xs) var(--space-3xl);
+  gap: var(--space-xs) var(--space-xl);
   align-items: start;
   margin-block-start: var(--space-md);
 }
@@ -690,13 +794,35 @@
 }
 
 @media (max-width: 767px) {
-  .stage {
-    margin-block-start: var(--space-lg);
+  .table {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-sm);
+    margin-block-start: var(--space-lg);
+  }
+
+  /* Порядок на телефоне: чат, подпись с панелью, полка, рейка */
+  .stage {
+    display: contents;
   }
 
   .chat {
+    order: 1;
     block-size: 400px;
+  }
+
+  .under {
+    order: 2;
+    margin-block-start: 0;
+  }
+
+  .desk {
+    order: 3;
+  }
+
+  .rail {
+    order: 4;
+    margin-block-start: var(--space-xs);
   }
 
   .pipe {
@@ -762,6 +888,13 @@
     order: 0;
   }
 
+  .card[data-open] .thumb[data-photo] {
+    min-block-size: 180px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
   .fields {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -773,7 +906,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage,
+  .table,
+  .skel,
   .log,
   .chip[data-on],
   .phrases li,
@@ -789,7 +923,4 @@
     animation: none;
   }
 
-  .late {
-    animation-delay: 0ms;
-  }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import type { CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import type { SceneProps } from '../types'
 import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, usePlay } from '../kit'
 import scene from '../Scene.module.css'
@@ -10,7 +10,8 @@ type Seg = { k: 'same' | 'del' | 'add' | 'dash'; t: string; alt?: string }
 type Data = {
   stations: { name: string; note: string }[]
   loop: { title: string; before: string; after: string; note: string; pair: { before: string; after: string; note: string } }
-  steps: { head: string; cap: string; foot: string }[]
+  steps: { head: string; foot: string }[]
+  caps: string[]
   topic: { label: string; rubrics: string[]; active: number; form: string; formName: string; seedLabel: string; seed: string; rule: string }
   angles: { title: string; items: string[]; pick: number; picked: string }
   draft: {
@@ -32,8 +33,17 @@ type Data = {
   }
 }
 
-/** Тема, автор, код, редактор, черновик в пульте, нажатие, слот, обучение */
-const SPANS = [2800, 3000, 3600, 3800, 3000, 3000, 4000, 3800]
+/**
+ * Тема и автор, код, редактор, пульт с нажатием, канал, обучение. Было восемь шагов на 27 с:
+ * тема склеена с автором, готовый черновик с нажатием «Опубликовать»
+ */
+const SPANS = [3400, 3000, 3200, 3600, 3200, 3000]
+
+/** Метка внутри шага, мс: с темы переход к автору, в пульте нажатие кнопки */
+const MARK = 1500
+
+/** Условное время сообщения в боте-пульте */
+const STAMP = '12:58'
 
 /** Шаг сценария -> станция конвейера: 0 тема, 1 автор, 2 код, 3 редактор, 4 пульт, 5 канал */
 const STATION = [0, 1, 2, 3, 4, 4, 5, 5]
@@ -75,7 +85,17 @@ function Piece({ s, step }: { s: Seg; step: number }) {
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
   const [ref, play] = usePlay(SPANS)
-  const { step } = play
+  const nstep = play.step
+  // Внутри шага: тема -> автор, готовый черновик -> нажатие кнопки. Пауза и reduced-motion сразу итог
+  const [ph, setPh] = useState(-1)
+  useEffect(() => {
+    if (!play.inView || play.stopped) return
+    const id = window.setTimeout(() => setPh(nstep), MARK)
+    return () => window.clearTimeout(id)
+  }, [nstep, play.inView, play.stopped])
+  const late = play.stopped || ph === nstep
+  // Прежний номер шага: по нему черновик, станции и пульт
+  const step = [late ? 1 : 0, 2, 3, late ? 5 : 4, 6, 7][nstep]
   const st = STATION[step]
   const s = d.steps[step]
 
@@ -295,7 +315,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             <Chat title={d.phone.title} sub={d.phone.sub} avatar="◆" live={play.playing} className={styles.chat}>
               {step < 4 && <Sys>{d.phone.idle}</Sys>}
               {step >= 4 && (
-                <Msg side="in" className={styles.draftMsg}>
+                <Msg side="in" time={STAMP} className={styles.draftMsg}>
                   <span className={styles.status} key={queued ? 'q' : 'p'}>
                     {queued ? (
                       <>
@@ -358,7 +378,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         </div>
 
         <div className={styles.under}>
-          <Cap className={styles.cap}>{s.cap}</Cap>
+          <Cap className={styles.cap}>{d.caps[nstep]}</Cap>
           <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
           <Note>{t.show.cast.demo}</Note>
         </div>
