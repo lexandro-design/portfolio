@@ -1529,8 +1529,8 @@
       "task": "A student needs feedback on a drawing right away, not at the next lesson.",
       "did": [
         "The bot finds the teacher’s nearest reference",
-        "A model with image recognition compares the work with the reference",
-        "A score from 0 to 100, a breakdown by four criteria and an overall impression"
+        "A model compares the work’s embedding with the reference",
+        "Five criteria and a grade on a five-point scale"
       ],
       "result": "The student sees what to fix and can show a new version as many times as they like.",
       "nums": [
@@ -1552,8 +1552,8 @@
             "note": "received"
           },
           {
-            "text": "description",
-            "note": "subject, technique, level"
+            "text": "drawing embedding",
+            "note": "image vector"
           },
           {
             "text": "reference",
@@ -1561,14 +1561,14 @@
           },
           {
             "text": "comparison",
-            "note": "the reference equals 100 points"
+            "note": "deviation from the reference"
           },
           {
             "text": "feedback",
-            "note": "by four criteria"
+            "note": "five criteria and a grade"
           }
         ],
-        "out": "Grade: 72 out of 100"
+        "out": "Grade: 3+"
       }
     ]
   },

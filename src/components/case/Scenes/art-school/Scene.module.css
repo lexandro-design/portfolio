@@ -625,6 +625,12 @@
     block-size: 420px !important;
   }
 
+  /* Окно фиксированной высоты: свежее сообщение внизу, старое уходит вверх, как в Telegram. Иначе итоговый отзыв обрезан */
+  .chat.chat[data-fit] > ol {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
   .under {
     grid-template-columns: minmax(0, 1fr);
   }

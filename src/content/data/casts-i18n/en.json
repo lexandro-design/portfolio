@@ -1668,25 +1668,25 @@
     }
    },
    {
-    "cap": "The model describes the work: subject, style, technique, level.",
-    "log": "description of the work goes to the vector database",
+    "cap": "The photo is turned into a drawing embedding.",
+    "log": "drawing embedding ready",
     "msg": {
      "label": "Looking at the drawing"
     }
    },
    {
     "cap": "The bot finds the teacher's nearest reference.",
-    "log": "nearest reference: 0.6 by vector and 0.4 by description"
+    "log": "nearest reference: search by image similarity"
    },
    {
-    "cap": "The reference counts as 100 points, only the deviation from it is graded.",
+    "cap": "The work is compared with the reference; deviations go into the review.",
     "log": "comparing two images"
    },
    {
-    "cap": "The feedback arrives in the chat: a grade and a breakdown by criteria.",
-    "log": "the feedback is based on textbooks",
+    "cap": "The feedback arrives in the chat: a breakdown by criteria and a grade.",
+    "log": "feedback in drawing terms",
     "msg": {
-     "text": "Grade: 72 out of 100.\nComposition: the sheet is filled evenly.\nStructure: check the ellipse of the jug.\nTonal solution: the shadow lacks reflected light.\nStroke: follow the form."
+     "text": "Composition: the sheet is filled evenly.\nStructure: check the ellipse of the jug.\nTone: the shadow lacks reflected light.\nStroke: follow the form.\nOverall: the form holds together.\nGrade: 3+."
     }
    },
    {
@@ -1700,7 +1700,7 @@
     "cap": "Each photo gets its own grade, so progress shows.",
     "log": "new grade against the same reference",
     "msg": {
-     "text": "Grade: 84 out of 100.\nStructure: the ellipse is more accurate.\nTonal solution: the shadow holds together."
+     "text": "Composition: the sheet is filled evenly.\nStructure: the ellipse is more accurate.\nTone: the shadow holds together.\nStroke: it follows the form.\nOverall: close to the reference.\nGrade: 4+."
     },
     "v": [
      {

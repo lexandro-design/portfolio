@@ -748,8 +748,8 @@
       {
         "title": "how it works",
         "body": [
-          "The drawing is compared with the teacher’s nearest reference work: the reference counts as 100 points, only the deviation from it is graded.",
-          "The feedback draws on academic drawing textbooks. A score from 0 to 100, a breakdown by four criteria and an overall impression come to the student in chat, and every new version gets its own score."
+          "The drawing is compared with the teacher’s nearest reference work: the bot finds it in the database by image similarity and reviews the deviations.",
+          "The feedback is short and uses academic drawing terms. Five criteria and a final grade on a five-point scale come to the student in chat, and every new version gets its own grade."
         ]
       }
     ],
@@ -764,7 +764,7 @@
         },
         {
           "from": "bot",
-          "text": "Grade: 72 out of 100. Structure: check the ellipse of the jug",
+          "text": "Grade: 3+. Structure: check the ellipse of the jug",
           "media": "drawing"
         },
         {
@@ -773,7 +773,7 @@
         },
         {
           "from": "bot",
-          "text": "Grade: 84 out of 100"
+          "text": "Grade: 4+"
         }
       ]
     }

@@ -14,7 +14,7 @@ type Data = {
   layers: { student: string; etalon: string; etalonHead: string; caption: string; captionText: string }
   drag: string
   tags: { k: string; v: string }[]
-  match: { title: string; vector: string; meta: string }
+  match: { title: string; vector: string; meta: string; sim: string; note: string }
   score: { title: string; base: string; of: string }
   pins: { k: string; t: string; ok: string }[]
   pinNote: string
@@ -22,14 +22,17 @@ type Data = {
   steps: { cap: string; log: string }[]
 }
 
-/** Шаги: фото и описание, поиск эталона, сравнение, отзыв, вторая сдача. Эталон преподавателя уже в базе */
+/** Шаги: фото и его образ, поиск эталона, сравнение, отзыв, вторая сдача. Эталон преподавателя уже в базе */
 const SPANS = [3200, 2600, 3400, 4200, 4200]
 
-/** Метки внутри шага, мс: описание работы, «печатает» гаснет, ответ бота */
+/** Метки внутри шага, мс: образ работы, «печатает» гаснет, ответ бота */
 const MARKS = [700, 1100, 1300]
 
 /** Условное время сообщений чата по порядку: фото, отзыв, второе фото, второй отзыв */
 const CLOCK = ['16:40', '16:41', '16:52', '16:53']
+
+/** Оценки по пятибалльной шкале и место метки на шкале, % */
+const GRADES = [{ v: '3+', at: 66 }, { v: '4+', at: 86 }]
 
 /** Где стоит шторка (доля работы ученика слева) на каждом шаге */
 const WIPE = [100, 100, 50, 100, 100]
@@ -45,16 +48,16 @@ const BOXES: { box: [number, number, number, number]; side: 'in' | 'right' | 'bo
 /**
  * Проверка рисунков. Сцена: мольберт. На листе работа ученика и эталон
  * преподавателя, между ними шторка (её можно двигать). По шагам бот
- * описывает работу, находит ближайший эталон, сравнивает, и на листе
+ * считает образ работы, находит ближайший эталон, сравнивает, и на листе
  * появляются пометки разбора, как замечания на полях. Рядом чат ученика,
- * куда разбор приходит текстом по критериям
+ * куда разбор приходит текстом: пять критериев и оценка
  */
 export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const d = data as unknown as Data
   const [ref, play] = usePlay(SPANS, { hold: 1800 })
   const { step } = play
 
-  // Внутри шага: описание, набор бота, ответ. Пауза и reduced-motion показывают итог
+  // Внутри шага: образ работы, набор бота, ответ. Пауза и reduced-motion показывают итог
   const [ph, setPh] = useState({ step: -1, n: 0 })
   useEffect(() => {
     if (!play.inView || play.stopped) return
@@ -71,7 +74,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const reviewed = step >= 4 || (step === 3 && reply)
   const done = step === 4 && reply
   const typing = (step === 3 || step === 4) && n <= 2
-  const score = done ? 84 : reviewed ? 72 : null
+  const score = done ? GRADES[1] : reviewed ? GRADES[0] : null
 
   return (
     <header ref={ref} className={`${scene.scene} ${styles.root}`}>
@@ -121,7 +124,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 />
               )}
 
-              {/* Шаг 0: описание работы */}
+              {/* Шаг 0: образ работы */}
               <ul className={styles.tags} data-on={(step === 0 && n >= 1) || undefined} aria-hidden="true">
                 {d.tags.map((g, i) => (
                   <li key={g.k} style={{ transitionDelay: `${i * 140}ms` }}>
@@ -138,11 +141,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <dl>
                   <div>
                     <dt>{d.match.vector}</dt>
-                    <dd>0,6</dd>
+                    <dd>{d.match.sim}</dd>
                   </div>
                   <div>
                     <dt>{d.match.meta}</dt>
-                    <dd>0,4</dd>
+                    <dd>{d.match.note}</dd>
                   </div>
                 </dl>
               </div>
@@ -175,14 +178,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 <Mono>{d.score.title}</Mono>
                 <div className={styles.track}>
                   <span className={styles.base}>{d.score.base}</span>
-                  <i className={styles.mark} style={{ left: `${score ?? 0}%` }} data-on={score !== null || undefined} />
-                  <i className={styles.fill} style={{ inlineSize: `${score ?? 0}%` }} />
+                  <i className={styles.mark} style={{ left: `${score?.at ?? 0}%` }} data-on={score !== null || undefined} />
+                  <i className={styles.fill} style={{ inlineSize: `${score?.at ?? 0}%` }} />
                 </div>
               </div>
               <p className={styles.big} aria-live="polite">
                 {score !== null ? (
                   <>
-                    <strong key={score}>{score}</strong> <span>{d.score.of}</span>
+                    <strong key={score.v}>{score.v}</strong> <span>{d.score.of}</span>
                   </>
                 ) : (
                   <span>·</span>

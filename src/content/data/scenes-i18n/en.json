@@ -15,33 +15,16 @@
       "captionText": "jug and apple, hatching"
     },
     "drag": "Drag the slider: work and reference",
-    "tags": [
-      {
-        "k": "subject",
-        "v": "jug and apple"
-      },
-      {
-        "k": "style",
-        "v": "academic drawing"
-      },
-      {
-        "k": "technique",
-        "v": "hatching"
-      },
-      {
-        "k": "level",
-        "v": "intermediate"
-      }
-    ],
+    "tags": [{"k": "drawing embedding", "v": "image vector"}, {"k": "search", "v": "among the teacher's references"}],
     "match": {
       "title": "closest reference",
-      "vector": "drawing embedding",
-      "meta": "description"
+      "vector": "embedding similarity",
+      "meta": "reference caption", "sim": "0.87", "note": "to the review"
     },
     "score": {
       "title": "score",
-      "base": "reference = 100",
-      "of": "out of 100"
+      "base": "five-point scale",
+      "of": "out of 5"
     },
     "pins": [
       {
@@ -68,25 +51,25 @@
     "pinNote": "Marks on the sheet illustrate the review. The bot sends it to the chat as text.",
     "msgs": {
       "photo1": "Check my drawing",
-      "review1": "Score: 72 out of 100.\nComposition: the sheet is filled evenly.\nConstruction: the jug's ellipse is too narrow.\nTonal solution: the shadow lacks reflected light.\nHatching: follow the form.\nOverall: the form holds together, the ellipse needs to be accurate.",
+      "review1": "Composition: the sheet is filled evenly.\nConstruction: the ellipse is too narrow.\nTone: no reflected light in the shadow.\nHatching: follow the form.\nOverall: the form holds together.\nGrade: 3+.",
       "photo2": "Fixed it",
-      "review2": "Score: 84 out of 100.\nConstruction: the ellipse is more accurate.\nTonal solution: the shadow is pulled together."
+      "review2": "Composition: the sheet is filled evenly.\nConstruction: the ellipse is more accurate.\nTone: the shadow is pulled together.\nHatching: it follows the form.\nOverall: close to the reference.\nGrade: 4+."
     },
     "steps": [
       {
-        "cap": "The student sends a drawing photo; the bot describes the work.",
-        "log": "work description to the database"
+        "cap": "The student sends a drawing photo; the bot computes its embedding.",
+        "log": "drawing embedding ready"
       },
       {
         "cap": "The closest of the teacher's references is picked.",
         "log": "closest reference found"
       },
       {
-        "cap": "The reference is 100 points; only the deviation is scored.",
-        "log": "comparing two images"
+        "cap": "The work is compared with the reference; the slider shows both.",
+        "log": "comparing with the reference"
       },
       {
-        "cap": "The review reaches the chat: a score and criteria breakdown.",
+        "cap": "The review reaches the chat: five criteria and a grade on a five-point scale.",
         "log": "review sent to the student"
       },
       {
