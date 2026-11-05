@@ -23,15 +23,15 @@ type Props = {
   base: string
 }
 
-/** Подборка на первом экране блока: самые показательные проекты разных направлений */
-const PICK = ['parfumeria', 'mimimibot', 'saldo', 'ai-office', 'otrx', 'haiku', 'prosoft', 'garden-td']
+/** Подборка на первом экране блока: самые сложные и сильные работы. Концепты и небольшие инструменты сюда не ставим */
+const PICK = ['parfumeria', 'prosoft', 'garden-td', 'otrx', 'svarka-3d', 'meeting-rooms', 'mimimibot', 'ai-office']
 const GROUPS: Case['group'][] = ['titan', 'entersales', 'freelance', 'own']
 
 const pad = (n: number) => String(n).padStart(2, '0')
 const order = (i: number) => ({ '--i': i }) as CSSProperties
 
 /**
- * Кейсы на главной. По умолчанию — подборка из шести проектов крупной
+ * Кейсы на главной. По умолчанию — подборка из восьми проектов крупной
  * мозаикой, остальное открывается вкладками: все, по направлению, плюс
  * второй фильтр «где сделано» (ТИТАН-2, EnterSales, фриланс, свои) и вид
  * плиткой или списком. Список с превью под курсором — 37 кейсов за пару
