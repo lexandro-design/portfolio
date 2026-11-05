@@ -33,6 +33,7 @@ export function getCases(locale: Locale): Case[] {
           ? ({ ...c.preview, ...t.preview } as Case['preview'])
           : (t.preview ?? c.preview),
       scheme: t.scheme ?? c.scheme,
+      card: c.card?.perLocale ? { ...c.card, src: c.card.src.replace('.jpg', `-${locale}.jpg`) } : c.card,
       shots: c.shots.map((s, i) => ({ ...s, caption: t.captions[i] ?? s.caption })),
     }
   })

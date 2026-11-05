@@ -53,7 +53,7 @@ export function WorkCard({ item, index, href, flow, note, size, style, className
             />
           )}
           <span className={styles.chip}>{item.label}</span>
-          {item.card && note && <span className={styles.note}>{note}</span>}
+          {item.card?.illustration && note && <span className={styles.note}>{note}</span>}
         </div>
 
         <div className={styles.text}>

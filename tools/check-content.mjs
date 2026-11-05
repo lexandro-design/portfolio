@@ -121,6 +121,7 @@ cases.forEach((c, i) => {
   if (!Array.isArray(c.shots)) fail(at, 'shots должен быть списком')
   else c.shots.forEach((s, j) => checkShot(s, `${at}.shots[${j}]`))
   if (c.thumb) checkShot(c.thumb, `${at}.thumb`)
+  if (c.card) checkShot(c.card, `${at}.card`)
   if (c.cover) checkShot(c.cover, `${at}.cover`)
   checkPreview(c.preview, `${at}.preview`)
   checkScheme(c.scheme, `${at}.scheme`)
