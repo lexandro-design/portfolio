@@ -41,22 +41,22 @@ const SCENES = {
     ${light('inset:0;z-index:3;background:radial-gradient(52% 36% at 100% 0%,rgb(4 23 58/.96) 30%,transparent 100%)')}`
   },
 
-  /* Герои игры выходят из заставки на фоне огорода */
+  /* Герои и экраны из текущей сборки игры */
   'garden-td': () => {
     const hero = (n, x, y, w, z = 3, rot = 0) =>
-      pic(s(`gt-${n}.webp`), `left:${x}px;top:${y}px;width:${w}px;z-index:${z};transform:rotate(${rot}deg);filter:drop-shadow(0 20px 22px rgb(20 10 50/.55))`)
-    return `<img src="${s('gt-bg.webp')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%">
-    ${light('inset:0;z-index:1;background:linear-gradient(180deg,rgb(24 16 70/.62) 0%,rgb(24 16 70/.1) 40%,rgb(18 10 50/.72) 100%)')}
-    ${light('inset:0;z-index:1;background:radial-gradient(46% 40% at 50% 34%,rgb(255 214 120/.5),transparent 72%)')}
-    ${screen(c('garden-td/s05.webp'), { x: 92, y: 300, w: 276, h: 600, r: 30, z: 2, rot: 'rotate(-7deg)' })}
-    ${screen(c('garden-td/s13.webp'), { x: 848, y: 300, w: 276, h: 600, r: 30, z: 2, rot: 'rotate(7deg)' })}
-    ${pic(s('gt-logo.webp'), 'left:236px;top:70px;width:744px;z-index:5;filter:drop-shadow(0 18px 26px rgb(20 10 50/.6))')}
-    ${hero('tykva', 300, 560, 250, 3, -3)}
-    ${hero('kabachok', 690, 500, 270, 4, 4)}
-    ${hero('mukhomor', 468, 470, 300, 4)}
-    ${hero('morkov', 200, 640, 210, 5, -6)}
-    ${hero('chesnok', 860, 650, 210, 5, 5)}
-    ${hero('luk', 560, 660, 230, 6)}`
+      pic(s(`gt-${n}.webp`), `left:${x}px;top:${y}px;width:${w}px;z-index:${z};transform:rotate(${rot}deg);filter:drop-shadow(0 22px 24px rgb(20 10 50/.6))`)
+    return `<img src="${s('gt-bg.webp')}" style="position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;object-position:50% 40%;filter:blur(2px) saturate(1.1)">
+    ${light('inset:0;z-index:1;background:linear-gradient(180deg,rgb(24 14 60/.42) 0%,rgb(24 14 60/.02) 44%,rgb(16 8 44/.72) 100%)')}
+    ${light('inset:0;z-index:1;background:radial-gradient(44% 38% at 50% 56%,rgb(255 196 90/.5),transparent 74%)')}
+    ${screen(s('gt-battle.webp'), { x: 56, y: 216, w: 310, h: 671, r: 34, z: 2, rot: 'rotate(-7deg)' })}
+    ${screen(s('gt-home.webp'), { x: 850, y: 216, w: 310, h: 671, r: 34, z: 2, rot: 'rotate(7deg)' })}
+    ${pic(s('gt-logo.webp'), 'left:358px;top:44px;width:500px;z-index:6;filter:drop-shadow(0 16px 24px rgb(20 10 50/.6))')}
+    ${hero('gorynych', 300, 400, 250, 3, -4)}
+    ${hero('tomat', 668, 420, 226, 3, 4)}
+    ${hero('chudo', 452, 318, 312, 4)}
+    ${hero('tykva', 236, 610, 250, 5, -3)}
+    ${hero('lyagushka', 722, 610, 220, 5, 3)}
+    ${hero('morkov', 498, 590, 214, 6)}`
   },
 
   /* Экран реестра, поверх него расписание и окно брони: три уровня одного сервиса */
