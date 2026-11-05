@@ -47,10 +47,23 @@
   }
 }
 
-/* Пять кнопок на узком телефоне: иначе меню в шапке уходит за край */
+.cycle {
+  display: none;
+}
+
+/* Узкий телефон: вместо пяти кнопок по 23 px одна на 44 px */
 @media (max-width: 419px) {
-  .option {
-    inline-size: 23px;
+  .switch {
+    display: none;
+  }
+
+  .cycle {
+    display: grid;
+    place-items: center;
+    inline-size: 44px;
+    block-size: 44px;
+    border: 1px solid var(--border-hair);
+    color: var(--fg-primary);
   }
 }
 

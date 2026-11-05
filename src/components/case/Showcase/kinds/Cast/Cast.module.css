@@ -226,6 +226,15 @@
   inline-size: 100%;
 }
 
+/* Терминал: первая строка сверху, как у настоящего. Строк мало, они не уходят за край */
+.root[data-screen='term'] .screen {
+  justify-content: flex-start;
+}
+
+.ghost {
+  display: none;
+}
+
 .root[data-tall] .screen {
   block-size: clamp(560px, 45vw, 640px);
 }
@@ -619,6 +628,30 @@
 
   .screen {
     block-size: 440px;
+  }
+
+  /* Окно по всей ленте, а не по чату: пустого места в первых кадрах меньше */
+  .root[data-screen='term'] .screen {
+    display: grid;
+    align-content: start;
+    block-size: auto;
+  }
+
+  .root[data-screen='term'] .feed,
+  .ghost {
+    grid-area: 1 / 1;
+  }
+
+  .ghost {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    visibility: hidden;
+  }
+
+  .ghost li {
+    animation: none;
   }
 
   .shot {

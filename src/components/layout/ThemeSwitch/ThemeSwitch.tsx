@@ -49,24 +49,38 @@ type Props = { label: string; labels: Record<Theme, string> }
 export function ThemeSwitch({ label, labels }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
+  const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
+
   return (
-    <div className={styles.switch} role="radiogroup" aria-label={label}>
-      {THEMES.map((id) => (
-        <button
-          key={id}
-          type="button"
-          role="radio"
-          aria-checked={theme === id}
-          aria-label={labels[id]}
-          title={labels[id]}
-          className={styles.option}
-          data-extra={BASE_THEMES.includes(id) ? undefined : ''}
-          onClick={() => applyTheme(id)}
-        >
-          <Icon id={id} />
-        </button>
-      ))}
-    </div>
+    <>
+      <div className={styles.switch} role="radiogroup" aria-label={label}>
+        {THEMES.map((id) => (
+          <button
+            key={id}
+            type="button"
+            role="radio"
+            aria-checked={theme === id}
+            aria-label={labels[id]}
+            title={labels[id]}
+            className={styles.option}
+            data-extra={BASE_THEMES.includes(id) ? undefined : ''}
+            onClick={() => applyTheme(id)}
+          >
+            <Icon id={id} />
+          </button>
+        ))}
+      </div>
+      {/* Узкий телефон: пять кнопок в шапку не влезают пальцу, одна нормального размера листает темы по кругу */}
+      <button
+        type="button"
+        className={styles.cycle}
+        aria-label={`${label}: ${labels[theme]}`}
+        title={labels[next]}
+        onClick={() => applyTheme(next)}
+      >
+        <Icon id={theme} />
+      </button>
+    </>
   )
 }
 

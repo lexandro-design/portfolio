@@ -278,6 +278,12 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
                 ))}
               </ol>
             )}
+            {cast.screen === 'term' && (
+              // Невидимая полная лента задаёт высоту окна на телефоне: окно сразу по содержимому и не растёт по шагам
+              <ol className={styles.ghost} aria-hidden="true">
+                {beats.map(({ msg }, i) => msg && <Item key={i} m={msg} fresh={false} />)}
+              </ol>
+            )}
             <span ref={cursor} className={styles.cursor} data-on="false" aria-hidden="true" />
           </div>
         </div>

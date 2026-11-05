@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "node tools/check-content.mjs && next build",
+    "build": "node tools/check-content.mjs && next build && node tools/flat-rsc.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",

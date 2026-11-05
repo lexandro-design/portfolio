@@ -264,14 +264,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
               )}
             </div>
           </div>
-        </div>
 
-        <div className={styles.under}>
-          <Cap className={styles.cap}>{cur.cap}</Cap>
-          <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
-          <div className={styles.notes}>
-            <Note>{t.show.cast.demo}</Note>
-            <Note>{d.note}</Note>
+          <div className={styles.under}>
+            <Cap className={styles.cap}>{cur.cap}</Cap>
+            <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
+            <div className={styles.notes}>
+              <Note>{t.show.cast.demo}</Note>
+              <Note>{d.note}</Note>
+            </div>
           </div>
         </div>
 
