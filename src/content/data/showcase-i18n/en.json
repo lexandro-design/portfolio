@@ -337,19 +337,19 @@
         "Four linked processes: request, generation queue, payment through YooKassa, delivery",
         "All content in the database: the owner changes the bot without touching code"
       ],
-      "result": "Over 3000 users. Preparing a reply got faster from about two seconds to 60 milliseconds.",
+      "result": "Preparing a reply got faster from about two seconds to 60 milliseconds.",
       "nums": [
         {
-          "v": "3000+",
-          "l": "users"
-        },
-        {
           "v": "60 ms",
-          "l": "to prepare a reply instead of ~2 s"
+          "l": "reply prep instead of ~2 s"
         },
         {
           "v": "4",
           "l": "linked processes"
+        },
+        {
+          "v": "3",
+          "l": "models to choose from"
         }
       ]
     },
@@ -942,15 +942,23 @@
     "brief": {
       "task": "Managers spent their time on first-line sales: understanding what the client packs and picking the packaging.",
       "did": [
-        "The client bot picks packaging from a vector base and creates a lead in the CRM",
+        "The bot picks packaging from the catalogue: search by meaning and by name, a product card in reply",
         "Client details are collected in stages, the Bitrix24 lead updates itself",
-        "Calls are turned into text, the contact and the deal fill themselves in"
+        "A conversation summary goes into the lead card after an hour and a half"
       ],
-      "result": "Three scenarios run on one stack, and in each the bot takes over the routine.",
+      "result": "One bot takes the client from a question to a CRM lead and takes the routine on itself.",
       "nums": [
         {
-          "v": "3",
-          "l": "scenarios on one stack"
+          "v": "15 s",
+          "l": "merging the client’s messages"
+        },
+        {
+          "v": "10+",
+          "l": "search phrases per request"
+        },
+        {
+          "v": "90 min",
+          "l": "until the conversation summary"
         }
       ]
     },
@@ -958,32 +966,32 @@
       {
         "kind": "sort",
         "section": 1,
-        "title": "Three scenarios",
+        "title": "Three roads of one bot",
         "lanes": [
           {
-            "label": "sales",
-            "out": "lead in the CRM"
-          },
-          {
-            "label": "training",
+            "label": "picking",
             "out": "product card"
           },
           {
+            "label": "client details",
+            "out": "lead in Bitrix24"
+          },
+          {
             "label": "summary",
-            "out": "deal filled in"
+            "out": "comment in the card"
           }
         ],
         "items": [
           {
-            "text": "I need takeaway sushi packaging",
+            "text": "I need packaging for takeaway sushi",
             "lane": 0
           },
           {
-            "text": "I need packaging for takeaway sushi",
+            "text": "Ivan, +7 900 000-00-00, need a quote",
             "lane": 1
           },
           {
-            "text": "Conversation summary into the lead card after an hour and a half",
+            "text": "The conversation runs for an hour and a half",
             "lane": 2
           },
           {
@@ -1900,7 +1908,7 @@
     "brief": {
       "task": "A newcomer in retail needs to get up to speed on procedures and the range quickly, while a human mentor is busy and the documents are long.",
       "did": [
-        "Hybrid search aware of the role: a storekeeper and a salesperson get their own answers",
+        "Hybrid search aware of the role: a storekeeper and a cashier get their own answers",
         "A first-week program, courses with tests and a trainer of work situations",
         "A training specialist's panel: a question without an answer becomes part of the base"
       ],
@@ -1916,7 +1924,7 @@
         "steps": [
           {
             "text": "role",
-            "note": "salesperson"
+            "note": "cashier"
           },
           {
             "text": "search by meaning",
