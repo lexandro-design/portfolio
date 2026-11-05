@@ -61,10 +61,10 @@ export function HomePage({ locale }: { locale: Locale }) {
           <Services
             t={t.build}
             services={t.services}
+            steps={t.process.steps}
+            route={t.contact.brief.route}
             hello={t.contact.brief.hello}
             need={t.contact.brief.need}
-            titles={Object.fromEntries(items.map((c) => [c.slug, c.title]))}
-            base={base}
           />
         </div>
       </section>

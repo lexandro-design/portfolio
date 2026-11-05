@@ -114,7 +114,13 @@
     {
       "code": "design",
       "title": "UX/UI and design systems",
-      "text": "Design systems that work for the product: colour, type and spacing tokens, components with every state, grid rules. New screens are assembled from ready parts, and developers build without guessing.",
+      "text": "A layout ready to build from: every screen, state and rule in one file.",
+      "items": [
+        "Task analysis and screen structure",
+        "Layouts for phone, tablet and desktop",
+        "Design system: tokens and components",
+        "3D graphics and video when needed"
+      ],
       "price": "from $600",
       "tags": [
         "ux/ui",
@@ -128,7 +134,13 @@
     {
       "code": "web",
       "title": "Websites and back end",
-      "text": "Websites and web apps built on my own design: front end on Tilda or React and Next.js, back end, database and server. Every screen is checked against the design at every width.",
+      "text": "A working site or web app, from front end to server and database, matching the design at every width.",
+      "items": [
+        "Tilda or React and Next.js",
+        "Backend, database and server",
+        "Checked against the design at every width",
+        "Launch and handover of access"
+      ],
       "price": "from $1,200",
       "tags": [
         "react",
@@ -142,7 +154,13 @@
     {
       "code": "automation",
       "title": "Automation and AI",
-      "text": "Telegram bots and AI assistants, CRM and payment integrations, databases, RAG search over documents. Can keep data and models in Russia under data law 152-FZ.",
+      "text": "Requests, replies and documents get processed on their own, and people step in where a decision is needed.",
+      "items": [
+        "Telegram bots and AI assistants",
+        "CRM and payment integrations",
+        "RAG search across documents",
+        "152-FZ compliant: data and models in Russia"
+      ],
       "price": "from $240",
       "tags": [
         "javascript",
@@ -534,61 +552,8 @@
     "hint": "↑↓ select · enter open · esc close"
   },
   "build": {
-    "lead": "One project shows it best. Parfumeria.by, a perfume store: I did the analysis, design, 3D and code myself, so nothing got lost between stages.",
-    "project": "Parfumeria.by",
-    "steps": [
-      {
-        "code": "analysis",
-        "title": "Analysis",
-        "text": "I went through the range, built the catalogue and sorted products by meaning: perfume under perfume, a brand page with that brand only. The layouts run on real data, not filler.",
-        "fact": "951 items and 56 brands from the real catalogue",
-        "chips": [
-          "perfume",
-          "skincare",
-          "makeup"
-        ]
-      },
-      {
-        "code": "design",
-        "title": "Design",
-        "text": "System first: colour and type in variables, a component library. Then every screen of the store, from home to account, with all states.",
-        "fact": "450+ screens at 1440, 768 and 375",
-        "chips": [
-          "screens",
-          "phone",
-          "colour",
-          "type"
-        ]
-      },
-      {
-        "code": "3d",
-        "title": "3D",
-        "text": "Video banners for the home page in Blender: glass, liquid, cap and label match the real product.",
-        "fact": "8–10 second loops at 60 frames per second",
-        "chips": []
-      },
-      {
-        "code": "code",
-        "title": "Code",
-        "text": "I built the storefront for myself in Next.js to test the design in a browser: catalogue, product page, cart, account. The card here works: pick a size and add it to the cart.",
-        "fact": "every screen checked against the layout at 1440, 768 and 375",
-        "chips": []
-      }
-    ],
-    "whole": "full case",
-    "shop": {
-      "add": "add to cart",
-      "size": "size"
-    },
-    "beyond": {
-      "title": "Automation and AI agents",
-      "text": "The store had none of this, it is a separate part of my work: bots, CRM integration, document search.",
-      "cases": [
-        "mail-to-crm",
-        "rag-mentor",
-        "brain-search"
-      ]
-    },
+    "lead": "I build the whole product or just the part that's missing. Tick what you need and the request writes itself.",
+    "more": "more on the stages",
     "discuss": "discuss this set",
     "write": "message me now"
   }

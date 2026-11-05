@@ -1,6 +1,6 @@
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: var(--space-2xl);
   align-items: start;
 }
@@ -14,27 +14,29 @@
   color: var(--fg-secondary);
 }
 
-.steps {
+.layers {
   border-block-end: 1px solid var(--border-hair);
 }
 
-.step {
+.layer {
+  padding-block: var(--space-md) var(--space-lg);
   border-block-start: 1px solid var(--border-hair);
 }
 
 .head {
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
   align-items: baseline;
+  gap: var(--space-sm);
   inline-size: 100%;
-  padding-block: var(--space-sm);
+  padding-block: var(--space-xs);
   text-align: start;
   color: var(--fg-tertiary);
   transition: color var(--dur-base) var(--ease-out-quart);
 }
 
-.head:hover,
-.step[data-on] .head {
+.layer[data-on] .head,
+.head:hover {
   color: var(--fg-primary);
 }
 
@@ -43,9 +45,17 @@
   outline-offset: 2px;
 }
 
-.index {
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
+.check {
+  align-self: center;
+  inline-size: 16px;
+  block-size: 16px;
+  border: 1px solid var(--border-hover);
+}
+
+.head[aria-pressed='true'] .check {
+  border-color: var(--fg-primary);
+  background: var(--fg-primary);
+  box-shadow: inset 0 0 0 3px var(--bg-base);
 }
 
 .title {
@@ -54,322 +64,103 @@
   letter-spacing: -0.02em;
 }
 
+.price {
+  font-size: var(--type-body);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.text,
+.items {
+  padding-inline-start: calc(20px + var(--space-sm));
+}
+
 .text {
-  max-inline-size: 34em;
+  max-inline-size: 36em;
+  margin-block-start: var(--space-xs);
   color: var(--fg-secondary);
 }
 
-.step .text {
-  padding-block-end: var(--space-md);
-  padding-inline-start: 32px;
-}
-
-/* Пояснения всех этапов лежат в вёрстке, скрыт лишний: высоту списка держит useReserve */
-.fold {
+.items {
   display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-slow) var(--ease-out-expo);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px var(--space-lg);
+  margin-block-start: var(--space-sm);
+  font-size: var(--type-body-sm);
+  line-height: 1.4;
+  color: var(--fg-primary);
 }
 
-.step[data-on] .fold {
-  grid-template-rows: 1fr;
+.layer:not([data-on]) :is(.text, .items) {
+  color: var(--fg-tertiary);
 }
 
-.inner {
-  min-block-size: 0;
-  overflow: hidden;
-  visibility: hidden;
-  transition: visibility var(--dur-slow);
-}
-
-.step[data-on] .inner {
-  visibility: visible;
-}
-
-.whole {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-block-start: var(--space-md);
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  transition: opacity var(--dur-base) var(--ease-out-quart);
-}
-
-.whole:hover {
-  opacity: 0.7;
-}
-
-/* Экран проекта: подпись и переключатель сверху, настоящий материал, факт снизу */
+/* Разрез стоит рядом, пока читают список слоёв */
 .side {
+  position: sticky;
+  inset-block-start: calc(var(--nav-h) + var(--space-md));
   display: grid;
   gap: var(--space-lg);
   min-inline-size: 0;
 }
 
-.stage {
-  border: 1px solid var(--border-hair);
-  background: var(--bg-elevated);
+.route {
+  display: grid;
+  gap: var(--space-xs);
 }
 
-.bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px var(--space-md);
-  padding: 10px var(--space-sm);
+.routeLabel {
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
-  border-block-end: 1px solid var(--border-hair);
 }
 
-.chipsStack {
-  display: grid;
-  min-inline-size: 0;
-}
-
-.chips {
-  grid-area: 1 / 1;
+.path {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
-  visibility: hidden;
+  gap: 4px var(--space-sm);
+  font-size: var(--type-body-sm);
+  color: var(--fg-tertiary);
 }
 
-.chips[data-on] {
-  visibility: visible;
+.path li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color var(--dur-base) var(--ease-out-quart);
 }
 
-.chips button,
-.sizes button {
-  padding: 5px 10px;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono-sm);
-  color: var(--fg-secondary);
-  border: 1px solid transparent;
-  transition:
-    color var(--dur-fast) var(--ease-out-quart),
-    background-color var(--dur-fast) var(--ease-out-quart);
+.path li::before {
+  content: '';
+  inline-size: 7px;
+  block-size: 7px;
+  border: 1px solid currentcolor;
 }
 
-.chips button:hover,
-.sizes button:hover {
+.path li[data-on] {
   color: var(--fg-primary);
 }
 
-.chips button[aria-pressed='true'],
-.sizes button[aria-pressed='true'] {
-  background: var(--fg-primary);
-  color: var(--fg-inverse);
+.path li[data-on]::before {
+  background: currentcolor;
 }
 
-.view {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--bg-subtle);
-}
-
-.shot {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: contain;
-}
-
-.table {
-  inline-size: 100%;
-  block-size: 100%;
-  border-collapse: collapse;
-  font-size: var(--type-body-sm);
-}
-
-.table tr + tr :is(th, td) {
-  border-block-start: 1px solid var(--border-hair);
-}
-
-.table :is(th, td) {
-  padding: 8px var(--space-sm);
-  text-align: start;
-  font-weight: 400;
-}
-
-.table th {
-  inline-size: 32%;
-  font-weight: 500;
-}
-
-.table td {
-  color: var(--fg-secondary);
-}
-
-.table td:last-child {
+.more {
+  justify-self: start;
   font-family: var(--font-mono);
   font-size: var(--type-mono);
-  text-align: end;
-  white-space: nowrap;
-}
-
-/* Рабочая карточка товара */
-.shop {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  block-size: 100%;
-}
-
-.shop img {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: contain;
-  background: #fff;
-}
-
-.buy {
-  display: grid;
-  justify-items: start;
-  gap: 8px;
-  padding: var(--space-md);
-}
-
-.brand {
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  color: var(--fg-tertiary);
-}
-
-.name {
-  font-size: var(--type-h3);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.sizes {
-  display: flex;
-  gap: 2px;
-}
-
-.price {
-  font-size: var(--type-h4);
-}
-
-.add {
-  padding: 10px 16px;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  background: var(--fg-primary);
-  color: var(--fg-inverse);
-  transition: opacity var(--dur-base) var(--ease-out-quart);
-}
-
-.add:hover {
-  opacity: 0.8;
-}
-
-.state {
-  margin: 4px 0 0;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono-sm);
-  line-height: 1.5;
-  color: var(--fg-tertiary);
-  white-space: pre-wrap;
-}
-
-.facts {
-  display: grid;
-  border-block-start: 1px solid var(--border-hair);
-}
-
-.fact {
-  grid-area: 1 / 1;
-  visibility: hidden;
-  padding: 10px var(--space-sm);
-  font-size: var(--type-body-sm);
-  color: var(--fg-secondary);
-}
-
-.fact[data-on] {
-  visibility: visible;
-}
-
-.beyond {
-  display: grid;
-  gap: 8px;
-}
-
-.beyondTitle {
-  font-size: var(--type-h4);
-  font-weight: 450;
-  letter-spacing: -0.015em;
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px var(--space-md);
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-}
-
-.links a {
   text-decoration: underline;
-  text-underline-offset: 3px;
   text-decoration-color: var(--border-hover);
+  text-underline-offset: 3px;
 }
 
-.links a:hover {
+.more:hover {
   text-decoration-color: currentcolor;
 }
 
-.total {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  justify-content: space-between;
+.order {
+  display: grid;
   gap: var(--space-md);
-  padding-block-start: var(--space-md);
-  border-block-start: 1px solid var(--border-hair);
-}
-
-.prices {
-  display: grid;
-  gap: 4px;
-  min-inline-size: 16em;
-  flex: 1 1 16em;
-  font-size: 15px;
-  color: var(--fg-secondary);
-}
-
-.prices button {
-  display: grid;
-  grid-template-columns: 14px 1fr auto;
-  align-items: center;
-  gap: 10px;
-  inline-size: 100%;
-  text-align: start;
-}
-
-.prices i {
-  inline-size: 12px;
-  block-size: 12px;
-  border: 1px solid var(--border-hover);
-}
-
-.prices button[aria-pressed='true'] i {
-  background: var(--fg-primary);
-  box-shadow: inset 0 0 0 2px var(--bg-base);
-}
-
-.prices button[aria-pressed='false'] {
-  opacity: 0.55;
-}
-
-.prices b {
-  font-weight: 500;
-  white-space: nowrap;
-  color: var(--fg-primary);
 }
 
 .actions {
@@ -404,77 +195,67 @@
   opacity: 0.8;
 }
 
+/* Одна колонка: подводка, разрез, слои, заказ */
 @media (max-width: 1023px) {
   .grid {
-    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-lg);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .main,
+  .side {
+    display: contents;
   }
 
   .lead {
-    margin-block-end: var(--space-lg);
+    order: 1;
+    margin-block-end: 0;
+  }
+
+  .figure {
+    order: 2;
+    justify-self: center;
+    inline-size: min(100%, 420px);
+  }
+
+  .layers {
+    order: 3;
+  }
+
+  .order {
+    order: 4;
   }
 }
 
 @media (max-width: 767px) {
+  .figure {
+    inline-size: min(100%, 300px);
+  }
+
+  .head {
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 2px var(--space-xs);
+    min-block-size: 44px;
+  }
+
   .title {
     font-size: 26px;
   }
 
-  .view {
-    aspect-ratio: 4 / 3;
-  }
-
-  .table {
-    font-size: 13px;
-  }
-
-  .table :is(th, td) {
-    padding: 4px 10px;
-  }
-
-  .table th {
-    inline-size: 34%;
-  }
-
-  .buy {
-    gap: 4px;
-    padding: var(--space-sm);
-  }
-
-  .name {
-    font-size: 20px;
-  }
-
   .price {
-    font-size: 17px;
+    grid-column: 2;
   }
 
-  .add {
-    padding: 8px 12px;
+  .text,
+  .items {
+    padding-inline-start: calc(20px + var(--space-xs));
   }
 
-  .state {
-    display: none;
+  .items {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .whole {
-    min-block-size: 44px;
-    margin-block-start: var(--space-xs);
-  }
-
-  .prices {
-    gap: 0;
-  }
-
-  .prices button {
-    min-block-size: 44px;
-  }
-
-  .links {
-    gap: 0 var(--space-md);
-  }
-
-  .links a {
+  .more {
     display: inline-flex;
     align-items: center;
     min-block-size: 44px;

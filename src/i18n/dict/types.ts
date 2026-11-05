@@ -73,22 +73,19 @@ export type Dict = {
     code: string
     title: string
     text: string
+    /** Что входит в услугу */
+    items: string[]
     /** Стартовая цена направления: «от 50 000 ₽» */
     price: string
     tags: string[]
     filter: Direction
   }[]
 
-  /** Сборка продукта в разделе услуг: слои включает посетитель, цены берутся из services */
+  /** Раздел услуг: слои и цены берутся из services, этапы из process */
   build: {
     lead: string
-    project: string
-    /** Этапы одного проекта: подпись переключателя chips идёт по порядку кадров в Services */
-    steps: { code: 'analysis' | 'design' | '3d' | 'code'; title: string; text: string; fact: string; chips: string[] }[]
-    whole: string
-    shop: { add: string; size: string }
-    /** Что в этом проекте не делалось: своя строка со своими кейсами */
-    beyond: { title: string; text: string; cases: string[] }
+    /** Ссылка на раздел этапов */
+    more: string
     discuss: string
     write: string
   }

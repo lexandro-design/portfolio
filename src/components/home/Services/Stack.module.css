@@ -1,0 +1,95 @@
+.stack {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+
+.guide {
+  fill: none;
+  stroke: var(--border-hover);
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.plate {
+  transform: translateY(12px);
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.plate[data-on] {
+  transform: none;
+}
+
+.plate[data-hot] {
+  transform: translateY(-10px);
+}
+
+.top,
+.edge {
+  stroke: var(--border-hover);
+  stroke-linejoin: round;
+  stroke-dasharray: 4 5;
+  vector-effect: non-scaling-stroke;
+  transition:
+    fill var(--dur-base) var(--ease-out-quart),
+    stroke var(--dur-base) var(--ease-out-quart);
+}
+
+.top {
+  fill: var(--bg-base);
+}
+
+.edge {
+  fill: var(--bg-base);
+}
+
+.plate[data-on] .top,
+.plate[data-on] .edge {
+  stroke: var(--fg-primary);
+  stroke-dasharray: none;
+}
+
+.plate[data-on] .top {
+  fill: var(--bg-elevated);
+}
+
+.plate[data-on] .edge {
+  fill: var(--bg-subtle);
+}
+
+.face {
+  opacity: 0.3;
+  transition: opacity var(--dur-base) var(--ease-out-quart);
+}
+
+.plate[data-on] .face {
+  opacity: 1;
+}
+
+.face > * {
+  fill: none;
+  stroke: var(--fg-primary);
+  vector-effect: non-scaling-stroke;
+}
+
+.face > [data-fill] {
+  fill: var(--fg-primary);
+}
+
+.plate[data-on] .face > [data-fill] {
+  fill: var(--accent);
+  stroke: var(--fg-primary);
+}
+
+/* Светлая тема: бледный акцент теряется на плите */
+:global([data-theme='light']) .plate[data-on] .face > [data-fill] {
+  fill: var(--fg-primary);
+}
+
+/* Разрез и заказ помещаются в экран вместе */
+@media (min-width: 1024px) {
+  .stack {
+    max-block-size: max(340px, calc(100dvh - var(--nav-h) - 260px));
+  }
+}
