@@ -17,6 +17,9 @@ export function Chat({
   live,
   fit,
   minHeight,
+  skin,
+  busy,
+  bar,
   className,
   style,
   children,
@@ -35,6 +38,12 @@ export function Chat({
   fit?: boolean
   /** Нижняя граница высоты в режиме fit: число в px или любая CSS-длина */
   minHeight?: number | string
+  /** tg: окно как тёмный Telegram на устройстве: круглый аватар, обои, стекло, строка ввода. Цвета свои на любой теме сайта */
+  skin?: 'tg'
+  /** Подпись в шапке цветом сцены, как «печатает…» */
+  busy?: boolean
+  /** Строка ввода внизу окна (только skin tg). hint подсвечивает скрепку */
+  bar?: { menu: string; field: string; hint?: boolean }
   className?: string
   style?: CSSProperties
   children: ReactNode
@@ -71,21 +80,52 @@ export function Chat({
       className={[styles.chat, className].filter(Boolean).join(' ')}
       data-tone={tone}
       data-fit={fit || undefined}
+      data-skin={skin}
       style={fitStyle ? { ...style, ...fitStyle } : style}
     >
       <div ref={topRef} className={styles.top}>
+        {skin && (
+          <svg className={styles.back} viewBox="0 0 12 20" width="12" height="20" aria-hidden="true" focusable="false">
+            <path d="M10 2 2 10l8 8" />
+          </svg>
+        )}
         <span className={styles.ava} aria-hidden="true">
           {avatar ?? title.slice(0, 1)}
         </span>
         <span className={styles.who}>
-          {title}
-          {sub && <small>{sub}</small>}
+          {skin ? <b className={styles.line}>{title}</b> : title}
+          {sub && <small data-busy={busy || undefined}>{sub}</small>}
         </span>
-        <span className={styles.dot} data-on={live || undefined} aria-hidden="true" />
+        {skin ? (
+          <span className={styles.more} aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+        ) : (
+          <span className={styles.dot} data-on={live || undefined} aria-hidden="true" />
+        )}
       </div>
       <ol ref={feedRef} className={styles.feed}>
         {children}
       </ol>
+      {bar && (
+        <div className={styles.bar} aria-hidden="true">
+          <span className={styles.menu}>
+            <svg viewBox="0 0 16 12" width="16" height="12" focusable="false">
+              <path d="M1 1h14M1 6h14M1 11h14" />
+            </svg>
+            {bar.menu}
+          </span>
+          <span className={styles.field}>{bar.field}</span>
+          <svg className={styles.clip} data-hint={bar.hint || undefined} viewBox="0 0 24 24" width="24" height="24" focusable="false">
+            <path d="M20 11.5 12.2 19.3a5 5 0 0 1-7.1-7.1l8.1-8.1a3.4 3.4 0 0 1 4.8 4.8l-8 8a1.7 1.7 0 0 1-2.4-2.4l7.3-7.3" />
+          </svg>
+          <svg className={styles.mic} viewBox="0 0 24 24" width="24" height="24" focusable="false">
+            <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3ZM5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3" />
+          </svg>
+        </div>
+      )}
     </div>
   )
 }
