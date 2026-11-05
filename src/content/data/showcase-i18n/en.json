@@ -331,11 +331,11 @@
   },
   "mimimibot": {
     "brief": {
-      "task": "My own product: AI photoshoots with a digital twin right in Telegram, with payment inside the bot.",
+      "task": "My own product: Pinterest-style shots with the person’s face right in Telegram, with payment inside the bot.",
       "did": [
-        "A carousel of ready shots, a twin from 10–20 photos, generation modes",
+        "A carousel of ready-made shots, 3–5 of your own photos, a shot in one tap",
         "Four linked processes: request, generation queue, payment through YooKassa, delivery",
-        "All content in the database: the owner changes the bot through an admin panel, without editing code"
+        "All content in the database: the owner changes the bot without touching code"
       ],
       "result": "Over 3000 users. Preparing a reply got faster from about two seconds to 60 milliseconds.",
       "nums": [
@@ -365,10 +365,10 @@
           "delivery of the result"
         ],
         "items": [
-          "\"Vacation\" photoshoot",
+          "shot from the carousel",
           "a shot from a reference",
           "makeup and hairstyle",
-          "the whole photoshoot"
+          "filter"
         ]
       },
       {
@@ -574,9 +574,9 @@
       "did": [
         "\"Andrey\" answers customers in the CRM chat and fills in the lead himself",
         "\"Sofia\" searches the catalog and procedures for the warehouse and managers",
-        "Request route: SQL on the catalog, a cheap or a powerful model, an answer cache"
+        "Routing by intent: SQL on the catalog, a ready answer, the model on the knowledge base, or a manager"
       ],
-      "result": "The model is used only where it can't be avoided, so the bot answers faster and cheaper.",
+      "result": "The model is brought in only where you can’t do without it: products are found in the catalog, standard topics are covered by ready text.",
       "nums": [
         {
           "v": "2",
@@ -588,23 +588,23 @@
       {
         "kind": "sort",
         "section": 2,
-        "title": "Where a request goes",
+        "title": "Where a message goes",
         "lanes": [
           {
-            "label": "SQL on the catalog",
-            "out": "products without a neural network"
+            "label": "catalog",
+            "out": "SQL, no neural network"
           },
           {
-            "label": "cheap model",
-            "out": "simple question"
+            "label": "model",
+            "out": "company knowledge base"
           },
           {
-            "label": "powerful model",
-            "out": "complex question"
+            "label": "ready answer",
+            "out": "price list and standard topics"
           },
           {
             "label": "manager",
-            "out": "sees the whole chat"
+            "out": "gets a card"
           }
         ],
         "items": [
@@ -617,7 +617,7 @@
             "lane": 1
           },
           {
-            "text": "how is brioche different from regular bread?",
+            "text": "is there halal?",
             "lane": 2
           },
           {
@@ -940,7 +940,7 @@
   },
   "packaging-bots": {
     "brief": {
-      "task": "Managers spent time on first sales, training newcomers and sorting calls by hand. The data must be stored in Russia.",
+      "task": "Managers spent their time on first-line sales, onboarding new staff and going through calls by hand.",
       "did": [
         "The client bot picks packaging from a vector base and creates a lead in the CRM",
         "The internal bot trains employees on procedures, access by department",
@@ -1109,13 +1109,13 @@
   },
   "resort-bot": {
     "brief": {
-      "task": "Cabin booking in chat: from a guest's question to a deal in the CRM.",
+      "task": "Booking requests in chat: from the guest’s first message to a deal in the CRM.",
       "did": [
-        "Clarifies dates and number of guests, checks free cabins and calculates the price",
+        "Parses the phrase into fields: dates, adults, children, phone, and asks for what’s missing",
         "Answers questions about the resort by searching documents",
-        "The booking and lead are created in Bitrix24 through Open Channels"
+        "The lead and deal are created in Bitrix24 through Open Channels"
       ],
-      "result": "The manager gets a ready booking and sees the whole conversation. Everything runs on the client's server under Federal Law 152-FZ.",
+      "result": "The manager gets a filled-in request and sees the whole conversation.",
       "nums": []
     },
     "blocks": [
@@ -1126,27 +1126,27 @@
         "prompt": "We'd like a cabin for the weekend, there are four of us",
         "steps": [
           {
+            "text": "intent",
+            "note": "booking"
+          },
+          {
             "text": "dates",
-            "note": "weekend"
+            "note": "ask the guest"
           },
           {
             "text": "guests",
-            "note": "4"
+            "note": "adults and children by age"
           },
           {
-            "text": "free cabins",
-            "note": "checked"
+            "text": "child under 2",
+            "note": "is a cradle needed"
           },
           {
-            "text": "price",
-            "note": "calculated"
-          },
-          {
-            "text": "booking and lead",
+            "text": "lead and deal",
             "note": "in Bitrix24"
           }
         ],
-        "out": "Booking created, the manager will get in touch to confirm"
+        "out": "Thanks for getting in touch! I'm checking room availability. I'll contact you shortly."
       }
     ]
   },
@@ -1277,9 +1277,9 @@
     "brief": {
       "task": "Requests arrived at a shared mailbox, and managers moved them into the CRM by hand. Some emails got lost, some went to the wrong funnel.",
       "did": [
-        "The email and attachments are parsed automatically",
-        "Request type: customer, supplier, spam and others",
-        "A deal in the right Bitrix24 funnel with the original email and an owner, duplicates are dropped"
+        "The email text is stripped of HTML and quotes",
+        "The model decides the type: customer, supplier or spam",
+        "The type and a mark are set in the Bitrix24 deal, spam goes to rejection"
       ],
       "result": "Managers no longer sort the mail by hand.",
       "nums": []
@@ -1290,16 +1290,16 @@
         "section": 1,
         "title": "The email's path",
         "stages": [
-          "incoming",
-          "email and attachment parsing",
+          "email",
+          "deal in Bitrix24",
           "request type",
-          "deal in the funnel"
+          "mark in the deal"
         ],
         "items": [
           "Price request for boxes",
           "Invoice for a film delivery",
           "Need bags with a logo",
-          "Price request for boxes · duplicate"
+          "You won a prize · spam"
         ]
       }
     ]
@@ -1518,17 +1518,17 @@
   },
   "art-school": {
     "brief": {
-      "task": "A student needs feedback on a drawing before the work goes to the teacher.",
+      "task": "A student needs feedback on a drawing right away, not at the next lesson.",
       "did": [
-        "The bot compares a photo of the drawing with the teacher's references",
-        "A model with image recognition writes specific remarks",
-        "A two-step check: the bot first, then the teacher"
+        "The bot finds the teacher’s nearest reference",
+        "A model with image recognition compares the work with the reference",
+        "A grade from 0 to 100 and a breakdown by five criteria"
       ],
-      "result": "The teacher receives a work that is already improved.",
+      "result": "The student sees what to fix and can show a new version as many times as they like.",
       "nums": [
         {
-          "v": "2",
-          "l": "check steps"
+          "v": "5",
+          "l": "criteria in the feedback"
         }
       ]
     },
@@ -1544,23 +1544,23 @@
             "note": "received"
           },
           {
-            "text": "teacher's references",
-            "note": "comparison"
+            "text": "description",
+            "note": "subject, technique, level"
           },
           {
-            "text": "composition",
-            "note": "ok"
+            "text": "reference",
+            "note": "nearest"
           },
           {
-            "text": "proportions",
-            "note": "fix the head"
+            "text": "comparison",
+            "note": "the reference equals 100 points"
           },
           {
-            "text": "light and shade",
-            "note": "fix the shadow"
+            "text": "feedback",
+            "note": "by five criteria"
           }
         ],
-        "out": "Fix what is marked: the proportions of the head and the direction of the shadow"
+        "out": "Grade: 72 out of 100"
       }
     ]
   },
@@ -1643,24 +1643,23 @@
         "app": "lexandro_assistant_bot",
         "items": [
           {
-            "text": "The Web desk is waiting for a decision: publish the site?",
+            "text": "❓ #012 web: publishing the site?",
             "actions": [
-              "Yes",
-              "No"
+              "✅ Yes",
+              "❌ No",
+              "✍️ My own"
             ]
           },
           {
-            "text": "The agent asks permission for an action",
+            "text": "The desk asks permission for an action",
             "actions": [
-              "Allow",
-              "No"
+              "✅ Allow",
+              "❌ No"
             ]
           },
           {
-            "text": "Done: a screenshot of the work",
-            "actions": [
-              "Open"
-            ]
+            "text": "passed to the Dispatcher",
+            "actions": []
           }
         ],
         "replies": [
@@ -1803,7 +1802,7 @@
     "brief": {
       "task": "To run a channel with three posts a day without spending the whole day on it.",
       "did": [
-        "Drafts are built in several passes: write, clear of clichés, put together",
+        "Drafts are built in several passes: the author, a code check for clichés, the editor",
         "A bot in the cloud sends the post with buttons and publishes the approved one in its slot",
         "Every edit is saved as a \"before → after\" pair and teaches the next drafts"
       ],
@@ -1826,10 +1825,10 @@
         "title": "A draft goes through several rounds",
         "passes": [
           "topic and primary source",
-          "draft",
-          "clichés and bureaucratese",
-          "assembly and a template gif",
-          "bot: approve"
+          "author writes",
+          "code catches clichés",
+          "editor by checklist",
+          "bot: publish"
         ],
         "was": "In the modern world of design it is important to follow trends.",
         "now": "A new feature came out in Figma, and I've already moved two designs onto it.",
@@ -1850,14 +1849,14 @@
       "task": "Design and development orders are scattered across dozens of channels, and by the time you read the feed, the good ones are taken.",
       "did": [
         "The agent reads a chosen folder of channels and the exchange feed",
-        "Scores an order against our skills and sends a card with advice on price and timing",
-        "Prepares a draft reply on a button, the decision is always the person's"
+        "Scores the order against our skills and sends a card with a price range from the price list",
+        "Prepares a draft on a button, a person writes to the client"
       ],
-      "result": "Suitable orders arrive as cards, and the price and timing stay up to us.",
+      "result": "Suitable orders arrive as cards, while the price and the conversation with the client stay with us.",
       "nums": [
         {
-          "v": "10",
-          "l": "cold messages a day, at most"
+          "v": "50",
+          "l": "score threshold: below it no card arrives"
         }
       ]
     },
@@ -1869,30 +1868,30 @@
         "note": "an example, the orders are made up",
         "items": [
           {
-            "src": "orders channel · 2 min",
+            "src": "Kwork · 2 min",
             "text": "Need a landing page for a coffee shop: a design in Figma and front-end.",
             "score": 86,
             "ok": true,
-            "tip": "price per price list · 5 days"
+            "tip": "our price range from the price list"
           },
           {
-            "src": "exchange · 6 min",
+            "src": "orders channel · 6 min",
             "text": "Set up warehouse accounting in an accounting system.",
             "score": 12,
             "ok": false,
-            "tip": "not our profile"
+            "tip": "below the threshold"
           }
         ],
-        "draft": "I'll make the landing page turnkey: design, front-end, responsive. I'll show similar work.",
+        "draft": "We'll build the landing page turnkey: layout, front-end, responsive. We'll show similar work.",
         "actions": [
-          "Send",
-          "Edit"
+          "✅ Wrote",
+          "🙈 Skip"
         ],
         "rules": [
           "prices only from the price list",
-          "no more than 10 cold messages a day",
-          "doesn't lie to \"is this a bot?\"",
-          "doesn't read private chats"
+          "a person writes to clients",
+          "ads and vacancies are filtered out",
+          "the status is visible to the whole team"
         ]
       }
     ]
@@ -1932,7 +1931,7 @@
             "note": "with a link to the document"
           }
         ],
-        "out": "Per the returns procedure: three steps [1]",
+        "out": "A return without a receipt follows the returns procedure [1]",
         "miss": {
           "text": "no answer in the base",
           "steps": [
@@ -1972,19 +1971,19 @@
         "events": [
           {
             "time": "in the evening",
-            "text": "Tomorrow 2 classes, the first at 10:00"
+            "text": "Tomorrow’s classes: 10:00 and 12:00"
           },
           {
             "time": "before a webinar",
-            "text": "Webinar link"
+            "text": "🎥 Webinar in 30 min"
           },
           {
             "time": "three days ahead",
-            "text": "Deadline soon: practical work"
+            "text": "⏰ Not submitted, due soon: 3 days left"
           },
           {
             "time": "a day ahead",
-            "text": "Deadline in a day: practical work"
+            "text": "⏰ Not submitted, due soon: 24 h left"
           }
         ],
         "tick": "a check every 15 minutes"
@@ -1999,7 +1998,7 @@
         "After booking, the time closes for others",
         "A reminder to the client before the visit"
       ],
-      "result": "A client books in a couple of taps. Runs locally, under Federal Law 152-FZ.",
+      "result": "The client books in a couple of taps.",
       "nums": []
     },
     "blocks": [
@@ -2032,30 +2031,30 @@
   },
   "team-reports": {
     "brief": {
-      "task": "Employees hand in reports as WhatsApp messages, and they have to be collected, checked and summarised.",
+      "task": "Employees report raw material intake in WhatsApp messages, which have to be collected and summed up.",
       "did": [
-        "The bot parses a message into fields and writes to a table",
-        "If a field is missing or the format is wrong, it asks for a fix right away",
-        "At the start of the month it builds a summary KPI report"
+        "The bot splits the message into lines and writes them to a table",
+        "Editing a message updates the rows, deleting removes them",
+        "Once a month a summary adds up the weight for each person"
       ],
-      "result": "Reports sit in a table, and the KPI summary builds itself. Local, under Federal Law 152-FZ.",
+      "result": "The data sits in a table and the chat stays a working one: the bot doesn’t write in it.",
       "nums": []
     },
     "blocks": [
       {
         "kind": "queue",
         "section": 0,
-        "title": "The report's path",
+        "title": "The path of a message",
         "stages": [
           "message",
-          "field check",
+          "parsing into fields",
           "table",
-          "KPI report"
+          "monthly summary"
         ],
         "items": [
-          "daily report",
-          "report with a missing field · request to fix",
-          "daily report",
+          "daily intake",
+          "message edit",
+          "daily intake",
           "month summary"
         ]
       }
@@ -2065,54 +2064,54 @@
     "brief": {
       "task": "A tracker of workouts, weight and diet in Telegram.",
       "did": [
-        "Records workouts, weight and diet, counts calories",
-        "Suggests recipes and handles complaints about well-being",
-        "A weekly progress report and a data export for the owner"
+        "Logs workouts and measurements, counts calories and macros from a photo of a dish",
+        "Suggests recipes and answers questions as a trainer and a dietitian",
+        "Personal reminders and an evening report for the day"
       ],
-      "result": "Progress is visible once a week without manual tracking.",
+      "result": "Progress shows every evening without manual tracking.",
       "nums": []
     },
     "blocks": [
       {
         "kind": "trace",
         "section": 0,
-        "title": "A week in the bot",
-        "prompt": "Workout and lunch",
+        "title": "A day in the bot",
+        "prompt": "Photo of lunch",
         "steps": [
           {
-            "text": "workout",
-            "note": "recorded"
+            "text": "dish",
+            "note": "recognized from the photo"
           },
           {
             "text": "diet",
-            "note": "calories counted"
+            "note": "calories and macros calculated"
           },
           {
-            "text": "recommendations",
-            "note": "a recipe"
+            "text": "workout",
+            "note": "logged as a line"
           },
           {
-            "text": "end of the week",
-            "note": "progress report"
+            "text": "evening",
+            "note": "daily report"
           }
         ],
-        "out": "The weekly report is ready"
+        "out": "Evening report: today’s nutrition and workouts"
       }
     ]
   },
   "dice-bots": {
     "brief": {
-      "task": "Dice mini-games with bets inside Telegram, two projects.",
+      "task": "Mini-games with prizes in Telegram group chats.",
       "did": [
-        "Games on Telegram's built-in dice",
-        "Bets and result calculation",
-        "Player statistics and owner reports from the database"
+        "Games on built-in emoji: slot, dice, bowling, darts, ball",
+        "A counter of the day’s wins and prize tables",
+        "A request to the admin about a new winner"
       ],
-      "result": "The owner sees statistics and reports without opening the database.",
+      "result": "The game runs by itself, the admin steps in only for the payout.",
       "nums": [
         {
-          "v": "2",
-          "l": "bots"
+          "v": "5",
+          "l": "games on Telegram emoji"
         }
       ]
     },
@@ -2121,38 +2120,38 @@
         "kind": "trace",
         "section": 0,
         "title": "One throw",
-        "prompt": "Bet",
+        "prompt": "🎰",
         "steps": [
           {
-            "text": "bet",
-            "note": "accepted"
+            "text": "emoji",
+            "note": "thrown by the player"
           },
           {
-            "text": "throw",
-            "note": "Telegram dice"
+            "text": "value",
+            "note": "from Telegram"
           },
           {
-            "text": "result",
-            "note": "calculated"
+            "text": "counter",
+            "note": "wins today"
           },
           {
-            "text": "statistics",
-            "note": "in the database"
+            "text": "prize",
+            "note": "request to the admin"
           }
         ],
-        "out": "The result and the player's statistics"
+        "out": "Congratulations! Expect your prize within a few minutes"
       }
     ]
   },
   "media-to-rag": {
     "brief": {
-      "task": "Videos and voice messages from Yandex Disk had to be turned into a knowledge base for an assistant.",
+      "task": "Documents from Yandex Disk had to be turned into a knowledge base for the assistant.",
       "did": [
         "New files are picked up from the Disk automatically",
-        "Conversion and transcription into text",
+        "Text is extracted from docx, pdf and txt",
         "Chunking, embeddings and loading into a vector database"
       ],
-      "result": "The assistant answers from the content of the videos and voice messages. Local, under Federal Law 152-FZ.",
+      "result": "The assistant answers from the content of the files, and the base tracks changes on the Disk by itself.",
       "nums": []
     },
     "blocks": [
@@ -2162,16 +2161,16 @@
         "title": "The file's path",
         "stages": [
           "Yandex Disk",
-          "transcription",
+          "text",
           "chunks",
           "embeddings",
           "vector database"
         ],
         "items": [
-          "video",
-          "voice message",
-          "video",
-          "voice message"
+          "contract.docx",
+          "price-list.pdf",
+          "procedure.docx",
+          "notes.txt"
         ]
       }
     ]

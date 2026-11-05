@@ -20,6 +20,21 @@
   color: var(--fg-primary);
 }
 
+/* Черта между стандартными темами и дополнительными */
+.option:not([data-extra]) + .option[data-extra] {
+  position: relative;
+  margin-inline-start: 7px;
+}
+
+.option:not([data-extra]) + .option[data-extra]::before {
+  content: '';
+  position: absolute;
+  inset-block: 5px;
+  inset-inline-start: -5px;
+  inline-size: 1px;
+  background: var(--border-hover);
+}
+
 .option[aria-checked='true'] {
   background: var(--fg-primary);
   color: var(--fg-inverse);
@@ -29,6 +44,13 @@
   .option {
     inline-size: 28px;
     block-size: 28px;
+  }
+}
+
+/* Пять кнопок на узком телефоне: иначе меню в шапке уходит за край */
+@media (max-width: 419px) {
+  .option {
+    inline-size: 23px;
   }
 }
 

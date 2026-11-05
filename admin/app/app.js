@@ -44,6 +44,8 @@ const SITE_THEMES = [
   ['dark', 'Тёмная'],
   ['light', 'Светлая'],
   ['steel', 'Сталь'],
+  ['moon', 'Луна'],
+  ['space', 'Космос'],
 ]
 const DIRECTIONS = [
   ['design', 'дизайн'],
@@ -1961,7 +1963,7 @@ function toggleDict(k, open) {
 
 function renderSettings() {
   const s = state.data[P.site]
-  s.features ??= { brief: true, palette: true, sandbox: true, steel: true, fitting: true }
+  s.features ??= { brief: true, palette: true, sandbox: true, steel: true }
   s.sandbox ??= { accents: ['#c6ff3d'] }
   const accents = s.sandbox.accents
   return h(

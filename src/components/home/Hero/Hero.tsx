@@ -47,7 +47,10 @@ export function Hero({ t, locale }: Props) {
           ))}
         </h1>
 
-        <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
+        <div className={styles.photo}>
+          <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
+        </div>
+        <div className={styles.moon} data-moon="" aria-hidden="true" />
       </div>
 
       <div className={styles.bottom}>

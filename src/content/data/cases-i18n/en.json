@@ -110,26 +110,26 @@
   },
   "mimimibot": {
     "tagline": "AI photoshoots in Telegram",
-    "lead": "My product: a Telegram bot for AI photoshoots with a digital twin. 3,000+ users, in-bot payments and content the owner edits without a developer.",
+    "lead": "My product: a Telegram bot that makes Pinterest-style shots with the person’s face. 3,000+ users, in-bot payments and content the owner edits without a developer.",
     "client": "own product",
     "sections": [
       {
         "title": "how it works",
         "body": [
-          "You scroll a carousel of ready-made shots by category and tap “Generate this shot” or “Generate the whole photoshoot”. To get your own face in the shots, you first create a digital twin: a name, 10 to 20 of your photos and a few appearance settings.",
-          "Separate modes: generation from references, filters, makeup and hairstyles, advanced settings for those who want to control the shot themselves."
+          "You scroll a carousel of ready-made shots, pick one and tap “Generate this shot”. To get your face in the shot, you upload 3–5 of your photos right in the chat. The first shot is free, then token packs.",
+          "Three models, each with its own price in tokens. Separate modes: “Pinterest+” builds a shot from a reference you send, “MAGIC+” gives filters, makeup, hairstyles and edits to a finished shot."
         ]
       },
       {
         "title": "a platform, not a bot",
         "body": [
-          "All content lives in the database: generation presets, texts, buttons, images. The owner changes them in the admin panel and rebuilds the bot for a new niche without touching code."
+          "All content lives in the database: shots and prompts, texts, buttons, pricing. The owner changes them in tables and rebuilds the bot for a new niche without touching code."
         ]
       },
       {
         "title": "under the hood",
         "body": [
-          "I wrote the logic myself: four linked processes: taking the request, the generation queue, payment and delivering the result. Payments through YooKassa: subscriptions, packs, refunds. Segmented broadcasts.",
+          "I wrote the logic myself: four linked processes: taking the request, the generation queue, payment and delivering the result. Payment through YooKassa, tokens are charged atomically and returned on failure. To those who looked at pricing and didn’t buy, the bot offers a discount on its own.",
           "Three sequential database queries at the start of a dialog became one PostgreSQL function: preparing a reply went from about two seconds to 60 milliseconds."
         ]
       }
@@ -140,20 +140,16 @@
       "lines": [
         {
           "from": "user",
-          "text": "I want a “Vacation” photoshoot"
+          "text": "Generate this exact shot"
         },
         {
           "from": "bot",
-          "text": "Your shot is ready",
+          "text": "Your shot is ready!",
           "media": "photo"
         },
         {
           "from": "bot",
-          "text": "Generate the whole photoshoot?"
-        },
-        {
-          "from": "user",
-          "text": "Yes"
+          "text": "See pricing"
         }
       ]
     }
@@ -218,7 +214,7 @@
       {
         "title": "the key move",
         "body": [
-          "Products are found with a direct SQL query over the catalog, without needless calls to a neural network: the model is used only where it is really needed. Simple requests go to a cheap model, complex ones to a strong one, answers are cached. The bot answers faster and costs less."
+          "The model first works out what the customer needs, and then each intent has its own route. Products are found with a direct SQL query on the catalog and assembled into an answer by code, the price list and standard topics are covered by ready text, and the model answers the rest from the knowledge base. This way the bot answers faster and cheaper."
         ]
       }
     ],
@@ -246,7 +242,7 @@
         },
         {
           "from": "bot",
-          "text": "Passing you to a manager, they already see the chat"
+          "text": "I’m passing your request to a manager to place the order now"
         }
       ]
     }
@@ -396,7 +392,7 @@
       {
         "title": "the task",
         "body": [
-          "First-line sales took a lot of managers’ time: first you figure out what the client is packing, only then pick the packaging. Add onboarding new staff and going through calls by hand. Data has to stay in Russia."
+          "First-line sales took a lot of managers’ time: first you figure out what the client is packing, only then pick the packaging. Add onboarding new staff and going through calls by hand."
         ]
       },
       {
@@ -492,21 +488,21 @@
   },
   "resort-bot": {
     "title": "AI bot for a holiday resort",
-    "tagline": "booking in chat",
-    "lead": "The bot picks dates, calculates the price, checks free cabins, books and creates a CRM deal. It runs entirely on the client’s server.",
+    "tagline": "booking requests in chat",
+    "lead": "The bot parses the guest’s message, clarifies dates, party and phone, answers questions from documents and creates a deal in the CRM. The manager confirms availability and price.",
     "client": "EnterSales · holiday resort",
     "sections": [
       {
         "title": "how it works",
         "body": [
-          "A guest writes in chat, the bot asks for dates and the number of guests, checks free cabins and calculates the price. Questions about the resort are answered by searching its documents.",
-          "The booking and lead are created in Bitrix24 through Open Channels, and the manager sees the whole conversation."
+          "A guest writes in chat, the model understands the intent and parses the phrase into fields: dates, adults, children by age, phone. The bot asks for whatever is missing, and for an infant it checks whether a cradle is needed. Questions about the resort are answered by searching documents.",
+          "The lead and deal are created in Bitrix24 through Open Channels, the manager sees the whole conversation and confirms the booking. Groups of six or more and corporate events go straight to them."
         ]
       },
       {
-        "title": "where it lives",
+        "title": "what it filters out",
         "body": [
-          "Everything runs locally on the client’s server in Russia, in line with data law 152-FZ."
+          "The bot filters out spam and ads itself and politely declines off-topic chats. A file from a guest goes to a person to check."
         ]
       }
     ],
@@ -516,23 +512,19 @@
       "lines": [
         {
           "from": "user",
-          "text": "We want a cabin for the weekend, four of us"
+          "text": "We want a cabin from July 15 to 17, two adults and two children"
         },
         {
           "from": "bot",
-          "text": "A cabin is free on those dates",
-          "media": "booking",
-          "items": [
-            "cabin · free"
-          ]
+          "text": "Do you need a cradle for the baby?"
         },
         {
           "from": "user",
-          "text": "Book it"
+          "text": "Yes, we do"
         },
         {
           "from": "bot",
-          "text": "Booked, a manager will call to confirm"
+          "text": "Thanks for getting in touch! I’m checking room availability."
         }
       ]
     }
@@ -592,7 +584,7 @@
   "mail-to-crm": {
     "title": "Email that sorts itself into the CRM",
     "tagline": "inbox triage",
-    "lead": "Incoming emails and attachments are classified automatically and land in the right funnel with the right owner. Managers no longer sort mail by hand.",
+    "lead": "Incoming emails get a type on their own: customer, supplier or spam. Managers no longer sort the mail by hand.",
     "client": "EnterSales · packaging supplier",
     "sections": [
       {
@@ -604,7 +596,7 @@
       {
         "title": "how it works",
         "body": [
-          "Each email and its attachments are parsed automatically: the request type is detected (customer, supplier, spam and others), and a deal with the original email and an owner is created in the right Bitrix24 funnel. Duplicates are filtered out, statuses are tracked."
+          "Bitrix24 creates a deal from the email, then the bot steps in: it takes the email text, strips HTML and quotes and hands it to the model. The model answers with one word: customer, supplier or spam. The bot sets the request type and a “processed” mark in the deal, and moves spam to the rejection stage."
         ]
       }
     ],
@@ -750,14 +742,14 @@
   "art-school": {
     "title": "AI assistant for an art school",
     "tagline": "drawing review",
-    "lead": "A student sends a photo of a drawing, the bot compares it with the teacher’s reference works and says what to fix. The teacher gets an already improved piece.",
+    "lead": "The student sends a photo of a drawing, the bot finds the teacher’s nearest reference, gives a grade and writes a breakdown: composition, structure, tone, stroke.",
     "client": "freelance · art school",
     "sections": [
       {
         "title": "how it works",
         "body": [
-          "Review in two steps. First the student shows the drawing to the bot and fixes it based on its notes, then sends it to the teacher, who reviews the final version.",
-          "The drawing is compared with the teacher’s reference works, and a vision model writes specific notes: composition, proportions, light and shade."
+          "The drawing is compared with the teacher’s nearest reference work: the reference counts as 100 points, only the deviation from it is graded.",
+          "The feedback is based on academic drawing textbooks. A grade from 0 to 100 and a breakdown by five criteria arrive in the student’s chat, and each new version gets its own grade."
         ]
       }
     ],
@@ -767,11 +759,12 @@
       "lines": [
         {
           "from": "user",
-          "text": "Check my drawing"
+          "text": "Check my drawing",
+          "media": "photo"
         },
         {
           "from": "bot",
-          "text": "Fix what is marked: head proportions and the shadow direction",
+          "text": "Grade: 72 out of 100. Structure: check the ellipse of the jug",
           "media": "drawing"
         },
         {
@@ -780,7 +773,7 @@
         },
         {
           "from": "bot",
-          "text": "Now you can send it to your teacher"
+          "text": "Grade: 84 out of 100"
         }
       ]
     }
@@ -812,7 +805,7 @@
   "salon-booking": {
     "title": "Online booking for salons and clinics",
     "tagline": "booking bot",
-    "lead": "The bot shows the nearest days and free slots as buttons, books the client and sends a reminder before the visit. Runs locally, in line with 152-FZ.",
+    "lead": "The bot shows the nearest days and free slots as buttons, books the client and sends a reminder before the visit.",
     "client": "freelance · beauty salons and dental clinics",
     "sections": [
       {
@@ -834,15 +827,15 @@
     }
   },
   "team-reports": {
-    "title": "Staff reports in WhatsApp",
-    "tagline": "collection and KPI",
-    "lead": "Staff send reports in WhatsApp, the bot puts them into a table, catches filling errors and builds a monthly KPI report.",
+    "title": "WhatsApp reports into a table",
+    "tagline": "raw material intake from chat",
+    "lead": "Employees post raw material intake in a work WhatsApp group, the bot parses the messages and puts them into a table. Edits and deletions are picked up automatically, and once a month a summary is built.",
     "client": "freelance",
     "sections": [
       {
         "title": "how it works",
         "body": [
-          "A report arrives as a message, the bot parses it into fields and writes it to the table. If something is missing or malformed, it asks to fix it right away. At the start of the month a KPI summary is built. Runs locally, in line with 152-FZ."
+          "A report arrives as an ordinary message: a surname and lines like “material - weight”. The bot parses them and writes to the table, without replying in the chat. An edited message updates the rows, a deleted one removes them. Once a month the summary adds up the weight for each person."
         ]
       }
     ],
@@ -851,22 +844,22 @@
       "kind": "flow",
       "steps": [
         "message",
-        "field check",
+        "parsing into fields",
         "table",
-        "KPI report"
+        "monthly summary"
       ]
     }
   },
   "fitness-bot": {
     "title": "Fitness bot",
     "tagline": "tracker in Telegram",
-    "lead": "Workouts, weight, diet and calories, recipes and tips, reminders and weekly progress reports.",
+    "lead": "Tracking workouts, measurements and diet: a dish is counted from a photo, with recipes, personal reminders and an evening report.",
     "client": "freelance",
     "sections": [
       {
         "title": "what it does",
         "body": [
-          "Logs workouts, weight and diet, counts calories, suggests recipes and looks into complaints about how you feel. Sends a progress report every week, and the owner can export the data."
+          "Logs workouts and measurements, counts calories and macros from a photo of a dish, suggests recipes. Questions are answered by a separate trainer and a dietitian. The person sets reminders for themselves, and in the evening a daily report arrives."
         ]
       }
     ],
@@ -876,21 +869,21 @@
       "steps": [
         "log",
         "count",
-        "tips",
-        "weekly report"
+        "reminder",
+        "evening report"
       ]
     }
   },
   "dice-bots": {
     "title": "Telegram mini-game bots",
-    "tagline": "two projects",
-    "lead": "Dice games with bets inside Telegram: player statistics, a database and reports for the owner.",
+    "tagline": "games in a group chat",
+    "lead": "Games on Telegram’s built-in emoji in a group chat: slot, dice, bowling, darts and ball. The bot counts the day’s wins and passes a prize request to the admin.",
     "client": "freelance",
     "sections": [
       {
         "title": "under the hood",
         "body": [
-          "Two bots with games on Telegram’s built-in dice: bets, result calculation, statistics for every player and reports for the owner from the database."
+          "The player throws an emoji into the chat themselves, the value is rolled on Telegram’s side. The bot waits for the animation to end and replies only to a win. Three lucky rolls a day earn a prize: the player gets a message, the admin gets a payout request. Win counters are stored in a database, and each bot has its own prize tables."
         ]
       }
     ],
@@ -898,23 +891,23 @@
     "preview": {
       "kind": "flow",
       "steps": [
-        "bet",
-        "roll",
-        "result",
-        "stats"
+        "emoji",
+        "value",
+        "counter",
+        "prize"
       ]
     }
   },
   "media-to-rag": {
-    "title": "Video and voice into a knowledge base",
+    "title": "Documents into a knowledge base",
     "tagline": "data prep for RAG",
-    "lead": "Files from Yandex Disk are converted, transcribed, split into fragments and loaded into a vector database. Runs locally, in line with 152-FZ.",
+    "lead": "Documents from Yandex Disk are picked up automatically, text is extracted from them, split into chunks and loaded into a vector database.",
     "client": "freelance",
     "sections": [
       {
         "title": "how it works",
         "body": [
-          "New videos and voice notes on Yandex Disk are picked up automatically, converted and transcribed. The text is split into fragments, each gets an embedding, and everything goes into the vector database the assistant answers from."
+          "New and changed files on Yandex Disk are found by MD5 and picked up automatically. Text is extracted from docx, pdf and txt, split into chunks with context, an embedding is calculated for each, and everything goes into the vector database the assistant answers from. A deleted file disappears from the base too."
         ]
       }
     ],
@@ -923,7 +916,7 @@
       "kind": "flow",
       "steps": [
         "Yandex Disk",
-        "transcript",
+        "text",
         "embeddings",
         "knowledge base"
       ]
@@ -1163,7 +1156,7 @@
         "title": "how it’s organised",
         "body": [
           "The control bot runs in the cloud and doesn’t depend on a computer: it sends a draft with buttons, publishes the approved one in its slot, reminds an hour and 15 minutes before it goes out, and sends a summary in the evening.",
-          "Drafts are put together in several passes: one writes, a second looks for clichés and stiff officialese, a third merges. GIFs for posts are made from templates in the channel’s style, so the feed looks consistent."
+          "Drafts are built in several passes: the author writes, code catches clichés and bureaucratese, the editor corrects by a checklist. Gifs for posts are built from templates in the channel’s style, so the feed looks consistent."
         ]
       },
       {
@@ -1180,15 +1173,15 @@
       "lines": [
         {
           "from": "bot",
-          "text": "Draft of a “Tip” for 15:00"
+          "text": "Draft · Tip · Tue 15:00"
         },
         {
           "from": "user",
-          "text": "Publish"
+          "text": "✅ Publish"
         },
         {
           "from": "bot",
-          "text": "Goes out at 15:00, I’ll remind you 15 minutes before"
+          "text": "✅ Queued · Tue 15:00"
         }
       ]
     },
@@ -1198,7 +1191,7 @@
       "steps": [
         {
           "label": "draft",
-          "note": "written, cleaned of clichés, put together"
+          "note": "the author writes, code catches clichés, the editor corrects"
         },
         {
           "label": "bot",
@@ -1206,7 +1199,7 @@
         },
         {
           "label": "decision",
-          "note": "approve or edit"
+          "note": "publish or edit"
         },
         {
           "label": "publishing",
@@ -1315,7 +1308,7 @@
   "lead-agent": {
     "title": "Order Search",
     "tagline": "a freelance agent in Telegram",
-    "lead": "The agent reads order channels and a freelance exchange, picks the suitable ones and prepares a reply. The last word on price and deadlines always stays with a person.",
+    "lead": "The agent reads order channels and a freelance exchange, picks the suitable ones and prepares a draft reply. Only a person writes to the client.",
     "client": "own project",
     "sections": [
       {
@@ -1327,13 +1320,13 @@
       {
         "title": "how it works",
         "body": [
-          "The agent reads only the chosen folder of channels and the exchange feed, rates each order against our skills and sends a card with advice on price and deadlines. On a button it prepares a draft reply, and then the choice is yours: send, edit or answer yourself."
+          "Every 15 minutes the agent reads the chosen channels and the exchange feed. Ads, vacancies and duplicates are filtered out without the model, and the model scores the rest against our skills. An order scoring 50 or more arrives as a card with a price range from the price list. On a button the agent prepares a draft, and then you mark with buttons what happened: wrote, replied, took it."
         ]
       },
       {
         "title": "rules",
         "body": [
-          "Prices only from the approved price list, no more than ten cold messages a day. Asked “is this a bot?”, the agent doesn’t lie and hands the dialog to a person. Personal and work chats are filtered out at the input and are not read."
+          "Prices only from the approved price list, cases only from our database. The bot doesn’t write to clients. Button presses are visible to the whole team, so two of us don’t write to the same client."
         ]
       }
     ],
@@ -1343,15 +1336,15 @@
       "lines": [
         {
           "from": "bot",
-          "text": "New order: a landing page for a studio, there is a budget"
-        },
-        {
-          "from": "bot",
-          "text": "Advice: 3–5 days, draft reply is ready"
+          "text": "🟢 86 · landing page for a coffee shop"
         },
         {
           "from": "user",
-          "text": "Send"
+          "text": "✍️ Draft"
+        },
+        {
+          "from": "bot",
+          "text": "We’ll build the landing page turnkey: layout, front-end, responsive"
         }
       ]
     },
@@ -1369,11 +1362,11 @@
         },
         {
           "label": "card",
-          "note": "advice on price and timing"
+          "note": "price range from the price list"
         },
         {
           "label": "reply",
-          "note": "send, edit or answer yourself"
+          "note": "draft on a button, a person writes"
         }
       ],
       "loop": {
@@ -1384,12 +1377,12 @@
             "note": "approved prices only"
           },
           {
-            "label": "up to ten a day",
-            "note": "cold messages"
+            "label": "the bot doesn’t write",
+            "note": "only a person writes to clients"
           },
           {
-            "label": "“is this a bot?”",
-            "note": "no lying, hands over to a person"
+            "label": "whole team",
+            "note": "the order status is visible to everyone"
           }
         ]
       }
@@ -1437,7 +1430,7 @@
         },
         {
           "from": "bot",
-          "text": "Per the returns policy: three steps [1]"
+          "text": "A return without a receipt follows the returns procedure [1]"
         }
       ]
     },
@@ -1637,11 +1630,11 @@
       "lines": [
         {
           "from": "bot",
-          "text": "Tomorrow 2 classes, the first at 10:00"
+          "text": "Tomorrow’s classes: 10:00 and 12:00"
         },
         {
           "from": "bot",
-          "text": "Due in a day: practical assignment"
+          "text": "⏰ Not submitted, due soon: 24 h left"
         }
       ]
     },

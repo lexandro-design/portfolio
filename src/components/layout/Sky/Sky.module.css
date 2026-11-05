@@ -4,10 +4,11 @@
   z-index: -1;
   inline-size: 100%;
   block-size: 100%;
-  display: none;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out-quart);
   pointer-events: none;
 }
 
 .ready {
-  display: block;
+  opacity: 1;
 }

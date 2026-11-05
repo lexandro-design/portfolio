@@ -188,11 +188,11 @@ for (const k of ['email', 'telegram', 'telegramHandle', 'github', 'behance']) {
   if (!str(site.contacts?.[k])) fail('site.contacts', `нет поля ${k}`)
 }
 if (!str(site.coords)) fail('site', 'нет поля coords')
-for (const k of ['brief', 'palette', 'sandbox', 'steel', 'fitting']) {
+for (const k of ['brief', 'palette', 'sandbox', 'steel']) {
   if (typeof site.features?.[k] !== 'boolean') fail('site.features', `${k} — true или false`)
 }
-if (!['dark', 'light', 'steel'].includes(site.defaultTheme)) {
-  fail('site', 'defaultTheme — dark, light или steel')
+if (!['dark', 'light', 'steel', 'moon', 'space'].includes(site.defaultTheme)) {
+  fail('site', 'defaultTheme — dark, light, steel, moon или space')
 }
 const accents = site.sandbox?.accents
 if (

@@ -25,7 +25,7 @@
   --cast-warn: #c0341d;
 }
 
-:global([data-theme='steel']) :is(.sheet, .desks, .sketch, .doc) {
+:global(:is([data-theme='steel'], [data-theme='moon'])) :is(.sheet, .desks, .sketch, .doc) {
   --cast-warn: #8f1d0a;
 }
 
@@ -694,5 +694,73 @@
 
   .rank li {
     transition: none;
+  }
+}
+
+/* Подборка кадров: столбцы со сдвигом, как доска. Выбранный кадр в рамке, готовый светится цветом кейса */
+.pins {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  list-style: none;
+}
+
+.pins li {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-subtle);
+}
+
+.pins li::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  transition: border-color 240ms var(--ease-out-quart);
+}
+
+.pins li:nth-child(3n + 2) {
+  transform: translateY(14px);
+}
+
+.pins img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  opacity: 0.72;
+  transition: opacity 240ms var(--ease-out-quart);
+  animation: pinIn 520ms var(--ease-out-quart) both;
+}
+
+@keyframes pinIn {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+.pins li[data-s] img {
+  opacity: 1;
+}
+
+.pins li[data-s='pick']::after,
+.pins li[data-s='you']::after {
+  border-color: var(--case-color, var(--accent));
+}
+
+.pins span {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-primary);
+  background: var(--bg-base);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pins img {
+    animation: none;
   }
 }

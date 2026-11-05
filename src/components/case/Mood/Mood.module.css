@@ -25,6 +25,16 @@
   background: var(--bg-subtle);
 }
 
+/* Вертикальные кадры: ровная сетка на всю ширину, без крупного первого */
+.grid[data-tall] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-inline-size: none;
+}
+
+.grid[data-tall] .cell {
+  aspect-ratio: 3 / 4;
+}
+
 .cell[data-lead] {
   grid-column: span 2;
   grid-row: span 2;
@@ -57,5 +67,14 @@
   .cell:last-child {
     grid-column: span 2;
     aspect-ratio: 2;
+  }
+
+  .grid[data-tall] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid[data-tall] .cell:last-child {
+    grid-column: auto;
+    aspect-ratio: 3 / 4;
   }
 }

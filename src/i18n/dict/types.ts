@@ -22,7 +22,7 @@ export type Dict = {
     menuOpen: string
     menuClose: string
     theme: string
-    themes: { dark: string; light: string; steel: string }
+    themes: { dark: string; light: string; steel: string; moon: string; space: string }
     language: string
     /** Кнопка палитры команд (Ctrl+K) */
     search: string
@@ -67,37 +67,13 @@ export type Dict = {
   /** Сборка продукта в разделе услуг: слои включает посетитель, цены берутся из services */
   build: {
     lead: string
-    layers: {
-      code: 'ux' | 'web' | 'back' | 'flow' | 'ai'
-      /** Какая услуга из services стоит за слоем */
-      service: string
-      filter: Direction
-      title: string
-      text: string
-      /** Кейсы, где эта часть правда делалась */
-      cases: string[]
-    }[]
-    more: string
-    demo: {
-      url: string
-      mock: string
-      brand: string
-      room: string
-      meta: string
-      book: string
-      booked: string
-      empty: string
-      db: string
-      dbOld: string
-      dbNew: string
-      bot: string
-      botText: string
-      ai: string
-      aiAsk: string
-      aiAnswer: string
-    }
-    /** Чего не хватает набору, от пустого до полного */
-    notes: { none: string; noScreen: string; mock: string; plain: string; noBack: string; noFlow: string; noAi: string; all: string }
+    project: string
+    /** Этапы одного проекта: подпись переключателя chips идёт по порядку кадров в Services */
+    steps: { code: 'analysis' | 'design' | '3d' | 'code'; title: string; text: string; fact: string; chips: string[] }[]
+    whole: string
+    shop: { add: string; size: string }
+    /** Что в этом проекте не делалось: своя строка со своими кейсами */
+    beyond: { title: string; text: string; cases: string[] }
     discuss: string
     write: string
   }

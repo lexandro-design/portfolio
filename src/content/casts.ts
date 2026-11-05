@@ -12,13 +12,16 @@ import { overlay } from './showcase'
  */
 
 /** Настоящий кадр вместо условного: src картинка или постер, video беззвучная петля */
-export type CastMedia = { src: string; video?: string; ratio?: '16:10' | '1:1'; alt?: string }
+export type CastMedia = { src: string; video?: string; ratio?: '16:10' | '1:1' | '3:4'; alt?: string }
 
 export type CastMsg =
-  | { k: 'in'; text: string; btns?: string[] }
+  | { k: 'in'; text: string; btns?: string[]; stack?: boolean }
   | { k: 'out'; text: string }
   | { k: 'tap'; btn: number }
-  | { k: 'shot'; label: string; btns?: string[]; media?: CastMedia }
+  /** Сообщение с кадром: slides листаются в том же сообщении, text подпись, stack кнопки столбиком */
+  | { k: 'shot'; label: string; btns?: string[]; media?: CastMedia; slides?: CastMedia[]; text?: string; stack?: boolean }
+  /** Перелистывание последней карусели: сообщение то же, меняется кадр */
+  | { k: 'swipe'; to: number }
   | { k: 'photos'; n: number; label: string; media?: CastMedia[] }
   | { k: 'voice'; text: string }
   | { k: 'bar'; label: string }
@@ -27,11 +30,11 @@ export type CastMsg =
 
 /** Что происходит внутри: у каждого кейса свой вид, шаги меняют его строки */
 export type CastView = {
-  kind: 'stages' | 'sheet' | 'card' | 'board' | 'slots' | 'rank' | 'desks' | 'chips' | 'lanes' | 'ticks' | 'sketch' | 'doc' | 'die'
+  kind: 'stages' | 'sheet' | 'card' | 'board' | 'slots' | 'rank' | 'desks' | 'chips' | 'lanes' | 'ticks' | 'sketch' | 'doc' | 'die' | 'pins'
   title: string
   cols?: string[]
   rows: { c: string[]; s?: string; at?: number }[]
-  /** Рисунок: настоящие кадры вместо условных, первый работа, второй эталон */
+  /** Рисунок: настоящие кадры вместо условных, первый работа, второй эталон. Подборка: at у строки номер кадра */
   media?: CastMedia[]
 }
 
@@ -54,6 +57,10 @@ export type Cast = {
   app: string
   sub: string
   screen: 'chat' | 'rows' | 'term' | 'voice' | 'view'
+  /** Экран выше обычного: в чате вертикальные кадры */
+  tall?: boolean
+  /** Своя подпись под записью, например что кадры иллюстративные */
+  note?: string
   rows?: { name: string; note: string; state?: string }[]
   view?: CastView
   beats: CastBeat[]

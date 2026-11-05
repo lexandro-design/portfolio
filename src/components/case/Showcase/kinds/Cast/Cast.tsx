@@ -20,7 +20,7 @@ const clock = (ms: number) => {
 
 /** Шаги до текущего включительно: нажатие отмечается на сообщении, к которому относится */
 function feed(beats: CastBeat[], at: number) {
-  const list: { msg: CastMsg; pressed?: number; key: number }[] = []
+  const list: { msg: CastMsg; pressed?: number; slide?: number; key: number }[] = []
   beats.slice(0, at + 1).forEach(({ msg }, i) => {
     if (!msg) return
     if (msg.k === 'tap') {
@@ -28,14 +28,19 @@ function feed(beats: CastBeat[], at: number) {
       if (last) last.pressed = msg.btn
       return
     }
+    if (msg.k === 'swipe') {
+      const last = [...list].reverse().find((m) => m.msg.k === 'shot' && m.msg.slides)
+      if (last) last.slide = msg.to
+      return
+    }
     list.push({ msg, key: i })
   })
   return list
 }
 
-function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: boolean }) {
+function Item({ m, pressed, slide = 0, turning, fresh }: { m: CastMsg; pressed?: number; slide?: number; turning?: boolean; fresh: boolean }) {
   const btns = 'btns' in m && m.btns && (
-    <span className={styles.btns}>
+    <span className={styles.btns} data-stack={('stack' in m && m.stack) || undefined}>
       {m.btns.map((b, i) => (
         <span key={b} className={styles.btn} data-press={pressed === i || undefined}>
           {b}
@@ -71,11 +76,25 @@ function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: bool
     case 'shot':
       return (
         <li className={styles.in}>
-          {m.media ? (
+          {m.slides ? (
+            <Frame key={slide} media={m.slides[slide]} alt={m.label} />
+          ) : m.media ? (
             <Frame media={m.media} alt={m.label} />
           ) : (
             <span className={styles.shot}>
               <span>{m.label}</span>
+            </span>
+          )}
+          {m.text && <p>{m.text}</p>}
+          {m.slides && (
+            <span className={styles.btns} aria-hidden="true">
+              <span className={styles.btn}>⏪</span>
+              <span className={styles.btn}>
+                {slide + 1}/{m.slides.length}
+              </span>
+              <span className={styles.btn} data-press={turning || undefined}>
+                ⏩
+              </span>
             </span>
           )}
           {btns}
@@ -85,7 +104,7 @@ function Item({ m, pressed, fresh }: { m: CastMsg; pressed?: number; fresh: bool
       return (
         <li className={styles.out}>
           {m.media ? (
-            <span className={styles.frames}>
+            <span className={styles.frames} data-n={m.media.length}>
               {m.media.map((f) => (
                 <Frame key={f.src} media={f} alt={m.label} />
               ))}
@@ -170,12 +189,14 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
     return { ...cast.view, rows: out }
   }, [beats, cast.view, shown])
   const talk = cast.screen === 'voice' ? list.slice(-2) : list
+  const lastSlides = [...list].reverse().find((m) => m.msg.k === 'shot' && m.msg.slides)?.key
 
   useLayoutEffect(() => {
     const box = screen.current
     const dot = cursor.current
     if (!box || !dot) return
-    const tapped = beats[shown].msg?.k === 'tap' || beats[shown].set
+    const kind = beats[shown].msg?.k
+    const tapped = kind === 'tap' || kind === 'swipe' || beats[shown].set
     const el = tapped ? [...box.querySelectorAll<HTMLElement>('[data-press], [data-hot]')].pop() : null
     dot.dataset.on = el ? 'true' : 'false'
     if (!el) return
@@ -196,7 +217,7 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
   const passed = beats.slice(0, shown).reduce((s, b) => s + span(b), 0)
 
   return (
-    <div ref={ref} className={styles.root} data-screen={cast.screen}>
+    <div ref={ref} className={styles.root} data-screen={cast.screen} data-tall={cast.tall || undefined}>
       <div className={styles.stage}>
         <div className={kit.win}>
           <div className={styles.top}>
@@ -233,8 +254,15 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
             )}
             {talk.length > 0 && (
               <ol className={styles.feed}>
-                {talk.map(({ msg, pressed, key }) => (
-                  <Item key={key} m={msg} pressed={pressed} fresh={key === shown} />
+                {talk.map(({ msg, pressed, slide, key }) => (
+                  <Item
+                    key={key}
+                    m={msg}
+                    pressed={pressed}
+                    slide={slide}
+                    turning={beats[shown].msg?.k === 'swipe' && slide !== undefined && key === lastSlides}
+                    fresh={key === shown}
+                  />
                 ))}
               </ol>
             )}
@@ -293,6 +321,7 @@ export function Cast({ cast, t }: { cast: Data; t: Labels }) {
         </span>
       </div>
       <p className={styles.demo}>{t.demo}</p>
+      {cast.note && <p className={styles.demo}>{cast.note}</p>}
     </div>
   )
 }
