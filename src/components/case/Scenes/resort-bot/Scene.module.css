@@ -339,20 +339,18 @@
   transform: none;
 }
 
+/* Колонки в пропорции самих фото (1360x603 и 750x1000): оба кадра целиком и одной высоты */
 .shots {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 2.255fr) minmax(0, 0.75fr);
   gap: 2px;
-  block-size: 120px;
   min-inline-size: 0;
-  overflow: hidden;
 }
 
 .shots img {
   display: block;
   inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
+  block-size: auto;
 }
 
 .place figcaption {

@@ -61,8 +61,8 @@ const CLOCK = ['18:42', '18:42', '18:43', '18:43', '18:44', '18:45', '18:46', '1
 
 /** Фото с сайта базы: один кадр дома и один интерьер, подпись источника рядом */
 const PHOTOS = [
-  '/cases/resort-bot/real/house-teremok.webp',
-  '/cases/resort-bot/real/interior-teremok.webp',
+  { src: '/cases/resort-bot/real/house-teremok.webp', w: 1360, h: 603 },
+  { src: '/cases/resort-bot/real/interior-teremok.webp', w: 750, h: 1000 },
 ]
 
 /** Шаги: знакомство, разбор фразы и люлька, контакты и заявка уходит, вопрос по базе, передача человеку */
@@ -224,14 +224,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   {/* Жильё из каталога базы: фото с сайта базы, не сообщение бота (бот в коде шлёт только текст) */}
                   <figure className={styles.place} data-on={step >= 1 || undefined}>
                     <div className={styles.shots}>
-                      {PHOTOS.map((src) => (
+                      {PHOTOS.map(({ src, w, h }) => (
                         // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет
                         <img
                           key={src}
                           src={asset(src)}
                           alt=""
-                          width={680}
-                          height={400}
+                          width={w}
+                          height={h}
                           decoding="async"
                          
                         />

@@ -17,7 +17,8 @@
 
 .media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  /* Пропорция обложек 1216x860: кадр входит целиком */
+  aspect-ratio: 1216 / 860;
   overflow: hidden;
   background: var(--bg-elevated);
 }
@@ -66,8 +67,7 @@
   inset: 0;
   inline-size: 100%;
   block-size: 100%;
-  object-fit: cover;
-  object-position: top left;
+  object-fit: contain;
 }
 
 .link:hover .media > :not(.chip) {
@@ -143,7 +143,7 @@
 
 /* Главный кейс подборки: текст слева, картинка справа на всю строку таблицы */
 .card[data-size='hero'] .media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1216 / 860;
 }
 
 .card[data-size='hero'] .title {
@@ -202,7 +202,7 @@
   }
 
   .card[data-size] .media {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 1216 / 860;
   }
 
   /* Полный список: строка с картинкой слева, 37 кейсов не растягивают страницу */
@@ -215,7 +215,7 @@
   }
 
   .card:not([data-size]) .media {
-    aspect-ratio: 1;
+    aspect-ratio: 1216 / 860;
   }
 
   .card:not([data-size]) .text {
