@@ -547,14 +547,16 @@ const photo = async () => {
 const mode = process.argv[2]
 if (!mode || mode === 'og') {
   await mkdir(join(ROOT, 'public/og'), { recursive: true })
-  for (const [l, copy] of Object.entries(OG_HOME))
+  // node tools/cards/render.mjs og slug,slug — только эти кейсы, остальные превью не трогать
+  const only = process.argv[3]?.split(',')
+  for (const [l, copy] of only ? [] : Object.entries(OG_HOME))
     await shot(
       ogHome(THEMES.dark, copy),
       1200,
       630,
       join(ROOT, `public/og/home${l === 'ru' ? '' : '-' + l}.png`),
     )
-  for (const c of cases)
+  for (const c of cases.filter((c) => !only || only.includes(c.slug)))
     await shot(ogCase(THEMES.dark, c), 1200, 630, join(ROOT, `public/og/${c.slug}.png`))
 }
 if (!mode || mode === 'profile') {

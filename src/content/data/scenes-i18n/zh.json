@@ -269,7 +269,7 @@
         },
         {
           "label": "一个 PostgreSQL 函数",
-          "value": "60 ms",
+          "value": "60 毫秒",
           "ms": 60
         }
       ]

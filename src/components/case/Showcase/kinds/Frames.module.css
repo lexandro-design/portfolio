@@ -29,6 +29,11 @@
   cursor: zoom-in;
 }
 
+/* Подсказка свайпа: только на телефоне, где кадр шире окна */
+.pan {
+  display: none;
+}
+
 .cap {
   display: flex;
   flex-wrap: wrap;
@@ -140,6 +145,48 @@
     inline-size: max(100%, 880px);
     max-inline-size: none;
   }
+
+  /* Лежит поверх кадра у правого края и не едет вместе с ним; по подписи снизу не попадает */
+  .root[data-variant='one'] .pan {
+    display: grid;
+    place-items: center;
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    justify-self: end;
+    z-index: 1;
+    inline-size: 44px;
+    block-size: 28px;
+    margin: var(--space-sm);
+    color: #fff;
+    background: rgb(0 0 0 / 0.62);
+    pointer-events: none;
+    transition: opacity 0.24s var(--ease-in-out);
+  }
+
+  .root[data-variant='one'] .pan svg {
+    animation: nudge 1.6s var(--ease-in-out) 3;
+  }
+
+  .root[data-variant='one'] .media {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .media[data-moved] + .pan {
+    opacity: 0;
+  }
+
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(-4px);
+    }
+  }
 }
 
 @media (max-width: 767px) {
@@ -157,5 +204,11 @@
 
   .root[data-variant='sheet'] .media {
     padding: var(--space-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[data-variant='one'] .pan svg {
+    animation: none;
   }
 }

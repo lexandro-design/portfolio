@@ -1,3 +1,6 @@
+'use client'
+
+import type { UIEvent } from 'react'
 import type { Shot } from '@/content/cases'
 import type { Block } from '@/content/showcase'
 import { asset } from '@/lib/asset'
@@ -24,7 +27,15 @@ export function Frames({ block, shots }: Props) {
                 className={styles.media}
                 style={{ maxInlineSize: `${s.w}px` }}
                 {...(block.variant === 'one'
-                  ? { tabIndex: 0, role: 'group', 'aria-label': it.title }
+                  ? {
+                      tabIndex: 0,
+                      role: 'group',
+                      'aria-label': it.title,
+                      // Первая прокрутка пальцем убирает подсказку: человек уже понял
+                      onScroll: (e: UIEvent<HTMLDivElement>) => {
+                        e.currentTarget.dataset.moved = ''
+                      },
+                    }
                   : {})}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
@@ -39,6 +50,13 @@ export function Frames({ block, shots }: Props) {
                   data-zoom
                 />
               </div>
+              {block.variant === 'one' && (
+                <span className={styles.pan} aria-hidden="true">
+                  <svg viewBox="0 0 24 12" width="24" height="12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M6 1 1 6l5 5M18 1l5 5-5 5M1 6h22" />
+                  </svg>
+                </span>
+              )}
               <figcaption className={styles.cap}>
                 <span className={kit.mono}>{String(i + 1).padStart(2, '0')}</span>
                 <span>{it.title}</span>
