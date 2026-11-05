@@ -1,5 +1,6 @@
 {
   "art-school": {
+    "typing": "入力中…",
     "board": "イーゼル",
     "chat": { "title": "アシスタント", "sub": "デッサンのチェック", "idle": "デッサンの写真を待っています" },
     "layers": { "student": "生徒の作品", "etalon": "お手本", "etalonHead": "先生のお手本", "caption": "先生のキャプション", "captionText": "水差しとりんご、ハッチング" },
@@ -57,6 +58,7 @@
     ]
   },
   "channel-pipeline": {
+    "typing": "入力中…",
     "stations": [
       { "name": "テーマ", "note": "ニュースは出典付き、アドバイスは切り口から" },
       { "name": "執筆", "note": "3 つの論点から最も鋭いものを選ぶ" },
@@ -272,6 +274,7 @@
     ]
   },
   "fitness-bot": {
+    "typing": "入力中…",
     "chat": { "title": "フィットネスボット", "sub": "トラッカー" },
     "ribbon": {
       "title": "ボットの 1 週間",
@@ -365,6 +368,8 @@
     }
   },
   "food-assistants": {
+    "typing": "入力中…",
+    "photoNote": "画像：FoodMarket 公式サイト",
     "left": { "title": "アンドレイ", "sub": "顧客 · CRM チャット" },
     "right": { "title": "ソフィア", "sub": "スタッフ" },
     "idle": "今は静か",
@@ -494,6 +499,7 @@
     ]
   },
   "lead-agent": {
+    "typing": "入力中…",
     "feed": {
       "title": "フィード",
       "tick": "15 分ごとにチェック",
@@ -559,6 +565,7 @@
     ]
   },
   "mail-to-crm": {
+    "typing": "入力中…",
     "inbox": { "title": "受信トレイ", "sub": "共有メール", "badge": "メール" },
     "board": { "title": "商談", "cols": ["新規商談", "却下"], "type": "問い合わせの種類", "none": "未判定", "done": "処理済み", "empty": "空" },
     "panel": {
@@ -643,6 +650,7 @@
     ]
   },
   "media-to-rag": {
+    "typing": "入力中…",
     "cols": [
       { "t": "フォルダ", "s": "Yandex Disk、毎日夜間にチェック" },
       { "t": "テキスト", "s": "docx、pdf、txt" },
@@ -759,6 +767,8 @@
     ]
   },
   "packaging-bots": {
+    "typing": "入力中…",
+    "photoNote": "写真：OSQ Group 公式サイト",
     "chat": { "title": "AI コンサルタント", "sub": "Bitrix24 チャット、オープンチャネル" },
     "pipe": {
       "title": "ボットが質問に対してすること",
@@ -958,6 +968,7 @@
     ]
   },
   "rag-mentor": {
+    "typing": "入力中…",
     "chat": {
       "title": "メンター",
       "sub": "新入社員"
@@ -1159,6 +1170,8 @@
     }
   },
   "resort-bot": {
+    "typing": "入力中…",
+    "photoNote": "写真：施設の公式サイト",
     "chat": { "title": "リゾート施設", "sub": "オープンチャネル" },
     "calendar": {
       "title": "宿泊カレンダー",
@@ -1247,6 +1260,7 @@
     ]
   },
   "salon-booking": {
+    "typing": "入力中…",
     "example": "プロジェクトの説明をもとにしたシナリオ例",
     "chat": { "title": "オンライン予約", "sub": "予約ボット" },
     "board": {
@@ -1279,6 +1293,7 @@
     ]
   },
   "team-reports": {
+    "typing": "入力中…",
     "chat": { "title": "原料の受け入れ", "sub": "作業グループ" },
     "parser": { "title": "ボット", "fields": ["氏名", "素材", "重量", "日付"] },
     "sheet": { "title": "Google Sheets · 受け入れシート", "cols": ["担当者", "素材", "kg"] },
@@ -1330,6 +1345,7 @@
     ]
   },
   "tg-assistant": {
+    "typing": "入力中…",
     "phone": { "title": "LEXANDRO", "sub": "lexandro_assistant_bot" },
     "office": "スマホの向こうのオフィス",
     "desks": [
@@ -1424,6 +1440,7 @@
     ]
   },
   "uni-bot": {
+    "typing": "入力中…",
     "axis": {
       "title": "15 分ごとの 1 日",
       "checks": "チェック",

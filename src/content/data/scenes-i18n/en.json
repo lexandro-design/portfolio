@@ -1,5 +1,6 @@
 {
   "art-school": {
+    "typing": "typing…",
     "board": "easel",
     "chat": {
       "title": "Assistant",
@@ -103,6 +104,7 @@
     ]
   },
   "channel-pipeline": {
+    "typing": "typing…",
     "stations": [
       {
         "name": "topic",
@@ -622,6 +624,7 @@
     ]
   },
   "fitness-bot": {
+    "typing": "typing…",
     "chat": {
       "title": "Fitness bot",
       "sub": "tracker"
@@ -750,6 +753,8 @@
     }
   },
   "food-assistants": {
+    "typing": "typing…",
+    "photoNote": "Images: FoodMarket website",
     "left": {
       "title": "Andrey",
       "sub": "customer · CRM chat"
@@ -993,6 +998,7 @@
     ]
   },
   "lead-agent": {
+    "typing": "typing…",
     "feed": {
       "title": "feed",
       "tick": "polled every 15 minutes",
@@ -1097,6 +1103,7 @@
     ]
   },
   "mail-to-crm": {
+    "typing": "typing…",
     "inbox": {
       "title": "Inbox",
       "sub": "shared mailbox",
@@ -1252,6 +1259,7 @@
     ]
   },
   "media-to-rag": {
+    "typing": "typing…",
     "cols": [
       {
         "t": "Folder",
@@ -1500,6 +1508,8 @@
     ]
   },
   "packaging-bots": {
+    "typing": "typing…",
+    "photoNote": "Photos: OSQ Group website",
     "chat": {
       "title": "AI consultant",
       "sub": "Bitrix24 chat, Open Channel"
@@ -1908,6 +1918,7 @@
     ]
   },
   "rag-mentor": {
+    "typing": "typing…",
     "chat": {
       "title": "Mentor",
       "sub": "new employee"
@@ -2109,6 +2120,8 @@
     }
   },
   "resort-bot": {
+    "typing": "typing…",
+    "photoNote": "Photos: the resort's website",
     "chat": {
       "title": "Holiday resort",
       "sub": "Open Channel"
@@ -2313,6 +2326,7 @@
     ]
   },
   "salon-booking": {
+    "typing": "typing…",
     "example": "A sample scenario based on the project description",
     "chat": {
       "title": "Online booking",
@@ -2424,6 +2438,7 @@
     ]
   },
   "team-reports": {
+    "typing": "typing…",
     "chat": {
       "title": "Material intake",
       "sub": "work group"
@@ -2547,6 +2562,7 @@
     ]
   },
   "tg-assistant": {
+    "typing": "typing…",
     "phone": {
       "title": "LEXANDRO",
       "sub": "lexandro_assistant_bot"
@@ -2685,6 +2701,7 @@
     ]
   },
   "uni-bot": {
+    "typing": "typing…",
     "axis": {
       "title": "A day in 15-minute steps",
       "checks": "checks",

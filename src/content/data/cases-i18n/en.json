@@ -196,7 +196,7 @@
     "title": "AI assistants for a distributor",
     "tagline": "two bots, one base",
     "lead": "Two bots on one infrastructure: “Andrey” answers clients in the CRM chat, “Sofia” helps warehouse staff and managers.",
-    "client": "freelance · food distribution",
+    "client": "freelance · FoodMarket, food distribution",
     "sections": [
       {
         "title": "the task",
@@ -387,7 +387,7 @@
     "title": "AI bots for a packaging maker",
     "tagline": "packaging picks and CRM leads",
     "lead": "A bot in the Bitrix24 chat picks packaging from the catalogue, collects the client’s details and keeps the lead in the CRM. A summary of the conversation lands in the card, the knowledge base is checked every night.",
-    "client": "EnterSales · packaging manufacturer",
+    "client": "EnterSales · OSQ Group, food packaging",
     "sections": [
       {
         "title": "the task",
@@ -490,7 +490,7 @@
     "title": "AI bot for a holiday resort",
     "tagline": "booking requests in chat",
     "lead": "The bot parses the guest’s message, clarifies dates, party and phone, answers questions from documents and creates a deal in the CRM. The manager confirms availability and price.",
-    "client": "EnterSales · holiday resort",
+    "client": "EnterSales · Laguna Yug holiday resort",
     "sections": [
       {
         "title": "how it works",

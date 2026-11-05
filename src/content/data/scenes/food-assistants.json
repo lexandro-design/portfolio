@@ -1,4 +1,6 @@
 {
+  "typing": "печатает…",
+  "photoNote": "Изображения: сайт FoodMarket",
   "left": { "title": "Андрей", "sub": "клиент · чат CRM" },
   "right": { "title": "Софья", "sub": "сотрудник" },
   "idle": "пока тихо",

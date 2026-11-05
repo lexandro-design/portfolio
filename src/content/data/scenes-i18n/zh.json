@@ -1,5 +1,6 @@
 {
   "team-reports": {
+    "typing": "正在输入…",
     "chat": { "title": "原料验收", "sub": "工作群" },
     "parser": { "title": "机器人", "fields": ["姓名", "原料", "重量", "日期"] },
     "sheet": { "title": "Google Sheets · 验收表", "cols": ["员工", "原料", "kg"] },
@@ -51,6 +52,7 @@
     ]
   },
   "salon-booking": {
+    "typing": "正在输入…",
     "example": "根据项目描述编写的示例场景",
     "chat": { "title": "在线预约", "sub": "预约机器人" },
     "board": {
@@ -165,6 +167,8 @@
     ]
   },
   "resort-bot": {
+    "typing": "正在输入…",
+    "photoNote": "照片：度假村官网",
     "chat": { "title": "度假村", "sub": "开放渠道" },
     "calendar": {
       "title": "入住日历",
@@ -253,6 +257,7 @@
     ]
   },
   "media-to-rag": {
+    "typing": "正在输入…",
     "cols": [
       { "t": "文件夹", "s": "Yandex Disk，每天夜里检查一次" },
       { "t": "文本", "s": "docx、pdf、txt" },
@@ -287,6 +292,7 @@
     ]
   },
   "art-school": {
+    "typing": "正在输入…",
     "board": "画架",
     "chat": { "title": "助手", "sub": "批改画作", "idle": "等待画作照片" },
     "layers": { "student": "学生作品", "etalon": "范本", "etalonHead": "老师的范本", "caption": "老师的备注", "captionText": "水壶和苹果，排线" },
@@ -344,6 +350,7 @@
     ]
   },
   "lead-agent": {
+    "typing": "正在输入…",
     "feed": {
       "title": "信息流",
       "tick": "每 15 分钟轮询一次",
@@ -409,6 +416,7 @@
     ]
   },
   "tg-assistant": {
+    "typing": "正在输入…",
     "phone": { "title": "LEXANDRO", "sub": "lexandro_assistant_bot" },
     "office": "手机背后的办公室",
     "desks": [
@@ -503,6 +511,7 @@
     ]
   },
   "uni-bot": {
+    "typing": "正在输入…",
     "axis": {
       "title": "一天，每 15 分钟",
       "checks": "次检查",
@@ -593,6 +602,7 @@
     }
   },
   "fitness-bot": {
+    "typing": "正在输入…",
     "chat": { "title": "健身机器人", "sub": "记录助手" },
     "ribbon": {
       "title": "机器人里的一周",
@@ -686,6 +696,7 @@
     }
   },
   "mail-to-crm": {
+    "typing": "正在输入…",
     "inbox": { "title": "收件箱", "sub": "公共邮箱", "badge": "邮件" },
     "board": { "title": "交易", "cols": ["新交易", "拒绝"], "type": "来信类型", "none": "未确定", "done": "已处理", "empty": "空" },
     "panel": {
@@ -770,6 +781,7 @@
     ]
   },
   "rag-mentor": {
+    "typing": "正在输入…",
     "chat": {
       "title": "导师",
       "sub": "新员工"
@@ -900,6 +912,8 @@
     }
   },
   "packaging-bots": {
+    "typing": "正在输入…",
+    "photoNote": "照片：OSQ Group 官网",
     "chat": { "title": "AI 顾问", "sub": "Bitrix24 聊天，开放渠道" },
     "pipe": {
       "title": "机器人如何处理问题",
@@ -1099,6 +1113,8 @@
     ]
   },
   "food-assistants": {
+    "typing": "正在输入…",
+    "photoNote": "图片：FoodMarket 官网",
     "left": { "title": "安德烈", "sub": "客户 · CRM 聊天" },
     "right": { "title": "索菲娅", "sub": "员工" },
     "idle": "暂时安静",
@@ -1292,6 +1308,7 @@
     ]
   },
   "channel-pipeline": {
+    "typing": "正在输入…",
     "stations": [
       { "name": "选题", "note": "新闻带原始来源，技巧帖从一个切入点出发" },
       { "name": "作者", "note": "三个论点，取最尖锐的" },

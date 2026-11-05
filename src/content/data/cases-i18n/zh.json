@@ -196,7 +196,7 @@
     "title": "食品分销商的 AI 助手",
     "tagline": "一套底座，两个机器人",
     "lead": "同一套基础设施上的两个机器人：“安德烈”在 CRM 聊天里接待客户，“索菲亚”帮助仓库员工和经理。",
-    "client": "自由职业 · 食品分销",
+    "client": "自由职业 · FoodMarket，食品分销",
     "sections": [
       {
         "title": "任务",
@@ -387,7 +387,7 @@
     "title": "包装厂的 AI 机器人",
     "tagline": "包装挑选与 CRM 线索",
     "lead": "Bitrix24 聊天里的机器人按目录挑选包装，收集客户信息，并在 CRM 里跟进线索。对话摘要会写进卡片，知识库每晚核对一次。",
-    "client": "EnterSales · 包装生产",
+    "client": "EnterSales · OSQ Group，食品包装",
     "sections": [
       {
         "title": "任务",
@@ -490,7 +490,7 @@
     "title": "度假村 AI 机器人",
     "tagline": "聊天里的预订申请",
     "lead": "机器人解析客人的消息，确认日期、人数和电话，根据文档回答问题，并在 CRM 里创建交易。是否有房和价格由经理确认。",
-    "client": "EnterSales · 度假村",
+    "client": "EnterSales · Laguna Yug 度假村",
     "sections": [
       {
         "title": "怎么工作",
