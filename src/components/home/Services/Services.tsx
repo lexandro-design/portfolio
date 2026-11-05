@@ -1,13 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
+import demo from '@/content/data/parfumeria-demo.json'
 import { contacts } from '@/content/site'
 import type { Dict } from '@/i18n/dict'
+import { asset } from '@/lib/asset'
 import { Arrow } from '@/components/ui/Arrow'
-import { useInView, useReduced } from '@/components/case/Showcase/hooks'
+import { useReduced } from '@/components/case/Showcase/hooks'
 import { BRIEF_EVENT } from '../Contact/Brief/Brief'
-import { FilterLink } from '../Works'
 import styles from './Services.module.css'
 
 type Props = {
@@ -19,176 +20,170 @@ type Props = {
   base: string
 }
 
-type Code = Dict['build']['layers'][number]['code']
+type Step = Dict['build']['steps'][number]['code']
 
-/** Куда дошла бронь: 1 кнопка, 2 база, 3 уведомление, 4 ассистент */
-const STEP = { back: 2, flow: 3, ai: 4 } as const
-const WALK = 620
-const BUILD = 420
+/** Настоящие кадры из кейса Parfumeria. Подпись переключателя берётся из словаря в том же порядке */
+const SHOTS = ['04.jpg', 'mobile-product.jpg', 'ds-colors.jpg', 'ds-type.jpg']
+const REELS = [
+  { name: 'Love Hibiscus', file: '3d-hibiscus' },
+  { name: "Terre d'Hermès", file: '3d-hermes' },
+  { name: 'Issey Miyake', file: '3d-issey' },
+  { name: 'HELLO', file: '3d-hello' },
+]
 
-/** Какую фразу показать под сборкой: чего в этом наборе не хватает */
-function verdict(on: Set<Code>, notes: Dict['build']['notes']) {
-  if (!on.size) return notes.none
-  if (!on.has('web') && !on.has('ux')) return notes.noScreen
-  if (!on.has('web')) return notes.mock
-  if (!on.has('ux')) return notes.plain
-  if (!on.has('back')) return notes.noBack
-  if (!on.has('flow')) return notes.noFlow
-  if (!on.has('ai')) return notes.noAi
-  return notes.all
-}
+const money = (n: number) => n.toFixed(2).replace('.', ',')
 
 /**
- * Что я делаю: продукт собирается на глазах из пяти слоёв. Посетитель
- * включает слои и жмёт кнопку в примере: бронь проходит через всё, что
- * включено, а строка снизу говорит, чего в наборе не хватает. Набор уходит
- * в заявку одной кнопкой. Сборка идёт сама один раз, первое нажатие её отменяет
+ * Что я делаю: один настоящий магазин проходит через анализ, дизайн, 3D и код, и на каждом
+ * этапе виден его настоящий материал. Автоматизации в этом проекте не было, она стоит отдельной
+ * строкой со своими кейсами. Отмеченные услуги уходят в заявку одной кнопкой
  */
 export function Services({ t, services, hello, need, titles, base }: Props) {
-  const [ref, inView] = useInView<HTMLDivElement>()
   const still = useReduced()
-  const all = t.layers.map((l) => l.code)
-  const [picked, setPicked] = useState<Code[]>([])
-  const [touched, setTouched] = useState(false)
-  const [walked, setWalked] = useState(0)
-  const timers = useRef<number[]>([])
-  const played = useRef(false)
+  const [step, setStep] = useState<Step>('analysis')
+  const [chip, setChip] = useState(0)
+  const [size, setSize] = useState(0)
+  const [cart, setCart] = useState(0)
+  const [off, setOff] = useState<string[]>([])
 
-  const whole = still && !touched
-  const on = new Set<Code>(whole ? all : picked)
-  const step = whole ? 4 : walked
-
-  const clear = () => {
-    timers.current.forEach((id) => window.clearTimeout(id))
-    timers.current = []
+  const chosen = services.filter((s) => !off.includes(s.code))
+  const message = [hello, chosen.length ? `${need}: ${chosen.map((s) => s.title).join(', ')}` : ''].filter(Boolean).join('\n')
+  const active = t.steps.find((s) => s.code === step) ?? t.steps[0]
+  const chips = step === '3d' ? REELS.map((r) => r.name) : active.chips
+  const open = (code: Step) => {
+    setStep(code)
+    setChip(0)
   }
-  const later = (fn: () => void, ms: number) => timers.current.push(window.setTimeout(fn, ms))
-
-  /* Бронь идёт только по включённым слоям */
-  const walk = (layers: Set<Code>) => {
-    clear()
-    setWalked(1)
-    const next = (['back', 'flow', 'ai'] as const).filter((c) => layers.has(c))
-    next.forEach((c, i) => later(() => setWalked(STEP[c]), WALK * (i + 1)))
-  }
-
-  useEffect(() => {
-    if (!inView || touched || still || played.current) return
-    played.current = true
-    all.forEach((_, i) => later(() => setPicked(all.slice(0, i + 1)), BUILD * (i + 1)))
-    later(() => walk(new Set(all)), BUILD * (all.length + 1))
-    // Сборка идёт один раз, all и walk пересоздаются на каждом рендере
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, touched, still])
-
-  useEffect(() => clear, [])
-
-  const toggle = (code: Code) => {
-    clear()
-    setTouched(true)
-    setWalked(0)
-    const now = [...on]
-    setPicked(now.includes(code) ? now.filter((c) => c !== code) : [...now, code])
-  }
-
-  const chosen = services.filter((s) => t.layers.some((l) => on.has(l.code) && l.service === s.code))
-  const list = t.layers.filter((l) => on.has(l.code)).map((l) => l.title)
-  const message = [hello, list.length ? `${need}: ${list.join(', ')}` : ''].filter(Boolean).join('\n')
-
-  const screen = on.has('web') ? (on.has('ux') ? 'site' : 'plain') : on.has('ux') ? 'mock' : 'empty'
-  const d = t.demo
-  const live = screen === 'site' || screen === 'plain'
-  const done = live && step > 0
+  const variant = demo.product.variants[size]
 
   return (
-    <div ref={ref} className={styles.grid}>
+    <div className={styles.grid}>
       <div className={styles.left}>
         <p className={styles.lead}>{t.lead}</p>
-        <ul className={styles.layers}>
-          {t.layers.map((l) => (
-            <li key={l.code} className={styles.layer} data-on={on.has(l.code) || undefined}>
-              <button type="button" className={styles.toggle} aria-pressed={on.has(l.code)} onClick={() => toggle(l.code)}>
-                <span className={styles.check} aria-hidden="true" />
-                <span className={styles.title}>{l.title}</span>
+        <ol className={styles.steps}>
+          {t.steps.map((s, i) => (
+            <li key={s.code} className={styles.step} data-on={s.code === step || undefined}>
+              <button type="button" className={styles.head} aria-expanded={s.code === step} onClick={() => open(s.code)}>
+                <span className={styles.index}>{i + 1}</span>
+                <span className={styles.title}>{s.title}</span>
               </button>
-              <p className={styles.text}>{l.text}</p>
-              <div className={styles.links}>
-                {l.cases.map((slug) => (
-                  <Link key={slug} href={`${base}/cases/${slug}/`}>
-                    {titles[slug]}
-                  </Link>
-                ))}
-                <FilterLink direction={l.filter} className={styles.more}>
-                  {t.more}
-                </FilterLink>
-              </div>
+              {s.code === step && <p className={styles.text}>{s.text}</p>}
             </li>
           ))}
-        </ul>
+        </ol>
+        <Link href={`${base}/cases/parfumeria/`} className={styles.whole}>
+          {t.whole}
+          <Arrow />
+        </Link>
       </div>
 
       <div className={styles.side}>
         <div className={styles.stage}>
-          <div className={styles.browser} data-look={screen}>
-            <div className={styles.bar}>
-              <i aria-hidden="true" />
-              <span>{screen === 'mock' ? d.mock : live ? d.url : ''}</span>
-            </div>
-            {screen === 'empty' ? (
-              <p className={styles.blank}>{d.empty}</p>
-            ) : (
-              <div className={styles.page}>
-                <p className={styles.brand}>{d.brand}</p>
-                <p className={styles.room}>{d.room}</p>
-                <p className={styles.meta}>{d.meta}</p>
-                <button
-                  type="button"
-                  className={styles.book}
-                  disabled={!live}
-                  data-done={done || undefined}
-                  onClick={() => {
-                    setTouched(true)
-                    walk(on)
-                  }}
-                >
-                  {done ? d.booked : d.book}
-                </button>
+          <div className={styles.bar}>
+            <span>{t.project}</span>
+            {chips.length > 0 && (
+              <div className={styles.chips} role="group" aria-label={active.title}>
+                {chips.map((label, i) => (
+                  <button key={label} type="button" aria-pressed={i === chip} onClick={() => setChip(i)}>
+                    {label}
+                  </button>
+                ))}
               </div>
             )}
           </div>
 
-          <div className={styles.parts}>
-            <div className={styles.part} data-on={on.has('back') || undefined} data-hit={(on.has('back') && step >= 2) || undefined}>
-              <span className={styles.name}>{d.db}</span>
-              {on.has('back') && (
-                <ul className={styles.table}>
-                  <li>{d.dbOld}</li>
-                  {live && step >= 2 && <li data-new>{d.dbNew}</li>}
-                </ul>
-              )}
-            </div>
-            <div className={styles.part} data-on={on.has('flow') || undefined} data-hit={(on.has('flow') && step >= 3) || undefined}>
-              <span className={styles.name}>{d.bot}</span>
-              {on.has('flow') && live && step >= 3 && <p key="bot">{d.botText}</p>}
-            </div>
-            <div className={styles.part} data-on={on.has('ai') || undefined} data-hit={(on.has('ai') && step >= 4) || undefined}>
-              <span className={styles.name}>{d.ai}</span>
-              {on.has('ai') && <p className={styles.ask}>{d.aiAsk}</p>}
-              {on.has('ai') && live && step >= 4 && <p key="ai">{d.aiAnswer}</p>}
-            </div>
+          <div className={styles.view}>
+            {step === 'analysis' && (
+              <table className={styles.table}>
+                <tbody>
+                  {demo.rows[chip].map((r) => (
+                    <tr key={r.brand + r.title}>
+                      <th scope="row">{r.brand}</th>
+                      <td>{r.title}</td>
+                      <td>{r.volume}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
+            {step === 'design' && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={chip} className={styles.shot} src={asset(`/cases/parfumeria/${SHOTS[chip]}`)} alt={chips[chip]} loading="lazy" />
+            )}
+
+            {step === '3d' &&
+              (still ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className={styles.shot} src={asset(`/cases/parfumeria/${REELS[chip].file}.jpg`)} alt={REELS[chip].name} />
+              ) : (
+                <video
+                  key={chip}
+                  className={styles.shot}
+                  src={asset(`/cases/parfumeria/${REELS[chip].file}.mp4`)}
+                  poster={asset(`/cases/parfumeria/${REELS[chip].file}.jpg`)}
+                  muted
+                  loop
+                  autoPlay
+                  playsInline
+                  aria-label={REELS[chip].name}
+                />
+              ))}
+
+            {step === 'code' && (
+              <div className={styles.shop}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={asset(demo.product.src)} alt={`${demo.product.brand} ${demo.product.title}`} loading="lazy" />
+                <div className={styles.buy}>
+                  <p className={styles.brand}>{demo.product.brand}</p>
+                  <p className={styles.name}>{demo.product.title}</p>
+                  <div className={styles.sizes} role="group" aria-label={t.shop.size}>
+                    {demo.product.variants.map((v, i) => (
+                      <button key={v.label} type="button" aria-pressed={i === size} onClick={() => setSize(i)}>
+                        {v.label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className={styles.price}>{money(variant.price)} BYN</p>
+                  <button type="button" className={styles.add} onClick={() => setCart((n) => n + 1)}>
+                    {t.shop.add}
+                  </button>
+                  <pre className={styles.state} aria-live="polite">
+                    {`variant: "${variant.label}"\ncart: ${cart}\ntotal: ${money(cart * variant.price)}`}
+                  </pre>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <p className={styles.fact}>{active.fact}</p>
+        </div>
+
+        <div className={styles.beyond}>
+          <h3 className={styles.beyondTitle}>{t.beyond.title}</h3>
+          <p className={styles.text}>{t.beyond.text}</p>
+          <div className={styles.links}>
+            {t.beyond.cases.map((slug) => (
+              <Link key={slug} href={`${base}/cases/${slug}/`}>
+                {titles[slug]}
+              </Link>
+            ))}
           </div>
         </div>
 
-        <p className={styles.verdict} aria-live="polite">
-          {verdict(on, t.notes)}
-        </p>
-
         <div className={styles.total}>
           <ul className={styles.prices}>
-            {chosen.map((s) => (
+            {services.map((s) => (
               <li key={s.code}>
-                <span>{s.title}</span>
-                <b>{s.price}</b>
+                <button
+                  type="button"
+                  aria-pressed={!off.includes(s.code)}
+                  onClick={() => setOff((now) => (now.includes(s.code) ? now.filter((c) => c !== s.code) : [...now, s.code]))}
+                >
+                  <i aria-hidden="true" />
+                  <span>{s.title}</span>
+                  <b>{s.price}</b>
+                </button>
               </li>
             ))}
           </ul>

@@ -522,92 +522,60 @@
     "hint": "↑↓ 选择 · enter 打开 · esc 关闭"
   },
   "build": {
-    "lead": "一个产品由五层组成，这五层我都能做。勾选你需要的部分，再点示例里的按钮：预订会走完所有已开启的层。",
-    "layers": [
+    "lead": "用一个项目来说明。Parfumeria.by 是一家香水商店：分析、设计、3D 和代码都由我一人完成，各阶段之间没有信息损失。",
+    "project": "Parfumeria.by",
+    "steps": [
       {
-        "code": "ux",
-        "service": "design",
-        "filter": "design",
-        "title": "UX/UI 设计",
-        "text": "场景、界面和设计系统：令牌、组件、所有状态。",
-        "cases": [
-          "parfumeria",
-          "otrx"
+        "code": "analysis",
+        "title": "分析",
+        "text": "梳理商品并整理目录，按含义归类：香水归香水，品牌页只放该品牌。设计稿使用真实数据，而不是占位内容。",
+        "fact": "真实目录中的 951 件商品和 56 个品牌",
+        "chips": [
+          "香水",
+          "护理",
+          "彩妆"
         ]
       },
       {
-        "code": "web",
-        "service": "web",
-        "filter": "web",
-        "title": "网站",
-        "text": "按我自己的设计用 Next.js 或 Tilda 实现，每个屏幕都在所有宽度下核对。",
-        "cases": [
-          "svarnoy52",
-          "reckon"
+        "code": "design",
+        "title": "设计",
+        "text": "先做系统：变量中的颜色和字体、组件库。然后是整个商店的页面，从首页到个人中心，包含所有状态。",
+        "fact": "450 多个页面，覆盖 1440、768 和 375",
+        "chips": [
+          "页面",
+          "手机",
+          "颜色",
+          "字体"
         ]
       },
       {
-        "code": "back",
-        "service": "web",
-        "filter": "web",
-        "title": "后端",
-        "text": "服务器、数据库和 API：订单、角色、支付、个人账户。",
-        "cases": [
-          "mimimibot",
-          "saldo"
-        ]
+        "code": "3d",
+        "title": "3D",
+        "text": "用 Blender 为首页制作视频横幅：玻璃、液体、瓶盖和标签都还原真实商品。",
+        "fact": "每段循环 8–10 秒，每秒 60 帧",
+        "chips": []
       },
       {
-        "code": "flow",
-        "service": "automation",
-        "filter": "ai",
-        "title": "自动化",
-        "text": "把产品接入 CRM、邮件和 Telegram，让重复工作无需人工。",
-        "cases": [
-          "mail-to-crm",
-          "packaging-bots"
-        ]
-      },
-      {
-        "code": "ai",
-        "service": "automation",
-        "filter": "ai",
-        "title": "AI 智能体",
-        "text": "助手和文档搜索，数据放在你需要的地方。",
-        "cases": [
-          "brain-search",
-          "rag-mentor"
-        ]
+        "code": "code",
+        "title": "代码",
+        "text": "我自己用 Next.js 做了店面，用来在浏览器中检验设计：目录、商品页、购物车、个人中心。这里的卡片可以操作：选择容量并加入购物车。",
+        "fact": "每个页面都在 1440、768 和 375 下与设计稿核对",
+        "chips": []
       }
     ],
-    "more": "全部案例",
-    "demo": {
-      "url": "rooms.demo",
-      "mock": "设计稿",
-      "brand": "会议室",
-      "room": "3 号会议室",
-      "meta": "今天 14:00，8 个座位",
-      "book": "预订",
-      "booked": "已预订",
-      "empty": "你的产品将显示在这里",
-      "db": "数据库",
-      "dbOld": "5 号会议室，11:00",
-      "dbNew": "3 号会议室，14:00",
-      "bot": "Telegram",
-      "botText": "14:00 有新预订，参会者已收到邮件",
-      "ai": "助手",
-      "aiAsk": "明天上午哪里有空？",
-      "aiAnswer": "3 号和 5 号会议室 12:00 前有空"
+    "whole": "查看完整案例",
+    "shop": {
+      "add": "加入购物车",
+      "size": "容量"
     },
-    "notes": {
-      "none": "勾选需要的部分，产品就会在这里组装起来。",
-      "noScreen": "逻辑有了，却没有地方展示。",
-      "mock": "设计稿好了，但按钮只是画出来的。",
-      "plain": "能用，但看起来像九十年代的网站。",
-      "noBack": "关闭页面后，预订就消失了。",
-      "noFlow": "预订进了数据库，但没人知道。",
-      "noAi": "一切正常，只是问题还要人来回答。",
-      "all": "全部由一人完成，外包之间没有缝隙。"
+    "beyond": {
+      "title": "自动化与 AI 智能体",
+      "text": "这家商店没有用到这些，这是我工作的另一部分：机器人、CRM 集成、文档搜索。",
+      "cases": [
+        "mail-to-crm",
+        "rag-mentor",
+        "brain-search"
+      ]
     },
     "discuss": "讨论这个组合",
     "write": "直接联系"

@@ -523,92 +523,60 @@
     "hint": "↑↓ select · enter open · esc close"
   },
   "build": {
-    "lead": "A product is built from five layers, and I handle all of them. Tick the ones you need and press the button in the example: the booking runs through everything that is on.",
-    "layers": [
+    "lead": "One project shows it best. Parfumeria.by, a perfume store: I did the analysis, design, 3D and code myself, so nothing got lost between stages.",
+    "project": "Parfumeria.by",
+    "steps": [
       {
-        "code": "ux",
-        "service": "design",
-        "filter": "design",
-        "title": "UX/UI design",
-        "text": "Scenarios, screens and a design system: tokens, components, every state.",
-        "cases": [
-          "parfumeria",
-          "otrx"
+        "code": "analysis",
+        "title": "Analysis",
+        "text": "I went through the range, built the catalogue and sorted products by meaning: perfume under perfume, a brand page with that brand only. The layouts run on real data, not filler.",
+        "fact": "951 items and 56 brands from the real catalogue",
+        "chips": [
+          "perfume",
+          "skincare",
+          "makeup"
         ]
       },
       {
-        "code": "web",
-        "service": "web",
-        "filter": "web",
-        "title": "Websites",
-        "text": "Built from my own layouts on Next.js or Tilda, every screen checked at every width.",
-        "cases": [
-          "svarnoy52",
-          "reckon"
+        "code": "design",
+        "title": "Design",
+        "text": "System first: colour and type in variables, a component library. Then every screen of the store, from home to account, with all states.",
+        "fact": "450+ screens at 1440, 768 and 375",
+        "chips": [
+          "screens",
+          "phone",
+          "colour",
+          "type"
         ]
       },
       {
-        "code": "back",
-        "service": "web",
-        "filter": "web",
-        "title": "Backend",
-        "text": "Server, database and API: orders, roles, payments, user accounts.",
-        "cases": [
-          "mimimibot",
-          "saldo"
-        ]
+        "code": "3d",
+        "title": "3D",
+        "text": "Video banners for the home page in Blender: glass, liquid, cap and label match the real product.",
+        "fact": "8–10 second loops at 60 frames per second",
+        "chips": []
       },
       {
-        "code": "flow",
-        "service": "automation",
-        "filter": "ai",
-        "title": "Automation",
-        "text": "I connect the product to CRM, email and Telegram, so routine runs without people.",
-        "cases": [
-          "mail-to-crm",
-          "packaging-bots"
-        ]
-      },
-      {
-        "code": "ai",
-        "service": "automation",
-        "filter": "ai",
-        "title": "AI agents",
-        "text": "Assistants and search across your documents, with your data kept where you need it.",
-        "cases": [
-          "brain-search",
-          "rag-mentor"
-        ]
+        "code": "code",
+        "title": "Code",
+        "text": "I built the storefront for myself in Next.js to test the design in a browser: catalogue, product page, cart, account. The card here works: pick a size and add it to the cart.",
+        "fact": "every screen checked against the layout at 1440, 768 and 375",
+        "chips": []
       }
     ],
-    "more": "all cases",
-    "demo": {
-      "url": "rooms.demo",
-      "mock": "layout",
-      "brand": "Rooms",
-      "room": "Meeting room 3",
-      "meta": "today, 2:00 pm, 8 seats",
-      "book": "Book",
-      "booked": "Booked",
-      "empty": "Your product will appear here",
-      "db": "database",
-      "dbOld": "Room 5, 11:00 am",
-      "dbNew": "Room 3, 2:00 pm",
-      "bot": "Telegram",
-      "botText": "New booking for 2:00 pm, attendees have been emailed",
-      "ai": "assistant",
-      "aiAsk": "What is free tomorrow morning?",
-      "aiAnswer": "Rooms 3 and 5 are free until noon"
+    "whole": "full case",
+    "shop": {
+      "add": "add to cart",
+      "size": "size"
     },
-    "notes": {
-      "none": "Tick what you need and the product builds itself here.",
-      "noScreen": "The logic is there, but nowhere to show it.",
-      "mock": "The layout is ready, but the button is only drawn.",
-      "plain": "It works, but it looks like a site from the nineties.",
-      "noBack": "The booking disappears as soon as you close the tab.",
-      "noFlow": "The booking is in the database, but nobody knows about it.",
-      "noAi": "Everything works. People still answer the questions.",
-      "all": "Everything in one pair of hands, with no gaps between contractors."
+    "beyond": {
+      "title": "Automation and AI agents",
+      "text": "The store had none of this, it is a separate part of my work: bots, CRM integration, document search.",
+      "cases": [
+        "mail-to-crm",
+        "rag-mentor",
+        "brain-search"
+      ]
     },
     "discuss": "discuss this set",
     "write": "message me now"
