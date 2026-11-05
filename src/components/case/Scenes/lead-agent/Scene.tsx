@@ -2,7 +2,25 @@
 
 import { useEffect, useState } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Sys, Title, usePlay } from '../kit'
+import {
+  Back,
+  Brief,
+  Cap,
+  Chat,
+  Controls,
+  Facts,
+  Keys,
+  Lead,
+  Meta,
+  Mono,
+  Msg,
+  Note,
+  Progress,
+  Reveal,
+  Sys,
+  Title,
+  usePlay,
+} from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -14,7 +32,10 @@ type Data = {
   totals: string[]
   phone: { title: string; sub: string; empty: string; drafting: string }
   card: { head: string; title: string; summary: string; money: string; note: string; draft: string }
-  keys: Record<'open' | 'draft' | 'wrote' | 'pass' | 'answered' | 'silent' | 'won' | 'expensive' | 'lost', string>
+  keys: Record<
+    'open' | 'draft' | 'wrote' | 'pass' | 'answered' | 'silent' | 'won' | 'expensive' | 'lost',
+    string
+  >
   status: { replied: string; answered: string; won: string; by: string }
   steps: string[]
   rules: string[]
@@ -50,7 +71,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const cutCount = d.posts.filter((p) => p.cut).length
   const lowCount = d.posts.filter((p) => !p.cut && (p.score ?? 0) < THRESHOLD).length
   const cardCount = d.posts.length - cutCount - lowCount
-  const counts = [d.posts.length, step >= 1 ? cutCount : null, step >= 1 ? lowCount : null, step >= 2 ? cardCount : null]
+  const counts = [
+    d.posts.length,
+    step >= 1 ? cutCount : null,
+    step >= 1 ? lowCount : null,
+    step >= 2 ? cardCount : null,
+  ]
 
   // Вторая половина последнего шага: «ответил» нажата, дальше «взял»
   const [lateAt, setLateAt] = useState(-1)
@@ -64,11 +90,17 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   // Кнопки карточки по шагу: что нажато и что приходит на смену
   const rows: Row[] = [{ items: [k.open] }]
   if (step === 2) rows.push({ items: [k.draft] }, { items: [k.wrote, k.pass] })
-  if (step === 3) rows.push({ items: [k.draft], pressed: 0, leave: true }, { items: [k.wrote, k.pass] })
-  if (step === 4) rows.push({ items: [k.wrote, k.pass], pressed: 0, leave: true }, { items: [k.answered, k.silent], enter: true })
+  if (step === 3)
+    rows.push({ items: [k.draft], pressed: 0, leave: true }, { items: [k.wrote, k.pass] })
+  if (step === 4)
+    rows.push(
+      { items: [k.wrote, k.pass], pressed: 0, leave: true },
+      { items: [k.answered, k.silent], enter: true },
+    )
   if (step === 5 && !late) rows.push({ items: [k.answered, k.silent], pressed: 0, leave: true })
   if (step === 5 && late) rows.push({ items: [k.won, k.expensive, k.lost], pressed: 0 })
-  const status = step === 4 ? d.status.replied : step === 5 ? (late ? d.status.won : d.status.answered) : null
+  const status =
+    step === 4 ? d.status.replied : step === 5 ? (late ? d.status.won : d.status.answered) : null
   const drafting = step === 3 && !late
   const showDraft = step >= 4 || (step === 3 && late)
 
@@ -84,7 +116,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <section className={styles.funnel} aria-label={d.feed.title}>
             <div className={styles.head}>
               <Mono className={styles.tick}>
-                <i className={styles.pulse} data-on={play.playing || undefined} aria-hidden="true" />
+                <i
+                  className={styles.pulse}
+                  data-on={play.playing || undefined}
+                  aria-hidden="true"
+                />
                 {d.feed.tick}
               </Mono>
               <Mono className={styles.g1}>{d.feed.gate1}</Mono>
@@ -112,16 +148,28 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                       <span className={styles.text}>{p.text}</span>
                     </div>
                     <div className={styles.gate1}>
-                      {cut ? <span className={styles.reason}>{p.cut}</span> : step >= 1 ? <span className={styles.ok}>✓ {d.feed.pass}</span> : <span className={styles.wait}>·</span>}
+                      {cut ? (
+                        <span className={styles.reason}>{p.cut}</span>
+                      ) : step >= 1 ? (
+                        <span className={styles.ok}>✓ {d.feed.pass}</span>
+                      ) : (
+                        <span className={styles.wait}>·</span>
+                      )}
                     </div>
                     <div className={styles.gate2}>
                       {scored ? (
                         <>
                           <span className={styles.track} aria-hidden="true">
-                            <i style={{ inlineSize: `${p.score}%`, transitionDelay: `${i * 90}ms` }} />
+                            <i
+                              style={{ inlineSize: `${p.score}%`, transitionDelay: `${i * 90}ms` }}
+                            />
                           </span>
                           <b className={styles.num}>{p.score}</b>
-                          {pass && <span className={styles.out}>{won ? d.tags.won : `→ ${d.tags.card}`}</span>}
+                          {pass && (
+                            <span className={styles.out}>
+                              {won ? d.tags.won : `→ ${d.tags.card}`}
+                            </span>
+                          )}
                           {low && <span className={styles.out}>{d.tags.low}</span>}
                         </>
                       ) : (
@@ -145,7 +193,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           {/* Телефон: сюда падает только то, что прошло оба сита */}
           <div className={styles.phone} aria-label={d.phone.title}>
-            <Chat title={d.phone.title} sub={d.phone.sub} live={play.playing} className={styles.chat}>
+            <Chat
+              title={d.phone.title}
+              sub={d.phone.sub}
+              live={play.playing}
+              className={styles.chat}
+            >
               {step < 2 ? (
                 <Sys key="empty">{d.phone.empty}</Sys>
               ) : (
@@ -175,7 +228,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   )}
                   <span className={styles.keys}>
                     {rows.map((r) => (
-                      <span key={r.items.join('|')} className={styles.keyrow} data-leave={r.leave || undefined} data-enter={r.enter || undefined}>
+                      <span
+                        key={r.items.join('|')}
+                        className={styles.keyrow}
+                        data-leave={r.leave || undefined}
+                        data-enter={r.enter || undefined}
+                      >
                         <Keys items={r.items} pressed={r.pressed} />
                       </span>
                     ))}
@@ -188,7 +246,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
         <div className={styles.under}>
           <Cap className={styles.cap}>{d.steps[step]}</Cap>
-          <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
+          <Controls
+            play={play}
+            t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }}
+            className={styles.controls}
+          />
           <Note>{t.show.cast.demo}</Note>
         </div>
 

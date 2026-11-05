@@ -2,7 +2,23 @@
 
 import { useEffect, useState, type ReactNode } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Title, usePlay } from '../kit'
+import {
+  Back,
+  Brief,
+  Cap,
+  Chat,
+  Controls,
+  Facts,
+  Keys,
+  Lead,
+  Meta,
+  Mono,
+  Msg,
+  Note,
+  Reveal,
+  Title,
+  usePlay,
+} from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -54,7 +70,18 @@ const SPANS = [3200, 3200, 3000, 2800, 3600, 3000, 3200]
 const MARKS = [1100, 1900]
 
 /** Условное время сообщений по прежним номерам шагов: идёт вперёд по сценарию */
-const CLOCK = ['10:02', '10:02', '10:15', '10:15', '10:21', '10:24', '10:26', '10:27', '10:31', '10:40']
+const CLOCK = [
+  '10:02',
+  '10:02',
+  '10:15',
+  '10:15',
+  '10:21',
+  '10:24',
+  '10:26',
+  '10:27',
+  '10:31',
+  '10:40',
+]
 
 /** Что летит между столом и телефоном на каждом шаге: стол, направление, значок */
 const FLY: ({ desk: DeskId; dir: 'in' | 'out'; glyph: string } | null)[] = [
@@ -151,7 +178,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         ]
       case 1:
         return [
-          <Msg key="1a" side="in" time={CLOCK[1]} tone={late ? 'ok' : undefined} className={styles.d1}>
+          <Msg
+            key="1a"
+            side="in"
+            time={CLOCK[1]}
+            tone={late ? 'ok' : undefined}
+            className={styles.d1}
+          >
             {m.ack}
             {late && <span className={styles.hint}>{m.read}</span>}
           </Msg>,
@@ -161,7 +194,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <Msg key="2a" side="in" time={CLOCK[2]} className={styles.d2}>
             {m.perm}
             {step >= 3 && (step > 3 || late) && <span className={styles.note}>{m.allowed}</span>}
-            {permKeysOn(2) && <Keys items={[d.keys.allow, d.keys.deny]} pressed={step === 3 ? 0 : undefined} />}
+            {permKeysOn(2) && (
+              <Keys items={[d.keys.allow, d.keys.deny]} pressed={step === 3 ? 0 : undefined} />
+            )}
           </Msg>,
         ]
       case 3:
@@ -245,7 +280,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             const s = status(desk.id, step, late)
             const hot = fly?.desk === desk.id
             return (
-              <div key={desk.id} className={styles.desk} data-desk={desk.id} data-s={s} data-hot={hot || undefined}>
+              <div
+                key={desk.id}
+                className={styles.desk}
+                data-desk={desk.id}
+                data-s={s}
+                data-hot={hot || undefined}
+              >
                 <span className={styles.deskName}>{desk.name}</span>
                 <span className={styles.deskTask}>{desk.task}</span>
                 <span className={styles.deskState}>
@@ -264,9 +305,20 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           {d.desks.map((desk) => {
             const hot = fly?.desk === desk.id
             return (
-              <div key={desk.id} className={styles.link} data-link={desk.id} data-hot={hot || undefined} aria-hidden="true">
+              <div
+                key={desk.id}
+                className={styles.link}
+                data-link={desk.id}
+                data-hot={hot || undefined}
+                aria-hidden="true"
+              >
                 {hot && fly && (
-                  <i key={step} className={styles.packet} data-dir={fly.dir} data-side={desk.id === 'web' || desk.id === 'design' ? 'l' : 'r'}>
+                  <i
+                    key={step}
+                    className={styles.packet}
+                    data-dir={fly.dir}
+                    data-side={desk.id === 'web' || desk.id === 'design' ? 'l' : 'r'}
+                  >
                     {fly.glyph}
                   </i>
                 )}
@@ -275,7 +327,14 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           })}
 
           <div className={styles.device}>
-            <Chat title={d.phone.title} sub={d.phone.sub} tone="tg" avatar="LX" live={play.playing} className={styles.chat}>
+            <Chat
+              title={d.phone.title}
+              sub={d.phone.sub}
+              tone="tg"
+              avatar="LX"
+              live={play.playing}
+              className={styles.chat}
+            >
               {shown}
             </Chat>
             <div className={styles.reply}>

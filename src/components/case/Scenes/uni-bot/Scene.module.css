@@ -528,7 +528,6 @@
       'side';
     margin-block-start: var(--space-lg);
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,7 +2,25 @@
 
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, useReduced, usePlay } from '../kit'
+import {
+  Back,
+  Brief,
+  Cap,
+  Chat,
+  Controls,
+  Facts,
+  Keys,
+  Lead,
+  Meta,
+  Mono,
+  Msg,
+  Note,
+  Reveal,
+  Sys,
+  Title,
+  useReduced,
+  usePlay,
+} from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -15,8 +33,21 @@ type Data = {
   events: Record<string, { label: string }>
   phone: { title: string; sub: string; quiet: string; after: string }
   messages: Msgs
-  deadlines: { title: string; sub: string; empty: string; name: string; course: string; due: string; states: { mark: string; left: string }[] }
-  memory: { title: string; sub: string; dup: string; rows: { id: string; key: string; value: string }[] }
+  deadlines: {
+    title: string
+    sub: string
+    empty: string
+    name: string
+    course: string
+    due: string
+    states: { mark: string; left: string }[]
+  }
+  memory: {
+    title: string
+    sub: string
+    dup: string
+    rows: { id: string; key: string; value: string }[]
+  }
   also: { title: string; items: string[] }
   commands: { title: string; items: string[] }
 }
@@ -146,17 +177,36 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             ))}
             {Array.from({ length: SLOTS }, (_, i) => {
               const sent = sentSlots.has(i)
-              const state = sent && i <= slot ? 'sent' : i === slot ? 'now' : i < slot ? 'past' : 'next'
-              return <i key={i} className={styles.tick} data-state={state} data-slot={sent ? 'event' : undefined} style={{ '--a': i + 1 } as CSSProperties} />
+              const state =
+                sent && i <= slot ? 'sent' : i === slot ? 'now' : i < slot ? 'past' : 'next'
+              return (
+                <i
+                  key={i}
+                  className={styles.tick}
+                  data-state={state}
+                  data-slot={sent ? 'event' : undefined}
+                  style={{ '--a': i + 1 } as CSSProperties}
+                />
+              )
             })}
             {Array.from({ length: 18 }, (_, h) => (
-              <span key={h} className={styles.hour} data-major={h % 3 === 0} style={{ '--a': h * 4 + 1 } as CSSProperties}>
+              <span
+                key={h}
+                className={styles.hour}
+                data-major={h % 3 === 0}
+                style={{ '--a': h * 4 + 1 } as CSSProperties}
+              >
                 {String(h + 6).padStart(2, '0')}
                 <small>:00</small>
               </span>
             ))}
             {today.map((e) => (
-              <span key={e.id} className={styles.flag} data-on={fired(e) || undefined} style={{ '--a': e.slot + 1 } as CSSProperties}>
+              <span
+                key={e.id}
+                className={styles.flag}
+                data-on={fired(e) || undefined}
+                style={{ '--a': e.slot + 1 } as CSSProperties}
+              >
                 <b>{clockOf(e.slot)}</b> {d.events[e.id].label}
               </span>
             ))}
@@ -165,7 +215,16 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         </section>
 
         <div className={styles.stage}>
-          <Chat title={d.phone.title} sub={d.phone.sub} tone="tg" live={play.playing} fit minHeight={300} className={styles.phone} avatar="🎓">
+          <Chat
+            title={d.phone.title}
+            sub={d.phone.sub}
+            tone="tg"
+            live={play.playing}
+            fit
+            minHeight={300}
+            className={styles.phone}
+            avatar="🎓"
+          >
             {shown.length === 0 && <Sys key={`q${plan.day}`}>{d.phone.quiet}</Sys>}
             {shown.map((e) => {
               const m = d.messages[e.id]
@@ -218,7 +277,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                       <code>{r.key}</code>
                       <span>
                         {r.value}
-                        {r.id === 'task' && on && dupN > 0 && <em>{d.memory.dup.replace('{n}', String(dupN))}</em>}
+                        {r.id === 'task' && on && dupN > 0 && (
+                          <em>{d.memory.dup.replace('{n}', String(dupN))}</em>
+                        )}
                       </span>
                     </li>
                   )
@@ -248,7 +309,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           <div className={styles.under}>
             <Cap className={styles.cap}>{d.steps[step].cap}</Cap>
-            <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
+            <Controls
+              play={play}
+              t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }}
+              className={styles.controls}
+            />
             <Note>{t.show.cast.demo}</Note>
           </div>
         </div>

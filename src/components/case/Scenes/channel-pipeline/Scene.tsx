@@ -2,17 +2,48 @@
 
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Lead, Meta, Mono, Msg, Note, Reveal, Sys, Title, usePlay } from '../kit'
+import {
+  Back,
+  Brief,
+  Cap,
+  Chat,
+  Controls,
+  Facts,
+  Lead,
+  Meta,
+  Mono,
+  Msg,
+  Note,
+  Reveal,
+  Sys,
+  Title,
+  usePlay,
+} from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
 type Seg = { k: 'same' | 'del' | 'add' | 'dash'; t: string; alt?: string }
 type Data = {
   stations: { name: string; note: string }[]
-  loop: { title: string; before: string; after: string; note: string; pair: { before: string; after: string; note: string } }
+  loop: {
+    title: string
+    before: string
+    after: string
+    note: string
+    pair: { before: string; after: string; note: string }
+  }
   steps: { head: string; foot: string }[]
   caps: string[]
-  topic: { label: string; rubrics: string[]; active: number; form: string; formName: string; seedLabel: string; seed: string; rule: string }
+  topic: {
+    label: string
+    rubrics: string[]
+    active: number
+    form: string
+    formName: string
+    seedLabel: string
+    seed: string
+    rule: string
+  }
   angles: { title: string; items: string[]; pick: number; picked: string }
   draft: {
     rubric: string
@@ -21,7 +52,18 @@ type Data = {
     length: string
     pics: { title: string; items: string[]; active: number; note: string }
   }
-  phone: { title: string; sub: string; idle: string; pending: string; queued: string; toast: string; published: string; menu: string[]; keys: string[]; keysQueued: string[] }
+  phone: {
+    title: string
+    sub: string
+    idle: string
+    pending: string
+    queued: string
+    toast: string
+    published: string
+    menu: string[]
+    keys: string[]
+    keysQueued: string[]
+  }
   channel: { head: string; time: string; empty: string }
   axis: {
     title: string
@@ -58,11 +100,20 @@ const at = (hm: string) => ((minutes(hm) - 540) / 720) * 100
 /** Кусок строки черновика в зависимости от шага: что написал автор, что отметил код, что переписал редактор */
 function Piece({ s, step }: { s: Seg; step: number }) {
   if (s.k === 'same') return <>{s.t}</>
-  if (s.k === 'add') return step >= 3 ? <ins className={styles.add} data-fresh={step === 3 || undefined}>{s.t}</ins> : null
+  if (s.k === 'add')
+    return step >= 3 ? (
+      <ins className={styles.add} data-fresh={step === 3 || undefined}>
+        {s.t}
+      </ins>
+    ) : null
   if (s.k === 'del') {
     if (step >= 4) return null
     return (
-      <del className={styles.del} data-flag={step === 2 || undefined} data-gone={step === 3 || undefined}>
+      <del
+        className={styles.del}
+        data-flag={step === 2 || undefined}
+        data-gone={step === 3 || undefined}
+      >
         {s.t}
       </del>
     )
@@ -70,9 +121,19 @@ function Piece({ s, step }: { s: Seg; step: number }) {
   // dash: автор поставил тире, код заменил на дефис, редактор переписал фразу
   if (step >= 4) return null
   // само тире: знак, который ловит код бота, он не текст сцены
-  if (step === 1) return <>{s.t}{'—'}</>
+  if (step === 1)
+    return (
+      <>
+        {s.t}
+        {'—'}
+      </>
+    )
   if (step === 2) return <span className={styles.fix}>{s.alt}</span>
-  return <del className={styles.del} data-gone>{s.alt}</del>
+  return (
+    <del className={styles.del} data-gone>
+      {s.alt}
+    </del>
+  )
 }
 
 /**
@@ -112,10 +173,17 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         <Title item={item} />
 
         {/* Конвейер: станции и карточка поста, которая по ним едет */}
-        <div className={styles.line} style={{ '--i': st, '--n': d.stations.length } as CSSProperties}>
+        <div
+          className={styles.line}
+          style={{ '--i': st, '--n': d.stations.length } as CSSProperties}
+        >
           <ol className={styles.belt}>
             {d.stations.map((x, i) => (
-              <li key={x.name} className={styles.station} data-state={i < st ? 'done' : i === st ? 'now' : 'next'}>
+              <li
+                key={x.name}
+                className={styles.station}
+                data-state={i < st ? 'done' : i === st ? 'now' : 'next'}
+              >
                 <span className={styles.dot} aria-hidden="true" />
                 <span className={styles.sname}>
                   <i>{String(i + 1).padStart(2, '0')}</i>
@@ -169,7 +237,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
         <div className={styles.work}>
           {/* Лист: тема, черновик с правками или готовый пост в канале */}
-          <section className={styles.paper} data-mode={onChannel ? 'channel' : 'draft'} aria-label={s.head}>
+          <section
+            className={styles.paper}
+            data-mode={onChannel ? 'channel' : 'draft'}
+            aria-label={s.head}
+          >
             <div className={styles.phead}>
               <Mono key={s.head}>{onChannel ? d.channel.head : s.head}</Mono>
               {draftStep && <Mono className={styles.tagr}>{d.draft.rubric}</Mono>}
@@ -204,7 +276,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 {step === 1 && (
                   <ul className={styles.angles}>
                     {d.angles.items.map((a, i) => (
-                      <li key={a} data-pick={i === d.angles.pick || undefined} style={{ animationDelay: `${i * 160}ms` }}>
+                      <li
+                        key={a}
+                        data-pick={i === d.angles.pick || undefined}
+                        style={{ animationDelay: `${i * 160}ms` }}
+                      >
                         <span>{a}</span>
                         {i === d.angles.pick && <em>{d.angles.picked}</em>}
                       </li>
@@ -213,7 +289,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 )}
                 <h3 className={styles.dtitle}>{d.draft.title}</h3>
                 {d.draft.lines.map((ln, li) => (
-                  <p key={li} className={styles.dline} style={{ animationDelay: `${step === 1 ? 500 + li * 420 : 0}ms` }} data-typed={step === 1 || undefined}>
+                  <p
+                    key={li}
+                    className={styles.dline}
+                    style={{ animationDelay: `${step === 1 ? 500 + li * 420 : 0}ms` }}
+                    data-typed={step === 1 || undefined}
+                  >
                     {ln.seg.map((sg, si) => (
                       <Piece key={si} s={sg} step={step} />
                     ))}
@@ -271,21 +352,35 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   className={styles.band}
                   data-low={b.low || undefined}
                   data-hit={(bi === 1 && step >= 4) || undefined}
-                  style={{ insetInlineStart: `${at(b.from)}%`, inlineSize: `${at(b.to) - at(b.from)}%` }}
+                  style={{
+                    insetInlineStart: `${at(b.from)}%`,
+                    inlineSize: `${at(b.to) - at(b.from)}%`,
+                  }}
                 >
                   <i>{b.label}</i>
                 </span>
               ))}
               {d.axis.ticks.map((tk) => (
-                <span key={tk} className={styles.tick} style={{ insetInlineStart: `${at(`${tk}:00`)}%` }}>
+                <span
+                  key={tk}
+                  className={styles.tick}
+                  style={{ insetInlineStart: `${at(`${tk}:00`)}%` }}
+                >
                   <i>{tk}</i>
                 </span>
               ))}
-              <span className={styles.digest} style={{ insetInlineStart: `${at(d.axis.digest.at)}%` }}>
+              <span
+                className={styles.digest}
+                style={{ insetInlineStart: `${at(d.axis.digest.at)}%` }}
+              >
                 <i>{d.axis.digest.at}</i>
               </span>
               {step >= 4 && (
-                <span className={styles.pin} data-solid={queued || undefined} style={{ insetInlineStart: `${pinAt}%` }}>
+                <span
+                  className={styles.pin}
+                  data-solid={queued || undefined}
+                  style={{ insetInlineStart: `${pinAt}%` }}
+                >
                   <b />
                   <span className={styles.plabel}>
                     <strong>{d.axis.pin.at}</strong>
@@ -300,7 +395,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   </span>
                 </span>
               )}
-              {queued && <span className={styles.head} style={{ '--to': `${pinAt}%` } as CSSProperties} aria-hidden="true" />}
+              {queued && (
+                <span
+                  className={styles.head}
+                  style={{ '--to': `${pinAt}%` } as CSSProperties}
+                  aria-hidden="true"
+                />
+              )}
             </div>
             <p className={styles.legend}>
               <span>{d.axis.lowNote}</span>
@@ -312,15 +413,25 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           {/* Телефон: бот-пульт с кнопками */}
           <div className={styles.phone}>
-            <Chat title={d.phone.title} sub={d.phone.sub} avatar="◆" live={play.playing} className={styles.chat}>
+            <Chat
+              title={d.phone.title}
+              sub={d.phone.sub}
+              avatar="◆"
+              live={play.playing}
+              className={styles.chat}
+            >
               {step < 4 && <Sys>{d.phone.idle}</Sys>}
               {step >= 4 && (
                 <Msg side="in" time={STAMP} className={styles.draftMsg}>
                   <span className={styles.status} key={queued ? 'q' : 'p'}>
                     {queued ? (
                       <>
-                        <span className={step === 6 ? styles.stQ : styles.stGone}>{d.phone.queued}</span>
-                        <span className={step === 6 ? styles.stOut : styles.stShow}>{d.phone.published}</span>
+                        <span className={step === 6 ? styles.stQ : styles.stGone}>
+                          {d.phone.queued}
+                        </span>
+                        <span className={step === 6 ? styles.stOut : styles.stShow}>
+                          {d.phone.published}
+                        </span>
                       </>
                     ) : (
                       d.phone.pending
@@ -340,7 +451,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                         <>
                           <span className={styles.krow}>
                             {d.phone.keys.slice(0, 2).map((k, i) => (
-                              <span key={k} className={styles.key} data-press={(step === 5 && i === 0) || undefined}>
+                              <span
+                                key={k}
+                                className={styles.key}
+                                data-press={(step === 5 && i === 0) || undefined}
+                              >
                                 {k}
                               </span>
                             ))}
@@ -379,7 +494,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
         <div className={styles.under}>
           <Cap className={styles.cap}>{d.caps[nstep]}</Cap>
-          <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
+          <Controls
+            play={play}
+            t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }}
+            className={styles.controls}
+          />
           <Note>{t.show.cast.demo}</Note>
         </div>
 

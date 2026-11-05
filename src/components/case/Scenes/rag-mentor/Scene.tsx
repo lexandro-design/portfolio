@@ -2,7 +2,24 @@
 
 import { useEffect, useState, type CSSProperties } from 'react'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Title, Typing, usePlay } from '../kit'
+import {
+  Back,
+  Brief,
+  Cap,
+  Chat,
+  Controls,
+  Facts,
+  Keys,
+  Lead,
+  Meta,
+  Mono,
+  Msg,
+  Note,
+  Reveal,
+  Title,
+  Typing,
+  usePlay,
+} from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -89,7 +106,8 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const hitIds = step >= 3 && step <= 5 ? d.fragments.map((f) => f.id) : []
   const weakIds = step === 6 ? d.weakFragments.map((f) => f.id) : []
   const asked = step >= 1
-  const shelfDocs = step >= 8 ? [{ id: 'fresh', title: d.fresh.title, bars: d.fresh.bars }, ...d.docs] : d.docs
+  const shelfDocs =
+    step >= 8 ? [{ id: 'fresh', title: d.fresh.title, bars: d.fresh.bars }, ...d.docs] : d.docs
 
   return (
     <header ref={ref} className={`${scene.scene} ${styles.root}`}>
@@ -127,7 +145,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                         <i key={b} data-lit={b === lit || undefined} />
                       ))}
                     </span>
-                    <span className={styles.tag}>{locked ? d.shelf.locked : fresh ? d.shelf.fresh : ''}</span>
+                    <span className={styles.tag}>
+                      {locked ? d.shelf.locked : fresh ? d.shelf.fresh : ''}
+                    </span>
                   </li>
                 )
               })}
@@ -135,7 +155,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           </section>
 
           <div className={styles.main}>
-            <Chat title={d.chat.title} sub={d.chat.sub} tone="tg" live={play.playing} className={styles.chat}>
+            <Chat
+              title={d.chat.title}
+              sub={d.chat.sub}
+              tone="tg"
+              live={play.playing}
+              className={styles.chat}
+            >
               <Msg side="in" time={CLOCK[0]}>
                 {m.greet}
                 <span className={styles.keysWrap}>
@@ -143,7 +169,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 </span>
               </Msg>
               {asked && (
-                <Msg side="out" key="q1" time={CLOCK[1]} status={step >= 5 ? 'read' : 'sent'} delay={nstep === 0 ? 700 : undefined}>
+                <Msg
+                  side="out"
+                  key="q1"
+                  time={CLOCK[1]}
+                  status={step >= 5 ? 'read' : 'sent'}
+                  delay={nstep === 0 ? 700 : undefined}
+                >
                   {m.q1}
                 </Msg>
               )}
@@ -174,7 +206,9 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   {m.q2}
                 </Msg>
               )}
-              {nstep === 4 && typing && <Typing key="tm" text={d.typing} leaving={leaving} delay={400} />}
+              {nstep === 4 && typing && (
+                <Typing key="tm" text={d.typing} leaving={leaving} delay={400} />
+              )}
               {step >= 7 && (
                 <Msg side="in" key="miss" time={CLOCK[4]}>
                   {m.miss}
@@ -203,7 +237,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                     <div className={styles.lane}>
                       <Mono>{dr.meaning}</Mono>
                       {d.fragments.map((f, i) => (
-                        <p key={f.n} className={styles.hitRow} style={{ '--w': `${LANE[i]}%`, '--d': `${i * 160}ms` } as CSSProperties}>
+                        <p
+                          key={f.n}
+                          className={styles.hitRow}
+                          style={{ '--w': `${LANE[i]}%`, '--d': `${i * 160}ms` } as CSSProperties}
+                        >
                           <span>
                             {f.doc} · {f.ref}
                           </span>
@@ -219,7 +257,16 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                         ))}
                       </p>
                       {d.fragments.slice(0, 2).map((f, i) => (
-                        <p key={f.n} className={styles.hitRow} style={{ '--w': `${LANE[i + 1]}%`, '--d': `${300 + i * 160}ms` } as CSSProperties}>
+                        <p
+                          key={f.n}
+                          className={styles.hitRow}
+                          style={
+                            {
+                              '--w': `${LANE[i + 1]}%`,
+                              '--d': `${300 + i * 160}ms`,
+                            } as CSSProperties
+                          }
+                        >
                           <span>
                             {f.doc} · {f.ref}
                           </span>
@@ -235,7 +282,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   <>
                     <ol className={styles.frags}>
                       {d.fragments.map((f, i) => (
-                        <li key={f.n} className={styles.frag} data-cited={step === 5 || undefined} style={{ '--d': `${i * 160}ms` } as CSSProperties}>
+                        <li
+                          key={f.n}
+                          className={styles.frag}
+                          data-cited={step === 5 || undefined}
+                          style={{ '--d': `${i * 160}ms` } as CSSProperties}
+                        >
                           <span className={styles.fragHead}>
                             <b>[{f.n}]</b>
                             <span>
@@ -256,7 +308,12 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   <>
                     <ol className={styles.frags} data-weak>
                       {d.weakFragments.map((f, i) => (
-                        <li key={f.id} className={styles.frag} data-weak style={{ '--d': `${i * 160}ms` } as CSSProperties}>
+                        <li
+                          key={f.id}
+                          className={styles.frag}
+                          data-weak
+                          style={{ '--d': `${i * 160}ms` } as CSSProperties}
+                        >
                           <span className={styles.fragHead}>
                             <span>{f.doc}</span>
                           </span>
@@ -300,7 +357,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             <Mono>{dr.flow}</Mono>
             <ol className={styles.stages}>
               {d.stages.map((s, i) => (
-                <li key={s} data-on={STAGE[step] === i || undefined} data-done={i < STAGE[step] || undefined}>
+                <li
+                  key={s}
+                  data-on={STAGE[step] === i || undefined}
+                  data-done={i < STAGE[step] || undefined}
+                >
                   {s}
                 </li>
               ))}
@@ -309,7 +370,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           <Cap className={styles.cap}>{d.steps[nstep].cap}</Cap>
           <div className={styles.ctl}>
-            <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
+            <Controls
+              play={play}
+              t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }}
+              className={styles.controls}
+            />
             <Note>{t.show.cast.demo}</Note>
           </div>
         </div>
@@ -325,7 +390,17 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 }
 
 /** Шкала «лучшее совпадение» с отметкой порога: ниже отметки бот честно говорит, что ответа нет */
-function Meter({ label, thr, value, low }: { label: string; thr: string; value: number; low?: boolean }) {
+function Meter({
+  label,
+  thr,
+  value,
+  low,
+}: {
+  label: string
+  thr: string
+  value: number
+  low?: boolean
+}) {
   return (
     <div className={styles.meter} data-low={low || undefined}>
       <span>{label}</span>

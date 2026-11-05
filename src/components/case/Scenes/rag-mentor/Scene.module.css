@@ -108,7 +108,11 @@
 .doc[data-locked] {
   opacity: 0.38;
   border-block-start-color: var(--border-hair);
-  background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in oklab, var(--fg-tertiary) 14%, transparent) 6px 7px);
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0 6px,
+    color-mix(in oklab, var(--fg-tertiary) 14%, transparent) 6px 7px
+  );
 }
 
 .doc[data-hit] {
