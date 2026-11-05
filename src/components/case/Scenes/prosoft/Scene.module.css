@@ -1,0 +1,307 @@
+.root {
+  /* Цвета макета: светлая студия 3D-сцен и тёмно-синий текст. Держатся на всех темах сайта */
+  --ps-ink: #062253;
+  --ps-mute: #4c5d7d;
+  --ps-blue: #0e4cb9;
+  --ps-orange: #f77106;
+  --ps-paper: #eef2f8;
+  padding-block-end: 0;
+}
+
+/* Витрина на всю ширину окна: 3D не влезает в колонку текста, ей нужен воздух */
+.band {
+  margin-block-start: var(--space-xl);
+  padding-inline: clamp(16px, 2.2vw, 40px);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  max-block-size: calc(100vh - var(--nav-h) - 40px);
+  inline-size: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  background: var(--ps-paper);
+}
+
+.loop,
+.now {
+  position: absolute;
+  inset: 0;
+}
+
+.now {
+  animation: fade 640ms var(--ease-out-quart) both;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: 100% 50%;
+}
+
+/* Левая часть кадра пустая по замыслу: на макете там заголовок страницы */
+.copy {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.2vw, 18px);
+  justify-content: center;
+  inline-size: 46%;
+  padding-inline-start: clamp(24px, 5vw, 88px);
+  color: var(--ps-ink);
+  animation: copyIn 620ms var(--ease-out-expo) both;
+}
+
+@keyframes copyIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.page {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ps-blue);
+}
+
+.head {
+  font-size: clamp(26px, 3.3vw, 56px);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.text {
+  max-inline-size: 34ch;
+  font-size: clamp(14px, 1.15vw, 18px);
+  line-height: 1.45;
+  color: var(--ps-mute);
+}
+
+/* Миниатюры: семь страниц сайта, у текущей полоса идёт по времени сцены */
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin-block-start: var(--space-md);
+  list-style: none;
+}
+
+.thumb {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  inline-size: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: none;
+  color: var(--fg-tertiary);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  text-align: start;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out-quart);
+}
+
+.thumb img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: var(--ps-paper);
+  opacity: 0.72;
+  transition: opacity var(--dur-base) var(--ease-out-quart);
+}
+
+.thumb[aria-current] {
+  color: var(--fg-primary);
+}
+
+.thumb[aria-current] img {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .thumb:hover {
+    color: var(--fg-primary);
+  }
+
+  .thumb:hover img {
+    opacity: 1;
+  }
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.thumb i {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 3px;
+  background: var(--ps-orange);
+  transform-origin: left;
+  animation: run var(--run) linear both;
+}
+
+@keyframes run {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.under {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-xs) var(--space-lg);
+  align-items: start;
+  margin-block-start: var(--space-md);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+/* Разработчик сайта рядом с описанием: это работа двоих */
+.credit {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: var(--space-sm);
+  align-items: baseline;
+  justify-self: start;
+  padding-block-end: 6px;
+  border-block-end: 1px solid var(--border-hover);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  text-decoration: none;
+  transition:
+    border-color var(--dur-base) var(--ease-out-quart),
+    color var(--dur-base) var(--ease-out-quart);
+}
+
+.credit b {
+  font-family: var(--font-sans);
+  font-size: var(--type-body-lg);
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+@media (hover: hover) {
+  .credit:hover {
+    border-color: var(--fg-primary);
+    color: var(--fg-primary);
+  }
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+/* Планшет: заголовок и модель ещё помещаются рядом, миниатюры в один ряд мельче */
+@media (max-width: 1099px) {
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .thumb span {
+    display: none;
+  }
+}
+
+/* Телефон: кадр срезан к модели, текст под ней, свой файл ролика */
+@media (max-width: 767px) {
+  .band {
+    margin-block-start: var(--space-lg);
+    padding-inline: 0;
+  }
+
+  .stage {
+    display: grid;
+    aspect-ratio: auto;
+    max-block-size: none;
+  }
+
+  .now,
+  .loop {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 800 / 714;
+  }
+
+  .stage > .loop {
+    position: absolute;
+    inset: 0 0 auto;
+  }
+
+  .now .loop {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Текст фиксированной высоты: шаги не двигают страницу на всех языках */
+  .copy {
+    position: static;
+    inline-size: auto;
+    block-size: 196px;
+    justify-content: flex-start;
+    padding: 16px;
+  }
+
+  .head {
+    font-size: 26px;
+  }
+
+  .text {
+    max-inline-size: none;
+    font-size: 15px;
+  }
+
+  .thumbs {
+    display: none;
+  }
+
+  .credit {
+    grid-auto-flow: row;
+    gap: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band,
+  .now,
+  .copy,
+  .thumb i {
+    animation: none;
+  }
+}

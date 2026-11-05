@@ -1746,43 +1746,60 @@
   },
   "prosoft": {
     "title": "PRO-SOFT",
-    "tagline": "design of an IT integrator's site",
-    "lead": "A Figma layout for a 1C integrator's site: eight pages, seven mobile versions, a design system and a prototype. The site is about services, not a catalog.",
+    "tagline": "1C integrator site: design and 3D",
+    "lead": "A site for a 1C integrator: eight pages, mobile versions, a design system and seven 3D scenes on the first screens. Design and 3D are mine, development is by Nika.",
     "client": "freelance · 1C integrator",
     "sections": [
       {
-        "title": "the task",
+        "title": "task",
         "body": [
-          "The company's two one-page sites are merged into one, only about 1C: moving off UPP, ERP and KA implementation, customization, support. A visitor should understand what they need and leave a request for a diagnostic."
+          "The company had two one-pagers on Tilda. They are being merged into one site about 1C only: moving off UPP, ERP and KA rollout, custom work, support. Its clients are manufacturers and retailers with 50 people or more. A visitor has to see within a minute which of the four jobs is theirs, what happens at each stage and what they pay for, then request a diagnostic."
         ]
       },
       {
-        "title": "what I did",
+        "title": "idea",
         "body": [
-          "Grid and rhythm, a design system with variables, components, all pages and states, mobile versions and a prototype in Figma. The palette comes from the company: blue, dark blue and an orange accent, Onest typeface."
+          "The company has one strong idea: you pay for the accepted result of a stage. So the centre of the site is not a banner but a stage ribbon, with term, result and payment condition in one table. Tools replace decoration: “Sound familiar?” with a situation picker, choosing ERP or KA with three questions, a sample diagnostic report, a five-question quiz."
         ]
       },
       {
-        "title": "decisions",
+        "title": "3D",
         "body": [
-          "Instead of decoration, the screens carry tools: a stage ribbon with acceptance and payment points, \"Do you recognise yourself?\" with a choice of situation, an ERP or KA picker in three questions, a sample diagnostic report, a five-question quiz."
+          "You cannot photograph 1C services, and people with laptops explain nothing. So each page gets a model that means something: the company mark on the home page, an old and a new computer for moving off UPP, a monitor with a scanner for the diagnostic, a factory and a truck for ERP, a database with integrations for custom work, a monitor with a headset for support, “4 0 4” with the mark.",
+          "Models, light and animation are built in Blender in the company colours: white, dark blue and an orange accent. Each scene is a 10-second loop at 3840 by 1920, with the model on the right and room for the headline on the left."
         ]
       },
       {
-        "title": "boundaries",
+        "title": "system",
         "body": [
-          "This is a layout and a prototype in Figma. Research, copy and site development are done by other people; the data in the samples is conditional."
+          "A design system on variables: colour and type tokens, components, a separate page of tools. The palette comes from the company: blue, dark blue for dark sections, orange as the second accent. Onest for text, IBM Plex Mono for numbers and dates. A grid with no fractions: margins 64, content 1312, rhythm between blocks 96. Mobile screens use their own component variants, not desktop overrides."
+        ]
+      },
+      {
+        "title": "who did what",
+        "body": [
+          "Design, the design system, the Figma prototype and the 3D scenes are mine. Nika runs the research and builds the site on Next.js and Payload. The site is in approval and in development, data in the samples is illustrative."
         ]
       }
     ],
     "captions": [
+      "Home first screen: the headline on the left, the 3D model on the right.",
+      "Home: situation picker, services and the stage ribbon.",
+      "Moving off UPP: scenarios and choosing a configuration.",
+      "Diagnostic: what gets checked and a sample report with sample data.",
+      "ERP and KA: picking a configuration, then the stages.",
+      "Custom work: what gets done and a sample audit with sample data.",
+      "Support: what is included and how the work is handed over.",
       "The stage ribbon: term, result and payment condition in one table.",
-      "\"Do you recognise yourself?\": choose a situation and see what we do.",
-      "A sample diagnostic report. The sample itself says the data is conditional.",
-      "An ERP or KA picker in three questions.",
-      "A five-question quiz, step two.",
-      "Phone: home, choice of situation, stage ribbon.",
-      "A base audit: a sample report with conditional data."
+      "“Sound familiar?”: the situation and what we do.",
+      "Choosing ERP or KA with three questions.",
+      "Sample diagnostic report. Marked on the sample: the data is illustrative.",
+      "Database audit: a sample report with illustrative data.",
+      "Five-question quiz, step two.",
+      "Phone: mobile screens of the home page.",
+      "Colour: semantic tokens.",
+      "Buttons and their states.",
+      "Scenario card."
     ]
   },
   "svarka-3d": {
