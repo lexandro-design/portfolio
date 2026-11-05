@@ -62,12 +62,6 @@ function Icon({ id }: { id: Theme }) {
         <circle cx="7" cy="7" r="4" fill="currentColor" />
       </svg>
     )
-  if (id === 'moon')
-    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="M11.6 8.7A5 5 0 0 1 5.3 2.4a5 5 0 1 0 6.3 6.3z" fill="currentColor" />
-      </svg>
-    )
   if (id === 'space')
     return (
       <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">

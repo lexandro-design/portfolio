@@ -164,41 +164,41 @@
   }
 }
 
-/* Темы Луна и Космос: вместо фото шар на общем холсте, его место задаёт блок data-moon.
+/* Тема Космос: вместо фото шар на общем холсте, его место задаёт блок data-moon.
    В остальных темах этого блока просто нет */
 .moon {
   display: none;
 }
 
-:global(:is([data-theme='moon'], [data-theme='space'])) .hero {
+:global([data-theme='space']) .hero {
   position: relative;
   grid-template-rows: auto 1fr auto auto;
   min-block-size: calc(100svh - var(--nav-h));
 }
 
-:global(:is([data-theme='moon'], [data-theme='space'])) .main {
+:global([data-theme='space']) .main {
   grid-template-columns: 1fr;
 }
 
-:global(:is([data-theme='moon'], [data-theme='space'])) .photo {
+:global([data-theme='space']) .photo {
   display: none;
 }
 
 /* Текст и кнопки выше блока Луны: мимо них её можно крутить, по ним нажатие идёт как обычно */
-:global(:is([data-theme='moon'], [data-theme='space'])) :is(.title, .meta, .bottom, .foot) {
+:global([data-theme='space']) :is(.title, .meta, .bottom, .foot) {
   position: relative;
   z-index: 1;
 }
 
-:global(:is([data-theme='moon'], [data-theme='space'])) .title {
+:global([data-theme='space']) .title {
   inline-size: fit-content;
 }
 
-:global(:is([data-theme='moon'], [data-theme='space'])) .buttons > :last-child:not(:first-child) {
+:global([data-theme='space']) .buttons > :last-child:not(:first-child) {
   background: var(--bg-scrim);
 }
 
-:global(:is([data-theme='moon'], [data-theme='space'])) .moon {
+:global([data-theme='space']) .moon {
   display: block;
   position: absolute;
   inset-block-start: 50%;
@@ -210,26 +210,15 @@
   touch-action: pan-y;
 }
 
-:global([data-theme='moon']) .moon {
-  cursor: auto;
-  pointer-events: none;
-}
-
-/* Над горизонтом чёрное небо, подпись на нём светлая */
-:global([data-theme='moon']) .meta,
-:global([data-theme='moon']) .meta > div > :last-child {
-  color: #dcdcd6;
-}
-
 @media (max-width: 1023px) {
-  :global(:is([data-theme='moon'], [data-theme='space'])) .moon {
+  :global([data-theme='space']) .moon {
     inline-size: min(62svh, 58%);
     inset-block-start: 36%;
   }
 }
 
 @media (max-width: 767px) {
-  :global(:is([data-theme='moon'], [data-theme='space'])) .moon {
+  :global([data-theme='space']) .moon {
     position: static;
     inline-size: 88%;
     margin-inline-start: auto;

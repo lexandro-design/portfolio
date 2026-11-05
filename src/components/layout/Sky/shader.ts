@@ -13,12 +13,10 @@ uniform vec3 uC;
 uniform mat3 uBody;
 uniform mat3 uSkyM;
 uniform vec3 uSun;
-uniform float uView;
 uniform float uIn;
 uniform sampler2D uAlb;
 uniform sampler2D uNx;
 uniform sampler2D uNy;
-uniform sampler2D uTile;
 uniform sampler2D uSky;
 out vec4 o;
 
@@ -37,14 +35,7 @@ vec2 mapUv(vec2 ll) {
 vec3 sky(vec3 d) {
   vec3 m = uSkyM * d;
   vec3 c = texture(uSky, mapUv(lonlat(m))).rgb;
-  return pow(c, vec3(2.2)) * vec3(.72, .84, 1.15) * mix(.09, .05, uView);
-}
-
-/* Высота мелкого рельефа: два масштаба, второй повёрнут, чтобы плитка не читалась */
-float relief(vec2 q) {
-  float a = texture(uTile, q).r;
-  float b = texture(uTile, vec2(q.x * .8 - q.y * .6, q.x * .6 + q.y * .8) * 4.3 + .37).r;
-  return a + b * .16;
+  return pow(c, vec3(2.2)) * vec3(.72, .84, 1.15) * .09;
 }
 
 vec3 moon(vec3 d, vec3 P) {
@@ -56,28 +47,9 @@ vec3 moon(vec3 d, vec3 P) {
   vec2 uv = mapUv(ll);
   float alb = pow(texture(uAlb, uv).r, 2.2);
   vec2 s = vec2(texture(uNx, uv).r, texture(uNy, uv).r) * 2. - 1.;
-  s *= mix(1.5, .04, uView);
+  s *= 1.5;
   vec3 E = normalize(vec3(M.z, 0., -M.x) + 1e-5);
   vec3 Nn = cross(M, E);
-  float shade = 1.;
-  if (uView > .02) {
-    vec2 q = vec2(ll.x * cos(ll.y), ll.y) * 5.;
-    float e = 2.5 / 2048.;
-    float h = relief(q);
-    vec2 g = vec2(relief(q + vec2(e, 0.)) - h, relief(q + vec2(0., e)) - h) / e;
-    s += g * .011 * uView;
-    /* Тень от склонов: несколько шагов по рельефу к Солнцу */
-    vec2 sd = normalize(vec2(dot(S, E), dot(S, Nn)) + 1e-4);
-    float rise = max(dot(S, M), .06);
-    float block = 0.;
-    for (int i = 1; i <= 7; i++) {
-      float t = float(i) * float(i) * .0006;
-      block = max(block, (relief(q + sd * t) - h) - rise * t * 60.);
-    }
-    shade = 1. - smoothstep(.02, .22, block) * .38 * uView;
-    /* Вблизи морей не видно: пятна альбедо читались бы кляксами, остаётся мелкий рельеф */
-    alb = mix(alb, .34 * (.86 + h * .28), uView * .9);
-  }
   vec3 n = normalize(M - s.x * E - s.y * Nn);
   float mu0 = max(dot(n, S), 0.);
   float mu = max(dot(n, V), .02);
@@ -86,7 +58,7 @@ vec3 moon(vec3 d, vec3 P) {
   float ls = mu0 / (mu0 + mu);
   float phase = dot(S, V);
   float light = (ls * 1.5 + mu0 * .55) * (1. + .35 * pow(max(phase, 0.), 6.));
-  vec3 sun = vec3(1., .975, .94) * alb * light * day * shade * 1.75 * mix(1., .6, uView);
+  vec3 sun = vec3(1., .975, .94) * alb * light * day * 1.75;
   /* Пепельный свет: ночная сторона светится отражённой Землёй */
   vec3 earth = vec3(.62, .74, 1.) * alb * .012 * max(N.z * .6 + .4, 0.);
   return sun + earth;
@@ -106,9 +78,6 @@ void main() {
   }
   c = 1. - exp(-c * 1.5);
   c = pow(c, vec3(1. / 2.2));
-  /* На низкой орбите поверхность становится фоном для текста: полоса яркости узкая */
-  vec3 ground = vec3(.60, .595, .575) + (c - vec3(.58)) * .9;
-  c = mix(c, mix(c, ground, cover), uView);
   o = vec4(c + (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - .5) / 255., 1.);
 }
 `

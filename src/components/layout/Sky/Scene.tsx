@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { readTheme, subscribeTheme } from '@/components/layout/ThemeSwitch/ThemeSwitch'
 import { QUAD, SCENE, STAR_F, STAR_V } from './shader'
 import styles from './Sky.module.css'
 
@@ -15,7 +14,6 @@ const BUDGET_WEAK = 620_000
 /** Движение не чаще 30 кадров в секунду: Луна поворачивается медленно, больше глаз не заметит */
 const FRAME = 33
 const HEAVY = 22
-const FLIGHT = 1700
 
 const D = Math.PI / 180
 const norm = (a: V3): V3 => {
@@ -23,8 +21,6 @@ const norm = (a: V3): V3 => {
   return [a[0] / l, a[1] / l, a[2] / l]
 }
 const cross = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
-const mix = (a: number, b: number, t: number) => a + (b - a) * t
-const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2)
 const point = (lat: number, lon: number): V3 => [Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon)]
 
 /** Поворот из камеры в карту Луны: точка карты lat/lon встаёт под камеру, север смотрит вверх */
@@ -84,7 +80,7 @@ export default function Scene() {
     const stars = program(STAR_V, STAR_F)
     const loc = (p: WebGLProgram, n: string) => gl.getUniformLocation(p, n)
     const u = Object.fromEntries(
-      ['uRes', 'uFocal', 'uC', 'uBody', 'uSkyM', 'uSun', 'uView', 'uIn'].map((n) => [n, loc(scene, n)]),
+      ['uRes', 'uFocal', 'uC', 'uBody', 'uSkyM', 'uSun', 'uIn'].map((n) => [n, loc(scene, n)]),
     )
     const s = Object.fromEntries(['uRes', 'uFocal', 'uC', 'uSkyT', 'uPx', 'uDim'].map((n) => [n, loc(stars, n)]))
 
@@ -120,7 +116,7 @@ export default function Scene() {
 
     /* Текстуры приходят после первой отрисовки, до них видно только звёзды */
     gl.useProgram(scene)
-    const slots = ['uAlb', 'uNx', 'uNy', 'uTile', 'uSky'] as const
+    const slots = ['uAlb', 'uNx', 'uNy', 'uSky'] as const
     const blank = new Uint8Array([0, 0, 0, 255])
     slots.forEach((name, i) => {
       gl.activeTexture(gl.TEXTURE0 + i)
@@ -129,7 +125,7 @@ export default function Scene() {
       gl.uniform1i(loc(scene, name), i)
     })
     const tag = weak ? '-lo' : ''
-    const files = [`moon-albedo${tag}`, `moon-nx${tag}`, `moon-ny${tag}`, 'regolith', 'sky']
+    const files = [`moon-albedo${tag}`, `moon-nx${tag}`, `moon-ny${tag}`, 'sky']
     let waiting = files.length
     let shown = 0
     let mounted = true
@@ -143,7 +139,7 @@ export default function Scene() {
         gl.generateMipmap(gl.TEXTURE_2D)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, i === 3 ? gl.REPEAT : gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
         if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 2 : 4)
         waiting -= 1
         wake()
@@ -151,10 +147,6 @@ export default function Scene() {
       img.src = `${BASE}/space/${name}.webp`
     })
 
-    let view = readTheme() === 'moon' ? 1 : 0
-    let from = view
-    let to = view
-    let started = -1
     let spin = 0
     let lastSpin = 0
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 }
@@ -188,9 +180,8 @@ export default function Scene() {
       const H = el.height
       const k = W / innerWidth
       const y = calm ? 0 : scrollY
-      const v = view
       const vh = innerHeight
-      const fov = mix(26, 52, v) * D
+      const fov = 26 * D
       const focal = H / 2 / Math.tan(fov / 2)
 
       /* Космос: сфера нужного размера в нужном месте экрана */
@@ -200,25 +191,16 @@ export default function Scene() {
       const sy = (((innerHeight / 2 - at.y - y * 0.22) * k) / focal) * dist
       const far: V3 = [sx, sy, -dist]
 
-      /* Низкая орбита: горизонт над заголовком, со скроллом камера наклоняется вниз к поверхности */
-      const alt = 1.05
-      const edge = Math.asin(1 / alt)
-      const seen = at.top > 0 ? edge - Math.atan(((vh / 2 - at.top) * k) / focal) : 8 * D
-      const tilt = mix(seen, 8 * D, Math.min(y / (vh * 0.9), 1))
-      const low: V3 = [0, -Math.sin(tilt) * alt, -Math.cos(tilt) * alt]
+      const C = far
 
-      const reach = Math.exp(mix(Math.log(Math.hypot(...far)), Math.log(alt), v))
-      const dir = norm([mix(far[0], low[0], v), mix(far[1], low[1], v), mix(far[2], low[2], v)])
-      const C: V3 = [dir[0] * reach, dir[1] * reach, dir[2] * reach]
-
-      const lat = mix(4 * D + turn.lat, -8 * D - (y / vh) * 3.6 * D, v)
-      const lon = mix(-6 * D + spin + turn.lon, -6 * D, v)
+      const lat = 4 * D + turn.lat
+      const lon = -6 * D + spin + turn.lon
       const body = bodyMatrix(C, lat, lon)
 
       const sun = norm([
-        mix(0.86, 0.62, v) + pointer.x * 0.16,
-        mix(0.24, 0.5, v) - pointer.y * 0.16,
-        mix(0.42, 0.34, v),
+        0.86 + pointer.x * 0.16,
+        0.24 - pointer.y * 0.16,
+        0.42,
       ])
       const skyM = skyMatrix(y * 0.00011 + pointer.x * 0.008, y * 0.00005 - pointer.y * 0.006)
 
@@ -231,7 +213,6 @@ export default function Scene() {
       gl.uniformMatrix3fv(u.uBody, false, body)
       gl.uniformMatrix3fv(u.uSkyM, false, skyM)
       gl.uniform3f(u.uSun, sun[0], sun[1], sun[2])
-      gl.uniform1f(u.uView, v)
       gl.uniform1f(u.uIn, shown)
       const watched = ++drawnCount % 4 === 0
       const start = performance.now()
@@ -247,7 +228,7 @@ export default function Scene() {
       /* Обратный поворот это транспонированная матрица */
       gl.uniformMatrix3fv(s.uSkyT, true, skyM)
       gl.uniform1f(s.uPx, Math.max(k, 0.8))
-      gl.uniform1f(s.uDim, 1 - v * 0.25)
+      gl.uniform1f(s.uDim, 1)
       gl.drawArrays(gl.POINTS, 0, count)
       if (!watched || still) return
       /* rAF о загрузке видеокарты не говорит: readPixels ждёт, пока кадр дорисуется */
@@ -267,11 +248,6 @@ export default function Scene() {
     const tick = (now: number) => {
       frame = 0
       if (!waiting && shown < 1) shown = Math.min(1, shown + 0.04)
-      if (started >= 0) {
-        const t = Math.min((now - started) / FLIGHT, 1)
-        view = mix(from, to, ease(t))
-        if (t === 1) started = -1
-      }
       pointer.x += (pointer.tx - pointer.x) * 0.08
       pointer.y += (pointer.ty - pointer.y) * 0.08
       if (!grab.on) {
@@ -280,10 +256,9 @@ export default function Scene() {
       }
       const dt = lastSpin ? Math.min(now - lastSpin, 100) : 0
       lastSpin = now
-      const turning = !still && !document.hidden && view < 0.5 && scrollY < innerHeight * 1.2 && place().top !== -1
+      const turning = !still && !document.hidden && scrollY < innerHeight * 1.2 && place().top !== -1
       if (turning) spin += dt * 0.0000135
       const settling =
-        started >= 0 ||
         (!waiting && shown < 1) ||
         Math.abs(grab.vx) > 1e-5 ||
         Math.abs(pointer.tx - pointer.x) + Math.abs(pointer.ty - pointer.y) > 0.002
@@ -325,7 +300,7 @@ export default function Scene() {
     }
     /* Хватаем только за саму Луну и только мимо текста и кнопок */
     const press = (e: PointerEvent) => {
-      if (view > 0.5 || !(e.target as Element).closest('[data-moon]')) return
+      if (!(e.target as Element).closest('[data-moon]')) return
       const at = place()
       if (Math.hypot(e.clientX - at.x, e.clientY - at.y) > at.r) return
       grab.on = true
@@ -340,19 +315,6 @@ export default function Scene() {
       document.documentElement.style.cursor = ''
     }
 
-    const fly = () => {
-      const next = readTheme() === 'moon' ? 1 : 0
-      if (next === to) return
-      to = next
-      from = view
-      if (calm) {
-        view = next
-        started = -1
-      } else started = performance.now()
-      wake()
-    }
-
-    const unTheme = subscribeTheme(fly)
     addEventListener('resize', resize)
     addEventListener('scroll', wake, { passive: true })
     addEventListener('visibilitychange', wake)
@@ -367,7 +329,6 @@ export default function Scene() {
 
     return () => {
       mounted = false
-      unTheme()
       gl.getExtension('WEBGL_lose_context')?.loseContext()
       cancelAnimationFrame(frame)
       removeEventListener('resize', resize)
