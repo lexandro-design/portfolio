@@ -73,11 +73,16 @@ export function Deck({ cards, shots, labels }: Props) {
         })}
       </div>
       <div className={styles.foot}>
-        <span className={styles.caption} key={i}>
-          <span className={kit.mono}>
-            {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
-          </span>
-          {cards[i].title}
+        {/* Подписи лежат стопкой в одной ячейке: подпись в две строки не двигает кнопки и текст ниже */}
+        <span className={styles.captions}>
+          {cards.map((c, k) => (
+            <span key={c.shot} className={styles.caption} data-on={k === i || undefined} aria-hidden={k !== i}>
+              <span className={kit.mono}>
+                {String(k + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
+              </span>
+              {c.title}
+            </span>
+          ))}
         </span>
         {n > 1 && (
           <span className={styles.nav}>

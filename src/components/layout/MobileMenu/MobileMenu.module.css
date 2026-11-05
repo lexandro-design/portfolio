@@ -2,26 +2,26 @@
 .close {
   position: relative;
   display: none;
-  inline-size: 36px;
-  block-size: 36px;
+  inline-size: 44px;
+  block-size: 44px;
   border: 1px solid var(--border-hair);
 }
 
 .trigger span,
 .close span {
   position: absolute;
-  inset-inline: 10px;
+  inset-inline: 14px;
   block-size: 1.5px;
   background: currentColor;
   transition: transform var(--dur-base) var(--ease-out-expo);
 }
 
 .trigger span:first-child {
-  inset-block-start: 13px;
+  inset-block-start: 17px;
 }
 
 .trigger span:last-child {
-  inset-block-end: 13px;
+  inset-block-end: 17px;
 }
 
 .trigger:hover span:first-child {

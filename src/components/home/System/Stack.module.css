@@ -1,4 +1,4 @@
-.xray {
+.stack {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: var(--space-xl) var(--space-2xl);
@@ -22,40 +22,6 @@
 .lead {
   max-inline-size: 30em;
   color: var(--fg-secondary);
-}
-
-.switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-block-start: var(--space-xs);
-  padding: 14px 20px;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  background: var(--fg-primary);
-  color: var(--fg-inverse);
-  border: 1px solid var(--fg-primary);
-  cursor: pointer;
-}
-
-.switch i {
-  inline-size: 10px;
-  block-size: 10px;
-  border: 1px solid currentColor;
-}
-
-.switch[aria-pressed='true'] {
-  background: none;
-  color: var(--fg-primary);
-}
-
-.switch[aria-pressed='true'] i {
-  background: currentColor;
-}
-
-.switch:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 3px;
 }
 
 .layers {
@@ -108,22 +74,8 @@
   color: var(--fg-secondary);
 }
 
-.tip {
-  position: fixed;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  z-index: 80;
-  padding: 4px 8px;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono-sm);
-  white-space: nowrap;
-  pointer-events: none;
-  background: var(--fg-primary);
-  color: var(--fg-inverse);
-}
-
 @media (max-width: 1023px) {
-  .xray {
+  .stack {
     grid-template-columns: minmax(0, 1fr);
   }
 

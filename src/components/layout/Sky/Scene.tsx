@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { QUAD, SCENE, STAR_F, STAR_V } from './shader'
 import styles from './Sky.module.css'
 
@@ -9,8 +9,8 @@ type V3 = [number, number, number]
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 /** Сколько пикселей считаем за кадр: на широком мониторе холст рисуется мельче и растягивается */
-const BUDGET = 2_400_000
-const BUDGET_WEAK = 620_000
+const BUDGET = 4_200_000
+const BUDGET_WEAK = 1_000_000
 /** Медленное вращение рисуем раз в 33 мс: за кадр Луна сдвигается меньше пикселя. Курсор, скролл и жест рисуются на каждом кадре */
 const FRAME = 33
 /** Градусов в секунду: вращение едва заметное */
@@ -56,11 +56,17 @@ function skyMatrix(yaw: number, pitch: number) {
  */
 export default function Scene() {
   const canvas = useRef<HTMLCanvasElement>(null)
+  const [gen, setGen] = useState(0)
 
   useEffect(() => {
     const el = canvas.current
     const gl = el?.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'low-power' })
     if (!el || !gl) return
+    /* Повторный монтаж на том же холсте (StrictMode в dev): контекст уже потерян, берём новый холст */
+    if (gl.isContextLost()) {
+      setGen((g) => g + 1)
+      return
+    }
 
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
     const nav = navigator as Nav
@@ -142,7 +148,7 @@ export default function Scene() {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-        if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 2 : 4)
+        if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 4 : 8)
         waiting -= 1
         wake()
       }
@@ -346,7 +352,7 @@ export default function Scene() {
       removeEventListener('pointerup', release)
       removeEventListener('pointercancel', release)
     }
-  }, [])
+  }, [gen])
 
-  return <canvas ref={canvas} className={styles.plate} aria-hidden="true" />
+  return <canvas key={gen} ref={canvas} className={styles.plate} aria-hidden="true" />
 }

@@ -107,6 +107,8 @@ export type Block = Titled &
         slots: string[]
       }
     | { kind: 'speed'; rows: { label: string; ms: number; value: string }[] }
+    /** Статичные кадры в своей пропорции, без анимации: one, two, sheet (лист спрайтов), phones, phones-3 */
+    | { kind: 'frames'; variant: string; items: { shot: number; title: string }[] }
   )
 
 export type Showcase = { brief: Brief; blocks: Block[] }
@@ -115,7 +117,7 @@ const RU = data as unknown as Record<string, Showcase>
 const COPY: Partial<Record<Locale, unknown>> = { en, zh, ja }
 
 /** Поля, которые не переводятся: тип блока и имя бота */
-const KEEP = new Set(['kind', 'app'])
+const KEEP = new Set(['kind', 'app', 'variant'])
 
 /** Накладывает перевод на русский: строки по тем же ключам и индексам, всё прочее из исходника */
 export function overlay<T>(base: T, tr: unknown): T {

@@ -1,0 +1,573 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Шкала суток во всю ширину: бегунок проверок, пары дня, флажки сообщений */
+.axis {
+  display: grid;
+  gap: var(--space-md);
+  margin-block-start: var(--space-xl);
+  padding-block-start: var(--space-md);
+  border-block-start: 1px solid var(--border-hair);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 200ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+.axHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-xl);
+}
+
+.clock {
+  display: grid;
+  gap: 2px;
+}
+
+.clock b {
+  font-family: var(--font-mono);
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--fg-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock span {
+  animation: capIn 400ms var(--ease-out-quart) both;
+}
+
+@keyframes capIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.count {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.count div {
+  display: grid;
+  gap: 2px;
+  justify-items: end;
+}
+
+.count dt {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.count dd {
+  font-family: var(--font-mono);
+  font-size: var(--type-h3);
+  line-height: 1;
+  color: var(--fg-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.count dd[data-hot] {
+  color: var(--case-color, var(--accent));
+}
+
+/* Сетка шкалы: 72 проверки по горизонтали, ряды: пары, метки проверок, часы, флажки */
+.rail {
+  display: grid;
+  grid-template-columns: repeat(72, minmax(0, 1fr));
+  grid-template-rows: 30px 64px auto 28px auto;
+  align-items: end;
+  row-gap: 6px;
+}
+
+.pair {
+  grid-row: 1;
+  grid-column: var(--a) / span var(--len);
+  align-self: stretch;
+  padding: 6px 8px;
+  border: 1px solid var(--border-hair);
+  border-block-start: 2px solid var(--border-hover);
+  background: var(--bg-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--fg-tertiary);
+  transition:
+    color var(--dur-slow),
+    border-color var(--dur-slow);
+}
+
+.pair[data-past] {
+  color: var(--fg-primary);
+  border-block-start-color: var(--case-color, var(--accent));
+}
+
+.tick {
+  grid-row: 2;
+  grid-column: var(--a);
+  justify-self: center;
+  align-self: end;
+  inline-size: 2px;
+  block-size: 14px;
+  background: var(--border-hover);
+  opacity: 0.45;
+  transition:
+    opacity 200ms,
+    block-size 260ms var(--ease-out-expo),
+    background-color 200ms;
+}
+
+.tick[data-state='past'] {
+  block-size: 26px;
+  background: var(--fg-tertiary);
+  opacity: 1;
+}
+
+.tick[data-state='now'] {
+  block-size: 44px;
+  opacity: 1;
+  background: var(--fg-primary);
+}
+
+.tick[data-state='sent'] {
+  block-size: 64px;
+  inline-size: 4px;
+  opacity: 1;
+  background: var(--case-color, var(--accent));
+}
+
+.hour {
+  grid-row: 3;
+  grid-column: var(--a) / span 4;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  border-inline-start: 1px solid var(--border-hair);
+  padding-inline-start: 6px;
+}
+
+.hour small {
+  font-size: inherit;
+}
+
+.hour[data-major='false'] {
+  display: none;
+}
+
+.flag {
+  grid-row: 4;
+  grid-column: var(--a) / span 14;
+  justify-self: start;
+  align-self: start;
+  padding-block-start: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  white-space: nowrap;
+  color: var(--fg-secondary);
+  opacity: 0.25;
+  transition: opacity var(--dur-slow);
+}
+
+.flag b {
+  font-weight: 400;
+  color: var(--case-color, var(--accent));
+}
+
+.flag[data-on] {
+  opacity: 1;
+}
+
+.sleep {
+  grid-row: 5;
+  grid-column: 1 / -1;
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+/* Телефон небольшой, рядом дедлайны и отметки */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  grid-template-areas:
+    'phone side'
+    'under under';
+  gap: var(--space-xl);
+  align-items: start;
+  margin-block-start: var(--space-xl);
+}
+
+/* Окно чата фиксированной высоты: реплики прижаты к низу, старые уходят вверх, страница не растёт с лентой */
+.phone {
+  grid-area: phone;
+  block-size: 440px;
+}
+
+.keys {
+  display: block;
+  margin-block-start: 10px;
+}
+
+.side {
+  grid-area: side;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+  align-content: start;
+  align-items: start;
+}
+
+/* Карточки держат высоту самого полного состояния (замер 390-1440): «пусто» и список не меняют страницу */
+.card:nth-child(1) {
+  min-block-size: 196px;
+}
+
+.card:nth-child(2) {
+  min-block-size: 306px;
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .card:nth-child(1) {
+    min-block-size: 238px;
+  }
+
+  .card:nth-child(2) {
+    min-block-size: 366px;
+  }
+}
+
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2xs);
+  padding: var(--space-sm);
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+}
+
+.sub {
+  margin-block-end: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.empty {
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+}
+
+.dl {
+  display: flex;
+  gap: 12px;
+  padding: var(--space-sm);
+  border: 1px solid var(--case-color, var(--accent));
+  animation: pop 600ms var(--ease-out-expo) both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0.2;
+    transform: translateY(10px);
+  }
+}
+
+.mark {
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.dlText {
+  display: grid;
+  gap: 4px;
+  min-inline-size: 0;
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+}
+
+.dlText b {
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.dlText em {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-style: normal;
+  color: var(--fg-tertiary);
+}
+
+.keysList {
+  display: grid;
+  gap: 0;
+  list-style: none;
+}
+
+.keysList li {
+  display: grid;
+  grid-template-columns: 16px minmax(0, auto) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0 8px;
+  padding-block: 8px;
+  border-block-start: 1px solid var(--border-hair);
+  color: var(--fg-tertiary);
+  transition: color var(--dur-slow);
+}
+
+.keysList li[data-on] {
+  color: var(--fg-primary);
+}
+
+.keysList i {
+  font-style: normal;
+  color: var(--case-color, var(--accent));
+}
+
+.keysList code {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  white-space: nowrap;
+}
+
+.keysList span {
+  display: grid;
+  font-size: var(--type-mono-sm);
+  font-family: var(--font-mono);
+  text-align: end;
+  overflow-wrap: anywhere;
+}
+
+.keysList em {
+  font-style: normal;
+  color: var(--case-color, var(--accent));
+}
+
+.more {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.more > div {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.chips li {
+  padding: 6px 10px;
+  border: 1px solid var(--border-hair);
+  font-size: var(--type-mono);
+  color: var(--fg-secondary);
+}
+
+.chips[data-code] li {
+  font-family: var(--font-mono);
+  color: var(--fg-primary);
+}
+
+/* Под сценой: подпись шага слева, панель справа */
+.under {
+  grid-area: under;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-xs) var(--space-3xl);
+  align-items: center;
+}
+
+/* Подпись шага в одну строку на широком экране */
+.cap {
+  grid-column: 1 / -1;
+  min-block-size: 1.5em;
+  font-size: var(--type-body-lg);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: var(--space-md);
+  }
+
+  .side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card {
+    min-block-size: 0;
+  }
+
+  .more {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .flag {
+    grid-column: var(--a) / span 24;
+  }
+
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    min-block-size: 3em;
+    font-size: var(--type-body);
+  }
+}
+
+/* Телефон: шкала становится вертикальной лентой, часы слева, пары справа */
+@media (max-width: 767px) {
+  .axis {
+    margin-block-start: var(--space-lg);
+  }
+
+  .rail {
+    grid-template-columns: 44px 56px minmax(0, 1fr);
+    grid-template-rows: repeat(72, 6px) auto;
+    row-gap: 0;
+    column-gap: 12px;
+  }
+
+  .pair {
+    grid-row: var(--a) / span var(--len);
+    grid-column: 3;
+    padding: 4px 8px;
+    border-block-start-width: 1px;
+    border-inline-start: 2px solid var(--border-hover);
+    border-block-start-color: var(--border-hair);
+  }
+
+  .pair[data-past] {
+    border-block-start-color: var(--border-hair);
+    border-inline-start-color: var(--case-color, var(--accent));
+  }
+
+  .tick {
+    grid-row: var(--a);
+    grid-column: 2;
+    justify-self: start;
+    align-self: center;
+    inline-size: 10px;
+    block-size: 2px;
+    transition:
+      inline-size 260ms var(--ease-out-expo),
+      background-color 200ms;
+  }
+
+  .tick[data-state='past'] {
+    inline-size: 18px;
+    block-size: 2px;
+  }
+
+  .tick[data-state='now'] {
+    inline-size: 36px;
+    block-size: 2px;
+  }
+
+  .tick[data-state='sent'] {
+    inline-size: 56px;
+    block-size: 4px;
+  }
+
+  .hour {
+    grid-row: var(--a) / span 4;
+    grid-column: 1;
+    padding-inline-start: 0;
+    border-inline-start: 0;
+    border-block-start: 1px solid var(--border-hair);
+    line-height: 1;
+    padding-block-start: 1px;
+  }
+
+  .hour[data-major='false'] {
+    display: block;
+  }
+
+  .hour small {
+    display: none;
+  }
+
+  .flag {
+    grid-row: var(--a);
+    grid-column: 3;
+    align-self: center;
+    padding-block-start: 0;
+    line-height: 1;
+    background: var(--bg-base);
+    z-index: 1;
+  }
+
+  .sleep {
+    grid-row: 73;
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-block-start: var(--space-xs);
+  }
+
+  .count dd {
+    font-size: 24px;
+  }
+
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'phone'
+      'under'
+      'side';
+    margin-block-start: var(--space-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axis,
+  .dl,
+  .clock span {
+    animation: none;
+  }
+
+  .tick,
+  .flag,
+  .pair {
+    transition: none;
+  }
+}
+
+/* Узкий телефон: счётчики уходят под часы, когда название дня длинное; место держим под две строки (замер 360 и 390) */
+@media (max-width: 430px) {
+  .axHead {
+    min-block-size: 128px;
+  }
+}

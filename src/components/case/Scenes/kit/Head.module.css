@@ -1,0 +1,41 @@
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.cap {
+  min-block-size: 3.2em;
+  font-size: var(--type-body);
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  animation: capIn 400ms var(--ease-out-quart) both;
+}
+
+@keyframes capIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .cap {
+    min-block-size: 4.2em;
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cap {
+    animation: none;
+  }
+}

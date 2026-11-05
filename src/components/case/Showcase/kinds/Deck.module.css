@@ -41,13 +41,24 @@
   gap: var(--space-md);
 }
 
+.captions {
+  display: grid;
+  min-inline-size: 0;
+}
+
 .caption {
+  grid-area: 1 / 1;
+  visibility: hidden;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 4px var(--space-sm);
   font-size: var(--type-body-lg);
   color: var(--fg-primary);
+}
+
+.caption[data-on] {
+  visibility: visible;
   animation: in var(--dur-slow) var(--ease-out-expo);
 }
 

@@ -1,0 +1,976 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Стол: сцена, рейка и подпись с панелью; на телефоне подпись идёт сразу за чатом */
+.table {
+  display: block;
+}
+
+/* Сцена: слева «полка» каталога, справа узкий чат, под ними рейка с тем, что бот делает с клиентом */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+.table {
+  margin-block-start: var(--space-2xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.desk {
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr;
+  gap: var(--space-sm);
+  align-content: start;
+  min-inline-size: 0;
+  transition: opacity 500ms var(--ease-out-quart);
+}
+
+.stage[data-late] .desk {
+  opacity: 0.45;
+}
+
+.chat {
+  align-self: stretch;
+  block-size: 100%;
+  min-block-size: 520px;
+}
+
+.dhead,
+.shelfHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-sm);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Логотип клиента на светлой плашке: серый знак не читается на тёмной теме */
+.logo {
+  block-size: 22px;
+  inline-size: auto;
+  padding: 5px 9px;
+  box-sizing: content-box;
+  background: #f4f3ef;
+}
+
+.chipBar {
+  block-size: 2px;
+  margin-block-start: 4px;
+}
+
+.log {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-secondary);
+  animation: capIn 400ms var(--ease-out-quart) both;
+}
+
+@keyframes capIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Конвейер: пять шагов, которые бот проходит с вопросом */
+.pipe {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  list-style: none;
+  border: 1px solid var(--border-hair);
+}
+
+.chip {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  min-block-size: 64px;
+  padding: 10px 12px;
+  border-inline-start: 1px solid var(--border-hair);
+  color: var(--fg-tertiary);
+  transition:
+    color var(--dur-slow),
+    background var(--dur-slow);
+}
+
+.chip:first-child {
+  border-inline-start: 0;
+}
+
+.chip b {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chip span {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.chip[data-on] {
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 14%, transparent);
+  color: var(--fg-primary);
+  box-shadow: inset 0 -2px 0 var(--case-color, var(--accent));
+  animation: chipOn 700ms var(--ease-out-expo) calc(var(--i) * 120ms) both;
+}
+
+.chip[data-done] {
+  color: var(--fg-secondary);
+  box-shadow: inset 0 -2px 0 var(--border-hover);
+}
+
+@keyframes chipOn {
+  from {
+    opacity: 0.2;
+    transform: translateY(8px);
+  }
+}
+
+/* Фразы, по которым бот ищет. Высота держится, чтобы полка не прыгала */
+.phrases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-block-size: 30px;
+  list-style: none;
+}
+
+.phrases li {
+  padding: 4px 10px;
+  border: 1px dashed var(--case-color, var(--accent));
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-primary);
+  animation: pop 500ms var(--ease-out-expo) calc(var(--i) * 110ms) both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+
+.src {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+  transition: color var(--dur-slow);
+}
+
+.src::before {
+  content: '← ';
+}
+
+.src[data-on] {
+  color: var(--case-color, var(--accent));
+}
+
+/* Полка с карточками */
+.shelf {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+  align-items: stretch;
+  align-content: start;
+  min-block-size: 0;
+}
+
+.shelf[data-open] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.skel {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 8px;
+  align-content: start;
+  min-block-size: 190px;
+  padding: 0 0 14px;
+  border: 1px dashed var(--border-hair);
+  animation: skel 1.6s var(--ease-in-out) calc(var(--i) * 160ms) infinite;
+}
+
+.skel i {
+  display: block;
+  aspect-ratio: 16 / 7;
+  background: repeating-linear-gradient(135deg, transparent 0 7px, var(--border-hair) 7px 8px);
+}
+
+.skel b {
+  display: block;
+  block-size: 8px;
+  margin-inline: 16px;
+  background: var(--border-hair);
+}
+
+.skel b:last-child {
+  inline-size: 55%;
+}
+
+@keyframes skel {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.empty {
+  grid-column: 1 / -1;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+}
+
+.card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-inline-size: 0;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  animation: shelfIn 700ms var(--ease-out-expo) calc(var(--i) * 140ms) both;
+  transition:
+    opacity 500ms var(--ease-out-quart),
+    border-color 500ms var(--ease-out-quart);
+}
+
+@keyframes shelfIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+.thumb {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  aspect-ratio: 16 / 7;
+  padding: 8px 12px;
+  border-block-end: 1px solid var(--border-hair);
+  background: repeating-linear-gradient(135deg, transparent 0 7px, var(--border-hair) 7px 8px);
+}
+
+/* Настоящий кадр: контейнер на светлой плашке, появляется, когда карточка раскрыта */
+.thumb[data-photo] {
+  position: relative;
+  overflow: hidden;
+  background: #f4f3ef;
+}
+
+.thumb[data-photo] > :global(*) {
+  position: relative;
+}
+
+.photo {
+  position: absolute !important;
+  inset: 8px 8px 22px;
+  inline-size: calc(100% - 16px);
+  block-size: calc(100% - 30px);
+  object-fit: contain;
+  animation: photoIn 700ms var(--ease-out-expo) both;
+}
+
+@keyframes photoIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.thumb[data-photo] span:not(.link) {
+  color: #6b6a66;
+}
+
+.link {
+  padding: 3px 8px;
+  border: 1px solid var(--case-color, var(--accent));
+  background: var(--bg-elevated);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-primary);
+  animation: pop 600ms var(--ease-out-expo) 500ms both;
+}
+
+.cbody {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 14px 16px 16px;
+}
+
+.name {
+  font-size: var(--type-body-lg);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--fg-primary);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tags span {
+  padding: 2px 6px;
+  border: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.chars {
+  display: grid;
+  gap: 4px;
+  margin-block-start: 4px;
+}
+
+.chars div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block-start: 6px;
+  border-block-start: 1px solid var(--border-hair);
+  font-size: 14px;
+}
+
+.chars dt {
+  color: var(--fg-tertiary);
+}
+
+.chars dd {
+  text-align: end;
+  color: var(--fg-primary);
+}
+
+/* Открытая карточка: во всю ширину полки, картинка слева, спецификация справа */
+.card[data-open] {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  grid-template-rows: 1fr;
+  border-color: var(--case-color, var(--accent));
+}
+
+.card[data-open] .thumb {
+  aspect-ratio: auto;
+  min-block-size: 100%;
+  border-block-end: 0;
+  border-inline-end: 1px solid var(--border-hair);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.card[data-open] .thumb > :first-child {
+  order: 2;
+}
+
+.spec {
+  display: grid;
+  gap: var(--space-xs);
+  margin-block-start: 4px;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 var(--space-sm);
+}
+
+.fields div {
+  display: grid;
+  gap: 1px;
+  padding-block: 7px;
+  border-block-start: 1px solid var(--border-hair);
+  animation: capIn 500ms var(--ease-out-quart) calc(var(--j) * 50ms) both;
+}
+
+.fields dt {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fields dd {
+  overflow: hidden;
+  font-size: 14px;
+  color: var(--fg-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card[data-dim] {
+  opacity: 0.5;
+}
+
+.card[data-dim] .thumb {
+  display: none;
+}
+
+.card[data-dim] .cbody {
+  padding-block: 10px;
+}
+
+/* Превью ссылки в чате: кадр товара и подпись */
+.preview {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin-block: 8px 2px;
+  padding: 6px;
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--fg-primary) 5%, transparent);
+  box-shadow: inset 2px 0 0 var(--case-color, var(--accent));
+}
+
+.preview img {
+  inline-size: 64px;
+  block-size: 48px;
+  border-radius: 4px;
+  background: #f4f3ef;
+  object-fit: contain;
+}
+
+.preview small {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  line-height: 1.3;
+  color: var(--fg-secondary);
+}
+
+/* Рейка: четыре панели о том, что происходит с клиентом и с базой */
+.rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-md);
+  margin-block-start: var(--space-md);
+}
+
+.panel {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+  padding: var(--space-sm);
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  transition: border-color 500ms var(--ease-out-quart);
+}
+
+.panel[data-live] {
+  border-color: var(--case-color, var(--accent));
+}
+
+.phead {
+  display: grid;
+  gap: 2px;
+  padding-block-end: var(--space-xs);
+  border-block-end: 1px solid var(--border-hair);
+}
+
+.phead small {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.rows {
+  display: grid;
+  align-content: start;
+  list-style: none;
+}
+
+.rows li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 6px;
+  border-block-end: 1px solid var(--border-hair);
+  font-size: 14px;
+  color: var(--fg-tertiary);
+  transition: color var(--dur-slow);
+}
+
+.rows li span {
+  flex: none;
+}
+
+.rows li b {
+  min-inline-size: 0;
+  overflow: hidden;
+  font-weight: 400;
+  text-align: end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rows li[data-on] {
+  color: var(--fg-primary);
+}
+
+.rows li[data-on] span {
+  color: var(--fg-tertiary);
+}
+
+.rows li[data-new] {
+  box-shadow: inset 2px 0 0 var(--case-color, var(--accent));
+}
+
+.rows li[data-new] b {
+  animation: pop 600ms var(--ease-out-expo) both;
+}
+
+.rule {
+  margin-block-start: var(--space-xs);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--fg-tertiary);
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-block-start: var(--space-xs);
+  padding: 8px 10px;
+  border: 1px solid var(--border-hair);
+  font-size: 14px;
+  color: var(--fg-tertiary);
+  transition:
+    border-color var(--dur-slow),
+    color var(--dur-slow);
+}
+
+.status b {
+  font-weight: 500;
+  text-align: end;
+  animation: pop 600ms var(--ease-out-expo) both;
+}
+
+.status[data-on] {
+  border-color: var(--case-color, var(--accent));
+  color: var(--fg-primary);
+}
+
+/* Шкала 90 минут: делений четыре, маркер доезжает до конца, и появляется саммари */
+.timeline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 8px;
+  margin-block-end: var(--space-xs);
+}
+
+.track {
+  position: relative;
+  block-size: 6px;
+  border: 1px solid var(--border-hair);
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--case-color, var(--accent));
+  transform-origin: left;
+  animation: fill 2400ms linear both;
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.timeline ol {
+  display: flex;
+  grid-column: 1;
+  justify-content: space-between;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.timeline small {
+  grid-column: 2;
+  grid-row: 2;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.wait {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--fg-tertiary);
+}
+
+.note {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.said {
+  padding: 10px 12px;
+  border-inline-start: 2px solid var(--case-color, var(--accent));
+  background: var(--bg-subtle);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg-primary);
+  animation: capIn 700ms var(--ease-out-quart) 2300ms both;
+}
+
+.where {
+  display: grid;
+  gap: 2px;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-secondary);
+  animation: capIn 700ms var(--ease-out-quart) 2700ms both;
+}
+
+.where li::before {
+  content: '→ ';
+  color: var(--case-color, var(--accent));
+}
+
+/* Ночная сверка базы */
+.sync {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+
+.sync ul {
+  display: grid;
+  list-style: none;
+}
+
+.sync li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 8px;
+  padding-block: 5px;
+  border-block-end: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-secondary);
+  animation: capIn 500ms var(--ease-out-quart) calc(var(--i) * 260ms) both;
+}
+
+.sync li[data-two] {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.sync li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sync li b {
+  font-weight: 500;
+  color: var(--case-color, var(--accent));
+}
+
+.sync ul:not([data-on]) li,
+.sync ul:not([data-on]) li b {
+  color: var(--fg-tertiary);
+  animation: none;
+}
+
+.sk {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 8px;
+  font-size: 14px;
+}
+
+.sk b {
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.sk span {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+/* Под сценой: подпись шага слева, панель справа, пометка ниже */
+.under {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-xs) var(--space-xl);
+  align-items: start;
+  margin-block-start: var(--space-md);
+}
+
+.cap {
+  grid-row: 1 / 3;
+  font-size: var(--type-body-lg);
+}
+
+.controls {
+  align-self: start;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+@media (max-width: 1279px) {
+  .fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'chat' 'desk';
+  }
+
+  .chat {
+    grid-area: chat;
+    block-size: 420px;
+    min-block-size: 0;
+  }
+
+  .desk {
+    grid-area: desk;
+  }
+
+  .rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-lg);
+  }
+
+  /* Порядок на телефоне: чат, подпись с панелью, полка, рейка */
+  .stage {
+    display: contents;
+  }
+
+  .chat {
+    order: 1;
+    block-size: 400px;
+  }
+
+  .under {
+    order: 2;
+    margin-block-start: 0;
+  }
+
+  .desk {
+    order: 3;
+  }
+
+  .rail {
+    order: 4;
+    margin-block-start: var(--space-xs);
+  }
+
+  .pipe {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chip {
+    min-block-size: 56px;
+    border-block-start: 1px solid var(--border-hair);
+  }
+
+  .chip:nth-child(odd) {
+    border-inline-start: 0;
+  }
+
+  .chip:nth-child(-n + 2) {
+    border-block-start: 0;
+  }
+
+  .shelf,
+  .shelf[data-open] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .card {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-rows: 1fr;
+  }
+
+  .thumb {
+    aspect-ratio: auto;
+    min-block-size: 88px;
+    border-block-end: 0;
+    border-inline-end: 1px solid var(--border-hair);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .thumb > :first-child {
+    order: 2;
+  }
+
+  .card[data-dim] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card[data-open] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+
+  .card[data-open] .thumb {
+    min-block-size: 0;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--border-hair);
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .card[data-open] .thumb > :first-child {
+    order: 0;
+  }
+
+  .card[data-open] .thumb[data-photo] {
+    min-block-size: 180px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
+  }
+}
+
+/* Высота сцены не зависит от шага: держим под самое полное состояние цикла (замер на 390-1440).
+   Раскрытая карточка выше полки с тремя карточками, а чат растёт с репликами, поэтому чат
+   не диктует высоту строки (contain: size), а лента сидит в окне фиксированной высоты */
+.chat {
+  contain: size;
+}
+
+.stage {
+  min-block-size: clamp(843px, calc(1037px - (100vw - 1024px) * 0.467), 1037px);
+}
+
+.shelf {
+  align-content: stretch;
+}
+
+@media (max-width: 1279px) {
+  .rail {
+    min-block-size: 460px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    min-block-size: 0;
+  }
+
+  .desk {
+    min-block-size: 720px;
+  }
+
+  .rail {
+    min-block-size: 730px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Подпись шага до трёх строк: кнопки под ней не прыгают */
+  .cap {
+    min-block-size: 4.5em;
+  }
+
+  .desk {
+    min-block-size: clamp(1290px, calc(1290px + (100vw - 600px) * 1.02), 1465px);
+  }
+
+  .rail {
+    min-block-size: clamp(1235px, calc(1420px - (100vw - 390px) * 0.5), 1425px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table,
+  .skel,
+  .log,
+  .chip[data-on],
+  .phrases li,
+  .card,
+  .link,
+  .fields div,
+  .rows li[data-new] b,
+  .status b,
+  .fill,
+  .said,
+  .where,
+  .sync li {
+    animation: none;
+  }
+
+}

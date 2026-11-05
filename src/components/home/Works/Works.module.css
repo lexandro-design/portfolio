@@ -201,6 +201,15 @@
   grid-column: span 2;
 }
 
+/* Седьмая и восьмая: по половине ряда. Если карточек семь, седьмая идёт во всю ширину */
+.bento > :nth-child(n + 7) {
+  grid-column: span 3;
+}
+
+.bento > :nth-child(7):last-child {
+  grid-column: 1 / -1;
+}
+
 .grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -308,7 +317,7 @@
     grid-column: span 1;
   }
 
-  .bento > :last-child {
+  .bento > :nth-child(even):last-child {
     grid-column: 1 / -1;
   }
 

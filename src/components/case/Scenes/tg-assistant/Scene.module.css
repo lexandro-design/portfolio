@@ -1,0 +1,771 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Сцена: телефон по центру, столы офиса по краям, между ними линии связи.
+   Вопрос вылетает из стола к телефону, ответ летит обратно */
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(40px, 0.5fr) minmax(300px, 380px) minmax(
+      40px,
+      0.5fr
+    ) minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    'web lweb phone lmech mech'
+    'design ldesign phone lcontent content';
+  align-items: center;
+  block-size: 620px;
+  margin-block-start: var(--space-2xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.office {
+  position: absolute;
+  inset-block-start: -28px;
+  inset-inline-start: 0;
+}
+
+/* --- Стол --- */
+.desk {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px var(--space-sm);
+  padding: var(--space-md);
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  transition:
+    border-color var(--dur-slow),
+    background var(--dur-slow);
+}
+
+.desk[data-desk='web'] {
+  grid-area: web;
+}
+
+.desk[data-desk='design'] {
+  grid-area: design;
+}
+
+.desk[data-desk='mech'] {
+  grid-area: mech;
+}
+
+.desk[data-desk='content'] {
+  grid-area: content;
+}
+
+.deskName {
+  font-size: var(--type-body-lg);
+  line-height: 1.2;
+  color: var(--fg-primary);
+}
+
+.deskTask {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.deskState {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block-start: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.deskState i {
+  flex: none;
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 50%;
+  background: var(--border-hover);
+}
+
+/* Три полоски: стол занят, они бегут; ждёт, стоят; готово, заполнены */
+.bars {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 5px;
+  margin-block-start: var(--space-xs);
+}
+
+.bars i {
+  display: block;
+  block-size: 2px;
+  background: var(--border-hair);
+  transform-origin: left;
+}
+
+.bars i:nth-child(2) {
+  inline-size: 72%;
+}
+
+.bars i:nth-child(3) {
+  inline-size: 46%;
+}
+
+.desk[data-s='work'] .deskState {
+  color: var(--fg-secondary);
+}
+
+.desk[data-s='work'] .deskState i {
+  background: var(--signal-live);
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.desk[data-s='work'] .bars i {
+  background: var(--border-hover);
+  animation: run 1.8s ease-in-out infinite;
+}
+
+.desk[data-s='work'] .bars i:nth-child(2) {
+  animation-delay: 300ms;
+}
+
+.desk[data-s='work'] .bars i:nth-child(3) {
+  animation-delay: 600ms;
+}
+
+.desk[data-s='wait'] {
+  border-color: var(--case-color, var(--accent));
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 10%, var(--bg-elevated));
+}
+
+.desk[data-s='wait'] .deskState {
+  color: var(--fg-primary);
+}
+
+.desk[data-s='wait'] .deskState i {
+  background: var(--case-color, var(--accent));
+  animation: blink 0.9s ease-in-out infinite;
+}
+
+.desk[data-s='wait'] .bars i {
+  background: var(--case-color, var(--accent));
+  opacity: 0.5;
+}
+
+.desk[data-s='done'] {
+  border-color: var(--border-hover);
+}
+
+.desk[data-s='done'] .deskState {
+  color: var(--fg-primary);
+}
+
+.desk[data-s='done'] .deskState i {
+  background: var(--fg-primary);
+}
+
+.desk[data-s='done'] .bars i {
+  background: var(--fg-primary);
+  opacity: 0.6;
+}
+
+.desk[data-s='free'] {
+  opacity: 0.6;
+}
+
+/* /office: табло просматривает все столы, они коротко вспыхивают */
+.stage[data-scan] .desk {
+  animation: scan 1400ms var(--ease-out-quart) both;
+}
+
+.stage[data-scan] .desk[data-desk='design'] {
+  animation-delay: 160ms;
+}
+
+.stage[data-scan] .desk[data-desk='content'] {
+  animation-delay: 320ms;
+}
+
+.stage[data-scan] .desk[data-desk='mech'] {
+  animation-delay: 480ms;
+}
+
+@keyframes scan {
+  30% {
+    border-color: var(--case-color, var(--accent));
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes run {
+  0%,
+  100% {
+    transform: scaleX(0.35);
+  }
+
+  50% {
+    transform: scaleX(1);
+  }
+}
+
+/* --- Линия связи и пакет --- */
+.link {
+  position: relative;
+  block-size: 32px;
+}
+
+.link[data-link='web'] {
+  grid-area: lweb;
+}
+
+.link[data-link='design'] {
+  grid-area: ldesign;
+}
+
+.link[data-link='mech'] {
+  grid-area: lmech;
+}
+
+.link[data-link='content'] {
+  grid-area: lcontent;
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  border-block-start: 1px dashed var(--border-hover);
+  transition: border-color var(--dur-slow);
+}
+
+.link[data-hot]::before {
+  border-block-start-style: solid;
+  border-color: var(--case-color, var(--accent));
+}
+
+.packet {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  display: grid;
+  place-items: center;
+  inline-size: 30px;
+  block-size: 30px;
+  margin: -15px 0 0 -15px;
+  border: 1px solid var(--case-color, var(--accent));
+  background: var(--bg-elevated);
+  font-size: 14px;
+  font-style: normal;
+  line-height: 1;
+  animation: flyH 1100ms cubic-bezier(0.65, 0, 0.35, 1) var(--pd, 0ms) both;
+}
+
+.packet[data-dir='out'] {
+  --pd: 420ms;
+}
+
+.packet[data-dir='in'][data-side='r'],
+.packet[data-dir='out'][data-side='l'] {
+  animation-direction: reverse;
+}
+
+@keyframes flyH {
+  0% {
+    inset-inline-start: 0;
+    opacity: 0;
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    inset-inline-start: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes flyV {
+  0% {
+    inset-block-start: 0;
+    opacity: 0;
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    inset-block-start: 100%;
+    opacity: 0;
+  }
+}
+
+/* --- Телефон --- */
+.device {
+  grid-area: phone;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-block-size: 0;
+  padding: 10px;
+  border: 2px solid var(--border-hover);
+  background: var(--bg-base);
+  box-shadow: 0 48px 90px -50px rgb(0 0 0 / 0.7);
+}
+
+.device::before {
+  content: '';
+  flex: none;
+  inline-size: 56px;
+  block-size: 4px;
+  margin: 2px auto 10px;
+  background: var(--border-hover);
+}
+
+.chat {
+  flex: 1;
+  min-block-size: 0;
+  box-shadow: none;
+}
+
+.chat :is(li) {
+  max-inline-size: 92%;
+}
+
+.chat li.d0 {
+  animation-delay: 0ms;
+}
+
+.chat li.d1 {
+  animation-delay: 650ms;
+}
+
+.chat li.d2 {
+  animation-delay: 900ms;
+}
+
+.hint {
+  display: block;
+  margin-block-start: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.note {
+  display: block;
+  margin-block-start: 8px;
+  padding-block-start: 8px;
+  border-block-start: 1px solid var(--border-hair);
+  font-size: 13px;
+  color: var(--fg-secondary);
+  animation: capIn 400ms var(--ease-out-quart) both;
+}
+
+@keyframes capIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.cmd {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+}
+
+.board {
+  display: grid;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  line-height: 1.5;
+}
+
+.board b {
+  margin-block-start: 6px;
+  font-weight: 500;
+  color: var(--fg-tertiary);
+}
+
+.board b:first-child {
+  margin-block-start: 0;
+}
+
+/* Голосовое: микрофон и столбики */
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-block-size: 24px;
+}
+
+.mic {
+  margin-inline-end: 6px;
+}
+
+.wave i {
+  inline-size: 3px;
+  background: var(--fg-primary);
+  opacity: 0.7;
+  transform-origin: center;
+}
+
+.wave[data-live] i {
+  animation: voice 700ms ease-in-out infinite;
+}
+
+@keyframes voice {
+  50% {
+    transform: scaleY(0.35);
+  }
+}
+
+/* Заготовка скрина */
+.shot {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  inline-size: 220px;
+  max-inline-size: 100%;
+  block-size: 124px;
+  margin-block-start: 8px;
+  padding: 12px;
+  border: 1px solid var(--border-hover);
+  background: var(--bg-base);
+  text-align: start;
+}
+
+.shot[data-small] {
+  inline-size: 150px;
+  block-size: 84px;
+  margin-block: 0 8px;
+  padding: 8px;
+}
+
+.shot i {
+  display: block;
+  block-size: 6px;
+  background: var(--border-hover);
+}
+
+.shot i:first-child {
+  inline-size: 55%;
+  block-size: 12px;
+  background: var(--case-color, var(--accent));
+}
+
+.shot i:nth-child(2) {
+  inline-size: 85%;
+}
+
+.shot i:nth-child(3) {
+  inline-size: 65%;
+}
+
+.shotLabel {
+  position: absolute;
+  inset-inline: 12px;
+  inset-block-end: 8px;
+  font-size: 10px;
+}
+
+/* Способы ответа под лентой */
+.reply {
+  display: grid;
+  gap: 6px;
+  margin-block-start: 10px;
+}
+
+.reply ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  list-style: none;
+}
+
+.reply li {
+  padding: 8px 4px;
+  border: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  text-align: center;
+  transition:
+    background var(--dur-base),
+    color var(--dur-base),
+    border-color var(--dur-base);
+}
+
+.reply li[data-on] {
+  border-color: var(--case-color, var(--accent));
+  background: var(--case-color, var(--accent));
+  color: var(--fg-inverse);
+}
+
+/* --- Под сценой --- */
+.under {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-xs) var(--space-3xl);
+  align-items: start;
+  margin-block-start: var(--space-lg);
+}
+
+/* Подпись шага в одну строку на широком экране, панель под ней */
+.cap {
+  grid-column: 1 / -1;
+  min-block-size: 1.5em;
+  font-size: var(--type-body-lg);
+}
+
+.side {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.side > :first-child {
+  max-inline-size: 560px;
+}
+
+.log {
+  min-block-size: 2.6em;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  animation: capIn 400ms var(--ease-out-quart) both;
+}
+
+/* Правило тишины и команды */
+.rule {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-xl);
+  align-items: center;
+  margin-block-start: var(--space-xl);
+  padding-block: var(--space-md);
+  border-block: 1px solid var(--border-hair);
+  transition: border-color var(--dur-slow);
+}
+
+.rule[data-on] {
+  border-color: var(--case-color, var(--accent));
+}
+
+.num {
+  display: grid;
+  gap: 2px;
+}
+
+.num strong {
+  font-size: var(--type-body-lg);
+  font-weight: 500;
+  color: var(--case-color, var(--accent));
+}
+
+.rule p {
+  max-inline-size: 48ch;
+  color: var(--fg-secondary);
+}
+
+.cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.cmds li {
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-hair);
+  transition:
+    border-color var(--dur-base),
+    background var(--dur-base);
+}
+
+.cmds li[data-on] {
+  border-color: var(--case-color, var(--accent));
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 14%, transparent);
+}
+
+.cmds code {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-primary);
+}
+
+.cmds span {
+  font-size: 12px;
+  color: var(--fg-tertiary);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+/* Планшет и телефон: столы лентой над телефоном, линия связи вертикальная */
+@media (max-width: 1023px) {
+  .stage {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: auto 56px auto;
+    grid-template-areas:
+      'web design mech content'
+      'lweb ldesign lmech lcontent'
+      'phone phone phone phone';
+    gap: 0 var(--space-xs);
+    block-size: auto;
+    margin-block-start: var(--space-xl);
+  }
+
+  .office {
+    inset-block-start: -24px;
+  }
+
+  .device {
+    inline-size: min(100%, 400px);
+    block-size: 560px;
+    justify-self: center;
+  }
+
+  .link {
+    inline-size: 32px;
+    block-size: auto;
+    justify-self: center;
+    align-self: stretch;
+  }
+
+  .link::before {
+    inset: 0;
+    inset-inline-start: 50%;
+    border-block-start: 0;
+    border-inline-start: 1px dashed var(--border-hover);
+  }
+
+  .link[data-hot]::before {
+    border-inline-start-style: solid;
+    border-color: var(--case-color, var(--accent));
+  }
+
+  .packet {
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    margin: -15px 0 0 -15px;
+    animation-name: flyV;
+  }
+
+  .packet[data-dir='in'][data-side] {
+    animation-direction: normal;
+  }
+
+  .packet[data-dir='out'][data-side] {
+    animation-direction: reverse;
+  }
+
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    min-block-size: 3em;
+    font-size: var(--type-body);
+  }
+
+  .rule {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .cmds {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .desk {
+    padding: var(--space-xs) var(--space-xs) var(--space-sm);
+  }
+
+  .deskName {
+    font-size: 15px;
+  }
+
+  .deskTask {
+    display: none;
+  }
+
+  .deskState {
+    margin-block-start: 6px;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .bars {
+    display: none;
+  }
+
+  .device {
+    block-size: 540px;
+  }
+
+  .rule {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .shot {
+    inline-size: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .stage[data-scan] .desk,
+  .packet,
+  .note,
+  .log,
+  .wave[data-live] i,
+  .desk[data-s='work'] .bars i,
+  .desk[data-s] .deskState i {
+    animation: none;
+  }
+
+  .packet {
+    display: none;
+  }
+}

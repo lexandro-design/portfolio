@@ -9,6 +9,11 @@ import { extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { cases, casesEn } from './cases.mjs'
 
+// Тексты блоков профиля берём из английского словаря сайта, чтобы не расходились
+const dict = JSON.parse(
+  await readFile(join(resolve(fileURLToPath(new URL('../..', import.meta.url))), 'src/content/data/dict/en.json'), 'utf8'),
+)
+
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)))
 const PROFILE = resolve(ROOT, '../lexandro-design/assets')
 const TYPES = {
@@ -163,15 +168,16 @@ const hero = (t) =>
   page(
     t,
     W,
-    480,
+    570,
     `
-  <div style="position:absolute;inset:36px 40px;display:grid;grid-template-rows:auto 1fr auto">
-    <div class="row m"><span>LEXANDRO · saint petersburg</span><span style="color:${t.fg}"><i class="dot"></i>open to projects</span></div>
-    <div class="h" style="align-self:end;font-size:62px">Design, code<br>and AI agents, end to end,<br><span style="color:${t.fg2}">in one pair of hands.</span></div>
-    <div class="row" style="margin-top:30px;align-items:end">
-      <p class="p" style="font-size:15px;max-width:480px">Alexey Sveshnikov, designer and developer. I design the product and its design system, build the front end, write the back end, set up the database and server and wire in AI agents. From idea to launch.</p>
-      <div class="m" style="text-align:right;line-height:1.9">now<br><span style="color:${t.fg}">TITAN-2 holding</span></div>
+  <div style="position:absolute;inset:36px 40px;display:grid;grid-template-rows:auto 1fr auto auto">
+    <div class="row m"><span style="display:grid;gap:8px"><span>${dict.hero.metaLeft[0]}</span><span class="m2">${dict.hero.metaLeft[1]}</span></span><span style="color:${t.fg}"><i class="dot"></i>${dict.contact.status}</span></div>
+    <div class="h" style="align-self:center;margin-top:28px;font-size:60px">${dict.hero.title.join('<br>')}<br><span style="color:${t.fg2}">${dict.hero.accent.join('<br>')}</span></div>
+    <div class="row" style="margin-top:12px;align-items:end">
+      <p class="p" style="font-size:15px;max-width:520px">${dict.hero.body}</p>
+      <div class="m" style="text-align:right;line-height:1.9">alexey sveshnikov<br>since 2025<br><span style="color:${t.fg}">TITAN-2 holding</span></div>
     </div>
+    <div class="m" style="margin-top:26px;padding:11px 14px;border:1px solid ${t.hair};background:${t.el};display:flex;flex-wrap:wrap;gap:6px 16px;text-transform:lowercase;letter-spacing:.02em"><span>${dict.hero.ticker}</span>${dict.hero.tickerItems.map((x) => `<span style="color:${t.fg}"><i class="dot" style="width:4px;height:4px;margin-right:6px;vertical-align:2px"></i>${x}</span>`).join('')}</div>
   </div>`,
   )
 
@@ -200,11 +206,14 @@ const featured = (t, c) =>
   </div>`,
   )
 
-const half = (t, c) => {
+// Кейсы без превью-картинки: скрин живой сцены со страницы кейса (снимается с dev-сервера в _shots/profile)
+const SCENE = { 'dice-bots': 'dice-bots' }
+const half = (t, c, name) => {
   // Превью строки с сайта (окна браузера на фоне), а не голый скрин
-  const cover = c.thumb ?? c.shots[0]
+  const scene = SCENE[c.slug] ? { src: `/_shots/profile/${SCENE[c.slug]}-${name}.png` } : null
+  const cover = scene ?? c.thumb ?? c.shots[0]
   const media = cover
-    ? `<div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:${c.thumb ? 'center' : 'top left'}" src="/public${cover.src}"></div>`
+    ? `<div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden"><img class="shot" style="object-position:${scene ? 'left top' : c.thumb ? 'center' : 'top left'}" src="${scene ? cover.src : '/public' + cover.src}"></div>`
     : `<div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden">
          <i class="corner tl"></i><i class="corner br"></i>
          <div class="row m" style="position:absolute;top:14px;left:34px;right:34px;font-size:10px"><span>case ${pad(c.index)}</span><span>${c.year}</span></div>
@@ -227,38 +236,50 @@ const half = (t, c) => {
   )
 }
 
-// Те же три направления и теги, что в блоке «Услуги» на сайте
+// Стек по колонкам: услуги и теги из блока «Услуги» сайта, плюс то, что есть в стеке кейсов
 const STACK = [
   ['design', ['UX/UI', 'Design systems', 'Design tokens', 'Figma, Auto Layout']],
-  ['web', ['React, Next.js', 'Node.js', 'Tilda', 'Responsive']],
-  ['data', ['PostgreSQL', 'Supabase', 'REST APIs', 'SQL functions']],
-  ['ai', ['Telegram bots', 'AI agents', 'RAG', 'CRM integrations']],
+  ['web', ['React, Next.js', 'TypeScript', 'Node.js', 'Tilda']],
+  ['data', ['PostgreSQL', 'Supabase', 'pgvector', 'SQL functions']],
+  ['ai', ['Telegram Bot API', 'AI agents', 'RAG', 'Bitrix24 CRM']],
+  ['3d', ['Blender', 'Cycles', 'Video banners']],
 ]
-const SERVICES = [
-  [
-    'design',
-    'UX/UI and design systems',
-    'Tokens, components with every state and grid rules. New screens are assembled from ready parts.',
-    ['ux/ui', 'design systems', 'figma'],
-  ],
-  [
-    'web',
-    'Websites and back end',
-    'Sites and web apps on my own design: React and Next.js or Tilda, back end, database, server.',
-    ['react', 'next.js', 'postgresql'],
-  ],
-  [
-    'automation',
-    'Automation and AI',
-    'Telegram bots and AI assistants, CRM and payment integrations, RAG search over documents.',
-    ['javascript', 'rag', 'ai agents'],
-  ],
-]
+const SERVICES = dict.services.map((x) => [x.code, x.title, x.text, x.tags])
+
+// «Что я делаю»: один проект целиком, четыре шага, как на сайте (build)
+const build = (t) =>
+  page(
+    t,
+    W,
+    500,
+    `
+  <div style="position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr">
+    <div class="row" style="padding:28px 28px 24px;border-bottom:1px solid ${t.hair};align-items:end">
+      <p class="p" style="font-size:16px;max-width:560px;color:${t.fg}">${dict.build.lead}</p>
+      <div class="m" style="text-align:right;line-height:1.9;white-space:nowrap"><span style="color:${t.fg}"><i class="dot"></i>${dict.build.project}</span><br>4 steps</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr)">
+      ${dict.build.steps
+        .map(
+          (x, i) => `<div style="padding:24px 22px 24px;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:12px;${i ? `border-left:1px solid ${t.hair}` : ''}">
+        <div class="m">0${i + 1} / ${x.code}</div>
+        <div style="font-size:22px;letter-spacing:-.02em;line-height:1.1">${x.title}</div>
+        <p class="p" style="font-size:12.5px;line-height:1.5">${x.text}</p>
+        <div class="m" style="font-size:10px;line-height:1.5;text-transform:none;letter-spacing:.01em;color:${t.fg};padding-top:12px;border-top:1px solid ${t.hair}"><i class="dot" style="width:4px;height:4px;margin-right:6px;vertical-align:2px"></i>${x.fact}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;min-height:24px">${x.chips.map((c) => `<span class="m" style="font-size:10px;padding:4px 8px;border:1px solid ${t.hair};text-transform:lowercase;letter-spacing:.02em">${c}</span>`).join('')}</div>
+      </div>`,
+        )
+        .join('')}
+    </div>
+  </div>`,
+  )
+
+// Три направления услуг, без цен
 const services = (t) =>
   page(
     t,
     W,
-    268,
+    330,
     `
   <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr)">
     ${SERVICES.map(
@@ -268,53 +289,55 @@ const services = (t) =>
       ) => `<div style="padding:28px 24px;display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;${i ? `border-left:1px solid ${t.hair}` : ''}">
       <div class="m">0${i + 1} / ${k}</div>
       <div style="font-size:22px;letter-spacing:-.02em;line-height:1.15">${title}</div>
-      <p class="p" style="font-size:14px">${text}</p>
+      <p class="p" style="font-size:13px;line-height:1.5">${text}</p>
       <div style="display:flex;flex-wrap:wrap;gap:6px">${tags.map((x) => `<span class="m" style="font-size:10px;padding:4px 8px;border:1px solid ${t.hair};text-transform:lowercase;letter-spacing:.02em">${x}</span>`).join('')}</div>
     </div>`,
     ).join('')}
   </div>`,
   )
 
-// Две карточки-приглашения на сайт: песочница дизайн-системы и конструктор заявки
+// Две карточки-приглашения на сайт: темы и конструктор заявки
 const LIME = '#c6ff3d'
 const tryCard = (t, kind) => {
-  // Живой скриншот мини-сайта из песочницы (снимается с собранного сайта в _shots/profile)
-  const sandbox = `
-    <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden">
-      <img class="shot" style="object-position:top center" src="/_shots/profile/sandbox-${t.bg === THEMES.dark.bg ? 'dark' : 'light'}.png">
+  // Темы сайта: главные экраны, снятые с dev-сервера (_shots/profile/theme-*.png)
+  const THEME_TILES = ['dark', 'light', 'steel']
+  const themes = `
+    <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr)">
+      ${THEME_TILES.map(
+        (x, i) => `<div style="position:relative;overflow:hidden;${i ? `border-left:1px solid ${t.hair}` : ''}">
+        <img class="shot" style="object-position:left top" src="/_shots/profile/theme-${x}.png">
+        <span class="m" style="position:absolute;left:8px;bottom:8px;font-size:9px;padding:3px 6px;background:${t.bg};color:${t.fg};text-transform:lowercase;letter-spacing:.02em;border:1px solid ${t.hair}">${x}</span>
+      </div>`,
+      ).join('')}
     </div>`
   const brief = `
     <div style="position:absolute;left:18px;top:18px;right:18px;height:261px;border:1px solid ${t.hair};background:${t.el};overflow:hidden;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div style="display:grid;gap:6px;align-content:start">
-        <div class="m" style="font-size:8px;margin-bottom:4px">what you need</div>
-        ${[
-          ['Design systems', true],
-          ['Websites', false],
-          ['Automation', true],
-        ]
+        <div class="m" style="font-size:8px;margin-bottom:4px">${dict.contact.brief.pick}</div>
+        ${dict.services
           .map(
-            ([x, on]) =>
-              `<div style="display:flex;gap:7px;align-items:center;font-size:10px;padding:7px 8px;border:1px solid ${on ? t.fg : t.hair}"><i style="width:9px;height:9px;border:1px solid ${t.hover};${on ? `background:${LIME};border-color:${LIME}` : ''}"></i>${x}</div>`,
+            (x, i) =>
+              `<div style="display:flex;gap:7px;align-items:center;font-size:10px;padding:7px 8px;border:1px solid ${i !== 1 ? t.fg : t.hair}"><i style="width:9px;height:9px;border:1px solid ${t.hover};${i !== 1 ? `background:${LIME};border-color:${LIME}` : ''}"></i>${x.title}</div>`,
           )
           .join('')}
       </div>
       <div style="display:grid;gap:7px;align-content:start">
-        <div class="m" style="font-size:8px;margin-bottom:4px">how the work goes</div>
-        ${['Analysis', 'Design', 'Automation', 'Handover'].map((x, i) => `<div style="display:flex;gap:8px;font-size:10px;padding-bottom:5px;border-bottom:1px solid ${t.hair}"><span class="m" style="font-size:8px;color:${t.live}">0${i + 1}</span>${x}</div>`).join('')}
-        <span style="margin-top:4px;font-family:Mono,monospace;font-size:8px;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:7px;background:${LIME};color:#0a0a0a">send via telegram</span>
+        <div class="m" style="font-size:8px;margin-bottom:4px">${dict.contact.brief.route}</div>
+        ${dict.process.steps.map((x, i) => `<div style="display:flex;gap:8px;font-size:10px;padding-bottom:5px;border-bottom:1px solid ${t.hair}"><span class="m" style="font-size:8px;color:${t.live}">0${i + 1}</span>${x.title}</div>`).join('')}
+        <span style="margin-top:4px;font-family:Mono,monospace;font-size:8px;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:7px;background:${LIME};color:#0a0a0a">${dict.contact.brief.telegram}</span>
       </div>
     </div>`
   const [title, sub] =
-    kind === 'sandbox'
-      ? ['Design-system sandbox', 'a whole site rebuilds from a few tokens']
+    kind === 'themes'
+      ? ['Try a theme', 'all themes, one set of tokens']
       : ['Brief in a minute', 'pick services, get a ready message']
   return page(
     t,
     405,
     391,
-    `${kind === 'sandbox' ? sandbox : brief}
+    `${kind === 'themes' ? themes : brief}
   <div style="position:absolute;left:18px;right:18px;bottom:22px">
-    <div class="row m" style="font-size:10px"><span>try it · ${kind === 'sandbox' ? 'system' : 'contact'}</span><span>↗</span></div>
+    <div class="row m" style="font-size:10px"><span>try it · ${kind === 'themes' ? 'system' : 'contact'}</span><span>↗</span></div>
     <div class="h" style="font-size:26px;margin-top:12px;letter-spacing:-.03em;line-height:1.08">${title}</div>
     <div style="font-size:14px;color:${t.fg2};margin-top:4px">${sub}</div>
   </div>`,
@@ -326,11 +349,11 @@ const stack = (t) =>
     W,
     200,
     `
-  <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr)">
+  <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr)">
     ${STACK.map(
-      ([k, v], i) => `<div style="padding:28px 24px;${i ? `border-left:1px solid ${t.hair}` : ''}">
+      ([k, v], i) => `<div style="padding:28px 20px;${i ? `border-left:1px solid ${t.hair}` : ''}">
       <div class="m">0${i + 1} / ${k}</div>
-      <div style="margin-top:20px;display:grid;gap:7px;font-size:15px">${v.map((x) => `<span>${x}</span>`).join('')}</div>
+      <div style="margin-top:20px;display:grid;gap:7px;font-size:14px">${v.map((x) => `<span>${x}</span>`).join('')}</div>
     </div>`,
     ).join('')}
   </div>`,
@@ -497,6 +520,8 @@ export const PROFILE_CASES = [
   'mimimibot',
   'otrx',
   'food-assistants',
+  'packaging-bots',
+  'dice-bots',
   'meg-site',
   'osq',
   'svarnoy52',
@@ -522,14 +547,16 @@ const photo = async () => {
 const mode = process.argv[2]
 if (!mode || mode === 'og') {
   await mkdir(join(ROOT, 'public/og'), { recursive: true })
-  for (const [l, copy] of Object.entries(OG_HOME))
+  // node tools/cards/render.mjs og slug,slug — только эти кейсы, остальные превью не трогать
+  const only = process.argv[3]?.split(',')
+  for (const [l, copy] of only ? [] : Object.entries(OG_HOME))
     await shot(
       ogHome(THEMES.dark, copy),
       1200,
       630,
       join(ROOT, `public/og/home${l === 'ru' ? '' : '-' + l}.png`),
     )
-  for (const c of cases)
+  for (const c of cases.filter((c) => !only || only.includes(c.slug)))
     await shot(ogCase(THEMES.dark, c), 1200, 630, join(ROOT, `public/og/${c.slug}.png`))
 }
 if (!mode || mode === 'profile') {
@@ -538,15 +565,17 @@ if (!mode || mode === 'profile') {
   // Список и порядок — те же, что в README репозитория lexandro-design
   const [first, ...rest] = PROFILE_CASES.map((slug) => casesEn.find((c) => c.slug === slug))
   for (const [name, t] of Object.entries(THEMES)) {
-    await shot(hero(t), W, 480, join(PROFILE, `hero-${name}.png`), 2)
+    await shot(hero(t), W, 570, join(PROFILE, `hero-${name}.png`), 2)
     await shot(
-      label(t, 'what I do', 'end to end · one person'),
+      label(t, 'what I do', 'analysis · design · 3d · code'),
       W,
       64,
       join(PROFILE, `label-approach-${name}.png`),
       2,
     )
-    await shot(services(t), W, 268, join(PROFILE, `approach-${name}.png`), 2)
+    await shot(build(t), W, 500, join(PROFILE, `build-${name}.png`), 2)
+    await shot(label(t, 'services', 'design · web · automation'), W, 64, join(PROFILE, `label-services-${name}.png`), 2)
+    await shot(services(t), W, 330, join(PROFILE, `approach-${name}.png`), 2)
     await shot(
       label(t, 'selected work', `${TOTAL} projects`),
       W,
@@ -562,7 +591,7 @@ if (!mode || mode === 'profile') {
       join(PROFILE, `label-try-${name}.png`),
       2,
     )
-    await shot(tryCard(t, 'sandbox'), 405, 391, join(PROFILE, `try-sandbox-${name}.png`), 2)
+    await shot(tryCard(t, 'themes'), 405, 391, join(PROFILE, `try-themes-${name}.png`), 2)
     await shot(tryCard(t, 'brief'), 405, 391, join(PROFILE, `try-brief-${name}.png`), 2)
     await shot(stack(t), W, 200, join(PROFILE, `stack-${name}.png`), 2)
     await shot(contact(t), W, 300, join(PROFILE, `contact-${name}.png`), 2)
@@ -571,7 +600,7 @@ if (!mode || mode === 'profile') {
       // Кейсы с перепиской — живой чат в SVG, остальные — картинка
       if (c.preview?.kind === 'chat')
         await writeFile(join(PROFILE, `case-${c.slug}-${name}.svg`), chatSvg(t, c, await photo()))
-      else await shot(half(t, c), 405, 391, join(PROFILE, `case-${c.slug}-${name}.png`), 2)
+      else await shot(half(t, c, name), 405, 391, join(PROFILE, `case-${c.slug}-${name}.png`), 2)
     }
   }
 }

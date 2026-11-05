@@ -95,11 +95,9 @@ export type Dict = {
   }
 
   system: {
-    xray: {
+    stack: {
       title: string
       lead: string
-      on: string
-      off: string
       layers: { title: string; text: string }[]
       numbers: { cases: string; langs: string; themes: string; casts: string; pages: string }
     }

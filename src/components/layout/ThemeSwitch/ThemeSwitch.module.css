@@ -42,15 +42,32 @@
 
 @media (max-width: 767px) {
   .option {
-    inline-size: 28px;
-    block-size: 28px;
+    inline-size: 32px;
+    block-size: 44px;
   }
 }
 
-/* Пять кнопок на узком телефоне: иначе меню в шапке уходит за край */
+.cycle {
+  display: none;
+}
+
+/* Узкий телефон: вместо пяти кнопок по 23 px одна на 44 px */
 @media (max-width: 419px) {
-  .option {
-    inline-size: 23px;
+  .switch:not([data-full]) {
+    display: none;
+  }
+
+  .switch[data-full] .option {
+    inline-size: 44px;
+  }
+
+  .cycle:not([data-full]) {
+    display: grid;
+    place-items: center;
+    inline-size: 44px;
+    block-size: 44px;
+    border: 1px solid var(--border-hair);
+    color: var(--fg-primary);
   }
 }
 

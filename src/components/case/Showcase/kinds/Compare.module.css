@@ -32,15 +32,26 @@
   transition: clip-path 900ms var(--ease-in-out);
 }
 
+/* Ручка размером с кадр, сдвиг только transform: правый край стоит на --x.
+   Процент в translate считается от собственной ширины, то есть от кадра.
+   Положение через inset сдвигало бы вёрстку и считалось layout shift */
 .handle {
   position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateX(calc(var(--x) - 100%));
+  transition: transform 900ms var(--ease-in-out);
+  will-change: transform;
+}
+
+.handle::after {
+  content: '';
+  position: absolute;
   inset-block: 0;
-  inset-inline-start: var(--x);
+  inset-inline-end: -1px;
   inline-size: 2px;
-  margin-inline-start: -1px;
   background: var(--fg-primary);
   box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
-  transition: inset-inline-start 900ms var(--ease-in-out);
 }
 
 .frame[data-drag] .after,
@@ -60,7 +71,7 @@
 .knob {
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-start: 50%;
+  inset-inline-end: 0;
   display: grid;
   place-items: center;
   inline-size: 48px;
@@ -71,7 +82,8 @@
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.1em;
-  transform: translate(-50%, -50%);
+  transform: translate(50%, -50%);
+  pointer-events: auto;
   box-shadow: 0 12px 30px -10px rgb(0 0 0 / 0.6);
 }
 

@@ -11,7 +11,7 @@ type Of<V extends Flow['variant']> = Extract<Flow, { variant: V }>
 
 const BARS = 44
 /** Рисунок волны: неровный, но одинаковый при каждой сборке */
-const shape = (i: number) => 0.3 + 0.7 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6 + 1))
+const shape = (i: number) => Math.round((0.3 + 0.7 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6 + 1))) * 1000) / 1000
 
 /** Голос: волна тянется к курсору, вопрос и ответ появляются репликами */
 export function Voice({ flow, on }: { flow: Of<'voice'>; on: boolean }) {

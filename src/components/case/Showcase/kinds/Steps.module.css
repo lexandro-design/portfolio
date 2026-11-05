@@ -7,6 +7,8 @@
 
 .list {
   display: grid;
+  /* Высоту держит Steps.tsx (min-block-size под самое длинное пояснение): строки не растягиваем */
+  align-content: start;
   gap: 4px;
   list-style: none;
 }
@@ -133,6 +135,18 @@
 
   .text b {
     font-size: 17px;
+  }
+
+  /* В столбец пояснения стоят у всех шагов, активный ярче: список не раскрывается
+     и не сдвигает шаги ниже, а страница не меняет высоту */
+  .text span,
+  .step[aria-pressed='true'] .text span {
+    max-block-size: none;
+    opacity: 0.6;
+  }
+
+  .step[aria-pressed='true'] .text span {
+    opacity: 1;
   }
 }
 

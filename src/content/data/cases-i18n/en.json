@@ -110,8 +110,8 @@
   },
   "mimimibot": {
     "tagline": "AI photoshoots in Telegram",
-    "lead": "My product: a Telegram bot that makes Pinterest-style shots with the person’s face. 3,000+ users, in-bot payments and content the owner edits without a developer.",
-    "client": "own product",
+    "lead": "A Telegram bot built for a client: it makes Pinterest-style shots with the person’s face. In-bot payments and content the owner edits without a developer.",
+    "client": "freelance",
     "sections": [
       {
         "title": "how it works",
@@ -195,20 +195,20 @@
   "food-assistants": {
     "title": "AI assistants for a distributor",
     "tagline": "two bots, one base",
-    "lead": "Two bots on one infrastructure: “Andrey” answers customers in the CRM chat, “Sofia” helps warehouse staff and managers. Data and models stay in Russia.",
-    "client": "freelance · food distribution",
+    "lead": "Two bots on one infrastructure: “Andrey” answers clients in the CRM chat, “Sofia” helps warehouse staff and managers.",
+    "client": "freelance · FoodMarket, food distribution",
     "sections": [
       {
         "title": "the task",
         "body": [
-          "Customers wait for answers in chat, the warehouse searches a large catalog by hand, managers spend time verifying customers and creating deals. By law, all data has to stay in Russia."
+          "Clients wait for a reply in chat, the warehouse searches a large catalogue by hand, managers spend time checking clients and creating deals."
         ]
       },
       {
         "title": "the solution",
         "body": [
           "“Andrey” understands what a customer wants: find a product, ask about delivery, check a spec or call a manager. It onboards new customers and fills in the CRM lead itself: phone, city, business type. Hard cases go to a live manager.",
-          "“Sofia” searches the catalog for the warehouse and answers questions about internal procedures from the knowledge base. Access differs by department."
+          "“Sofia” searches the catalogue for the warehouse and answers questions from the company knowledge base. Access differs by department."
         ]
       },
       {
@@ -385,22 +385,22 @@
   },
   "packaging-bots": {
     "title": "AI bots for a packaging maker",
-    "tagline": "sales, training, calls",
-    "lead": "Three scenarios on one stack: a bot picks packaging and brings in leads, an internal bot trains staff, and call recordings turn into CRM deals on their own.",
-    "client": "EnterSales · packaging manufacturer",
+    "tagline": "packaging picks and CRM leads",
+    "lead": "A bot in the Bitrix24 chat picks packaging from the catalogue, collects the client’s details and keeps the lead in the CRM. A summary of the conversation lands in the card, the knowledge base is checked every night.",
+    "client": "EnterSales · OSQ Group, food packaging",
     "sections": [
       {
         "title": "the task",
         "body": [
-          "First-line sales took a lot of managers’ time: first you figure out what the client is packing, only then pick the packaging. Add onboarding new staff and going through calls by hand."
+          "First-line sales took a lot of the managers’ time: first you have to understand what the client packs, and only then pick the packaging."
         ]
       },
       {
         "title": "the solution",
         "body": [
-          "The customer bot identifies the product type, picks packaging from a vector base of the range, answers from price lists and documents and creates a CRM lead with the right request type.",
-          "The internal bot trains staff on procedures and training scenarios, with access by department.",
-          "Call recordings are transcribed, the name, phone and gist of the request are pulled out of the conversation, and the contact card and deal fill in themselves."
+          "The bot merges the client’s messages, works out the intent and searches the catalogue two ways: by meaning and by name. The reply is a product card: dimensions, material, volume, pieces per pack and per pallet, assembly instructions.",
+          "Details are collected in stages: name and phone, then a short form. The profile is written only into empty fields and updates the lead in Bitrix24; once everything is in, the lead moves to a deal. When a person is needed, the chat is handed to a manager.",
+          "An hour and a half after the conversation, a summary goes into the lead card as a comment. Knowledge-base files are checked every night, the catalogue syncs with the spreadsheet on a schedule."
         ]
       }
     ],
@@ -490,13 +490,13 @@
     "title": "AI bot for a holiday resort",
     "tagline": "booking requests in chat",
     "lead": "The bot parses the guest’s message, clarifies dates, party and phone, answers questions from documents and creates a deal in the CRM. The manager confirms availability and price.",
-    "client": "EnterSales · holiday resort",
+    "client": "EnterSales · Laguna Yug holiday resort",
     "sections": [
       {
         "title": "how it works",
         "body": [
           "A guest writes in chat, the model understands the intent and parses the phrase into fields: dates, adults, children by age, phone. The bot asks for whatever is missing, and for an infant it checks whether a cradle is needed. Questions about the resort are answered by searching documents.",
-          "The lead and deal are created in Bitrix24 through Open Channels, the manager sees the whole conversation and confirms the booking. Groups of six or more and corporate events go straight to them."
+          "The lead and deal are created in Bitrix24 through Open Lines, the manager sees the whole conversation and confirms the booking. Groups of seven or more, requests for three bedrooms, corporate events and a plain “book it” go straight to the manager."
         ]
       },
       {
@@ -748,8 +748,8 @@
       {
         "title": "how it works",
         "body": [
-          "The drawing is compared with the teacher’s nearest reference work: the reference counts as 100 points, only the deviation from it is graded.",
-          "The feedback is based on academic drawing textbooks. A grade from 0 to 100 and a breakdown by five criteria arrive in the student’s chat, and each new version gets its own grade."
+          "The drawing is compared with the teacher’s nearest reference work: the bot finds it in the database by image similarity and reviews the deviations.",
+          "The feedback is short and uses academic drawing terms. Five criteria and a final grade on a five-point scale come to the student in chat, and every new version gets its own grade."
         ]
       }
     ],
@@ -764,7 +764,7 @@
         },
         {
           "from": "bot",
-          "text": "Grade: 72 out of 100. Structure: check the ellipse of the jug",
+          "text": "Grade: 3+. Structure: check the ellipse of the jug",
           "media": "drawing"
         },
         {
@@ -773,7 +773,7 @@
         },
         {
           "from": "bot",
-          "text": "Grade: 84 out of 100"
+          "text": "Grade: 4+"
         }
       ]
     }
@@ -877,13 +877,13 @@
   "dice-bots": {
     "title": "Telegram mini-game bots",
     "tagline": "games in a group chat",
-    "lead": "Games on Telegram’s built-in emoji in a group chat: slot, dice, bowling, darts and ball. The bot counts the day’s wins and passes a prize request to the admin.",
+    "lead": "Games on Telegram’s built-in emoji in a group chat: slot, dice, bowling, darts and basketball. The bot counts the day’s wins and sends the admin a prize request.",
     "client": "freelance",
     "sections": [
       {
         "title": "under the hood",
         "body": [
-          "The player throws an emoji into the chat themselves, the value is rolled on Telegram’s side. The bot waits for the animation to end and replies only to a win. Three lucky rolls a day earn a prize: the player gets a message, the admin gets a payout request. Win counters are stored in a database, and each bot has its own prize tables."
+          "The player throws the emoji into the chat, the value is rolled on Telegram’s side. The bot waits for the animation to end and replies only to a win. Most wins pay out at once, while for the slot’s triple BAR and the dice’s one it is the third win of the day that counts. The player gets a message, the admin gets a payout request."
         ]
       }
     ],
@@ -1403,7 +1403,7 @@
       {
         "title": "how it works",
         "body": [
-          "Search is hybrid: by meaning and by words, taking the employee’s role into account, so that a warehouse worker and a salesperson get their own answers. Answers come with links to documents, and a question unrelated to work is politely declined.",
+          "Hybrid search: by meaning and by words, aware of the employee’s role, so a storekeeper and a cashier get their own answers. Answers link to documents, off-topic questions are politely declined.",
           "Besides questions there is a first-week programme, short courses with tests and a simulator: the bot plays out a work situation and rates the newcomer’s answer. An IT request can be left right in the chat."
         ]
       },
@@ -1677,5 +1677,158 @@
         ]
       }
     }
+  },
+  "garden-td": {
+    "title": "Garden Bogatyrs",
+    "tagline": "art and design of a game for Yandex Games",
+    "lead": "A mobile game for Yandex Games set in a Russian fairy tale: vegetables and berries become heroes and defend the garden. A Figma layout, heroes, enemies, bosses and the Gardener.",
+    "client": "team project · game",
+    "sections": [
+      {
+        "title": "the game",
+        "body": [
+          "A merge tower defense in a Russian fairy tale: heroes are summoned onto the field, identical ones merge into stronger ones, and between waves you pick spells. Heroes split by suit (Earth, Fire, Water, Charms) and rarity; there are hybrids and chapters with bosses from the tales: Nightingale the Robber, Baba Metelitsa, the Leshy, the Sea Tsar and Koschei."
+        ]
+      },
+      {
+        "title": "what I did",
+        "body": [
+          "A Figma layout: sign-in and menu, battle, plants and summoning, a design system with components, tokens, buttons, hero cards and the battle HUD. Art: heroes, hybrids, enemies and bosses, the Gardener with looks and weapons, chapter backgrounds, interface icons and textures. Checking the game against the layout screen by screen."
+        ]
+      },
+      {
+        "title": "what it is made of",
+        "body": [
+          "Heroes, enemies and battle backgrounds are built from Blender 3D renders. The sprites on the sheets are shown at the game's native size, without enlarging."
+        ]
+      },
+      {
+        "title": "boundaries",
+        "body": [
+          "The game code is written by another team member; here is design and art. The battle shots were taken on a test build with the heroes placed by hand."
+        ]
+      }
+    ],
+    "captions": [
+      "Chapter 1: Nightingale the Robber enters",
+      "Chapter 1: the fight with Nightingale the Robber",
+      "Chapter 1: wave 10",
+      "Chapter 2, the swamp: Gorynych's fire stream",
+      "Chapter 3, Koschei's forest: wave 10",
+      "Chapter 4: the boss Baba Metelitsa",
+      "Chapter 4: a volley from the heroes",
+      "Chapter 5: wave 10",
+      "Chapter 6: Gorynych's fire",
+      "Chapter 1: heroes merge",
+      "Heroes, sheet 1: common and rare, suit and rarity are labelled.",
+      "Heroes, sheet 2: rare and legendary.",
+      "Heroes, sheet 3: legendary and mythical.",
+      "Hero ranks: the first and the fourth side by side.",
+      "Hybrids: fairy-tale characters made from two heroes.",
+      "Enemies, flyers, elites and bosses.",
+      "The Gardener: looks and weapons.",
+      "The title screen, the Figma layout.",
+      "A plant card, the Figma layout.",
+      "Layout, screen: Home, the Battle tab",
+      "Layout, screen: Chapter select",
+      "Layout, screen: Level card",
+      "Layout, screen: Battle",
+      "Layout, screen: Battle: wave, elite, boss",
+      "Layout, screen: Spell choice",
+      "Layout, screen: Victory",
+      "Layout, screen: Summon",
+      "Layout, screen: Summon result",
+      "Layout, screen: Modes",
+      "Layout, screen: The Gardener",
+      "Layout, screen: The fair",
+      "Layout, screen: Hero, look"
+    ]
+  },
+  "prosoft": {
+    "title": "PRO-SOFT",
+    "tagline": "design of an IT integrator's site",
+    "lead": "A Figma layout for a 1C integrator's site: eight pages, seven mobile versions, a design system and a prototype. The site is about services, not a catalog.",
+    "client": "freelance · 1C integrator",
+    "sections": [
+      {
+        "title": "the task",
+        "body": [
+          "The company's two one-page sites are merged into one, only about 1C: moving off UPP, ERP and KA implementation, customization, support. A visitor should understand what they need and leave a request for a diagnostic."
+        ]
+      },
+      {
+        "title": "what I did",
+        "body": [
+          "Grid and rhythm, a design system with variables, components, all pages and states, mobile versions and a prototype in Figma. The palette comes from the company: blue, dark blue and an orange accent, Onest typeface."
+        ]
+      },
+      {
+        "title": "decisions",
+        "body": [
+          "Instead of decoration, the screens carry tools: a stage ribbon with acceptance and payment points, \"Do you recognise yourself?\" with a choice of situation, an ERP or KA picker in three questions, a sample diagnostic report, a five-question quiz."
+        ]
+      },
+      {
+        "title": "boundaries",
+        "body": [
+          "This is a layout and a prototype in Figma. Research, copy and site development are done by other people; the data in the samples is conditional."
+        ]
+      }
+    ],
+    "captions": [
+      "The stage ribbon: term, result and payment condition in one table.",
+      "\"Do you recognise yourself?\": choose a situation and see what we do.",
+      "A sample diagnostic report. The sample itself says the data is conditional.",
+      "An ERP or KA picker in three questions.",
+      "A five-question quiz, step two.",
+      "Phone: home, choice of situation, stage ribbon.",
+      "A base audit: a sample report with conditional data."
+    ]
+  },
+  "svarka-3d": {
+    "title": "Welding: 3D and motion",
+    "tagline": "renders, loops and a film",
+    "lead": "3D graphics for two welding equipment stores: an isometric service centre, a mask with an arc, a film built from the site design and a machine for a first screen.",
+    "client": "freelance · welding equipment",
+    "sections": [
+      {
+        "title": "the film",
+        "body": [
+          "For Svarnoy 52 I built a 51-second film from the redesign layout: cutting the old home page, a macro of the seam, site sections on a 3D screen, phones and the About mask. Rendered in Blender, titles and screens in Remotion. Here are three silent fragments."
+        ]
+      },
+      {
+        "title": "service centre",
+        "body": [
+          "An illustration for the Svarnoy 52 service centre page: a cutaway workshop, a bench with an open machine, a multimeter, a pegboard with tools, a gas cylinder by the window. Rendered in Cycles at 4480×3840 with a transparent background and no people. Light, materials and palette match the About mask."
+        ]
+      },
+      {
+        "title": "before and after",
+        "body": [
+          "The service centre started as a flat isometric drawing and became a 3D scene. The About mask reached its final form through revisions: the hose, the embossed Svarnoy 52 lettering, the materials."
+        ]
+      },
+      {
+        "title": "Svarprom NN",
+        "body": [
+          "For the first screen of Svarprom NN I built an ATIG 210PAC machine in Blender from photos in the store's catalog. Three-quarter view, an 8° sway around the vertical axis, light on the display and a glint along the edges. The background is transparent."
+        ]
+      }
+    ],
+    "captions": [
+      "Svarnoy 52, the film: cutting the old home page and a macro of the seam.",
+      "Svarnoy 52, the film: the page halves fall and the new home page is on screen.",
+      "Svarnoy 52, the film: the About section with the mask.",
+      "Svarnoy 52: an illustration for the service centre page, a 3D render.",
+      "Svarnoy 52, render detail: the machine on the bench and a multimeter.",
+      "Svarnoy 52, render detail: a pegboard with tools.",
+      "Svarnoy 52, render detail: a machine waiting in the queue.",
+      "Svarnoy 52, service centre: a flat isometric drawing.",
+      "Svarnoy 52, service centre: the 3D scene.",
+      "Svarnoy 52, About mask: the first version.",
+      "Svarnoy 52, About mask: the final version.",
+      "Svarprom NN: ATIG 210PAC loop."
+    ]
   }
 }

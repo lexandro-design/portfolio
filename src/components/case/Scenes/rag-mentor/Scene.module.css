@@ -1,0 +1,774 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Полка документов лентой сверху, под ней чат с открытой панелью, справа ход ответа */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-areas:
+    'shelf shelf'
+    'main rail'
+    'cap cap'
+    'ctl ctl';
+  gap: var(--space-lg) var(--space-xl);
+  margin-block-start: var(--space-2xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+/* ---------- полка ---------- */
+.shelf {
+  grid-area: shelf;
+  display: grid;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+}
+
+.shelfHead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.role {
+  color: var(--case-color, var(--accent));
+}
+
+.docs {
+  display: flex;
+  gap: 6px;
+  min-inline-size: 0;
+  list-style: none;
+}
+
+.doc {
+  position: relative;
+  display: grid;
+  flex: 1 1 0;
+  grid-template-rows: 1fr auto auto;
+  gap: 10px;
+  min-inline-size: 0;
+  block-size: 148px;
+  padding: 12px 10px 10px;
+  border: 1px solid var(--border-hair);
+  border-block-start: 3px solid var(--border-hover);
+  background: var(--bg-elevated);
+  overflow: hidden;
+  transition:
+    opacity var(--dur-slow) var(--ease-out-quart),
+    border-color var(--dur-slow) var(--ease-out-quart),
+    background var(--dur-slow) var(--ease-out-quart),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.docTitle {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--fg-primary);
+  hyphens: manual;
+}
+
+/* Полоски внизу корешка: пункты документа, из которых режутся фрагменты */
+.bars {
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  block-size: 14px;
+}
+
+.bars i {
+  flex: 1;
+  max-inline-size: 10px;
+  block-size: 6px;
+  background: var(--border-hover);
+  transition:
+    background var(--dur-slow),
+    block-size var(--dur-slow) var(--ease-out-expo);
+}
+
+.bars i[data-lit] {
+  block-size: 14px;
+  background: var(--case-color, var(--accent));
+}
+
+.tag {
+  min-block-size: 1.2em;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.doc[data-locked] {
+  opacity: 0.38;
+  border-block-start-color: var(--border-hair);
+  background: repeating-linear-gradient(
+    135deg,
+    transparent 0 6px,
+    color-mix(in oklab, var(--fg-tertiary) 14%, transparent) 6px 7px
+  );
+}
+
+.doc[data-hit] {
+  border-color: var(--case-color, var(--accent));
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 10%, var(--bg-elevated));
+  transform: translateY(-6px);
+}
+
+.doc[data-weak] {
+  border-style: dashed;
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+}
+
+.doc[data-fresh] {
+  border-color: var(--signal-live);
+  border-block-start-color: var(--signal-live);
+  animation: grow 900ms var(--ease-out-expo) both;
+}
+
+.doc[data-fresh] .tag {
+  color: var(--signal-live);
+}
+
+@keyframes grow {
+  from {
+    flex-grow: 0;
+    opacity: 0;
+    padding-inline: 0;
+  }
+}
+
+/* Поиск пробегает по доступным документам волной */
+.docs[data-scan] .doc:not([data-locked]) {
+  animation: scan 1400ms var(--ease-out-quart) both;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+@keyframes scan {
+  40% {
+    border-color: var(--case-color, var(--accent));
+    background: color-mix(in oklab, var(--case-color, var(--accent)) 7%, var(--bg-elevated));
+  }
+}
+
+/* ---------- чат + панель ---------- */
+.main {
+  grid-area: main;
+  display: grid;
+  min-inline-size: 0;
+  align-content: start;
+  max-inline-size: 920px;
+}
+
+.main > .chat {
+  block-size: 340px;
+  border-block-end: 0;
+}
+
+.keysWrap {
+  display: block;
+  margin-block-start: 10px;
+}
+
+.scan {
+  position: relative;
+  display: inline-block;
+  padding-inline-end: 4px;
+  color: var(--fg-secondary);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.cite {
+  margin-inline: 2px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--case-color, var(--accent));
+}
+
+.cite[data-on] {
+  animation: cite 900ms var(--ease-out-expo) both;
+}
+
+@keyframes cite {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.drawer {
+  min-block-size: 300px;
+  border: 1px solid var(--border-hair);
+  border-block-start: 2px solid var(--case-color, var(--accent));
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+
+.drawerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: 10px 16px;
+  border-block-end: 1px solid var(--border-hair);
+}
+
+.log {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-secondary);
+  text-align: end;
+  animation: fade 400ms var(--ease-out-quart) both;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.drawerBody {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: 16px;
+}
+
+.idle {
+  max-inline-size: 52ch;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  animation: fade 400ms var(--ease-out-quart) both;
+}
+
+/* два списка поиска */
+.lanes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+}
+
+.lane {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-inline-size: 0;
+}
+
+.hitRow {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--fg-primary);
+  animation: fade 500ms var(--ease-out-expo) var(--d, 0ms) both;
+}
+
+.hitRow i {
+  display: block;
+  inline-size: var(--w);
+  block-size: 4px;
+  background: var(--case-color, var(--accent));
+  transform-origin: left;
+  animation: scaleX 800ms var(--ease-out-expo) var(--d, 0ms) both;
+}
+
+@keyframes scaleX {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.terms b {
+  padding: 3px 8px;
+  border: 1px solid var(--border-hover);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  font-weight: 400;
+  color: var(--fg-primary);
+}
+
+.merge {
+  grid-column: 1 / -1;
+  padding-block-start: 10px;
+  border-block-start: 1px dashed var(--border-hover);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+/* фрагменты вылетают с полки */
+.frags {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  list-style: none;
+}
+
+.frags[data-weak] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.frag {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 10px 12px;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--fg-secondary);
+  transition:
+    border-color var(--dur-slow),
+    background var(--dur-slow);
+  animation: fly 800ms var(--ease-out-expo) var(--d, 0ms) both;
+}
+
+/* След от полки: тонкая линия, по которой фрагмент спустился */
+.frag::before {
+  content: '';
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: 18px;
+  inline-size: 1px;
+  block-size: 60px;
+  background: var(--case-color, var(--accent));
+  transform-origin: bottom;
+  animation: tether 900ms var(--ease-out-quart) var(--d, 0ms) both;
+}
+
+@keyframes fly {
+  from {
+    opacity: 0;
+    transform: translateY(-48px) scale(0.94);
+  }
+}
+
+@keyframes tether {
+  from {
+    transform: scaleY(0);
+  }
+
+  60% {
+    transform: scaleY(1);
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fragHead {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.fragHead b {
+  font-weight: 500;
+  color: var(--case-color, var(--accent));
+}
+
+.frag strong {
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.frag p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.frag em {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  font-style: normal;
+  color: var(--case-color, var(--accent));
+}
+
+.frag[data-cited] {
+  border-color: var(--case-color, var(--accent));
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 8%, var(--bg-elevated));
+}
+
+.frag[data-weak] {
+  border-style: dashed;
+  border-color: var(--border-hover);
+  color: var(--fg-tertiary);
+}
+
+.frag[data-weak] em {
+  color: var(--fg-tertiary);
+}
+
+.frag[data-weak]::before {
+  display: none;
+}
+
+/* шкала совпадения с порогом */
+.meter {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.track {
+  position: relative;
+  block-size: 6px;
+  background: var(--border-hair);
+}
+
+.track i {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: var(--v);
+  background: var(--signal-live);
+  transform-origin: left;
+  animation: scaleX 1000ms var(--ease-out-expo) 300ms both;
+}
+
+.meter[data-low] .track i {
+  background: var(--fg-tertiary);
+}
+
+.track b {
+  position: absolute;
+  inset-block: -4px;
+  inset-inline-start: 45%;
+  inline-size: 2px;
+  background: var(--fg-primary);
+}
+
+/* пробел и ответ методиста */
+.gap,
+.reply {
+  display: grid;
+  gap: 8px;
+  max-inline-size: 72ch;
+  padding: 14px 16px;
+  border: 1px solid var(--border-hover);
+  border-inline-start: 3px solid var(--case-color, var(--accent));
+  background: var(--bg-elevated);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--fg-secondary);
+  animation: fade 500ms var(--ease-out-expo) both;
+}
+
+.gap strong,
+.reply strong {
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.gapQ {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-primary);
+}
+
+.reply {
+  border-inline-start-color: var(--signal-live);
+}
+
+.skel {
+  display: grid;
+  gap: 6px;
+}
+
+.skel i {
+  display: block;
+  block-size: 6px;
+  background: var(--border-hover);
+}
+
+.skel i:nth-child(1) {
+  inline-size: 92%;
+}
+
+.skel i:nth-child(2) {
+  inline-size: 78%;
+}
+
+.skel i:nth-child(3) {
+  inline-size: 54%;
+}
+
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+}
+
+.flow li {
+  padding: 3px 8px;
+  border: 1px solid var(--signal-live);
+  color: var(--fg-primary);
+}
+
+.flow li:not(:last-child)::after {
+  content: ' →';
+  color: var(--fg-tertiary);
+}
+
+/* ---------- ход ответа справа ---------- */
+.rail {
+  grid-area: rail;
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+}
+
+.stages {
+  display: grid;
+  gap: 0;
+  list-style: none;
+  counter-reset: st;
+}
+
+.stages li {
+  position: relative;
+  padding: 7px 0 7px 28px;
+  border-block-end: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+  counter-increment: st;
+  transition: color var(--dur-slow);
+}
+
+.stages li::before {
+  content: counter(st, decimal-leading-zero);
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--fg-tertiary);
+}
+
+.stages li[data-done] {
+  color: var(--fg-secondary);
+}
+
+.stages li[data-on] {
+  color: var(--fg-primary);
+}
+
+.stages li[data-on]::before {
+  color: var(--case-color, var(--accent));
+}
+
+.stages li[data-on]::after {
+  content: '';
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 50%;
+  inline-size: 28px;
+  block-size: 2px;
+  background: var(--case-color, var(--accent));
+}
+
+/* Подпись шага в одну строку под чатом и панелью, управление сразу за ней */
+.cap {
+  grid-area: cap;
+  margin-block-start: calc(var(--space-xs) * -1);
+  font-size: var(--type-body-lg);
+  min-block-size: 1.5em;
+}
+
+.ctl {
+  grid-area: ctl;
+  display: grid;
+  gap: var(--space-xs);
+  margin-block-start: calc(var(--space-sm) * -1);
+}
+
+.ctl > :first-child {
+  max-inline-size: 560px;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+@media (max-width: 1099px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'shelf'
+      'main'
+      'cap'
+      'ctl'
+      'rail';
+    gap: var(--space-md);
+  }
+
+  .stages {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    column-gap: var(--space-md);
+  }
+
+  .cap {
+    min-block-size: 3em;
+    font-size: var(--type-body);
+    margin-block-start: 0;
+  }
+
+  .ctl {
+    margin-block-start: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .stage {
+    margin-block-start: var(--space-lg);
+  }
+
+  /* Полка лентой с прокруткой по горизонтали */
+  .docs {
+    margin-inline: calc(var(--space-md, 16px) * -1);
+    padding: 6px var(--space-md, 16px) 4px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    /* Иначе привязка ставит первый документ вплотную к краю экрана, мимо отступа */
+    scroll-padding-inline: var(--space-md, 16px);
+    scrollbar-width: none;
+  }
+
+  .doc {
+    flex: 0 0 132px;
+    block-size: 132px;
+    scroll-snap-align: start;
+  }
+
+  .main > .chat {
+    block-size: 360px;
+  }
+
+  /* Панель одной высоты на всех шагах (замер 390): фрагменты на телефоне плотнее, поэтому самое высокое состояние ниже */
+  .drawer,
+  .drawer[data-step] {
+    min-block-size: 330px;
+  }
+
+  .frag {
+    gap: 4px;
+    padding: 8px 10px;
+  }
+
+  .lanes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  /* Фрагменты лентой с горизонтальной прокруткой, как полка выше: три карточки в столбик
+     делали панель вдвое выше остальных шагов */
+  .frags,
+  .frags[data-weak] {
+    display: flex;
+    margin-inline: -16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .frags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .frag {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  .frag p {
+    -webkit-line-clamp: 2;
+  }
+
+  .meter {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .drawerHead {
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+  }
+
+  .log {
+    text-align: start;
+  }
+
+  .stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .doc[data-fresh],
+  .docs[data-scan] .doc,
+  .scan,
+  .cite[data-on],
+  .log,
+  .idle,
+  .hitRow,
+  .hitRow i,
+  .frag,
+  .frag::before,
+  .track i,
+  .gap,
+  .reply {
+    animation: none;
+  }
+}
+
+/* Самый узкий телефон: списки поиска переносятся плотнее (замер 360) */
+@media (max-width: 380px) {
+  .drawer,
+  .drawer[data-step] {
+    min-block-size: 356px;
+  }
+}

@@ -24,7 +24,7 @@ type Props = {
 }
 
 /** Подборка на первом экране блока: самые показательные проекты разных направлений */
-const PICK = ['parfumeria', 'mimimibot', 'saldo', 'ai-office', 'otrx', 'haiku']
+const PICK = ['parfumeria', 'mimimibot', 'saldo', 'ai-office', 'otrx', 'haiku', 'prosoft', 'garden-td']
 const GROUPS: Case['group'][] = ['titan', 'entersales', 'freelance', 'own']
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -157,7 +157,7 @@ export function Works({ items, flows, t, base }: Props) {
                   href={href(c)}
                   flow={flows[c.slug]}
                   note={t.illustration}
-                  size={i === 0 ? 'hero' : i < 3 ? 'wide' : 'base'}
+                  size={i === 0 ? 'hero' : i < 3 || i >= 6 ? 'wide' : 'base'}
                   style={order(i)}
                   className={styles.cell}
                 />

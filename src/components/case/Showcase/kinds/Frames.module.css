@@ -1,0 +1,214 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg) var(--space-md);
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  min-inline-size: 0;
+}
+
+.fig {
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: center;
+}
+
+.media {
+  inline-size: 100%;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+}
+
+.img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  cursor: zoom-in;
+}
+
+/* Подсказка свайпа: только на телефоне, где кадр шире окна */
+.pan {
+  display: none;
+}
+
+.cap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px var(--space-sm);
+  justify-self: start;
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+}
+
+.root[data-variant='two'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.root[data-variant='three'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Узкий кадр (три экрана телефона на одном листе): не шире 960 px, по центру */
+.root[data-variant='narrow'] {
+  inline-size: min(100%, 960px);
+  margin-inline: auto;
+}
+
+/* Лист спрайтов: на плашке, в родном размере по центру */
+.root[data-variant='sheet'] .media {
+  padding: var(--space-md);
+  background: var(--bg-subtle);
+  justify-self: center;
+}
+
+.root[data-variant='sheet'] .fig {
+  justify-items: stretch;
+}
+
+/* Экраны телефона: чёрная рамка, ряд из пяти, на планшете три, на телефоне два */
+.root[data-variant='phones'] {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-lg) var(--space-sm);
+}
+
+.root[data-variant='phones'] .media {
+  padding: 6px;
+  border-color: var(--border-hover);
+  background: #0b0b0c;
+  box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.7);
+}
+
+.root[data-variant='phones'] .fig {
+  justify-items: stretch;
+}
+
+.root[data-variant='phones'] .cap {
+  display: grid;
+  gap: 2px;
+  font-size: var(--type-body-sm);
+}
+
+/* Два крупных экрана Figma: по центру, не шире 800 px */
+.root[data-variant='phones-2'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  inline-size: min(100%, 800px);
+  margin-inline: auto;
+  gap: var(--space-lg) var(--space-md);
+}
+
+.root[data-variant='phones-2'] .media {
+  padding: 6px;
+  border-color: var(--border-hair);
+  background: #0b0b0c;
+  box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.7);
+}
+
+.root[data-variant='phones-2'] .fig {
+  justify-items: stretch;
+}
+
+/* Три экрана в ряд: крупнее, чем пять */
+.root[data-variant='phones-3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg) var(--space-md);
+}
+
+.root[data-variant='phones-3'] .media {
+  padding: 6px;
+  border-color: var(--border-hover);
+  background: #0b0b0c;
+}
+
+.root[data-variant='phones-3'] .fig {
+  justify-items: stretch;
+}
+
+@media (max-width: 1023px) {
+  .root[data-variant='phones'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  /* Широкий экран на телефоне не сжимается до нечитаемого: кадр шире окна, его листают пальцем вбок */
+  .root[data-variant='one'] .media {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .root[data-variant='one'] .img {
+    inline-size: max(100%, 880px);
+    max-inline-size: none;
+  }
+
+  /* Лежит поверх кадра у правого края и не едет вместе с ним; по подписи снизу не попадает */
+  .root[data-variant='one'] .pan {
+    display: grid;
+    place-items: center;
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    justify-self: end;
+    z-index: 1;
+    inline-size: 44px;
+    block-size: 28px;
+    margin: var(--space-sm);
+    color: #fff;
+    background: rgb(0 0 0 / 0.62);
+    pointer-events: none;
+    transition: opacity 0.24s var(--ease-in-out);
+  }
+
+  .root[data-variant='one'] .pan svg {
+    animation: nudge 1.6s var(--ease-in-out) 3;
+  }
+
+  .root[data-variant='one'] .media {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .media[data-moved] + .pan {
+    opacity: 0;
+  }
+
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(-4px);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .root[data-variant='two'],
+  .root[data-variant='three'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .root[data-variant='phones'],
+  .root[data-variant='phones-3'],
+  .root[data-variant='phones-2'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md) var(--space-sm);
+  }
+
+  .root[data-variant='sheet'] .media {
+    padding: var(--space-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[data-variant='one'] .pan svg {
+    animation: none;
+  }
+}

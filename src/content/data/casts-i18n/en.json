@@ -220,9 +220,10 @@
     }
    },
    {
-    "cap": "More than 3000 people use this bot.",
+    "cap": "Dialog start: one PostgreSQL function instead of three queries in a row.",
     "big": {
-     "l": "users"
+     "v": "60 ms",
+     "l": "instead of ~2 s"
     }
    }
   ]
@@ -543,7 +544,7 @@
     }
    },
    {
-    "cap": "The bot doesn't nag: the same question comes at most once every half hour, and only urgent ones at night.",
+    "cap": "The bot doesn’t nag: the same question comes at most once every half hour.",
     "log": "no repeat sooner than 30 minutes",
     "big": {
      "v": "30 min",
@@ -1523,7 +1524,7 @@
    },
    {
     "cap": "Complex cases go straight to a person.",
-    "log": "6 people and more, and corporate events: to the manager",
+    "log": "7+ people, 3 bedrooms, corporate events: to the manager",
     "msg": {
      "text": "There will be 20 of us, a corporate event"
     }
@@ -1667,25 +1668,25 @@
     }
    },
    {
-    "cap": "The model describes the work: subject, style, technique, level.",
-    "log": "description of the work goes to the vector database",
+    "cap": "The photo is turned into a drawing embedding.",
+    "log": "drawing embedding ready",
     "msg": {
      "label": "Looking at the drawing"
     }
    },
    {
     "cap": "The bot finds the teacher's nearest reference.",
-    "log": "nearest reference: 0.6 by vector and 0.4 by description"
+    "log": "nearest reference: search by image similarity"
    },
    {
-    "cap": "The reference counts as 100 points, only the deviation from it is graded.",
+    "cap": "The work is compared with the reference; deviations go into the review.",
     "log": "comparing two images"
    },
    {
-    "cap": "The feedback arrives in the chat: a grade and a breakdown by criteria.",
-    "log": "the feedback is based on textbooks",
+    "cap": "The feedback arrives in the chat: a breakdown by criteria and a grade.",
+    "log": "feedback in drawing terms",
     "msg": {
-     "text": "Grade: 72 out of 100.\nComposition: the sheet is filled evenly.\nStructure: check the ellipse of the jug.\nTonal solution: the shadow lacks reflected light.\nStroke: follow the form."
+     "text": "Composition: the sheet is filled evenly.\nStructure: check the ellipse of the jug.\nTone: the shadow lacks reflected light.\nStroke: follow the form.\nOverall: the form holds together.\nGrade: 3+."
     }
    },
    {
@@ -1699,7 +1700,7 @@
     "cap": "Each photo gets its own grade, so progress shows.",
     "log": "new grade against the same reference",
     "msg": {
-     "text": "Grade: 84 out of 100.\nStructure: the ellipse is more accurate.\nTonal solution: the shadow holds together."
+     "text": "Composition: the sheet is filled evenly.\nStructure: the ellipse is more accurate.\nTone: the shadow holds together.\nStroke: it follows the form.\nOverall: close to the reference.\nGrade: 4+."
     },
     "v": [
      {
@@ -1767,7 +1768,7 @@
    },
    {
     "cap": "The bot knows the role and the work day, the menu is at the bottom.",
-    "log": "role: salesperson",
+    "log": "role: cashier",
     "msg": {
      "text": "Ask anything about work, I'll answer from the procedures and show where it comes from.",
      "btns": [
@@ -1812,7 +1813,7 @@
     "cap": "The bot doesn't make things up and says who to go to. The question goes to the training specialist on its own.",
     "log": "a gap in the training specialist panel",
     "msg": {
-     "text": "The base doesn't have this. Ask the shift lead."
+     "text": "The base doesn’t have this. I’ve passed the question to the methodologist."
     }
    },
    {
@@ -2210,7 +2211,7 @@
     }
    },
    {
-    "cap": "Dice, bowling, darts and ball work the same way, each game has its own prizes.",
+    "cap": "Dice, bowling, darts and basketball work the same way, each game has its own prizes.",
     "log": "the prizes live in probability tables"
    },
    {

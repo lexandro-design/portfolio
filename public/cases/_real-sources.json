@@ -1,0 +1,209 @@
+[
+  {
+    "slug": "resort-bot",
+    "file": "logo.webp",
+    "client": "База отдыха «Лагуна Юг»",
+    "what": "логотип",
+    "source": "https://www.vmestehorosho.ru/",
+    "fetched": "2026-11-05",
+    "note": "Официальный сайт базы"
+  },
+  {
+    "slug": "resort-bot",
+    "file": "house-teremok.webp",
+    "client": "База отдыха «Лагуна Юг»",
+    "what": "коттедж «Теремок», внешний вид",
+    "source": "https://www.vmestehorosho.ru/dwelling-teremok/",
+    "fetched": "2026-11-05",
+    "note": "Теремок: 4 основных места и до 2 дополнительных; гостиная с камином и панорамным видом на реку, кухонная зона, 2 спальни, балкон, санузел с душем, кондиционер. Другие жилья на сайте: Лесной, Стандарт, Шародом, Дом у воды, Комфорт/Комфорт+. Цены не указаны."
+  },
+  {
+    "slug": "resort-bot",
+    "file": "interior-teremok.webp",
+    "client": "База отдыха «Лагуна Юг»",
+    "what": "Теремок, гостиная-столовая",
+    "source": "https://www.vmestehorosho.ru/dwelling-teremok/",
+    "fetched": "2026-11-05",
+    "note": "Фото интерьера с сайта базы"
+  },
+  {
+    "slug": "resort-bot",
+    "file": "territory-1.webp",
+    "client": "База отдыха «Лагуна Юг»",
+    "what": "территория с воздуха: берег реки Юг, сосновый лес, домики",
+    "source": "https://www.vmestehorosho.ru/",
+    "fetched": "2026-11-05",
+    "note": "70 км от Нижнего Новгорода, Чкаловский район, берег реки Юг"
+  },
+  {
+    "slug": "osq",
+    "file": "logo.svg",
+    "client": "OSQ Group",
+    "what": "логотип (SVG, без скриптов)",
+    "source": "https://osqgroup.ru/bitrix/templates/osq/img/logo.svg",
+    "fetched": "2026-11-05",
+    "note": "Официальный сайт osqgroup.ru"
+  },
+  {
+    "slug": "osq",
+    "file": "product-1.webp",
+    "client": "OSQ Group",
+    "what": "контейнер OSQ OCTOBOX с салатом",
+    "source": "https://osqgroup.ru/product/upakovka-osq-octobox-1000/",
+    "fetched": "2026-11-05",
+    "note": "Официальный сайт OSQ GROUP (упаковка для еды, osqgroup.ru; osq.group - портал Битрикс24)"
+  },
+  {
+    "slug": "osq",
+    "file": "product-2.webp",
+    "client": "OSQ Group",
+    "what": "линейка контейнеров OCTOBOX на столе",
+    "source": "https://osqgroup.ru/product/upakovka-osq-octobox-1000/",
+    "fetched": "2026-11-05",
+    "note": ""
+  },
+  {
+    "slug": "osq",
+    "file": "product-box.webp",
+    "client": "OSQ Group",
+    "what": "контейнер OCTOBOX 1000, предметное фото",
+    "source": "https://osqgroup.ru/product/upakovka-osq-octobox-1000/",
+    "fetched": "2026-11-05",
+    "note": "На сером фоне"
+  },
+  {
+    "slug": "osq",
+    "file": "catalog.webp",
+    "client": "OSQ Group",
+    "what": "скрин каталога osqgroup.ru (категории), 1440 px",
+    "source": "https://osqgroup.ru/catalog/",
+    "fetched": "2026-11-05",
+    "note": "Снято 2026-11-05, без цен и плавающих виджетов"
+  },
+  {
+    "slug": "svarnoy52",
+    "file": "logo.webp",
+    "client": "Сварной 52",
+    "what": "логотип (растр из SVG сайта)",
+    "source": "https://svarnoy52.ru/",
+    "fetched": "2026-11-05",
+    "note": "Сайт делал Lexandro на Tilda; SVG логотипа содержит встроенный растр, поэтому сохранён как webp"
+  },
+  {
+    "slug": "food-assistants",
+    "file": "logo.webp",
+    "client": "FoodMarket (МАРКЕТ, fast food поставщик)",
+    "what": "логотип сайта food-market.pro",
+    "source": "https://food-market.pro/",
+    "fetched": "2026-11-05",
+    "note": "Чёрные буквы на прозрачном: на тёмной теме класть на светлую плашку"
+  },
+  {
+    "slug": "food-assistants",
+    "file": "banner.webp",
+    "client": "FoodMarket (МАРКЕТ, fast food поставщик)",
+    "what": "баннер главной: оптовый поставщик продуктов, упаковки и оборудования для фастфуда",
+    "source": "https://food-market.pro/",
+    "fetched": "2026-11-05",
+    "note": "На баннере слоган сайта, без цен"
+  },
+  {
+    "slug": "svarprom-nn",
+    "file": "logo.svg",
+    "client": "СварПром НН",
+    "what": "логотип (SVG, только векторы)",
+    "source": "https://svarprom-nn.ru/",
+    "fetched": "2026-11-05",
+    "note": "Сайт делал Lexandro на Tilda"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "avatar.webp",
+    "client": "MiMiMi AI",
+    "what": "аватар бота @Mimimi_Ai_bot (Mimimi Bot - Нейро Фотосессия)",
+    "source": "https://t.me/Mimimi_Ai_bot",
+    "fetched": "2026-11-05",
+    "note": "Публичная страница бота; оригинал 320 px, не апскейлился"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "cover.webp",
+    "client": "MiMiMi AI",
+    "what": "обложка первого сообщения бота",
+    "source": "https://t.me/Mimimi_Ai_bot",
+    "fetched": "2026-11-05",
+    "note": "Из переписки с ботом, кадр показывается всем пользователям; разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-red.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон из карусели бота; tpl-red-crop.webp тот же кадр без белой рамки",
+    "source": "https://t.me/Mimimi_Ai_bot",
+    "fetched": "2026-11-05",
+    "note": "Из переписки с ботом, кадр показывается всем пользователям; разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-studio.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 23 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-dark.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 20 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-lift.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 32 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-stairs.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 1 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-roses.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 33 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-camera.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 35 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-hall.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон бота, кадр 34 из набора заказчика, обрезан до 3:4",
+    "source": "папка заказчика, шаблоны бота",
+    "fetched": "2026-11-05",
+    "note": "Генерация бота, не реальные люди; показывать разрешил Lexandro 05.11"
+  }
+]

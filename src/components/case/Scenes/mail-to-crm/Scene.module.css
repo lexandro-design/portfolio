@@ -1,0 +1,673 @@
+.root {
+  padding-block-end: 0;
+  --accent-case: var(--case-color, var(--accent));
+}
+
+/* Сверху лента писем, под ней письмо слева и доска сделок справа */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-areas:
+    'inbox inbox'
+    'panel board';
+  gap: var(--space-sm) var(--space-md);
+}
+
+/* Сцена и подпись с панелью под ней: на телефоне подпись идёт сразу за письмом */
+.table {
+  margin-block-start: var(--space-2xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.inbox,
+.panel,
+.board {
+  min-inline-size: 0;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+}
+
+.inbox {
+  grid-area: inbox;
+}
+
+/* Высоту панелей держим под самое полное состояние цикла (замер 1024-1440): шаги не двигают страницу */
+.panel {
+  grid-area: panel;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 475px;
+}
+
+.board {
+  grid-area: board;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 475px;
+}
+
+.bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 10px 14px;
+  border-block-end: 1px solid var(--border-hair);
+  background: var(--bg-subtle);
+}
+
+.sub {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+/* Лента входящих */
+.ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+}
+
+.mail {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  min-inline-size: 0;
+  padding: 14px 16px 14px 28px;
+  border-inline-end: 1px solid var(--border-hair);
+  transition:
+    background var(--dur-base),
+    color var(--dur-base);
+  animation: mailIn 700ms var(--ease-out-expo) both;
+}
+
+.mail:last-child {
+  border-inline-end: 0;
+}
+
+@keyframes mailIn {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+
+.mail strong {
+  font-weight: 500;
+  font-size: var(--type-body-sm);
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.preview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--type-body-sm);
+  color: var(--fg-tertiary);
+}
+
+.dot {
+  position: absolute;
+  inset-block-start: 20px;
+  inset-inline-start: 12px;
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 50%;
+  background: var(--accent-case);
+  transition:
+    background var(--dur-base),
+    transform var(--dur-base);
+}
+
+.mail[data-done] .dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--border-hover);
+}
+
+.mail[data-active] {
+  background: color-mix(in oklab, var(--accent-case) 12%, transparent);
+}
+
+.mail[data-active] .dot {
+  transform: scale(1.4);
+}
+
+.mail[data-kind='spam'] strong {
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+.tag {
+  justify-self: start;
+  margin-block-start: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+  opacity: 0;
+  transition: opacity var(--dur-base);
+}
+
+.mail[data-done] .tag {
+  opacity: 1;
+}
+
+.tag[data-kind='customer'] {
+  border-color: var(--accent-case);
+  color: var(--fg-primary);
+}
+
+.tag[data-kind='spam'] {
+  color: var(--fg-tertiary);
+}
+
+/* Открытое письмо */
+.letter {
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 14px var(--space-md);
+}
+
+.subject {
+  display: grid;
+  gap: 2px;
+  font-size: var(--type-body-lg);
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.subject span {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.body {
+  min-block-size: 120px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border-hair);
+  font-size: var(--type-body-sm);
+  line-height: 1.55;
+  color: var(--fg-primary);
+  overflow-wrap: anywhere;
+}
+
+.part[data-k='tag'],
+.part[data-k='cut'] {
+  display: inline-block;
+  max-inline-size: 100%;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+  animation: strip 700ms var(--ease-out-quart) 380ms both;
+}
+
+.part[data-k='cut'] {
+  animation-delay: 900ms;
+  animation-name: cut;
+}
+
+@keyframes strip {
+  to {
+    max-inline-size: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes cut {
+  0%,
+  35% {
+    text-decoration: line-through;
+    max-inline-size: 100%;
+    opacity: 1;
+  }
+  100% {
+    text-decoration: line-through;
+    max-inline-size: 0;
+    opacity: 0;
+  }
+}
+
+.chain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.chain li {
+  padding: 4px 10px;
+  border: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+  animation: lit 600ms var(--ease-out-expo) both;
+}
+
+@keyframes lit {
+  0% {
+    border-color: var(--border-hair);
+    color: var(--fg-tertiary);
+  }
+  100% {
+    border-color: var(--accent-case);
+    color: var(--fg-primary);
+  }
+}
+
+.wait {
+  display: block;
+  padding-block-start: var(--space-xs);
+  transition: opacity 300ms var(--ease-out-quart);
+}
+
+.wait[data-off] {
+  opacity: 0;
+}
+
+.answer {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-block-start: var(--space-xs);
+  animation: pop 500ms var(--ease-out-expo) 1300ms both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.answer span {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.answer b {
+  font-size: var(--type-h4);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent-case);
+}
+
+.answer[data-kind='supplier'] b {
+  color: var(--fg-primary);
+}
+
+.answer[data-kind='spam'] b {
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+.log {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  animation: pop 500ms var(--ease-out-expo) 1500ms both;
+}
+
+.idle,
+.final {
+  margin: auto;
+  padding: var(--space-md);
+}
+
+.idle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+}
+
+.idle i {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 50%;
+  background: var(--signal-live, var(--accent-case));
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.final {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+.final li {
+  display: flex;
+  gap: var(--space-xs);
+  font-size: var(--type-body);
+  line-height: 1.4;
+  color: var(--fg-primary);
+  animation: pop 500ms var(--ease-out-expo) both;
+}
+
+.final li::before {
+  content: '✓';
+  color: var(--accent-case);
+}
+
+/* Доска сделок */
+.cols {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+
+.col {
+  min-inline-size: 0;
+  padding: var(--space-xs) var(--space-xs) var(--space-sm);
+}
+
+.col + .col {
+  border-inline-start: 1px solid var(--border-hair);
+}
+
+.col h3 {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 6px 12px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.col ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--border-hair);
+  border-inline-start: 2px solid var(--border-hover);
+  background: var(--bg-base);
+  transition:
+    border-color var(--dur-base),
+    background var(--dur-base);
+  animation: cardIn 700ms var(--ease-out-expo) both;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+.col[data-out] .card {
+  animation-name: cardFly;
+}
+
+@keyframes cardFly {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+}
+
+.card b {
+  font-weight: 500;
+  font-size: var(--type-body-sm);
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.card[data-kind='customer'] {
+  border-inline-start-color: var(--accent-case);
+}
+
+.card[data-kind='spam'] b {
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+.card[data-hot] {
+  border-color: var(--accent-case);
+  background: color-mix(in oklab, var(--accent-case) 8%, var(--bg-base));
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+.field i {
+  font-style: normal;
+  color: var(--fg-tertiary);
+}
+
+.field i[data-kind='customer'] {
+  color: var(--accent-case);
+}
+
+.field i[data-kind='supplier'] {
+  color: var(--fg-primary);
+}
+
+.flag {
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+  animation: pop 400ms var(--ease-out-expo) both;
+}
+
+.flag::before {
+  content: '✓ ';
+  color: var(--accent-case);
+}
+
+.void {
+  padding: 12px;
+  border: 1px dashed var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
+
+/* Под сценой: подпись шага слева, панель справа */
+.under {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-xs) var(--space-3xl);
+  align-items: start;
+  margin-block-start: var(--space-md);
+}
+
+.cap {
+  grid-row: 1 / 3;
+  font-size: var(--type-body-lg);
+}
+
+.controls {
+  align-self: start;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'inbox'
+      'panel'
+      'board';
+  }
+
+  .panel {
+    min-block-size: 380px;
+  }
+
+  .board {
+    min-block-size: 450px;
+  }
+
+  .body {
+    min-block-size: 76px;
+  }
+
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    grid-row: auto;
+  }
+}
+
+/* Телефон: лента листается вбок, доска остаётся двумя колонками */
+@media (max-width: 767px) {
+  .table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-lg);
+  }
+
+  /* Ячейки по порядку: лента, письмо, подпись с панелью, доска */
+  .stage {
+    display: contents;
+  }
+
+  .inbox {
+    order: 1;
+  }
+
+  .panel {
+    order: 2;
+  }
+
+  .under {
+    order: 3;
+    margin-block-start: 0;
+  }
+
+  .board {
+    order: 4;
+  }
+
+  .ribbon {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .ribbon::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mail {
+    flex: 0 0 72%;
+    scroll-snap-align: start;
+  }
+
+  /* Ниже 768 строки переносятся плотнее: высота растёт к узкому экрану (замер 390 и 767) */
+  .panel {
+    min-block-size: clamp(375px, calc(465px - (100vw - 390px) * 0.24), 470px);
+  }
+
+  .board {
+    min-block-size: clamp(450px, calc(590px - (100vw - 390px) * 0.37), 600px);
+  }
+
+  .body {
+    min-block-size: clamp(76px, calc(122px - (100vw - 390px) * 0.12), 128px);
+  }
+
+  .cols {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .col {
+    padding-inline: 6px;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .answer b {
+    font-size: var(--type-body-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table,
+  .mail,
+  .card,
+  .flag,
+  .chain li,
+  .answer,
+  .log,
+  .final li,
+  .idle i {
+    animation: none;
+  }
+
+  .part[data-k='tag'],
+  .part[data-k='cut'] {
+    animation: none;
+    max-inline-size: 0;
+    opacity: 0;
+  }
+}

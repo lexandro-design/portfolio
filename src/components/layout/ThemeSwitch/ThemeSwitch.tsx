@@ -43,30 +43,50 @@ export function applyTheme(next: Theme) {
   }
 }
 
-type Props = { label: string; labels: Record<Theme, string> }
+type Props = {
+  label: string
+  labels: Record<Theme, string>
+  /** Все кнопки и на узком телефоне: в блоке «Система» места хватает, это не шапка */
+  full?: boolean
+}
 
 /** Переключатель тем из THEMES. Выбор помнится */
-export function ThemeSwitch({ label, labels }: Props) {
+export function ThemeSwitch({ label, labels, full }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
+  const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
+
   return (
-    <div className={styles.switch} role="radiogroup" aria-label={label}>
-      {THEMES.map((id) => (
-        <button
-          key={id}
-          type="button"
-          role="radio"
-          aria-checked={theme === id}
-          aria-label={labels[id]}
-          title={labels[id]}
-          className={styles.option}
-          data-extra={BASE_THEMES.includes(id) ? undefined : ''}
-          onClick={() => applyTheme(id)}
-        >
-          <Icon id={id} />
-        </button>
-      ))}
-    </div>
+    <>
+      <div className={styles.switch} data-full={full || undefined} role="radiogroup" aria-label={label}>
+        {THEMES.map((id) => (
+          <button
+            key={id}
+            type="button"
+            role="radio"
+            aria-checked={theme === id}
+            aria-label={labels[id]}
+            title={labels[id]}
+            className={styles.option}
+            data-extra={BASE_THEMES.includes(id) ? undefined : ''}
+            onClick={() => applyTheme(id)}
+          >
+            <Icon id={id} />
+          </button>
+        ))}
+      </div>
+      {/* Узкий телефон: пять кнопок в шапку не влезают пальцу, одна нормального размера листает темы по кругу */}
+      <button
+        type="button"
+        className={styles.cycle}
+        data-full={full || undefined}
+        aria-label={`${label}: ${labels[theme]}`}
+        title={labels[next]}
+        onClick={() => applyTheme(next)}
+      >
+        <Icon id={theme} />
+      </button>
+    </>
   )
 }
 

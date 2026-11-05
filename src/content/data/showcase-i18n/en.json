@@ -331,25 +331,25 @@
   },
   "mimimibot": {
     "brief": {
-      "task": "My own product: Pinterest-style shots with the person’s face right in Telegram, with payment inside the bot.",
+      "task": "Built for a client: Pinterest-style shots with the person’s face right in Telegram, with payment inside the bot.",
       "did": [
         "A carousel of ready-made shots, 3–5 of your own photos, a shot in one tap",
         "Four linked processes: request, generation queue, payment through YooKassa, delivery",
         "All content in the database: the owner changes the bot without touching code"
       ],
-      "result": "Over 3000 users. Preparing a reply got faster from about two seconds to 60 milliseconds.",
+      "result": "Preparing a reply got faster from about two seconds to 60 milliseconds.",
       "nums": [
         {
-          "v": "3000+",
-          "l": "users"
-        },
-        {
           "v": "60 ms",
-          "l": "to prepare a reply instead of ~2 s"
+          "l": "reply prep instead of ~2 s"
         },
         {
           "v": "4",
           "l": "linked processes"
+        },
+        {
+          "v": "3",
+          "l": "models to choose from"
         }
       ]
     },
@@ -573,7 +573,7 @@
       "task": "Customers wait for an answer in chat, the warehouse searches a large catalog by hand, managers spend time on leads. By law the data must be stored in Russia.",
       "did": [
         "\"Andrey\" answers customers in the CRM chat and fills in the lead himself",
-        "\"Sofia\" searches the catalog and procedures for the warehouse and managers",
+        "“Sofia” searches the catalogue and knowledge base for the warehouse and managers",
         "Routing by intent: SQL on the catalog, a ready answer, the model on the knowledge base, or a manager"
       ],
       "result": "The model is brought in only where you can’t do without it: products are found in the catalog, standard topics are covered by ready text.",
@@ -940,17 +940,25 @@
   },
   "packaging-bots": {
     "brief": {
-      "task": "Managers spent their time on first-line sales, onboarding new staff and going through calls by hand.",
+      "task": "Managers spent their time on first-line sales: understanding what the client packs and picking the packaging.",
       "did": [
-        "The client bot picks packaging from a vector base and creates a lead in the CRM",
-        "The internal bot trains employees on procedures, access by department",
-        "Calls are turned into text, the contact and the deal fill themselves in"
+        "The bot picks packaging from the catalogue: search by meaning and by name, a product card in reply",
+        "Client details are collected in stages, the Bitrix24 lead updates itself",
+        "A conversation summary goes into the lead card after an hour and a half"
       ],
-      "result": "Three scenarios run on one stack, and in each the bot takes over the routine.",
+      "result": "One bot takes the client from a question to a CRM lead and takes the routine on itself.",
       "nums": [
         {
-          "v": "3",
-          "l": "scenarios on one stack"
+          "v": "15 s",
+          "l": "merging the client’s messages"
+        },
+        {
+          "v": "10+",
+          "l": "search phrases per request"
+        },
+        {
+          "v": "90 min",
+          "l": "until the conversation summary"
         }
       ]
     },
@@ -958,32 +966,32 @@
       {
         "kind": "sort",
         "section": 1,
-        "title": "Three scenarios",
+        "title": "Three roads of one bot",
         "lanes": [
           {
-            "label": "sales",
-            "out": "lead in the CRM"
+            "label": "picking",
+            "out": "product card"
           },
           {
-            "label": "training",
-            "out": "answer from procedures"
+            "label": "client details",
+            "out": "lead in Bitrix24"
           },
           {
-            "label": "calls",
-            "out": "deal filled in"
+            "label": "summary",
+            "out": "comment in the card"
           }
         ],
         "items": [
           {
-            "text": "I need takeaway sushi packaging",
+            "text": "I need packaging for takeaway sushi",
             "lane": 0
           },
           {
-            "text": "How do I work by the department procedure?",
+            "text": "Ivan, +7 900 000-00-00, need a quote",
             "lane": 1
           },
           {
-            "text": "Call recording: name, phone, what they asked for",
+            "text": "The conversation runs for an hour and a half",
             "lane": 2
           },
           {
@@ -1521,8 +1529,8 @@
       "task": "A student needs feedback on a drawing right away, not at the next lesson.",
       "did": [
         "The bot finds the teacher’s nearest reference",
-        "A model with image recognition compares the work with the reference",
-        "A grade from 0 to 100 and a breakdown by five criteria"
+        "A model compares the work’s embedding with the reference",
+        "Five criteria and a grade on a five-point scale"
       ],
       "result": "The student sees what to fix and can show a new version as many times as they like.",
       "nums": [
@@ -1544,8 +1552,8 @@
             "note": "received"
           },
           {
-            "text": "description",
-            "note": "subject, technique, level"
+            "text": "drawing embedding",
+            "note": "image vector"
           },
           {
             "text": "reference",
@@ -1553,14 +1561,14 @@
           },
           {
             "text": "comparison",
-            "note": "the reference equals 100 points"
+            "note": "deviation from the reference"
           },
           {
             "text": "feedback",
-            "note": "by five criteria"
+            "note": "five criteria and a grade"
           }
         ],
-        "out": "Grade: 72 out of 100"
+        "out": "Grade: 3+"
       }
     ]
   },
@@ -1900,7 +1908,7 @@
     "brief": {
       "task": "A newcomer in retail needs to get up to speed on procedures and the range quickly, while a human mentor is busy and the documents are long.",
       "did": [
-        "Hybrid search aware of the role: a storekeeper and a salesperson get their own answers",
+        "Hybrid search aware of the role: a storekeeper and a cashier get their own answers",
         "A first-week program, courses with tests and a trainer of work situations",
         "A training specialist's panel: a question without an answer becomes part of the base"
       ],
@@ -1916,7 +1924,7 @@
         "steps": [
           {
             "text": "role",
-            "note": "salesperson"
+            "note": "cashier"
           },
           {
             "text": "search by meaning",
@@ -2103,7 +2111,7 @@
     "brief": {
       "task": "Mini-games with prizes in Telegram group chats.",
       "did": [
-        "Games on built-in emoji: slot, dice, bowling, darts, ball",
+        "Games on built-in emoji: slot, dice, bowling, darts, basketball",
         "A counter of the day’s wins and prize tables",
         "A request to the admin about a new winner"
       ],
@@ -2171,6 +2179,379 @@
           "price-list.pdf",
           "procedure.docx",
           "notes.txt"
+        ]
+      }
+    ]
+  },
+  "garden-td": {
+    "brief": {
+      "task": "A game for Yandex Games needed its own world, characters and interface that read on a small phone screen.",
+      "did": [
+        "A Figma layout: screens, a design system and the battle HUD",
+        "Heroes, hybrids, enemies and bosses by suit and rarity",
+        "The Gardener with looks and weapons, chapter backgrounds, icons"
+      ],
+      "result": "Screens and characters share one style, and the game was checked against the layout screen by screen.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "section": 0,
+        "title": "Battle",
+        "items": [
+          {
+            "shot": 0,
+            "title": "Chapter 1: Nightingale the Robber enters"
+          },
+          {
+            "shot": 1,
+            "title": "Chapter 1: the fight with Nightingale the Robber"
+          },
+          {
+            "shot": 2,
+            "title": "Chapter 1: wave 10"
+          },
+          {
+            "shot": 3,
+            "title": "Chapter 2, the swamp: Gorynych's fire stream"
+          },
+          {
+            "shot": 4,
+            "title": "Chapter 3, Koschei's forest: wave 10"
+          },
+          {
+            "shot": 5,
+            "title": "Chapter 4: the boss Baba Metelitsa"
+          },
+          {
+            "shot": 6,
+            "title": "Chapter 4: a volley from the heroes"
+          },
+          {
+            "shot": 7,
+            "title": "Chapter 5: wave 10"
+          },
+          {
+            "shot": 8,
+            "title": "Chapter 6: Gorynych's fire"
+          },
+          {
+            "shot": 9,
+            "title": "Chapter 1: heroes merge"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Heroes",
+        "items": [
+          {
+            "shot": 10,
+            "title": "Common and rare"
+          },
+          {
+            "shot": 11,
+            "title": "Rare and legendary"
+          },
+          {
+            "shot": 12,
+            "title": "Legendary and mythical"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Ranks",
+        "items": [
+          {
+            "shot": 13,
+            "title": "A rank-one hero and the same hero at rank four"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Hybrids",
+        "items": [
+          {
+            "shot": 14,
+            "title": "Fairy-tale characters made from two heroes"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 2,
+        "title": "Enemies and bosses",
+        "items": [
+          {
+            "shot": 15,
+            "title": "Regular, flying, elites and chapter bosses"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "The Gardener",
+        "items": [
+          {
+            "shot": 16,
+            "title": "Looks and weapons of the main character"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones-2",
+        "section": 1,
+        "title": "The Figma layout",
+        "items": [
+          {
+            "shot": 17,
+            "title": "The title screen"
+          },
+          {
+            "shot": 18,
+            "title": "A plant card"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "title": "The rest of the layout",
+        "items": [
+          {
+            "shot": 19,
+            "title": "Home, the Battle tab"
+          },
+          {
+            "shot": 20,
+            "title": "Chapter select"
+          },
+          {
+            "shot": 21,
+            "title": "Level card"
+          },
+          {
+            "shot": 22,
+            "title": "Battle"
+          },
+          {
+            "shot": 23,
+            "title": "Battle: wave, elite, boss"
+          },
+          {
+            "shot": 24,
+            "title": "Spell choice"
+          },
+          {
+            "shot": 25,
+            "title": "Victory"
+          },
+          {
+            "shot": 26,
+            "title": "Summon"
+          },
+          {
+            "shot": 27,
+            "title": "Summon result"
+          },
+          {
+            "shot": 28,
+            "title": "Modes"
+          },
+          {
+            "shot": 29,
+            "title": "The Gardener"
+          },
+          {
+            "shot": 30,
+            "title": "The fair"
+          },
+          {
+            "shot": 31,
+            "title": "Hero, look"
+          }
+        ]
+      }
+    ]
+  },
+  "prosoft": {
+    "brief": {
+      "task": "A 1C integrator's site had to explain in a minute what a visitor needs and lead to a request for a diagnostic.",
+      "did": [
+        "Grid, a design system with variables and components",
+        "Desktop pages, quiz states and mobile versions",
+        "Tool screens instead of decoration and a prototype in Figma"
+      ],
+      "result": "The layout and prototype are built, approval with the client is under way. The site itself is developed separately.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "The stage ribbon",
+        "items": [
+          {
+            "shot": 0,
+            "title": "Term, result and payment condition of a stage in one table"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 2,
+        "title": "Choosing a situation and an ERP or KA",
+        "items": [
+          {
+            "shot": 1,
+            "title": "\"Do you recognise yourself?\": situation and what we do"
+          },
+          {
+            "shot": 3,
+            "title": "Three questions and a comparison of configurations"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "What the client gets",
+        "items": [
+          {
+            "shot": 2,
+            "title": "A sample diagnostic report, conditional data"
+          },
+          {
+            "shot": 6,
+            "title": "A base audit: a sample report, conditional data"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Quiz",
+        "items": [
+          {
+            "shot": 4,
+            "title": "A five-question quiz, step two"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "narrow",
+        "title": "Phone",
+        "items": [
+          {
+            "shot": 5,
+            "title": "Home, choice of situation and stage ribbon on mobile components"
+          }
+        ]
+      }
+    ]
+  },
+  "svarka-3d": {
+    "brief": {
+      "task": "Welding equipment stores needed their own 3D graphics for their sites: illustrations, loops and a film.",
+      "did": [
+        "Svarnoy 52: a film from the site layout, a service centre illustration and the About mask",
+        "Svarprom NN: a model of the ATIG 210PAC machine for the first screen",
+        "Blender, Cycles and Remotion, at the resolution the site needs"
+      ],
+      "result": "Each store has its own scene. The two companies' sites stay separate.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "reel",
+        "section": 0,
+        "title": "Svarnoy 52: the Welding 3D film",
+        "items": [
+          {
+            "shot": 0,
+            "title": "Cutting the home page"
+          },
+          {
+            "shot": 1,
+            "title": "The new home page"
+          },
+          {
+            "shot": 2,
+            "title": "About"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "art",
+        "section": 1,
+        "title": "Svarnoy 52: service centre",
+        "items": [
+          {
+            "shot": 3,
+            "title": "A cutaway workshop, render 4480×3840"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "title": "Svarnoy 52: render details",
+        "items": [
+          {
+            "shot": 4,
+            "title": "A machine and a multimeter"
+          },
+          {
+            "shot": 5,
+            "title": "A pegboard with tools"
+          },
+          {
+            "shot": 6,
+            "title": "A machine in the queue"
+          }
+        ]
+      },
+      {
+        "kind": "compare",
+        "section": 2,
+        "title": "Svarnoy 52: before and after",
+        "a": "before",
+        "b": "after",
+        "pairs": [
+          {
+            "a": 7,
+            "b": 8,
+            "label": "service centre"
+          },
+          {
+            "a": 9,
+            "b": 10,
+            "label": "mask"
+          }
+        ]
+      },
+      {
+        "kind": "reel",
+        "section": 3,
+        "title": "Svarprom NN: a machine for the first screen",
+        "items": [
+          {
+            "shot": 11,
+            "title": "Loop with an 8° sway"
+          }
         ]
       }
     ]

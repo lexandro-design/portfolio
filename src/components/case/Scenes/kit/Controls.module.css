@@ -1,0 +1,142 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ctl {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border: 1px solid var(--border-hair);
+  background: none;
+  font-size: 14px;
+  color: var(--fg-primary);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-fast) var(--ease-out-quart);
+}
+
+.ctl[data-wide] {
+  inline-size: 52px;
+}
+
+.ctl:hover:not(:disabled) {
+  border-color: var(--border-hover);
+}
+
+.ctl:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.ctl:disabled {
+  color: var(--fg-tertiary);
+  cursor: default;
+}
+
+.ctl:focus-visible,
+.track button:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.track {
+  display: flex;
+  flex: 1;
+  gap: 3px;
+  min-inline-size: 0;
+  margin-inline: 10px;
+  list-style: none;
+}
+
+.track li {
+  flex-basis: 0;
+  min-inline-size: 0;
+}
+
+.track button {
+  display: block;
+  inline-size: 100%;
+  padding-block: 18px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.track i {
+  position: relative;
+  display: block;
+  block-size: 3px;
+  overflow: hidden;
+  background-color: var(--border-hover);
+  transition: transform var(--dur-base) var(--ease-out-quart);
+}
+
+.track button:hover i {
+  transform: scaleY(1.7);
+}
+
+/* Заливка шага через scaleX: плавно и без перерисовки раскладки */
+.track i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--fg-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation-duration: inherit;
+  transition: transform var(--dur-base) var(--ease-out-quart);
+}
+
+.track button[data-done] i::after,
+.track button[aria-current] i::after {
+  transform: scaleX(1);
+}
+
+.track i[data-run]::after {
+  animation: seg linear both;
+  animation-duration: inherit;
+}
+
+@keyframes seg {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.time {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-tertiary);
+}
+
+@media (max-width: 1023px) {
+  .time {
+    display: none;
+  }
+
+  .track {
+    margin-inline: 8px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctl,
+  .track i,
+  .track i::after {
+    transition: none;
+  }
+
+  .track i[data-run]::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

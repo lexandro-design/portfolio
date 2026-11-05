@@ -244,11 +244,9 @@
         "footer": "demo interface from the sandbox"
       }
     },
-    "xray": {
-      "title": "X-ray of this page",
-      "lead": "Turn it on and scroll: sections get their component names, a grid appears, and the cursor shows the component, size and font of any element.",
-      "on": "turn on x-ray",
-      "off": "turn off x-ray",
+    "stack": {
+      "title": "What this site is built from",
+      "lead": "The stack layers and numbers come from the site's own data.",
       "layers": [
         {
           "title": "Hosting",
@@ -342,7 +340,7 @@
       {
         "when": "since 2024",
         "title": "Freelance and own products",
-        "text": "Websites, bots and AI assistants for businesses. My own product, MiMiMi AI, has 3,000+ users."
+        "text": "Websites, bots and AI assistants for businesses, among them the MiMiMi AI bot built for a client."
       },
       {
         "when": "2024",
@@ -361,8 +359,8 @@
     },
     "facts": [
       {
-        "v": "3000+",
-        "l": "MiMiMi AI users"
+        "v": "16",
+        "l": "bots and automations among the cases"
       },
       {
         "v": "450+",
