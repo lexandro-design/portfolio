@@ -20,7 +20,13 @@ export function Frames({ block, shots }: Props) {
         return (
           <li key={it.shot} className={styles.item}>
             <figure className={styles.fig}>
-              <div className={styles.media} style={{ maxInlineSize: `${s.w}px` }}>
+              <div
+                className={styles.media}
+                style={{ maxInlineSize: `${s.w}px` }}
+                {...(block.variant === 'one'
+                  ? { tabIndex: 0, role: 'group', 'aria-label': it.title }
+                  : {})}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
                 <img
                   src={asset(s.src)}

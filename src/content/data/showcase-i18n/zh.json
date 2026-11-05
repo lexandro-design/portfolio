@@ -2183,6 +2183,207 @@
       }
     ]
   },
+  "garden-td": {
+    "brief": {
+      "task": "一款面向 Yandex Games 的游戏，需要属于自己的世界、角色和界面，并且在手机小屏幕上依然清晰。",
+      "did": [
+        "Figma 设计稿：画面、设计系统和战斗 HUD",
+        "按属性与稀有度划分的英雄、混合英雄、敌人和首领",
+        "带外观与武器的园丁、章节背景和图标"
+      ],
+      "result": "画面与角色风格统一，游戏已逐屏与设计稿核对。",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "section": 0,
+        "title": "战斗",
+        "items": [
+          {
+            "shot": 0,
+            "title": "第 1 章：夜莺强盗登场"
+          },
+          {
+            "shot": 1,
+            "title": "第 1 章：对战夜莺强盗"
+          },
+          {
+            "shot": 2,
+            "title": "第 1 章：“寒霜！”闪光"
+          },
+          {
+            "shot": 3,
+            "title": "第 2 章 沼泽：戈里尼奇的火焰喷射"
+          },
+          {
+            "shot": 4,
+            "title": "第 3 章 科舍伊森林：“寒霜！”闪光"
+          },
+          {
+            "shot": 5,
+            "title": "第 4 章：首领暴雪婆婆"
+          },
+          {
+            "shot": 6,
+            "title": "第 4 章：英雄齐射"
+          },
+          {
+            "shot": 7,
+            "title": "第 5 章：“寒霜！”闪光"
+          },
+          {
+            "shot": 8,
+            "title": "第 6 章：戈里尼奇之火"
+          },
+          {
+            "shot": 9,
+            "title": "第 1 章：英雄合成"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "英雄",
+        "items": [
+          {
+            "shot": 10,
+            "title": "普通与稀有"
+          },
+          {
+            "shot": 11,
+            "title": "稀有与传说"
+          },
+          {
+            "shot": 12,
+            "title": "传说与神话级"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "阶级",
+        "items": [
+          {
+            "shot": 13,
+            "title": "一阶英雄与四阶的同一位英雄"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "混合英雄",
+        "items": [
+          {
+            "shot": 14,
+            "title": "由两位英雄融合的童话角色"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 2,
+        "title": "敌人与首领",
+        "items": [
+          {
+            "shot": 15,
+            "title": "普通、飞行、精英与章节首领"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "园丁",
+        "items": [
+          {
+            "shot": 16,
+            "title": "主角的外观与武器"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones-2",
+        "section": 1,
+        "title": "Figma 设计稿",
+        "items": [
+          {
+            "shot": 17,
+            "title": "标题画面"
+          },
+          {
+            "shot": 18,
+            "title": "植物卡片"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "title": "其余设计稿画面",
+        "items": [
+          {
+            "shot": 19,
+            "title": "首页，“战斗”标签"
+          },
+          {
+            "shot": 20,
+            "title": "章节选择"
+          },
+          {
+            "shot": 21,
+            "title": "关卡卡片"
+          },
+          {
+            "shot": 22,
+            "title": "战斗"
+          },
+          {
+            "shot": 23,
+            "title": "战斗：波次、精英、首领"
+          },
+          {
+            "shot": 24,
+            "title": "咒语选择"
+          },
+          {
+            "shot": 25,
+            "title": "胜利"
+          },
+          {
+            "shot": 26,
+            "title": "召唤"
+          },
+          {
+            "shot": 27,
+            "title": "召唤结果"
+          },
+          {
+            "shot": 28,
+            "title": "模式"
+          },
+          {
+            "shot": 29,
+            "title": "园丁"
+          },
+          {
+            "shot": 30,
+            "title": "集市"
+          },
+          {
+            "shot": 31,
+            "title": "英雄外观"
+          }
+        ]
+      }
+    ]
+  },
   "prosoft": {
     "brief": {
       "task": "1C 集成商的网站要在一分钟内让访客明白自己需要什么，并引导到诊断申请。",
@@ -2232,7 +2433,7 @@
             "title": "诊断报告样例，数据为示意"
           },
           {
-            "shot": 8,
+            "shot": 6,
             "title": "数据库审计：报告样例，数据为示意"
           }
         ]
@@ -2240,19 +2441,11 @@
       {
         "kind": "frames",
         "variant": "one",
-        "title": "流程地图与问卷",
+        "title": "问卷",
         "items": [
           {
             "shot": 4,
-            "title": "流程地图：环节与子系统"
-          },
-          {
-            "shot": 5,
             "title": "五个问题的问卷，第二步"
-          },
-          {
-            "shot": 6,
-            "title": "问卷结果：方案与申请表单"
           }
         ]
       },
@@ -2262,8 +2455,102 @@
         "title": "手机",
         "items": [
           {
-            "shot": 7,
+            "shot": 5,
             "title": "移动组件上的首页、情境选择和阶段条"
+          }
+        ]
+      }
+    ]
+  },
+  "svarka-3d": {
+    "brief": {
+      "task": "焊接设备商店需要为网站准备自己的 3D 图形：插画、循环动画和视频。",
+      "did": [
+        "Svarnoy 52：基于网站设计稿的视频、服务中心插画和“关于公司”面罩",
+        "Svarprom NN：用于首屏的 ATIG 210PAC 焊机模型",
+        "Blender、Cycles 和 Remotion，分辨率满足网站需要"
+      ],
+      "result": "每家商店都有自己的场景。两家公司的网站保持独立。",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "reel",
+        "section": 0,
+        "title": "Svarnoy 52：视频“Welding 3D”",
+        "items": [
+          {
+            "shot": 0,
+            "title": "切割首页"
+          },
+          {
+            "shot": 1,
+            "title": "新首页"
+          },
+          {
+            "shot": 2,
+            "title": "关于公司"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "art",
+        "section": 1,
+        "title": "Svarnoy 52：服务中心",
+        "items": [
+          {
+            "shot": 3,
+            "title": "剖面式工作间，渲染 4480×3840"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "title": "Svarnoy 52：渲染细节",
+        "items": [
+          {
+            "shot": 4,
+            "title": "焊机与万用表"
+          },
+          {
+            "shot": 5,
+            "title": "挂着工具的洞洞板"
+          },
+          {
+            "shot": 6,
+            "title": "排队的焊机"
+          }
+        ]
+      },
+      {
+        "kind": "compare",
+        "section": 2,
+        "title": "Svarnoy 52：之前与之后",
+        "a": "之前",
+        "b": "之后",
+        "pairs": [
+          {
+            "a": 7,
+            "b": 8,
+            "label": "服务中心"
+          },
+          {
+            "a": 9,
+            "b": 10,
+            "label": "面罩"
+          }
+        ]
+      },
+      {
+        "kind": "reel",
+        "section": 3,
+        "title": "Svarprom NN：首屏用的焊机",
+        "items": [
+          {
+            "shot": 11,
+            "title": "摆动 8° 的循环动画"
           }
         ]
       }

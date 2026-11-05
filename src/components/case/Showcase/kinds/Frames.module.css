@@ -43,6 +43,10 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.root[data-variant='three'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 /* Узкий кадр (три экрана телефона на одном листе): не шире 960 px, по центру */
 .root[data-variant='narrow'] {
   inline-size: min(100%, 960px);
@@ -83,6 +87,25 @@
   font-size: var(--type-body-sm);
 }
 
+/* Два крупных экрана Figma: по центру, не шире 800 px */
+.root[data-variant='phones-2'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  inline-size: min(100%, 800px);
+  margin-inline: auto;
+  gap: var(--space-lg) var(--space-md);
+}
+
+.root[data-variant='phones-2'] .media {
+  padding: 6px;
+  border-color: var(--border-hair);
+  background: #0b0b0c;
+  box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.7);
+}
+
+.root[data-variant='phones-2'] .fig {
+  justify-items: stretch;
+}
+
 /* Три экрана в ряд: крупнее, чем пять */
 .root[data-variant='phones-3'] {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -106,12 +129,28 @@
 }
 
 @media (max-width: 767px) {
-  .root[data-variant='two'] {
+  /* Широкий экран на телефоне не сжимается до нечитаемого: кадр шире окна, его листают пальцем вбок */
+  .root[data-variant='one'] .media {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .root[data-variant='one'] .img {
+    inline-size: max(100%, 880px);
+    max-inline-size: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .root[data-variant='two'],
+  .root[data-variant='three'] {
     grid-template-columns: minmax(0, 1fr);
   }
 
   .root[data-variant='phones'],
-  .root[data-variant='phones-3'] {
+  .root[data-variant='phones-3'],
+  .root[data-variant='phones-2'] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-md) var(--space-sm);
   }

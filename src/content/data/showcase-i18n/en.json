@@ -2183,6 +2183,207 @@
       }
     ]
   },
+  "garden-td": {
+    "brief": {
+      "task": "A game for Yandex Games needed its own world, characters and interface that read on a small phone screen.",
+      "did": [
+        "A Figma layout: screens, a design system and the battle HUD",
+        "Heroes, hybrids, enemies and bosses by suit and rarity",
+        "The Gardener with looks and weapons, chapter backgrounds, icons"
+      ],
+      "result": "Screens and characters share one style, and the game was checked against the layout screen by screen.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "section": 0,
+        "title": "Battle",
+        "items": [
+          {
+            "shot": 0,
+            "title": "Chapter 1: Nightingale the Robber enters"
+          },
+          {
+            "shot": 1,
+            "title": "Chapter 1: the fight with Nightingale the Robber"
+          },
+          {
+            "shot": 2,
+            "title": "Chapter 1: the Frost! flash"
+          },
+          {
+            "shot": 3,
+            "title": "Chapter 2, the swamp: Gorynych's fire stream"
+          },
+          {
+            "shot": 4,
+            "title": "Chapter 3, Koschei's forest: the Frost! flash"
+          },
+          {
+            "shot": 5,
+            "title": "Chapter 4: the boss Baba Metelitsa"
+          },
+          {
+            "shot": 6,
+            "title": "Chapter 4: a volley from the heroes"
+          },
+          {
+            "shot": 7,
+            "title": "Chapter 5: the Frost! flash"
+          },
+          {
+            "shot": 8,
+            "title": "Chapter 6: Gorynych's fire"
+          },
+          {
+            "shot": 9,
+            "title": "Chapter 1: heroes merge"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Heroes",
+        "items": [
+          {
+            "shot": 10,
+            "title": "Common and rare"
+          },
+          {
+            "shot": 11,
+            "title": "Rare and legendary"
+          },
+          {
+            "shot": 12,
+            "title": "Legendary and mythical"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Ranks",
+        "items": [
+          {
+            "shot": 13,
+            "title": "A rank-one hero and the same hero at rank four"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Hybrids",
+        "items": [
+          {
+            "shot": 14,
+            "title": "Fairy-tale characters made from two heroes"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 2,
+        "title": "Enemies and bosses",
+        "items": [
+          {
+            "shot": 15,
+            "title": "Regular, flying, elites and chapter bosses"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "The Gardener",
+        "items": [
+          {
+            "shot": 16,
+            "title": "Looks and weapons of the main character"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones-2",
+        "section": 1,
+        "title": "The Figma layout",
+        "items": [
+          {
+            "shot": 17,
+            "title": "The title screen"
+          },
+          {
+            "shot": 18,
+            "title": "A plant card"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "title": "The rest of the layout",
+        "items": [
+          {
+            "shot": 19,
+            "title": "Home, the Battle tab"
+          },
+          {
+            "shot": 20,
+            "title": "Chapter select"
+          },
+          {
+            "shot": 21,
+            "title": "Level card"
+          },
+          {
+            "shot": 22,
+            "title": "Battle"
+          },
+          {
+            "shot": 23,
+            "title": "Battle: wave, elite, boss"
+          },
+          {
+            "shot": 24,
+            "title": "Spell choice"
+          },
+          {
+            "shot": 25,
+            "title": "Victory"
+          },
+          {
+            "shot": 26,
+            "title": "Summon"
+          },
+          {
+            "shot": 27,
+            "title": "Summon result"
+          },
+          {
+            "shot": 28,
+            "title": "Modes"
+          },
+          {
+            "shot": 29,
+            "title": "The Gardener"
+          },
+          {
+            "shot": 30,
+            "title": "The fair"
+          },
+          {
+            "shot": 31,
+            "title": "Hero, look"
+          }
+        ]
+      }
+    ]
+  },
   "prosoft": {
     "brief": {
       "task": "A 1C integrator's site had to explain in a minute what a visitor needs and lead to a request for a diagnostic.",
@@ -2232,7 +2433,7 @@
             "title": "A sample diagnostic report, conditional data"
           },
           {
-            "shot": 8,
+            "shot": 6,
             "title": "A base audit: a sample report, conditional data"
           }
         ]
@@ -2240,19 +2441,11 @@
       {
         "kind": "frames",
         "variant": "one",
-        "title": "Process map and quiz",
+        "title": "Quiz",
         "items": [
           {
             "shot": 4,
-            "title": "A process map: area and subsystem"
-          },
-          {
-            "shot": 5,
             "title": "A five-question quiz, step two"
-          },
-          {
-            "shot": 6,
-            "title": "Quiz result: a scenario and a request form"
           }
         ]
       },
@@ -2262,8 +2455,102 @@
         "title": "Phone",
         "items": [
           {
-            "shot": 7,
+            "shot": 5,
             "title": "Home, choice of situation and stage ribbon on mobile components"
+          }
+        ]
+      }
+    ]
+  },
+  "svarka-3d": {
+    "brief": {
+      "task": "Welding equipment stores needed their own 3D graphics for their sites: illustrations, loops and a film.",
+      "did": [
+        "Svarnoy 52: a film from the site layout, a service centre illustration and the About mask",
+        "Svarprom NN: a model of the ATIG 210PAC machine for the first screen",
+        "Blender, Cycles and Remotion, at the resolution the site needs"
+      ],
+      "result": "Each store has its own scene. The two companies' sites stay separate.",
+      "nums": []
+    },
+    "blocks": [
+      {
+        "kind": "reel",
+        "section": 0,
+        "title": "Svarnoy 52: the Welding 3D film",
+        "items": [
+          {
+            "shot": 0,
+            "title": "Cutting the home page"
+          },
+          {
+            "shot": 1,
+            "title": "The new home page"
+          },
+          {
+            "shot": 2,
+            "title": "About"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "art",
+        "section": 1,
+        "title": "Svarnoy 52: service centre",
+        "items": [
+          {
+            "shot": 3,
+            "title": "A cutaway workshop, render 4480×3840"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "title": "Svarnoy 52: render details",
+        "items": [
+          {
+            "shot": 4,
+            "title": "A machine and a multimeter"
+          },
+          {
+            "shot": 5,
+            "title": "A pegboard with tools"
+          },
+          {
+            "shot": 6,
+            "title": "A machine in the queue"
+          }
+        ]
+      },
+      {
+        "kind": "compare",
+        "section": 2,
+        "title": "Svarnoy 52: before and after",
+        "a": "before",
+        "b": "after",
+        "pairs": [
+          {
+            "a": 7,
+            "b": 8,
+            "label": "service centre"
+          },
+          {
+            "a": 9,
+            "b": 10,
+            "label": "mask"
+          }
+        ]
+      },
+      {
+        "kind": "reel",
+        "section": 3,
+        "title": "Svarprom NN: a machine for the first screen",
+        "items": [
+          {
+            "shot": 11,
+            "title": "Loop with an 8° sway"
           }
         ]
       }
