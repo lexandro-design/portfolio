@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { asset } from '@/lib/asset'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Reveal, Title, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Title, Typing, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
 type Tile = { id: string; src: string; you: string }
 type Data = {
-  chat: { title: string; sub: string }
+  chat: { title: string; sub: string; typing: string }
   wall: { title: string; note: string }
   tiles: Tile[]
   cols: string[][]
@@ -28,7 +28,13 @@ type Data = {
 type State = 'idle' | 'look' | 'pick' | 'gen' | 'you'
 
 /** Шаги: старт, листание, выбор, селфи, генерация, готовый кадр, меню. Последний держится */
-const SPANS = [3400, 3000, 3600, 3600, 3800, 4200, 4400]
+const SPANS = [3400, 3000, 3600, 3600, 4000, 4200, 4400]
+
+/** Метки внутри шага, мс: «печатает» гаснет, ответ, продолжение, нажатие кнопки */
+const MARKS = [700, 900, 1800, 2400]
+
+/** Условное время сообщений: идёт вперёд по сценарию */
+const CLOCK = ['12:04', '12:04', '12:05', '12:05', '12:06', '12:08', '12:09']
 
 /** Какой плитке стены что происходит на каком шаге */
 function stateOf(id: string, step: number): State {
@@ -59,36 +65,20 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const { step } = play
   const byId = Object.fromEntries(d.tiles.map((x) => [x.id, x])) as Record<string, Tile>
 
-  // Нажатие кнопки в середине шага: пока не прошло время, кнопка не подсвечена
-  const [pressedAt, setPressedAt] = useState(-1)
+  // Внутри шага: набор бота, ответ, продолжение, нажатие кнопки. Пауза и reduced-motion показывают итог
+  const [ph, setPh] = useState({ step: -1, n: 0 })
   useEffect(() => {
-    if (!play.inView) return
-    const id = window.setTimeout(() => setPressedAt(step), 1500)
-    return () => window.clearTimeout(id)
-  }, [step, play.inView])
-  const late = pressedAt === step || play.stopped
-
-  // Высота чата по содержимому: считаем ленту и плавно подгоняем окно
-  const phoneRef = useRef<HTMLDivElement>(null)
-  const [chatH, setChatH] = useState<number | undefined>(undefined)
-  useEffect(() => {
-    const measure = () => {
-      const feed = phoneRef.current?.querySelector('ol')
-      if (!feed) return
-      const kids = Array.from(feed.children) as HTMLElement[]
-      const body = kids.reduce((n, k) => n + k.offsetHeight, 0) + Math.max(0, kids.length - 1) * 8
-      const pad = parseFloat(getComputedStyle(feed).paddingBlockStart) * 2
-      setChatH(Math.round(Math.min(660, Math.max(340, body + pad + 52))))
-    }
-    const raf = window.requestAnimationFrame(measure)
-    const late = window.setTimeout(measure, 350)
-    window.addEventListener('resize', measure)
-    return () => {
-      window.cancelAnimationFrame(raf)
-      window.clearTimeout(late)
-      window.removeEventListener('resize', measure)
-    }
-  }, [step])
+    if (!play.inView || play.stopped) return
+    const ids = MARKS.map((ms, i) => window.setTimeout(() => setPh({ step, n: i + 1 }), ms))
+    return () => ids.forEach((id) => window.clearTimeout(id))
+  }, [step, play.inView, play.stopped])
+  const n = play.stopped ? MARKS.length : ph.step === step ? ph.n : 0
+  const quiet = step === 1
+  const typing = !quiet && n < 2
+  const leaving = n === 1
+  const reply = quiet || n >= 2
+  const follow = n >= 3
+  const press = n >= 4 ? 0 : undefined
 
   const side = [d.cols[0], d.cols[1], d.cols[2], d.cols[3]]
   const filler = [
@@ -140,61 +130,89 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             ))}
           </div>
 
-          <div ref={phoneRef} className={styles.phone}>
-            <Chat title={d.chat.title} sub={d.chat.sub} avatar="M" live={play.playing} className={styles.chat} style={chatH ? { blockSize: chatH } : undefined}>
+          <div className={styles.phone}>
+            <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar="M" live={play.playing} fit minHeight={160} className={styles.chat}>
               {step <= 1 && (
                 <>
-                  <Msg side="out">{d.start.cmd}</Msg>
-                  <Msg side="in" className={styles.wide}>
-                    <Pic key={carousel.id} src={carousel.src} />
-                    {d.start.text}
-                    <Keys items={d.start.keys} />
+                  <Msg side="out" time={CLOCK[0]} status={reply ? 'read' : 'sent'}>
+                    {d.start.cmd}
                   </Msg>
+                  {typing && <Typing leaving={leaving} delay={300} />}
+                  {reply && (
+                    <Msg side="in" time={CLOCK[1]} className={styles.wide}>
+                      <Pic key={carousel.id} src={carousel.src} />
+                      {d.start.text}
+                      <Keys items={d.start.keys} pressed={step === 1 ? press : undefined} />
+                    </Msg>
+                  )}
                 </>
               )}
               {step === 2 && (
-                <Msg side="in" className={styles.wide}>
-                  <Pic src={byId.terrace.src} />
-                  {d.demo.text}
-                  <Keys items={d.demo.keys} pressed={late ? 0 : undefined} stack />
-                </Msg>
+                <>
+                  {typing && <Typing leaving={leaving} />}
+                  {reply && (
+                    <Msg side="in" time={CLOCK[2]} className={styles.wide}>
+                      <Pic src={byId.terrace.src} />
+                      {d.demo.text}
+                      <Keys items={d.demo.keys} pressed={press} stack />
+                    </Msg>
+                  )}
+                </>
               )}
               {step === 3 && (
                 <>
-                  <Msg side="in">
-                    {d.upload.text}
-                    <Keys items={d.upload.keys} pressed={late ? 0 : undefined} />
-                  </Msg>
-                  <Msg side="out" className={styles.selfies}>
-                    <span className={styles.shots}>
-                      {d.selfies.map((s, i) => (
-                        <Pic key={s} src={s} className={styles.selfie} style={{ animationDelay: `${i * 320}ms` }} />
-                      ))}
-                    </span>
-                    {d.upload.count}
-                  </Msg>
+                  {typing && <Typing leaving={leaving} />}
+                  {reply && (
+                    <Msg side="in" time={CLOCK[2]} tail={false}>
+                      {d.upload.text}
+                      <Keys items={d.upload.keys} pressed={press} />
+                    </Msg>
+                  )}
+                  {follow && (
+                    <Msg side="out" time={CLOCK[3]} status={press === 0 ? 'read' : 'sent'} className={styles.selfies}>
+                      <span className={styles.shots}>
+                        {d.selfies.map((x, i) => (
+                          <Pic key={x} src={x} className={styles.selfie} style={{ animationDelay: `${i * 320}ms` }} />
+                        ))}
+                      </span>
+                      {d.upload.count}
+                    </Msg>
+                  )}
                 </>
               )}
               {step === 4 && (
-                <Msg side="in">
-                  {d.gen.text}
-                  <span className={styles.bar} aria-hidden="true">
-                    <i style={{ animationDuration: `${SPANS[4]}ms` }} />
-                  </span>
-                </Msg>
+                <>
+                  {typing && <Typing leaving={leaving} />}
+                  {reply && (
+                    <Msg side="in" time={CLOCK[4]}>
+                      {d.gen.text}
+                      <Progress run={SPANS[4] - MARKS[1]} label={d.gen.eta} className={styles.prog} />
+                    </Msg>
+                  )}
+                </>
               )}
               {step === 5 && (
-                <Msg side="in" tone="ok" className={styles.wide}>
-                  <Pic src={byId.terrace.you} />
-                  {d.done.text}
-                  <Keys items={d.done.keys} pressed={late ? 0 : undefined} stack />
-                </Msg>
+                <>
+                  {typing && <Typing leaving={leaving} />}
+                  {reply && (
+                    <Msg side="in" tone="ok" time={CLOCK[5]} className={styles.wide}>
+                      <Pic src={byId.terrace.you} />
+                      {d.done.text}
+                      <Keys items={d.done.keys} pressed={press} stack />
+                    </Msg>
+                  )}
+                </>
               )}
               {step === 6 && (
-                <Msg side="in">
-                  {d.menu.text}
-                  <Keys items={d.menu.keys} pressed={late ? 2 : undefined} stack />
-                </Msg>
+                <>
+                  {typing && <Typing leaving={leaving} />}
+                  {reply && (
+                    <Msg side="in" time={CLOCK[6]}>
+                      {d.menu.text}
+                      <Keys items={d.menu.keys} pressed={n >= 4 ? 2 : undefined} stack />
+                    </Msg>
+                  )}
+                </>
               )}
             </Chat>
 
