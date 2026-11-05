@@ -2,7 +2,7 @@
 // а TypeScript его формы не проверяет (данные приводятся через `as`), поэтому
 // сломанная правка должна валить деплой здесь, пока на сайте остаётся старая версия.
 // Запуск: node tools/check-content.mjs
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 
 const root = new URL('../', import.meta.url)
 const read = (p) => JSON.parse(readFileSync(new URL(`src/content/data/${p}`, root), 'utf8'))
@@ -201,6 +201,30 @@ if (
   !accents.every((c) => /^#[0-9a-f]{6}$/i.test(c))
 ) {
   fail('site.sandbox', 'accents — непустой список цветов вида #aabbcc')
+}
+
+// Сцены кейсов (scenes/<slug>.json): у кейса из cases.json, не пустые, без тире и упоминаний
+// инструментов в текстах; перевод, если он есть, той же формы, что русский
+const sceneDir = new URL('src/content/data/scenes/', root)
+const sceneFiles = readdirSync(sceneDir).filter((f) => f.endsWith('.json'))
+const sceneCopy = Object.fromEntries(LOCALES.map((l) => [l, read(`scenes-i18n/${l}.json`)]))
+const BANNED = [/—/, /\bn8n\b/i, /claude/i, /openai|gpt|gemini|midjourney|flux/i]
+const walk = (v, where) => {
+  if (str(v)) {
+    for (const re of BANNED) if (re.test(v)) fail(where, `в тексте «${v.slice(0, 40)}» запрещённое: ${re}`)
+  } else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${where}[${i}]`))
+  else if (v && typeof v === 'object') for (const k of Object.keys(v)) walk(v[k], `${where}.${k}`)
+}
+for (const f of sceneFiles) {
+  const slug = f.replace(/\.json$/, '')
+  const s = read(`scenes/${f}`)
+  if (!slugs.has(slug)) fail(`scenes/${f}`, 'такого кейса нет в cases.json')
+  if (Object.keys(s).length === 0) continue
+  walk(s, `scenes/${slug}`)
+  for (const l of LOCALES) {
+    const tr = sceneCopy[l][slug]
+    if (tr) sameShape(s, tr, `scenes-i18n/${l}.${slug}`)
+  }
 }
 
 if (errors.length) {
