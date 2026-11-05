@@ -1,0 +1,338 @@
+/* Окно живёт поверх любой темы, поэтому цвета свои, а не токены: это кусочек космоса в светлом сайте */
+.dialog {
+  --sky-fg: #f5f5f2;
+  --sky-dim: #b4b4af;
+  --sky-line: rgb(245 245 242 / 0.16);
+  --sky-accent: #dddec7;
+  inline-size: min(480px, calc(100vw - 32px));
+  max-block-size: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--sky-line);
+  background: #000;
+  color: var(--sky-fg);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 0.72);
+}
+
+.dialog[open] {
+  animation: arrive var(--dur-slow) var(--ease-out-expo) both;
+}
+
+/* Звёзды: статичные точки градиентом, без холста и без скрипта */
+.card {
+  position: relative;
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  background:
+    radial-gradient(1px 1px at 12% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 27% 8%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 44% 24%, rgb(214 226 255 / 0.9), transparent),
+    radial-gradient(1px 1px at 58% 12%, rgb(255 255 255 / 0.5), transparent),
+    radial-gradient(1px 1px at 8% 44%, rgb(255 236 214 / 0.7), transparent),
+    radial-gradient(1px 1px at 36% 38%, rgb(255 255 255 / 0.4), transparent),
+    radial-gradient(1px 1px at 92% 52%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 96% 86%, rgb(214 226 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 72% 94%, rgb(255 255 255 / 0.4), transparent),
+    radial-gradient(1px 1px at 18% 92%, rgb(255 255 255 / 0.4), transparent);
+}
+
+/* Луна целиком на своей орбите, спутник идёт по кругу */
+.orbit {
+  position: relative;
+  justify-self: center;
+  inline-size: 196px;
+  block-size: 196px;
+  display: grid;
+  place-items: center;
+  margin-block-end: var(--space-2xs);
+  border: 1px solid var(--sky-line);
+  border-radius: 50%;
+}
+
+.orbit img {
+  display: block;
+  /* В кадре поле вокруг диска: край уходит в чёрный, лимб целый */
+  mask-image: radial-gradient(closest-side, #000 95%, transparent);
+}
+
+.orbit::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -3px;
+  inset-inline-start: calc(50% - 3px);
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: 50%;
+  background: var(--sky-accent);
+  transform-origin: 3px 101px;
+  animation: circle 14s linear infinite;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 450;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text {
+  font-size: var(--type-body);
+  line-height: 1.5;
+  color: var(--sky-fg);
+}
+
+.note {
+  font-size: var(--type-body-sm);
+  line-height: 1.5;
+  color: var(--sky-dim);
+}
+
+.never {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-block-size: 44px;
+  font-size: var(--type-body-sm);
+  color: var(--sky-dim);
+  cursor: pointer;
+}
+
+.never input {
+  inline-size: 18px;
+  block-size: 18px;
+  margin: 0;
+  accent-color: var(--sky-accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.primary,
+.ghost {
+  flex: 1 1 auto;
+  min-block-size: 44px;
+  padding-inline: 20px;
+  border: 1px solid var(--sky-line);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-base) var(--ease-out-quart),
+    border-color var(--dur-base) var(--ease-out-quart),
+    color var(--dur-base) var(--ease-out-quart);
+}
+
+.primary {
+  border-color: var(--sky-fg);
+  background: var(--sky-fg);
+  color: #000;
+}
+
+.primary:hover {
+  border-color: var(--sky-accent);
+  background: var(--sky-accent);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--sky-fg);
+}
+
+.ghost:hover {
+  border-color: rgb(245 245 242 / 0.4);
+}
+
+.primary:focus-visible,
+.ghost:focus-visible,
+.never input:focus-visible {
+  outline: 2px solid var(--sky-accent);
+  outline-offset: 2px;
+}
+
+/* Кнопка возврата: в обычном состоянии только значок в углу, подсказка разворачивает её рядом */
+.dock {
+  position: fixed;
+  inset-block-end: max(16px, env(safe-area-inset-bottom));
+  inset-inline-end: 16px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  max-inline-size: calc(100vw - 32px);
+}
+
+.dock[data-open] {
+  padding: 6px 6px 6px 16px;
+  border: 1px solid var(--border-hover);
+  background: #000;
+  animation: arrive var(--dur-slow) var(--ease-out-expo) both;
+}
+
+.warn {
+  font-size: var(--type-body-sm);
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  border: 1px solid var(--border-hair);
+  border-radius: 22px;
+  background: rgb(0 0 0 / 0.6);
+  color: var(--fg-secondary);
+  cursor: pointer;
+  transition:
+    color var(--dur-base) var(--ease-out-quart),
+    border-color var(--dur-base) var(--ease-out-quart);
+}
+
+.back:hover,
+.back:focus-visible {
+  border-color: var(--border-hover);
+  color: var(--fg-primary);
+}
+
+.back:focus-visible,
+.hide:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.backLabel {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.back:hover .backLabel,
+.back:focus-visible .backLabel,
+.dock[data-open] .backLabel {
+  display: inline;
+}
+
+.back:hover,
+.back:focus-visible,
+.dock[data-open] .back {
+  padding-inline: 14px;
+}
+
+.dock[data-open] .back {
+  border-color: var(--fg-primary);
+  border-radius: 0;
+  background: var(--fg-primary);
+  color: #000;
+}
+
+.hide {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  flex: none;
+  border: 0;
+  background: none;
+  color: var(--fg-tertiary);
+  cursor: pointer;
+}
+
+.hide:hover {
+  color: var(--fg-primary);
+}
+
+@media (hover: none) {
+  .back:hover .backLabel {
+    display: none;
+  }
+
+  .dock:not([data-open]) .back:hover {
+    padding-inline: 0;
+  }
+
+  .dock[data-open] .back .backLabel {
+    display: inline;
+  }
+}
+
+@media (max-width: 559px) {
+  .card {
+    padding: var(--space-md);
+  }
+
+  .orbit {
+    inline-size: 150px;
+    block-size: 150px;
+  }
+
+  .orbit::before {
+    transform-origin: 3px 78px;
+  }
+
+  .orbit img {
+    inline-size: 112px;
+    block-size: 112px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .dock[data-open] {
+    inset-inline: 16px;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .dock[data-open] .warn {
+    flex: 1 1 calc(100% - 52px);
+  }
+
+  .dock[data-open] .back {
+    flex: 1 1 auto;
+    order: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dock[data-open] {
+    animation: none;
+  }
+
+  .orbit::before {
+    animation: none;
+  }
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+
+@keyframes circle {
+  to {
+    rotate: 360deg;
+  }
+}

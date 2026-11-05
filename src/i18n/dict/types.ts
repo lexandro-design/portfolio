@@ -11,6 +11,20 @@ export type SectionCopy = { label: string; title: string; aside?: string }
 export type Dict = {
   meta: { title: string; description: string; caseTitle: string }
 
+  /** Окно перед темой Космос и кнопка возврата */
+  sky: {
+    title: string
+    text: string
+    note: string
+    enable: string
+    stay: string
+    never: string
+    lag: string
+    slow: string
+    back: string
+    hide: string
+  }
+
   nav: {
     services: string
     works: string

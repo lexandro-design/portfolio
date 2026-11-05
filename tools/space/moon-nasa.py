@@ -46,7 +46,7 @@ def save(a, name, q):
     print(name, a.shape[1], 'x', a.shape[0], os.path.getsize(p) // 1024, 'KB')
 
 
-for tag, W, Wn, q, sg, qn in (('', 6144, 3072, 70, 1.0, 64), ('-lo', 2048, 1024, 74, 0.7, 72)):
+for tag, W, Wn, q, sg, qn in (('', 6144, 3072, 70, 1.0, 64), ('-mid', 3072, 1536, 74, 1.0, 66), ('-lo', 2048, 1024, 74, 0.7, 72)):
     H, Hn = W // 2, Wn // 2
     c = col.resize((W, H), Image.LANCZOS)
     save(np.array(c), 'moon-albedo' + tag, q)
