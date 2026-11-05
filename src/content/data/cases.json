@@ -376,6 +376,12 @@
       "w": 1216,
       "h": 860,
       "video": "/cases/prosoft/thumb.mp4"
+    },
+    "card": {
+      "src": "/cases/prosoft/tile.jpg",
+      "caption": "",
+      "w": 1216,
+      "h": 860
     }
   },
   {
