@@ -413,20 +413,15 @@
 }
 
 .fields dt {
-  overflow: hidden;
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .fields dd {
-  overflow: hidden;
   font-size: 14px;
   color: var(--fg-primary);
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .card[data-dim] {
@@ -528,11 +523,8 @@
 
 .rows li b {
   min-inline-size: 0;
-  overflow: hidden;
   font-weight: 400;
   text-align: end;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .rows li[data-on] {
@@ -695,9 +687,7 @@
 }
 
 .sync li span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  min-inline-size: 0;
 }
 
 .sync li b {

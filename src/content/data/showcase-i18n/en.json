@@ -2386,23 +2386,78 @@
   },
   "prosoft": {
     "brief": {
-      "task": "A 1C integrator's site had to explain in a minute what a visitor needs and lead to a request for a diagnostic.",
+      "task": "A 1C integrator's site has to explain in a minute which job is yours and lead to a request for a diagnostic.",
       "did": [
-        "Grid, a design system with variables and components",
-        "Desktop pages, quiz states and mobile versions",
-        "Tool screens instead of decoration and a prototype in Figma"
+        "Eight pages, case screens, quiz states and mobile versions",
+        "A design system on variables and a Figma prototype",
+        "Seven 3D scenes on the first screens: models, light and animation in Blender"
       ],
-      "result": "The layout and prototype are built, approval with the client is under way. The site itself is developed separately.",
-      "nums": []
+      "result": "The layout, prototype and 3D are done, approval with the client is under way. Nika is building the site.",
+      "nums": [
+        {
+          "v": "8",
+          "l": "desktop pages"
+        },
+        {
+          "v": "7",
+          "l": "mobile versions"
+        },
+        {
+          "v": "7",
+          "l": "3D scenes"
+        }
+      ]
     },
     "blocks": [
       {
         "kind": "frames",
         "variant": "one",
-        "title": "The stage ribbon",
+        "title": "First screen",
         "items": [
           {
             "shot": 0,
+            "title": "Headline on the left, model on the right"
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "title": "Site pages",
+        "pages": [
+          {
+            "shot": 1,
+            "label": "Home"
+          },
+          {
+            "shot": 2,
+            "label": "Moving off UPP"
+          },
+          {
+            "shot": 3,
+            "label": "Diagnostic"
+          },
+          {
+            "shot": 4,
+            "label": "ERP and KA"
+          },
+          {
+            "shot": 5,
+            "label": "Custom work"
+          },
+          {
+            "shot": 6,
+            "label": "Support"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "section": 1,
+        "title": "The stage ribbon",
+        "items": [
+          {
+            "shot": 7,
             "title": "Term, result and payment condition of a stage in one table"
           }
         ]
@@ -2410,15 +2465,14 @@
       {
         "kind": "frames",
         "variant": "one",
-        "section": 2,
-        "title": "Choosing a situation and an ERP or KA",
+        "title": "Tools instead of decoration",
         "items": [
           {
-            "shot": 1,
-            "title": "\"Do you recognise yourself?\": situation and what we do"
+            "shot": 8,
+            "title": "“Sound familiar?”: the situation and what we do"
           },
           {
-            "shot": 3,
+            "shot": 9,
             "title": "Three questions and a comparison of configurations"
           }
         ]
@@ -2429,12 +2483,12 @@
         "title": "What the client gets",
         "items": [
           {
-            "shot": 2,
-            "title": "A sample diagnostic report, conditional data"
+            "shot": 10,
+            "title": "Sample diagnostic report, illustrative data"
           },
           {
-            "shot": 6,
-            "title": "A base audit: a sample report, conditional data"
+            "shot": 11,
+            "title": "Database audit: sample report, illustrative data"
           }
         ]
       },
@@ -2444,8 +2498,8 @@
         "title": "Quiz",
         "items": [
           {
-            "shot": 4,
-            "title": "A five-question quiz, step two"
+            "shot": 12,
+            "title": "Five-question quiz, step two"
           }
         ]
       },
@@ -2455,8 +2509,28 @@
         "title": "Phone",
         "items": [
           {
-            "shot": 5,
-            "title": "Home, choice of situation and stage ribbon on mobile components"
+            "shot": 13,
+            "title": "Mobile home screens on their own component variants"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "section": 3,
+        "title": "Design system",
+        "items": [
+          {
+            "shot": 14,
+            "title": "Semantic colours"
+          },
+          {
+            "shot": 15,
+            "title": "Buttons"
+          },
+          {
+            "shot": 16,
+            "title": "Scenario card"
           }
         ]
       }

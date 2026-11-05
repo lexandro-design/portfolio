@@ -311,7 +311,7 @@
         {
           "from": "17:40",
           "to": "20:40",
-          "label": "a day later"
+          "label": "next day"
         }
       ],
       "ticks": [
@@ -2791,5 +2791,58 @@
         "/attendance"
       ]
     }
+  },
+  "prosoft": {
+    "note": "Loops from the site layout. The site is in approval and in development.",
+    "credit": {
+      "role": "development by",
+      "name": "Nika",
+      "href": "https://github.com/zeawale",
+      "handle": "zeawale"
+    },
+    "pages": [
+      {
+        "id": "home",
+        "page": "Home",
+        "title": "The company mark",
+        "text": "Where the site begins: a white ring, an orange insert, a dark base."
+      },
+      {
+        "id": "upp",
+        "page": "Moving off UPP",
+        "title": "Old and new computer",
+        "text": "The move shown literally: a floppy with the data goes from the old machine to the new one."
+      },
+      {
+        "id": "diag",
+        "page": "Diagnostic",
+        "title": "Monitor with a scanner",
+        "text": "The scanner bar moves down the screen and marks with crosses what to check."
+      },
+      {
+        "id": "erp",
+        "page": "ERP and KA",
+        "title": "Factory and truck",
+        "text": "Manufacturing and retail on one model, like the company clients."
+      },
+      {
+        "id": "dev",
+        "page": "Custom work",
+        "title": "Database and integrations",
+        "text": "The database in the middle, outside systems and data exchange around it."
+      },
+      {
+        "id": "care",
+        "page": "Support",
+        "title": "Monitor and headset",
+        "text": "The system runs, support is on the line."
+      },
+      {
+        "id": "e404",
+        "page": "404",
+        "title": "Digits with the mark",
+        "text": "Even the error page stays in the same world."
+      }
+    ]
   }
 }

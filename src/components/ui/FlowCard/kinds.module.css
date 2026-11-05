@@ -246,7 +246,7 @@
 .deskName {
   overflow: hidden;
   font-size: clamp(11px, 3.1cqi, 15px);
-  line-height: 1.15;
+  line-height: 1.3;
   color: var(--fg-primary);
   white-space: nowrap;
   text-overflow: ellipsis;

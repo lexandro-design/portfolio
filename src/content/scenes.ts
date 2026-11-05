@@ -13,6 +13,7 @@ import mailToCrm from './data/scenes/mail-to-crm.json'
 import mediaToRag from './data/scenes/media-to-rag.json'
 import mimimibot from './data/scenes/mimimibot.json'
 import packagingBots from './data/scenes/packaging-bots.json'
+import prosoft from './data/scenes/prosoft.json'
 import ragMentor from './data/scenes/rag-mentor.json'
 import resortBot from './data/scenes/resort-bot.json'
 import salonBooking from './data/scenes/salon-booking.json'
@@ -39,6 +40,7 @@ const RU: Record<string, Data> = {
   'media-to-rag': mediaToRag,
   mimimibot,
   'packaging-bots': packagingBots,
+  prosoft,
   'rag-mentor': ragMentor,
   'resort-bot': resortBot,
   'salon-booking': salonBooking,
