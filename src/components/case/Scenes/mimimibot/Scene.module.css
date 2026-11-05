@@ -6,7 +6,7 @@
 .stage {
   --g: 16px;
   position: relative;
-  --chat-h: 720px;
+  --chat-h: 812px;
   min-block-size: calc(var(--chat-h) + 140px);
   margin-block-start: var(--space-xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) both;
@@ -414,7 +414,7 @@
 /* Планшет и телефон: стена превращается в ленту над чатом */
 @media (max-width: 1099px) {
   .stage {
-    --chat-h: 750px;
+    --chat-h: 842px;
     display: grid;
     gap: var(--space-md);
     justify-items: center;
@@ -468,7 +468,7 @@
 
 @media (max-width: 599px) {
   .stage {
-    --chat-h: 700px;
+    --chat-h: 792px;
     margin-block-start: var(--space-lg);
   }
 

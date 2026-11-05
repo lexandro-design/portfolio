@@ -17,7 +17,7 @@ type Data = {
   cols: string[][]
   tag: { look: string; pick: string; gen: string; you: string }
   selfies: string[]
-  start: { time: string; text: string[]; pager: string[]; keys: string[] }
+  start: { time: string; text: string[]; pager: string[]; keys: string[]; more: { row: string[]; keys: string[] } }
   demo: { text: string[]; pager: string[]; keys: string[] }
   upload: { text: string[]; keys: string[] }
   gen: { text: string[]; pager: string[]; eta: string }
@@ -169,7 +169,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                     </span>
                     <span className={styles.said}>{said(d.start.text)}</span>
                   </Msg>
-                  <Pad rows={[{ items: d.start.pager }, { items: d.start.keys, stack: true }]} />
+                  <Pad rows={[{ items: d.start.pager }, { items: d.start.keys, stack: true }, { items: d.start.more.row }, { items: d.start.more.keys, stack: true }]} />
                 </>
               )}
               {shown === 1 && (
