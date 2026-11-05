@@ -828,7 +828,7 @@
   },
   "team-reports": {
     "title": "WhatsApp reports into a table",
-    "tagline": "collection into a table",
+    "tagline": "raw material intake from chat",
     "lead": "Employees post raw material intake in a work WhatsApp group, the bot parses the messages and puts them into a table. Edits and deletions are picked up automatically, and once a month a summary is built.",
     "client": "freelance",
     "sections": [

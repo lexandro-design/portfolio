@@ -897,3 +897,12 @@
     animation: none;
   }
 }
+
+/* Шапка кейса: карточка широкая, таблица и карточка из плеера не должны теряться в ней */
+@container (min-inline-size: 520px) {
+  .mini[data-kind='sheet'],
+  .mini[data-kind='card'],
+  .mini[data-kind='die'] {
+    zoom: 1.2;
+  }
+}

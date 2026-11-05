@@ -828,7 +828,7 @@
   },
   "team-reports": {
     "title": "把 WhatsApp 报告录入表格",
-    "tagline": "汇总进表格",
+    "tagline": "工作群里的原料入库记录",
     "lead": "员工把原料验收情况发进工作用的 WhatsApp 群，机器人解析消息并录入表格。修改和删除会自动同步，每月生成一次汇总。",
     "client": "自由职业",
     "sections": [
