@@ -1,0 +1,422 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Сцена: стена шаблонов на всю ширину, чат стоит поверх неё по центру */
+.stage {
+  --g: 16px;
+  position: relative;
+  min-block-size: 720px;
+  margin-block-start: var(--space-xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+/* Стена: шесть колонок, средние две спрятаны под чатом. Колонки сдвинуты, как доска пинов */
+.wall {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--g);
+  align-items: start;
+}
+
+.col {
+  display: grid;
+  gap: var(--g);
+}
+
+.col[data-i='0'] {
+  margin-block-start: 56px;
+}
+
+.col[data-i='1'] {
+  margin-block-start: 8px;
+}
+
+.col[data-i='4'] {
+  margin-block-start: 40px;
+}
+
+.col[data-i='5'] {
+  margin-block-start: 0;
+}
+
+.col[data-hide] {
+  margin-block-start: 24px;
+  opacity: 0.35;
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--bg-subtle);
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  transition:
+    opacity var(--dur-slow) var(--ease-out-quart),
+    filter var(--dur-slow) var(--ease-out-quart),
+    outline-color var(--dur-base);
+}
+
+.tile[data-s='idle'] {
+  opacity: 0.5;
+  filter: saturate(0.7);
+}
+
+.tile[data-s='look'],
+.tile[data-s='pick'] {
+  outline-color: var(--case-color, var(--accent));
+}
+
+.tile[data-s='gen'] {
+  outline-color: var(--border-hover);
+}
+
+.tile[data-s='you'] {
+  outline-color: var(--signal-live);
+}
+
+.base,
+.you {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Готовый кадр открывается поверх шаблона снизу вверх */
+.you {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1100ms var(--ease-out-expo);
+}
+
+.tile[data-s='you'] .you {
+  clip-path: inset(0);
+}
+
+.tag {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  padding: 4px 8px;
+  background: var(--bg-base);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-primary);
+  animation: tagIn 400ms var(--ease-out-quart) both;
+}
+
+.tile[data-s='look'] .tag,
+.tile[data-s='pick'] .tag {
+  background: var(--case-color, var(--accent));
+  color: var(--fg-inverse);
+}
+
+@keyframes tagIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Генерация: затемнение, бегущая линия и полоса, которая идёт весь шаг */
+.gen {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--bg-base) 62%, transparent);
+}
+
+.gen b {
+  padding: 4px 8px;
+  background: var(--bg-base);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-primary);
+}
+
+.sweep {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 2px;
+  background: var(--case-color, var(--accent));
+  animation: sweep 1800ms linear infinite;
+}
+
+@keyframes sweep {
+  to {
+    transform: translateY(var(--sweep, 320px));
+  }
+}
+
+.fill {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 4px;
+  background: var(--case-color, var(--accent));
+  transform-origin: left;
+  animation: grow linear both;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0.04);
+  }
+}
+
+/* Чат поверх стены: ширина ровно в две колонки, под ним строка «внутри» */
+.phone {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 50%;
+  display: grid;
+  gap: 8px;
+  inline-size: max(320px, calc((100% - 5 * var(--g)) / 3 + var(--g)));
+  max-inline-size: 400px;
+  transform: translateX(-50%);
+}
+
+.chat {
+  block-size: 560px;
+  transition: block-size 600ms var(--ease-out-expo);
+}
+
+.pic {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 3 / 4;
+  margin-block-end: 10px;
+  object-fit: cover;
+  animation: swap 520ms var(--ease-out-expo) both;
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+
+.wide {
+  inline-size: min(268px, 84%);
+}
+
+.selfies {
+  max-inline-size: 70%;
+}
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-block-end: 8px;
+}
+
+.selfie {
+  inline-size: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  animation: swap 520ms var(--ease-out-expo) both;
+}
+
+.bar {
+  display: block;
+  inline-size: 100%;
+  block-size: 4px;
+  margin-block-start: 12px;
+  overflow: hidden;
+  background: var(--border-hair);
+}
+
+.bar i {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  background: var(--case-color, var(--accent));
+  transform-origin: left;
+  animation: grow linear both;
+}
+
+.dock {
+  display: grid;
+  gap: 8px;
+  min-block-size: 68px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  animation: tagIn 400ms var(--ease-out-quart) both;
+}
+
+.speed {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+}
+
+.speed li {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr) 4.5em;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-secondary);
+}
+
+.speed i {
+  block-size: 6px;
+  background: var(--border-hover);
+  transform-origin: left;
+  animation: grow 1200ms var(--ease-out-expo) 300ms both;
+}
+
+.speed li:last-child i {
+  background: var(--case-color, var(--accent));
+}
+
+.speed b {
+  font-weight: 400;
+  color: var(--fg-primary);
+  text-align: end;
+}
+
+/* Под сценой: подпись шага слева, панель справа */
+.under {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-xs) var(--space-3xl);
+  align-items: start;
+  margin-block-start: var(--space-lg);
+}
+
+.cap {
+  grid-row: 1 / 3;
+  font-size: var(--type-body-lg);
+}
+
+.notes {
+  display: grid;
+  gap: 2px;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+/* Планшет и телефон: стена превращается в ленту над чатом */
+@media (max-width: 1099px) {
+  .stage {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: center;
+    min-block-size: 0;
+  }
+
+  .wall {
+    position: static;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 8px;
+    inline-size: 100%;
+  }
+
+  .col {
+    display: contents;
+  }
+
+  .col[data-hide] {
+    display: none;
+  }
+
+  .col[data-i] .tile {
+    margin: 0;
+  }
+
+  .tile {
+    outline-offset: 2px;
+  }
+
+  .phone {
+    position: static;
+    inline-size: 100%;
+    max-inline-size: 440px;
+    transform: none;
+  }
+
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 599px) {
+  .stage {
+    margin-block-start: var(--space-lg);
+  }
+
+  .wall {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .speed li {
+    grid-template-columns: 8.5em minmax(0, 1fr) 3.6em;
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 2px 4px;
+    font-size: 9px;
+  }
+
+  .gen b {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .tag,
+  .sweep,
+  .fill,
+  .pic,
+  .selfie,
+  .bar i,
+  .dock,
+  .speed i {
+    animation: none;
+  }
+
+  .chat,
+  .you,
+  .tile {
+    transition: none;
+  }
+}
