@@ -110,9 +110,6 @@
 }
 
 .preview {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: var(--type-body-sm);
   color: var(--fg-tertiary);
 }

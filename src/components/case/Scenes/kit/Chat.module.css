@@ -597,10 +597,8 @@
 }
 
 .line {
-  overflow: hidden;
   font-weight: inherit;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .chat[data-skin='tg'] .who small {

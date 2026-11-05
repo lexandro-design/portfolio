@@ -412,10 +412,10 @@
   margin-block-start: 6px;
 }
 
-.pin[data-side='left'] > span {
-  inset-block-start: 0;
-  inset-inline-end: 100%;
-  margin-inline-end: 8px;
+.pin[data-side='top'] > span {
+  inset-block-end: 100%;
+  inset-inline-start: 0;
+  margin-block-end: 6px;
 }
 
 /* Полоса оценки: шкала 0-100, эталон на конце, отметка ученика */
@@ -697,10 +697,18 @@
     font-size: 13px;
   }
 
+  /* Лист на телефоне ниже панели: эталон слева, цифры справа, чтобы панель стояла внутри листа целиком */
   .match {
-    inline-size: 138px;
+    inset-inline-start: 6px;
+    inset-block-end: 6px;
+    grid-template-columns: 96px minmax(0, 1fr);
+    inline-size: auto;
     padding: 6px;
-    gap: 5px;
+    gap: 5px 8px;
+  }
+
+  .match > :first-child {
+    grid-column: 1 / -1;
   }
 
   .match dl div {
