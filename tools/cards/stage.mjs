@@ -14,30 +14,31 @@ const c = (p) => pathToFileURL(`${ROOT}/public/cases/${p}`).href
 const s = (p) => pathToFileURL(`${ROOT}/tools/cards/src/${p}`).href
 
 /** Экран в окне: кадр кейса шириной iw, x0 и y0 сдвигают его внутри окна */
-const screen = (src, { x, y, w, h, y0 = 0, x0 = 0, iw = w, r = 14, rot = '', z = 1, shade = '', bg = '#fff' }) =>
+const screen = (src, { x, y, w, h, y0 = 0, x0 = 0, iw = w, r = 14, rot = '', z = 1, shade = '', blend = 'normal', bg = '#fff' }) =>
   `<div class="scr" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:${r}px;z-index:${z};transform:${rot};background:${bg}">
-    <img src="${src}" style="width:${iw}px;max-width:none;margin:${-y0}px 0 0 ${-x0}px">${shade ? `<i style="position:absolute;inset:0;background:${shade}"></i>` : ''}</div>`
+    <img src="${src}" style="width:${iw}px;max-width:none;margin:${-y0}px 0 0 ${-x0}px">${shade ? `<i style="position:absolute;inset:0;background:${shade};mix-blend-mode:${blend}"></i>` : ''}</div>`
 
 const pic = (src, st) => `<img class="pic" src="${src}" style="${st}">`
 const light = (st) => `<i class="light" style="${st}"></i>`
 
 const SCENES = {
-  /* Стена страниц сайта в изометрии, сверху 3D из кейса */
+  /* Стена страниц сайта в изометрии: главная крупно и в свете, остальные в цвете бренда */
   prosoft: () => {
-    const col = (x, y, list) =>
-      list.map(([src, h, y0 = 0], i) => {
-        const top = y + list.slice(0, i).reduce((a, [, hh]) => a + hh + 34, 0)
-        return screen(c(`prosoft/${src}`), { x, y: top, w: 470, h, y0, r: 12, z: 1, shade: 'rgb(6 34 83/.2)' })
-      })
-    return `<div style="position:absolute;inset:0;background:radial-gradient(90% 80% at 72% 18%,#1a63dc 0%,#0e4cb9 34%,#062253 78%,#04173a 100%)"></div>
-    ${light('inset:0;z-index:2;background:radial-gradient(40% 36% at 88% 88%,rgb(247 113 6/.42),transparent 72%)')}
+    const side = (src, x, y, h, y0 = 0) => screen(c(`prosoft/${src}`), { x, y, w: 470, h, y0, r: 12, z: 1, shade: '#0e4cb9', blend: 'multiply' })
+    return `<div style="position:absolute;inset:0;background:radial-gradient(90% 80% at 62% 40%,#1a63dc 0%,#0e4cb9 36%,#062253 80%,#04173a 100%)"></div>
     <div class="plane" style="left:-190px;top:-430px;width:1560px;height:1800px;transform:perspective(2600px) rotateX(50deg) rotateZ(-34deg)">
-      ${col(0, 120, [['p-erp.webp', 620], ['p-care.webp', 560], ['p-diag.webp', 620]]).join('')}
-      ${col(504, -40, [['p-home.webp', 700], ['p-dev.webp', 620], ['p-upp.webp', 620]]).join('')}
-      ${col(1008, 90, [['p-upp.webp', 620], ['p-diag.webp', 620, 700], ['p-erp.webp', 620, 900]]).join('')}
+      ${side('p-erp.webp', 0, 150, 620)}
+      ${side('p-care.webp', 0, 804, 560)}
+      ${side('p-diag.webp', 0, 1398, 620)}
+      ${side('p-dev.webp', 1090, 40, 620)}
+      ${side('p-upp.webp', 1090, 694, 620)}
+      ${side('p-diag.webp', 1090, 1348, 620, 700)}
+      ${side('p-upp.webp', 504, -420, 400, 900)}
+      ${side('p-dev.webp', 504, 1420, 620, 900)}
+      <i class="light" style="left:430px;top:60px;width:800px;height:1400px;border-radius:40px;background:#f77106;filter:blur(46px);opacity:.95"></i>
+      ${screen(c('prosoft/p-home.webp'), { x: 520, y: 20, w: 640, h: 1360, r: 16, z: 2 })}
     </div>
-    ${light('inset:0;z-index:3;background:linear-gradient(200deg,rgb(4 23 58/.94) 0%,rgb(4 23 58/.5) 26%,transparent 46%,transparent 62%,rgb(4 23 58/.8) 100%)')}
-    ${pic(s('prosoft-erp.webp'), 'left:560px;top:410px;width:640px;z-index:4;filter:drop-shadow(0 44px 54px rgb(2 10 30/.7))')}`
+    ${light('inset:0;z-index:3;background:radial-gradient(52% 36% at 100% 0%,rgb(4 23 58/.96) 30%,transparent 100%)')}`
   },
 
   /* Герои игры выходят из заставки на фоне огорода */
