@@ -670,6 +670,8 @@
     padding: 6px var(--space-md, 16px) 4px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
+    /* Иначе привязка ставит первый документ вплотную к краю экрана, мимо отступа */
+    scroll-padding-inline: var(--space-md, 16px);
     scrollbar-width: none;
   }
 
