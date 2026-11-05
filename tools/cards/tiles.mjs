@@ -31,7 +31,7 @@ const SITES = {
   svarnoy52: { shot: 'r1.jpg', x: 0, y: 0, w: 1100 },
   'pix-bi': { shot: '01.jpg', x: 330, y: 60, w: 900 },
   /* Без лица героини страницы */
-  'ubiray-rf': { shot: '06.jpg', x: 30, y: 1190, w: 1000 },
+  'ubiray-rf': { shot: '06.jpg', x: 30, y: 1262, w: 1000 },
   /* Заглавный экран игры */
   'garden-td': { shot: 'title.webp', x: 0, y: 120, w: 780 },
   'vacation-plan': { shot: '01.jpg', x: 20, y: 0, w: 850 },
