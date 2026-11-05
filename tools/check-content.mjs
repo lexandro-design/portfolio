@@ -192,8 +192,8 @@ if (!str(site.coords)) fail('site', 'нет поля coords')
 for (const k of ['brief', 'palette', 'sandbox', 'steel']) {
   if (typeof site.features?.[k] !== 'boolean') fail('site.features', `${k} — true или false`)
 }
-if (!['dark', 'light', 'steel', 'moon', 'space'].includes(site.defaultTheme)) {
-  fail('site', 'defaultTheme — dark, light, steel, moon или space')
+if (!['dark', 'light', 'steel', 'space'].includes(site.defaultTheme)) {
+  fail('site', 'defaultTheme — dark, light, steel или space')
 }
 const accents = site.sandbox?.accents
 if (

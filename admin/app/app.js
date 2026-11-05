@@ -44,7 +44,6 @@ const SITE_THEMES = [
   ['dark', 'Тёмная'],
   ['light', 'Светлая'],
   ['steel', 'Сталь'],
-  ['moon', 'Луна'],
   ['space', 'Космос'],
 ]
 const DIRECTIONS = [

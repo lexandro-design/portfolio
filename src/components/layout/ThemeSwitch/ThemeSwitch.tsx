@@ -17,11 +17,30 @@ export const readTheme = () =>
 
 /** Сменить тему сайта: шапка, блок «Система» и палитра команд подписаны на событие */
 export function applyTheme(next: Theme) {
-  document.documentElement.dataset.theme = next
+  const root = document.documentElement
+  const commit = () => {
+    root.dataset.theme = next
+    try {
+      localStorage.setItem('theme', next)
+    } catch {}
+    window.dispatchEvent(new Event(THEME_EVENT))
+  }
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } }
+  if (!doc.startViewTransition || next === readTheme() || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    commit()
+    return
+  }
+  /* Плавность даёт браузер: он делает снимок старой страницы и растворяет его в новую на видеокарте.
+     Покрасочные transition у всех элементов на это время выключены (data-swap), иначе тысяча узлов
+     пересчитывает цвет на каждом кадре и телефон теряет половину кадров */
+  root.dataset.swap = ''
+  const done = () => delete root.dataset.swap
   try {
-    localStorage.setItem('theme', next)
-  } catch {}
-  window.dispatchEvent(new Event(THEME_EVENT))
+    doc.startViewTransition(commit).finished.then(done, done)
+  } catch {
+    commit()
+    done()
+  }
 }
 
 type Props = { label: string; labels: Record<Theme, string> }
@@ -60,12 +79,6 @@ function Icon({ id }: { id: Theme }) {
     return (
       <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
         <circle cx="7" cy="7" r="4" fill="currentColor" />
-      </svg>
-    )
-  if (id === 'moon')
-    return (
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-        <path d="M11.6 8.7A5 5 0 0 1 5.3 2.4a5 5 0 1 0 6.3 6.3z" fill="currentColor" />
       </svg>
     )
   if (id === 'space')
