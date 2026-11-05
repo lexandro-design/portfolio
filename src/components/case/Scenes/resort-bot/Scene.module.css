@@ -712,9 +712,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .shots {
-    block-size: 150px;
-  }
 
   .field {
     grid-template-columns: 6.5em minmax(0, 1fr);
