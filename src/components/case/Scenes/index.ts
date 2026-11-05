@@ -12,7 +12,7 @@ export type { SceneProps } from './types'
  */
 export const SCENES: Record<string, ComponentType<SceneProps>> = {
   'team-reports': dynamic(() => import('./team-reports/Scene').then((m) => m.Scene)),
-  // 'dice-bots': dynamic(() => import('./dice-bots/Scene').then((m) => m.Scene)),
+  'dice-bots': dynamic(() => import('./dice-bots/Scene').then((m) => m.Scene)),
   'resort-bot': dynamic(() => import('./resort-bot/Scene').then((m) => m.Scene)),
   mimimibot: dynamic(() => import('./mimimibot/Scene').then((m) => m.Scene)),
   // 'food-assistants': dynamic(() => import('./food-assistants/Scene').then((m) => m.Scene)),
