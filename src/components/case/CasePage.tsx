@@ -17,7 +17,6 @@ import { ChapterRail } from './ChapterRail'
 import { Showcase, chapterId } from './Showcase/Showcase'
 import { CaseHero } from './CaseHero'
 import { Lightbox } from './Lightbox'
-import { Mood } from './Mood'
 import { NextCase } from './NextCase'
 
 /** Разделы, которые почти дословно повторяют блок «Коротко»: дважды одно и то же не показываем */
@@ -75,7 +74,6 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
           data={scene}
         />
         {show.blocks.length > 1 && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="rest" />}
-        {item.mood && <Mood shots={item.mood} title={item.title} t={t.case.mood} />}
         <CaseBody item={item} t={t.case} used={used} />
         <CaseCta title={t.case.cta} primary={t.hero.primary} write={t.nav.write} href={localePath(locale, '/#contact')} />
         <NextCase
@@ -110,7 +108,6 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
       {show && pace === 'show' && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="lead" />}
       {show && <Brief brief={show.brief} t={t.case.brief} />}
       {show && <Showcase data={show} item={item} t={t.case.show} pace={pace} part={pace === 'show' ? 'rest' : 'all'} cast={cast} />}
-      {item.mood && <Mood shots={item.mood} title={item.title} t={t.case.mood} />}
       <CaseBody item={item} t={t.case} used={used} />
       {chapters.length > 1 && <ChapterRail chapters={chapters} label={t.case.toc} />}
       <CaseCta

@@ -609,57 +609,7 @@
       "w": 1600,
       "h": 1000,
       "caption": "MiMiMi AI"
-    },
-    "mood": [
-      {
-        "src": "/cases/mimimibot/gen/you-terrace.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-studio.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-cafe.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-nyc.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-car.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-roof.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-beach.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      },
-      {
-        "src": "/cases/mimimibot/gen/you-mirror.webp",
-        "w": 600,
-        "h": 800,
-        "caption": "MiMiMi AI"
-      }
-    ]
+    }
   },
   {
     "slug": "ai-office",
@@ -1747,45 +1697,7 @@
       "w": 1600,
       "h": 1000,
       "caption": "AI-бот для базы отдыха"
-    },
-    "mood": [
-      {
-        "src": "/cases/resort-bot/gen/card-16x10.webp",
-        "w": 1600,
-        "h": 1000,
-        "caption": "AI-бот для базы отдыха"
-      },
-      {
-        "src": "/cases/resort-bot/gen/01-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-бот для базы отдыха"
-      },
-      {
-        "src": "/cases/resort-bot/gen/02-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-бот для базы отдыха"
-      },
-      {
-        "src": "/cases/resort-bot/gen/03-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-бот для базы отдыха"
-      },
-      {
-        "src": "/cases/resort-bot/gen/04-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-бот для базы отдыха"
-      },
-      {
-        "src": "/cases/resort-bot/gen/05-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-бот для базы отдыха"
-      }
-    ]
+    }
   },
   {
     "slug": "vacation-plan",
@@ -2808,46 +2720,7 @@
       "w": 1600,
       "h": 1000,
       "caption": "AI-ассистент художественной школы"
-    },
-    "mood": [
-      {
-        "src": "/cases/art-school/gen/progress-poster.jpg",
-        "video": "/cases/art-school/gen/progress-1x1.mp4",
-        "w": 900,
-        "h": 900,
-        "caption": "AI-ассистент художественной школы"
-      },
-      {
-        "src": "/cases/art-school/gen/01-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-ассистент художественной школы"
-      },
-      {
-        "src": "/cases/art-school/gen/02-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-ассистент художественной школы"
-      },
-      {
-        "src": "/cases/art-school/gen/03-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-ассистент художественной школы"
-      },
-      {
-        "src": "/cases/art-school/gen/04-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-ассистент художественной школы"
-      },
-      {
-        "src": "/cases/art-school/gen/05-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "AI-ассистент художественной школы"
-      }
-    ]
+    }
   },
   {
     "slug": "brain-search",
@@ -3563,45 +3436,7 @@
       "w": 1600,
       "h": 1000,
       "caption": "Онлайн-запись в салоны и клиники"
-    },
-    "mood": [
-      {
-        "src": "/cases/salon-booking/gen/card-16x10.webp",
-        "w": 1600,
-        "h": 1000,
-        "caption": "Онлайн-запись в салоны и клиники"
-      },
-      {
-        "src": "/cases/salon-booking/gen/01-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "Онлайн-запись в салоны и клиники"
-      },
-      {
-        "src": "/cases/salon-booking/gen/02-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "Онлайн-запись в салоны и клиники"
-      },
-      {
-        "src": "/cases/salon-booking/gen/03-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "Онлайн-запись в салоны и клиники"
-      },
-      {
-        "src": "/cases/salon-booking/gen/04-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "Онлайн-запись в салоны и клиники"
-      },
-      {
-        "src": "/cases/salon-booking/gen/05-1x1.webp",
-        "w": 1024,
-        "h": 1024,
-        "caption": "Онлайн-запись в салоны и клиники"
-      }
-    ]
+    }
   },
   {
     "slug": "team-reports",

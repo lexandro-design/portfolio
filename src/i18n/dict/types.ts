@@ -232,7 +232,6 @@ export type Dict = {
 
   case: {
     /** Галерея иллюстраций: подпись обязательна, это не результат работы */
-    mood: { title: string; note: string }
     back: string
     cta: string
     facts: { client: string; year: string; direction: string; stack: string; site: string }
