@@ -53,6 +53,17 @@
   border-block-end-color: var(--fg-primary);
 }
 
+@media (max-width: 767px) {
+  .button {
+    min-block-size: 44px;
+  }
+
+  .button[data-variant='text'] {
+    min-block-size: 44px;
+    padding-block: 0 6px;
+  }
+}
+
 .arrow {
   display: inline-flex;
   transition: transform var(--dur-base) var(--ease-out-expo);

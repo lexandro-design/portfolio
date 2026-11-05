@@ -318,6 +318,10 @@
   .actions {
     grid-template-columns: 1fr;
   }
+
+  .seg button {
+    min-block-size: 44px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

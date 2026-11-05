@@ -1,5 +1,7 @@
 .logo {
   display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
   font-family: var(--font-display);
   font-size: 19px;
   font-weight: 800;
