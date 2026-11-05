@@ -1,0 +1,244 @@
+/* Окно мессенджера: шапка, лента, пузыри. Углы острые, как везде на сайте */
+.chat {
+  --chat-out: color-mix(in oklab, var(--case-color, var(--accent)) 28%, var(--bg-subtle));
+  --chat-in: var(--bg-subtle);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-hair);
+  background: var(--bg-elevated);
+  box-shadow: 0 40px 80px -48px rgb(0 0 0 / 0.6);
+}
+
+.chat[data-tone='wa'] {
+  --chat-out: color-mix(in oklab, #25d366 22%, var(--bg-subtle));
+}
+
+.top {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  min-block-size: 52px;
+  padding-inline: 14px;
+  border-block-end: 1px solid var(--border-hair);
+  background: var(--bg-subtle);
+}
+
+.ava {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 30px;
+  block-size: 30px;
+  background: var(--case-color, var(--accent));
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-inverse);
+}
+
+.who {
+  display: grid;
+  flex: 1;
+  min-inline-size: 0;
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--fg-primary);
+}
+
+.who small {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 50%;
+  background: var(--border-hover);
+}
+
+.dot[data-on] {
+  background: var(--signal-live);
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.feed {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  min-block-size: 0;
+  padding: 16px;
+  overflow: hidden;
+  list-style: none;
+}
+
+.msg {
+  display: grid;
+  gap: 4px;
+  max-inline-size: 84%;
+  animation: msgIn 480ms var(--ease-out-expo) both;
+}
+
+.msg[data-side='in'] {
+  justify-self: start;
+  align-self: flex-start;
+}
+
+.msg[data-side='out'] {
+  justify-self: end;
+  align-self: flex-end;
+  text-align: end;
+}
+
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.name {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--case-color, var(--accent));
+}
+
+.bubble {
+  padding: 10px 14px;
+  background: var(--chat-in);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--fg-primary);
+  text-align: start;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.msg[data-side='out'] .bubble {
+  background: var(--chat-out);
+}
+
+.msg[data-tone='dim'] .bubble {
+  color: var(--fg-tertiary);
+  text-decoration: line-through;
+}
+
+.msg[data-tone='ok'] .bubble {
+  outline: 1px solid var(--signal-live);
+  outline-offset: -1px;
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+}
+
+.keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.keys[data-stack] .key {
+  flex-basis: 100%;
+}
+
+.key {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border-hover);
+  font-size: 13px;
+  color: var(--fg-primary);
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background var(--dur-base),
+    color var(--dur-base);
+}
+
+.key[data-press] {
+  background: var(--case-color, var(--accent));
+  border-color: var(--case-color, var(--accent));
+  color: var(--fg-inverse);
+}
+
+.sys {
+  align-self: center;
+  padding: 4px 10px;
+  background: var(--bg-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-tertiary);
+  text-align: center;
+  animation: msgIn 480ms var(--ease-out-expo) both;
+}
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding-block: 14px;
+}
+
+.typing i {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--fg-tertiary);
+  animation: typing 1.1s ease-in-out infinite;
+}
+
+.typing i:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.typing i:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes typing {
+  40% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+
+  0%,
+  80%,
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 767px) {
+  .bubble {
+    font-size: 14px;
+  }
+
+  .feed {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg,
+  .sys,
+  .typing i,
+  .dot[data-on] {
+    animation: none;
+  }
+}

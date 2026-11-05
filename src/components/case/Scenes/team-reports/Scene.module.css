@@ -1,0 +1,223 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Сцена во всю ширину: группа (узко, как телефон), бот посередине, таблицы (широко) */
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 6fr);
+  gap: var(--space-md);
+  align-items: stretch;
+  block-size: 560px;
+  margin-block-start: var(--space-2xl);
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.chat {
+  block-size: 100%;
+}
+
+/* Бот между чатом и таблицей: поля, которые он вытаскивает, и строка «внутри» */
+.parser {
+  display: grid;
+  align-content: center;
+  gap: var(--space-sm);
+  padding-inline: var(--space-sm);
+  border-inline: 1px solid var(--border-hair);
+}
+
+.fields {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+}
+
+.fields li {
+  padding: 6px 10px;
+  border: 1px solid var(--border-hair);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-tertiary);
+  transition:
+    color var(--dur-slow),
+    border-color var(--dur-slow);
+}
+
+.fields[data-on] li {
+  border-color: var(--case-color, var(--accent));
+  color: var(--fg-primary);
+  animation: pop 600ms var(--ease-out-expo) both;
+}
+
+@keyframes pop {
+  from {
+    transform: translateX(-10px);
+    opacity: 0.3;
+  }
+}
+
+.log {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  animation: capIn 400ms var(--ease-out-quart) both;
+}
+
+@keyframes capIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.sheets {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--space-sm);
+  min-block-size: 0;
+}
+
+.sheet {
+  min-block-size: 0;
+}
+
+/* Сводка выезжает снизу, когда месяц закрыт */
+.summary {
+  overflow: hidden;
+  max-block-size: 0;
+  opacity: 0;
+  transition:
+    max-block-size 700ms var(--ease-out-expo),
+    opacity 500ms var(--ease-out-quart);
+}
+
+.summary[data-on] {
+  max-block-size: 200px;
+  opacity: 1;
+}
+
+.stage[data-final] .sheet {
+  opacity: 0.55;
+  transition: opacity 500ms var(--ease-out-quart);
+}
+
+/* Под сценой: подпись шага слева, панель справа, пометка про имитацию ниже */
+.under {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-xs) var(--space-3xl);
+  align-items: start;
+  margin-block-start: var(--space-md);
+}
+
+.cap {
+  grid-row: 1 / 3;
+  font-size: var(--type-body-lg);
+}
+
+.controls {
+  align-self: start;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-2xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: 440px auto;
+    block-size: auto;
+  }
+
+  .chat {
+    block-size: 440px;
+  }
+
+  .parser {
+    grid-row: 1;
+    grid-column: 2;
+    border-inline: 0;
+    border-block-end: 0;
+    padding-inline: 0;
+    align-content: start;
+  }
+
+  .sheets {
+    grid-column: 1 / -1;
+    grid-template-rows: auto auto;
+  }
+
+  .under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cap {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-lg);
+  }
+
+  .chat {
+    block-size: 380px;
+  }
+
+  .parser {
+    grid-row: auto;
+    grid-column: 1;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-xs) var(--space-sm);
+  }
+
+  .fields {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fields li {
+    padding-inline: 6px;
+    text-align: center;
+  }
+
+  .log {
+    grid-column: 1 / -1;
+  }
+
+  .sheets {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .fields[data-on] li,
+  .log {
+    animation: none;
+  }
+
+  .summary {
+    transition: none;
+  }
+}

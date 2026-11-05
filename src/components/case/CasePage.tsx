@@ -8,6 +8,8 @@ import { liveOf } from '@/content/flows'
 import { paceOf } from '@/content/pace'
 import { getShowcase } from '@/content/showcase'
 import { getCast } from '@/content/casts'
+import { getScene } from '@/content/scenes'
+import { SCENES } from './Scenes'
 import { Brief } from './Brief/Brief'
 import { CaseBody } from './CaseBody'
 import { CaseCta } from './CaseCta'
@@ -43,6 +45,49 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   }
 
   used.push(...(SAID[slug] ?? []))
+
+  // Кейс со своей сценой: она стоит вместо шапки, «Коротко» и плеера первой главы
+  const Scene = SCENES[slug]
+  const scene = Scene ? getScene(locale, slug) : null
+  if (Scene && scene && show) {
+    const facts = [
+      { label: t.case.facts.client, value: item.client },
+      { label: t.case.facts.year, value: item.year },
+      { label: t.case.facts.direction, value: item.directions.map((d) => t.works.directions[d]).join(', ') },
+      { label: t.case.facts.stack, value: item.stack.join(' · ') },
+      ...(item.link ? [{ label: t.case.facts.site, value: item.link.label, href: item.link.href }] : []),
+    ]
+    return (
+      <div
+        lang={HTML_LANG[locale]}
+        data-case
+        data-scene={slug}
+        data-shots="light"
+        data-pace={pace}
+        style={caseColor(slug) ? ({ '--case-color': caseColor(slug) } as CSSProperties) : undefined}
+      >
+        <Scene
+          item={item}
+          meta={{ index: index + 1, total: items.length, back: { href: localePath(locale, '/#works'), label: t.case.back } }}
+          facts={facts}
+          brief={show.brief}
+          t={t.case}
+          data={scene}
+        />
+        {show.blocks.length > 1 && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="rest" />}
+        {item.mood && <Mood shots={item.mood} title={item.title} t={t.case.mood} />}
+        <CaseBody item={item} t={t.case} used={used} />
+        <CaseCta title={t.case.cta} primary={t.hero.primary} write={t.nav.write} href={localePath(locale, '/#contact')} />
+        <NextCase
+          item={next}
+          index={items.indexOf(next) + 1}
+          total={items.length}
+          href={localePath(locale, `/cases/${next.slug}/`)}
+          label={t.case.next}
+        />
+      </div>
+    )
+  }
 
   return (
     <div

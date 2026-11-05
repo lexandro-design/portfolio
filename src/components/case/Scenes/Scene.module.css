@@ -1,0 +1,16 @@
+/* Общий корень сцены: отступы шапки и место под свечение цвета кейса, если сцена его хочет */
+.scene {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-2xl) var(--space-xl);
+}
+
+.scene > :global(.container) {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .scene {
+    padding-block: var(--space-lg);
+  }
+}
