@@ -839,7 +839,7 @@
       "sub": "ボット",
       "typing": "入力中…"
     },
-    "note": "カバーと赤いテンプレートは実物で、ボットからのものです。その他はイメージのイラストで、成果物や顧客の写真ではありません。ヒロインは架空の人物です。",
+    "note": "カバーとテンプレートは実物で、ボットからのものです。写っているモデルは生成によるものです。自撮りと完成カットはイメージのイラストで、成果物や顧客の写真ではありません。ヒロインは架空の人物です。",
     "wall": {
       "title": "テンプレートの壁",
       "note": "ショットはデータベースにあり、コードなしで変えられます"
@@ -847,13 +847,11 @@
     "tiles": [
       {
         "id": "studio",
-        "src": "/cases/mimimibot/gen/tpl-studio.webp",
-        "you": "/cases/mimimibot/gen/you-studio.webp"
+        "src": "/cases/mimimibot/real/tpl-studio.webp"
       },
       {
-        "id": "nyc",
-        "src": "/cases/mimimibot/gen/tpl-nyc.webp",
-        "you": "/cases/mimimibot/gen/you-nyc.webp"
+        "id": "dark",
+        "src": "/cases/mimimibot/real/tpl-dark.webp"
       },
       {
         "id": "red",
@@ -861,47 +859,42 @@
         "you": "/cases/mimimibot/gen/you-red.webp"
       },
       {
-        "id": "car",
-        "src": "/cases/mimimibot/gen/tpl-car.webp",
-        "you": "/cases/mimimibot/gen/you-car.webp"
+        "id": "lift",
+        "src": "/cases/mimimibot/real/tpl-lift.webp"
       },
       {
-        "id": "beach",
-        "src": "/cases/mimimibot/gen/tpl-beach.webp",
-        "you": "/cases/mimimibot/gen/you-beach.webp"
+        "id": "stairs",
+        "src": "/cases/mimimibot/real/tpl-stairs.webp"
       },
       {
-        "id": "mirror",
-        "src": "/cases/mimimibot/gen/tpl-mirror.webp",
-        "you": "/cases/mimimibot/gen/you-mirror.webp"
+        "id": "roses",
+        "src": "/cases/mimimibot/real/tpl-roses.webp"
       },
       {
-        "id": "cafe",
-        "src": "/cases/mimimibot/gen/tpl-cafe.webp",
-        "you": "/cases/mimimibot/gen/you-cafe.webp"
+        "id": "camera",
+        "src": "/cases/mimimibot/real/tpl-camera.webp"
       },
       {
-        "id": "roof",
-        "src": "/cases/mimimibot/gen/tpl-roof.webp",
-        "you": "/cases/mimimibot/gen/you-roof.webp"
+        "id": "hall",
+        "src": "/cases/mimimibot/real/tpl-hall.webp"
       }
     ],
     "cols": [
       [
         "studio",
-        "beach"
+        "stairs"
       ],
       [
-        "nyc",
-        "mirror"
+        "dark",
+        "roses"
       ],
       [
-        "cafe",
-        "roof"
+        "camera",
+        "hall"
       ],
       [
         "red",
-        "car"
+        "lift"
       ]
     ],
     "tag": {
