@@ -5,6 +5,8 @@
   --ps-blue: #0e4cb9;
   --ps-orange: #f77106;
   --ps-paper: #eef2f8;
+  /* Кадр 2:1 целиком в окне: на ультрашироком экране ширину задаёт высота окна, текст и модель остаются рядом */
+  --ps-stage: min(100%, calc((100vh - var(--nav-h) - 40px) * 2));
   padding-block-end: 0;
 }
 
@@ -25,10 +27,10 @@
 .stage {
   position: relative;
   aspect-ratio: 2 / 1;
-  max-block-size: calc(100vh - var(--nav-h) - 40px);
-  inline-size: 100%;
+  inline-size: var(--ps-stage);
   margin-inline: auto;
   overflow: hidden;
+  container-type: inline-size;
   background: var(--ps-paper);
 }
 
@@ -64,10 +66,10 @@
   inset-inline-start: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 1.2vw, 18px);
+  gap: clamp(10px, 1.2cqi, 28px);
   justify-content: center;
   inline-size: 46%;
-  padding-inline-start: clamp(24px, 5vw, 88px);
+  padding-inline-start: clamp(24px, 5cqi, 128px);
   color: var(--ps-ink);
   animation: copyIn 620ms var(--ease-out-expo) both;
 }
@@ -81,14 +83,14 @@
 
 .page {
   font-family: var(--font-mono);
-  font-size: var(--type-mono-sm);
+  font-size: clamp(11px, 0.85cqi, 22px);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ps-blue);
 }
 
 .head {
-  font-size: clamp(26px, 3.3vw, 56px);
+  font-size: clamp(26px, 3.3cqi, 88px);
   font-weight: 500;
   line-height: 1.06;
   letter-spacing: -0.02em;
@@ -97,7 +99,7 @@
 
 .text {
   max-inline-size: 34ch;
-  font-size: clamp(14px, 1.15vw, 18px);
+  font-size: clamp(14px, 1.15cqi, 30px);
   line-height: 1.45;
   color: var(--ps-mute);
 }
@@ -107,7 +109,9 @@
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
+  inline-size: var(--ps-stage);
   margin-block-start: var(--space-md);
+  margin-inline: auto;
   list-style: none;
 }
 
@@ -249,7 +253,8 @@
   .stage {
     display: grid;
     aspect-ratio: auto;
-    max-block-size: none;
+    inline-size: 100%;
+    container-type: normal;
   }
 
   .now,
@@ -276,6 +281,10 @@
     block-size: 196px;
     justify-content: flex-start;
     padding: 16px;
+  }
+
+  .page {
+    font-size: var(--type-mono-sm);
   }
 
   .head {
