@@ -14,6 +14,7 @@
     "steel": true
   },
   "defaultTheme": "dark",
+  "heroPhotos": ["/me"],
   "sandbox": {
     "accents": [
       "#c6ff3d",
