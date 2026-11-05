@@ -1236,7 +1236,7 @@
       "menu": "Menu",
       "field": "Message"
     },
-    "note": "The cover and templates are real, taken from the bot; the model in them is generated. Selfies and the finished shot are illustration, mood only. Not a result or a client photo. The heroine is fictional.",
+    "note": "The cover and templates are real, taken from the bot. The heroine is fictional: the selfies and the final frame show how the bot works, the same face and hair in the look of a template. This is not bot output or a client photo.",
     "wall": {
       "title": "template wall",
       "note": "the shots live in the database and change without code"

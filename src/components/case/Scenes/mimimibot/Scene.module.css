@@ -384,7 +384,7 @@
 .cover {
   position: relative;
   display: block;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 3;
   margin: -8px -12px 8px;
   overflow: hidden;
   border-radius: var(--bub-r) var(--bub-r) 4px 4px;
