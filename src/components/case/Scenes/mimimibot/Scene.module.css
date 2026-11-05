@@ -208,6 +208,7 @@
 
 .first .pic {
   aspect-ratio: 1;
+  object-position: 50% 24%;
 }
 
 .pic {
@@ -282,39 +283,16 @@
   block-size: 100%;
   aspect-ratio: auto;
   margin: 0;
-  object-position: 50% 14%;
+  object-position: 50% 6%;
 }
 
-/* Надпись поверх кадра: чёрный и розовый на светлом, не зависит от темы сайта */
-.coverType {
-  position: absolute;
-  inset-block-start: 6%;
-  inset-inline-start: 6%;
-  inline-size: 31%;
-  block-size: auto;
-  font-family: var(--font-display);
-  font-weight: 900;
-  text-transform: uppercase;
-  pointer-events: none;
-}
-
-.tA,
-.tB {
-  fill: #0b0b0b;
-}
-
-.tA {
-  font-size: 11px;
-}
-
-.tB {
-  font-size: 34px;
-}
-
-.tC {
-  fill: #e2569d;
-  font-size: 9px;
-  font-weight: 600;
+/* Логотип заполняет кружок шапки целиком */
+.logo {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: inherit;
+  object-fit: cover;
 }
 
 .shots {

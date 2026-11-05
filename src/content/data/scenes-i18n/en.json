@@ -1251,11 +1251,7 @@
       "sub": "bot",
       "typing": "typing…"
     },
-    "cover": {
-      "a": "MIMIMI",
-      "b": "BOT",
-      "c": "PINTEREST+"
-    },
+    "note": "The cover and the red template are real, taken from the bot. The rest is illustration, mood only. Not a result or a client photo. The heroine is fictional.",
     "wall": {
       "title": "template wall",
       "note": "the shots live in the database and change without code"
@@ -1272,9 +1268,9 @@
         "you": "/cases/mimimibot/gen/you-nyc.webp"
       },
       {
-        "id": "terrace",
-        "src": "/cases/mimimibot/gen/tpl-terrace.webp",
-        "you": "/cases/mimimibot/gen/you-terrace.webp"
+        "id": "red",
+        "src": "/cases/mimimibot/real/tpl-red.webp",
+        "you": "/cases/mimimibot/gen/you-red.webp"
       },
       {
         "id": "car",
@@ -1316,7 +1312,7 @@
         "roof"
       ],
       [
-        "terrace",
+        "red",
         "car"
       ]
     ],

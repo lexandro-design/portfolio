@@ -124,5 +124,23 @@
     "source": "https://t.me/Mimimi_Ai_bot",
     "fetched": "2026-11-05",
     "note": "Публичная страница бота; оригинал 320 px, не апскейлился"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "cover.webp",
+    "client": "MiMiMi AI",
+    "what": "обложка первого сообщения бота",
+    "source": "https://t.me/Mimimi_Ai_bot",
+    "fetched": "2026-11-05",
+    "note": "Из переписки с ботом, кадр показывается всем пользователям; разрешил Lexandro 05.11"
+  },
+  {
+    "slug": "mimimibot",
+    "file": "tpl-red.webp",
+    "client": "MiMiMi AI",
+    "what": "шаблон из карусели бота; tpl-red-crop.webp тот же кадр без белой рамки",
+    "source": "https://t.me/Mimimi_Ai_bot",
+    "fetched": "2026-11-05",
+    "note": "Из переписки с ботом, кадр показывается всем пользователям; разрешил Lexandro 05.11"
   }
 ]

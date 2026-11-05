@@ -10,7 +10,7 @@ import styles from './Scene.module.css'
 type Tile = { id: string; src: string; you: string }
 type Data = {
   chat: { title: string; sub: string; typing: string }
-  cover: { a: string; b: string; c: string }
+  note: string
   wall: { title: string; note: string }
   tiles: Tile[]
   cols: string[][]
@@ -39,7 +39,7 @@ const CLOCK = ['12:01', '12:02', '12:03', '12:03', '12:05', '12:06']
 
 /** Какой плитке стены что происходит на каком шаге */
 function stateOf(id: string, step: number): State {
-  if (id === 'terrace') return step === 0 ? 'idle' : step === 1 ? 'look' : step === 2 ? 'pick' : step === 3 ? 'gen' : 'you'
+  if (id === 'red') return step === 0 ? 'idle' : step === 1 ? 'look' : step === 2 ? 'pick' : step === 3 ? 'gen' : 'you'
   return 'idle'
 }
 
@@ -54,28 +54,17 @@ function Pic({ src, className, style }: { src: string; className?: string; style
 /** Тире подставляется здесь: в json его держать нельзя (tools/check-content.mjs) */
 const DASH = '\u2014'
 
-/**
- * Обложка первого сообщения: наш кадр 1:1, поверх вёрсткой МИМИМИ / БОТ / PINTEREST+ чёрным и розовым,
- * как у настоящего бота. Три строки одной ширины: textLength тянет буквы, а не меняет кегль
- */
-function Cover({ src, c, type }: { src: string; c: Data['cover']; type: boolean }) {
+/** Настоящие кадры бота: обложка и логотип. Надписи уже на обложке, поверх ничего не кладём */
+const COVER = '/cases/mimimibot/real/cover.webp'
+const LOGO = '/cases/mimimibot/real/avatar.webp'
+/** Тот же шаблон без белой рамки: квадрат в чате обрезает её, полосы по бокам смотрятся случайно */
+const TEMPLATE = '/cases/mimimibot/real/tpl-red-crop.webp'
+
+/** Логотип бота в шапке чата */
+function Logo() {
   return (
-    <span className={styles.cover}>
-      <Pic key={src} src={src} className={styles.coverPic} />
-      {type && (
-        <svg className={styles.coverType} viewBox="0 0 100 56" aria-hidden="true" focusable="false">
-          <text className={styles.tA} x="0" y="9" textLength="100" lengthAdjust="spacingAndGlyphs">
-            {c.a}
-          </text>
-          <text className={styles.tB} x="0" y="37" textLength="100" lengthAdjust="spacingAndGlyphs">
-            {c.b}
-          </text>
-          <text className={styles.tC} x="0" y="51" textLength="100" lengthAdjust="spacingAndGlyphs">
-            {c.c}
-          </text>
-        </svg>
-      )}
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет
+    <img className={styles.logo} src={asset(LOGO)} alt="" width={320} height={320} decoding="async" />
   )
 }
 
@@ -169,11 +158,13 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           </div>
 
           <div className={styles.phone}>
-            <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar="M" live={play.playing} className={styles.chat}>
+            <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar={<Logo />} live={play.playing} className={styles.chat}>
               {step === 0 && (
                 <>
                   <Msg side="in" time={d.start.time} tail={false} className={styles.first}>
-                    <Cover src={byId.studio.src} c={d.cover} type />
+                    <span className={styles.cover}>
+                      <Pic src={COVER} className={styles.coverPic} />
+                    </span>
                     <span className={styles.said}>{said(d.start.text)}</span>
                   </Msg>
                   <Pad rows={[{ items: d.start.pager }, { items: d.start.keys, stack: true }]} />
@@ -185,7 +176,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   {reply && (
                     <>
                       <Msg side="in" time={CLOCK[1]} tail={false} className={styles.first}>
-                        <Pic src={byId.terrace.src} className={styles.pic} />
+                        <Pic src={TEMPLATE} className={styles.pic} />
                         <span className={styles.said}>{said(d.demo.text)}</span>
                       </Msg>
                       <Pad rows={[{ items: d.demo.pager }, { items: d.demo.keys, stack: true, pressed: press }]} />
@@ -235,7 +226,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   {reply && (
                     <>
                       <Msg side="in" tone="ok" time={CLOCK[4]} tail={false} className={styles.first}>
-                        <Pic src={byId.terrace.you} className={styles.pic} />
+                        <Pic src={byId.red.you} className={styles.pic} />
                         <span className={styles.said}>{said(d.done.text)}</span>
                       </Msg>
                       <Pad rows={[{ items: d.done.keys, stack: true, pressed: press }]} />
@@ -280,7 +271,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
           <Controls play={play} t={{ ...t.show.cast, prev: t.show.prev, next: t.show.next }} className={styles.controls} />
           <div className={styles.notes}>
             <Note>{t.show.cast.demo}</Note>
-            <Note>{t.mood.note}</Note>
+            <Note>{d.note}</Note>
           </div>
         </div>
 

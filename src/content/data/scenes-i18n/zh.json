@@ -94,11 +94,7 @@
       "sub": "机器人",
       "typing": "正在输入…"
     },
-    "cover": {
-      "a": "MIMIMI",
-      "b": "BOT",
-      "c": "PINTEREST+"
-    },
+    "note": "封面和红色模板是真实的，来自机器人。其余为插图，仅表现氛围，不是成果，也不是客户照片。女主角为虚构人物。",
     "wall": {
       "title": "模板墙",
       "note": "画面存在数据库里，无需改代码"
@@ -115,9 +111,9 @@
         "you": "/cases/mimimibot/gen/you-nyc.webp"
       },
       {
-        "id": "terrace",
-        "src": "/cases/mimimibot/gen/tpl-terrace.webp",
-        "you": "/cases/mimimibot/gen/you-terrace.webp"
+        "id": "red",
+        "src": "/cases/mimimibot/real/tpl-red.webp",
+        "you": "/cases/mimimibot/gen/you-red.webp"
       },
       {
         "id": "car",
@@ -159,7 +155,7 @@
         "roof"
       ],
       [
-        "terrace",
+        "red",
         "car"
       ]
     ],

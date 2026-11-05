@@ -4,11 +4,7 @@
     "sub": "бот",
     "typing": "печатает…"
   },
-  "cover": {
-    "a": "МИМИМИ",
-    "b": "БОТ",
-    "c": "PINTEREST+"
-  },
+  "note": "Обложка и красный шаблон настоящие, из бота. Остальное: иллюстрация, настроение. Не результат и не фото клиента. Героиня вымышленная.",
   "wall": {
     "title": "стена шаблонов",
     "note": "кадры лежат в базе и меняются без кода"
@@ -25,9 +21,9 @@
       "you": "/cases/mimimibot/gen/you-nyc.webp"
     },
     {
-      "id": "terrace",
-      "src": "/cases/mimimibot/gen/tpl-terrace.webp",
-      "you": "/cases/mimimibot/gen/you-terrace.webp"
+      "id": "red",
+      "src": "/cases/mimimibot/real/tpl-red.webp",
+      "you": "/cases/mimimibot/gen/you-red.webp"
     },
     {
       "id": "car",
@@ -69,7 +65,7 @@
       "roof"
     ],
     [
-      "terrace",
+      "red",
       "car"
     ]
   ],

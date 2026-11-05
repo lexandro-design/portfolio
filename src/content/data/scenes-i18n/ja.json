@@ -839,11 +839,7 @@
       "sub": "ボット",
       "typing": "入力中…"
     },
-    "cover": {
-      "a": "MIMIMI",
-      "b": "BOT",
-      "c": "PINTEREST+"
-    },
+    "note": "カバーと赤いテンプレートは実物で、ボットからのものです。その他はイメージのイラストで、成果物や顧客の写真ではありません。ヒロインは架空の人物です。",
     "wall": {
       "title": "テンプレートの壁",
       "note": "ショットはデータベースにあり、コードなしで変えられます"
@@ -860,9 +856,9 @@
         "you": "/cases/mimimibot/gen/you-nyc.webp"
       },
       {
-        "id": "terrace",
-        "src": "/cases/mimimibot/gen/tpl-terrace.webp",
-        "you": "/cases/mimimibot/gen/you-terrace.webp"
+        "id": "red",
+        "src": "/cases/mimimibot/real/tpl-red.webp",
+        "you": "/cases/mimimibot/gen/you-red.webp"
       },
       {
         "id": "car",
@@ -904,7 +900,7 @@
         "roof"
       ],
       [
-        "terrace",
+        "red",
         "car"
       ]
     ],
