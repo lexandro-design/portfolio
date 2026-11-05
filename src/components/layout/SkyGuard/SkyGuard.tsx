@@ -149,9 +149,10 @@ export function SkyGuard() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`${BASE}/space/moon-card.webp`} alt="" width={150} height={150} />
             </div>
-            <h2 id="sky-ask-title" className={styles.title}>
+            {/* Не h2: тема Сталь красит заголовки по тегу, а окно одинаковое во всех темах */}
+            <p id="sky-ask-title" role="heading" aria-level={2} className={styles.title}>
               {s.title}
-            </h2>
+            </p>
             <p className={styles.text}>{s.text}</p>
             <p className={styles.note}>{s.note}</p>
             <label className={styles.never}>

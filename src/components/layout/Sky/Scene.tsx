@@ -19,8 +19,8 @@ const FRAME = 66
 const FRAME_SCROLL = 33
 /** Градусов в секунду: вращение едва заметное */
 const SPIN = 0.5
-/** Кадр считается тяжёлым, если видеокарта не закончила его к следующему кадру браузера */
-const HEAVY = 30
+/** Кадр тяжёлый, если видеокарта не успела к следующему кадру браузера и возилась дольше этого, мс. На экране 30 Гц (режим экономии) успевает, и качество не падает зря */
+const HEAVY = 24
 /** Разрешение карт: 1 тексель на пиксель в центре диска держится, пока длина карты не меньше окружности Луны на экране */
 const TIERS = [
   { tag: '-mid', size: 3072 },
@@ -243,6 +243,7 @@ export default function Scene() {
     let drawnCount = 0
     let fence: WebGLSync | null = null
     let fenceAt = 0
+    let fenceLate = false
     let ready = false
     let lastTick = 0
 
@@ -319,16 +320,21 @@ export default function Scene() {
       /* rAF о загрузке видеокарты не говорит. Метка в очереди команд покажет, когда кадр дорисован, и не останавливает конвейер, как readPixels */
       fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
       fenceAt = start
+      fenceLate = false
       gl.flush()
     }
 
-    const judge = (now: number, gap: number) => {
-      if (!fence || gl.getSyncParameter(fence, gl.SYNC_STATUS) !== gl.SIGNALED) return
+    const judge = (gap: number) => {
+      if (!fence) return
+      if (gl.getSyncParameter(fence, gl.SYNC_STATUS) !== gl.SIGNALED) {
+        fenceLate = true
+        return
+      }
       gl.deleteSync(fence)
       fence = null
       /* Цикл спал или главный поток был занят: это не видеокарта */
       if (gap > 100) return
-      slow = now - fenceAt > HEAVY ? slow + 1 : Math.max(0, slow - 1)
+      slow = fenceLate && performance.now() - fenceAt > HEAVY ? slow + 1 : Math.max(0, slow - 1)
       if (slow < 6) return
       slow = 0
       slowed += 1
@@ -345,7 +351,7 @@ export default function Scene() {
     let drawn = ''
     const tick = (now: number) => {
       frame = 0
-      judge(now, lastTick ? now - lastTick : 0)
+      judge(lastTick ? now - lastTick : 0)
       lastTick = now
       if (moonIn && shown < 1) shown = Math.min(1, shown + 0.04)
       const dtf = lastSpin ? Math.min(now - lastSpin, 100) : 16
