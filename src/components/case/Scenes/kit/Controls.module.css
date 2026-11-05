@@ -15,7 +15,9 @@
   font-size: 14px;
   color: var(--fg-primary);
   cursor: pointer;
-  transition: border-color 200ms var(--ease-out-quart);
+  transition:
+    border-color var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-fast) var(--ease-out-quart);
 }
 
 .ctl[data-wide] {
@@ -24,6 +26,10 @@
 
 .ctl:hover:not(:disabled) {
   border-color: var(--border-hover);
+}
+
+.ctl:active:not(:disabled) {
+  transform: scale(0.94);
 }
 
 .ctl:disabled {
@@ -61,30 +67,47 @@
 }
 
 .track i {
+  position: relative;
   display: block;
   block-size: 3px;
+  overflow: hidden;
   background-color: var(--border-hover);
-  background-image: linear-gradient(var(--fg-primary), var(--fg-primary));
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
+  transition: transform var(--dur-base) var(--ease-out-quart);
 }
 
-.track button[data-done] i,
-.track button[aria-current] i {
-  background-size: 100% 100%;
+.track button:hover i {
+  transform: scaleY(1.7);
 }
 
-.track i[data-run] {
+/* Заливка шага через scaleX: плавно и без перерисовки раскладки */
+.track i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--fg-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation-duration: inherit;
+  transition: transform var(--dur-base) var(--ease-out-quart);
+}
+
+.track button[data-done] i::after,
+.track button[aria-current] i::after {
+  transform: scaleX(1);
+}
+
+.track i[data-run]::after {
   animation: seg linear both;
+  animation-duration: inherit;
 }
 
 @keyframes seg {
   from {
-    background-size: 0% 100%;
+    transform: scaleX(0);
   }
 
   to {
-    background-size: 100% 100%;
+    transform: scaleX(1);
   }
 }
 
@@ -102,5 +125,18 @@
 
   .track {
     margin-inline: 8px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctl,
+  .track i,
+  .track i::after {
+    transition: none;
+  }
+
+  .track i[data-run]::after {
+    animation: none;
+    transform: scaleX(1);
   }
 }

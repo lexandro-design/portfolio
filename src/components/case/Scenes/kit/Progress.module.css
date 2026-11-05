@@ -1,0 +1,118 @@
+.bar {
+  display: block;
+  inline-size: 100%;
+  block-size: 4px;
+  overflow: hidden;
+  background: var(--border-hair);
+}
+
+.fill {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  background: var(--case-color, var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.fill[data-mode='run'] {
+  transform: none;
+  transition: none;
+  animation: grow linear both;
+}
+
+.fill[data-mode='idle'] {
+  inline-size: 40%;
+  transform: none;
+  transition: none;
+  animation: slide 1.4s var(--ease-in-out) infinite;
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}
+
+.dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dots i {
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: 50%;
+  background: currentcolor;
+  opacity: 0.4;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.dots i:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.dots i:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+@keyframes wave {
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+.spin {
+  display: inline-block;
+  flex: none;
+  border: 2px solid var(--border-hover);
+  border-block-start-color: var(--case-color, var(--accent));
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+
+  .fill[data-mode='run'] {
+    animation: none;
+    transform: none;
+  }
+
+  .fill[data-mode='idle'] {
+    animation: none;
+    transform: none;
+    inline-size: 100%;
+    opacity: 0.5;
+  }
+
+  .dots i,
+  .spin {
+    animation: none;
+  }
+
+  .dots i {
+    opacity: 0.7;
+  }
+}

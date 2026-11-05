@@ -1,7 +1,11 @@
-/* Окно мессенджера: шапка, лента, пузыри. Углы острые, как везде на сайте */
+/* Окно мессенджера: шапка, лента, пузыри. Рамка окна острая, как везде на сайте;
+   пузыри скруглены и с хвостиком, это цитата интерфейса мессенджера */
 .chat {
   --chat-out: color-mix(in oklab, var(--case-color, var(--accent)) 28%, var(--bg-subtle));
   --chat-in: var(--bg-subtle);
+  --chat-spring: cubic-bezier(0.34, 1.45, 0.5, 1);
+  --chat-shade: rgb(0 0 0 / 0.22);
+  --bub-r: 14px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -14,6 +18,11 @@
 
 .chat[data-tone='wa'] {
   --chat-out: color-mix(in oklab, #25d366 22%, var(--bg-subtle));
+}
+
+/* Режим fit: высота по содержимому, block-size плавно догоняет ленту */
+.chat[data-fit] {
+  transition: block-size var(--dur-slow) var(--ease-out-expo);
 }
 
 .top {
@@ -62,6 +71,7 @@
   block-size: 7px;
   border-radius: 50%;
   background: var(--border-hover);
+  transition: background var(--dur-base) var(--ease-out-quart);
 }
 
 .dot[data-on] {
@@ -87,11 +97,19 @@
   list-style: none;
 }
 
+/* fit: лента занимает ровно своё содержимое, пустоты сверху нет */
+.chat[data-fit] .feed {
+  flex: none;
+  justify-content: flex-start;
+}
+
 .msg {
+  position: relative;
   display: grid;
   gap: 4px;
   max-inline-size: 84%;
-  animation: msgIn 480ms var(--ease-out-expo) both;
+  transform-origin: bottom left;
+  animation: msgIn 380ms var(--chat-spring) both;
 }
 
 .msg[data-side='in'] {
@@ -103,26 +121,45 @@
   justify-self: end;
   align-self: flex-end;
   text-align: end;
+  transform-origin: bottom right;
+}
+
+/* Серия подряд от одного автора: пузыри ближе друг к другу (без имени над ними) */
+.msg[data-side='in']:has(+ .msg[data-side='in']:not([data-named])),
+.msg[data-side='out']:has(+ .msg[data-side='out']:not([data-named])) {
+  margin-block-end: -5px;
 }
 
 @keyframes msgIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px) scale(0.94);
+  }
+
+  60% {
+    opacity: 1;
   }
 }
 
 .name {
+  padding-inline: 2px;
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--case-color, var(--accent));
 }
 
 .bubble {
+  --bub: var(--chat-in);
+  position: relative;
+  display: flow-root;
   padding: 10px 14px;
-  background: var(--chat-in);
+  border-radius: var(--bub-r);
+  background: var(--bub);
+  box-shadow:
+    0 1px 1px var(--chat-shade),
+    0 4px 10px -6px var(--chat-shade);
   font-size: 15px;
-  line-height: 1.4;
+  line-height: 20px;
   color: var(--fg-primary);
   text-align: start;
   white-space: pre-line;
@@ -130,7 +167,73 @@
 }
 
 .msg[data-side='out'] .bubble {
-  background: var(--chat-out);
+  --bub: var(--chat-out);
+}
+
+/* Хвостик: острый угол пузыря и вогнутый выступ из того же цвета */
+.msg[data-side='in'] .bubble {
+  border-end-start-radius: 0;
+}
+
+.msg[data-side='out'] .bubble {
+  border-end-end-radius: 0;
+}
+
+.msg[data-side='in'] .bubble::after,
+.msg[data-side='out'] .bubble::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inline-size: 8px;
+  block-size: 8px;
+  pointer-events: none;
+}
+
+.msg[data-side='in'] .bubble::after {
+  inset-inline-start: -8px;
+  background: radial-gradient(circle at 0 0, transparent 7.5px, var(--bub) 8px);
+}
+
+.msg[data-side='out'] .bubble::after {
+  inset-inline-end: -8px;
+  background: radial-gradient(circle at 100% 0, transparent 7.5px, var(--bub) 8px);
+}
+
+/* Не последний в серии (за ним идёт ещё один от того же автора): хвоста нет, угол круглый */
+.msg[data-side='in']:has(+ .msg[data-side='in']) .bubble,
+.msg[data-side='out']:has(+ .msg[data-side='out']) .bubble {
+  border-radius: var(--bub-r);
+}
+
+.msg[data-side='in']:has(+ .msg[data-side='in']) .bubble::after,
+.msg[data-side='out']:has(+ .msg[data-side='out']) .bubble::after {
+  display: none;
+}
+
+/* Явное tail на Msg перекрывает автоматику */
+.msg[data-tail='false'] .bubble {
+  border-radius: var(--bub-r);
+}
+
+.msg[data-tail='false'] .bubble::after,
+.msg[data-tone='ok'] .bubble::after {
+  display: none;
+}
+
+.msg[data-tone='ok'] .bubble {
+  border-radius: var(--bub-r);
+}
+
+.msg.msg.msg.msg[data-tail='true'][data-side='in'] .bubble {
+  border-end-start-radius: 0;
+}
+
+.msg.msg.msg.msg[data-tail='true'][data-side='out'] .bubble {
+  border-end-end-radius: 0;
+}
+
+.msg.msg.msg.msg[data-tail='true'] .bubble::after {
+  display: block;
 }
 
 .msg[data-tone='dim'] .bubble {
@@ -143,16 +246,59 @@
   outline-offset: -1px;
 }
 
-.time {
+/* Время и галочки в правом нижнем углу пузыря, обтекаются текстом */
+.meta {
+  display: inline-flex;
+  float: inline-end;
+  align-items: center;
+  gap: 4px;
+  margin-block: 6px -3px;
+  margin-inline-start: 12px;
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  line-height: 14px;
   color: var(--fg-tertiary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.msg[data-side='out'] .meta {
+  color: color-mix(in oklab, var(--fg-secondary) 80%, transparent);
+}
+
+.ticks {
+  flex: none;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+  color: var(--fg-tertiary);
+  transition: color var(--dur-base) var(--ease-out-quart);
+}
+
+.ticks[data-read] {
+  color: color-mix(in oklab, var(--case-color, var(--accent)) 65%, var(--fg-primary));
+}
+
+.tickB {
+  opacity: 0;
+  transform: translateX(-3px);
+  transition:
+    opacity var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-base) var(--ease-out-quart);
+}
+
+.ticks[data-read] .tickB {
+  opacity: 1;
+  transform: none;
 }
 
 .keys {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+  margin-block-start: 8px;
 }
 
 .keys[data-stack] .key {
@@ -160,73 +306,174 @@
 }
 
 .key {
+  position: relative;
   flex: 1;
   padding: 8px 10px;
   border: 1px solid var(--border-hover);
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--fg-primary) 3%, transparent);
   font-size: 13px;
+  line-height: 18px;
   color: var(--fg-primary);
   text-align: center;
   white-space: nowrap;
+  animation: keyIn 360ms var(--ease-out-expo) both;
+  animation-delay: calc(140ms + var(--i, 0) * 60ms);
   transition:
-    background var(--dur-base),
-    color var(--dur-base);
+    background var(--dur-base) var(--ease-out-quart),
+    border-color var(--dur-base) var(--ease-out-quart),
+    color var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-fast) var(--ease-out-quart);
+}
+
+@keyframes keyIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (hover: hover) {
+  .key:hover {
+    border-color: var(--fg-secondary);
+    background: color-mix(in oklab, var(--fg-primary) 8%, transparent);
+  }
+}
+
+.key:active {
+  transform: scale(0.97);
 }
 
 .key[data-press] {
   background: var(--case-color, var(--accent));
   border-color: var(--case-color, var(--accent));
   color: var(--fg-inverse);
+  animation:
+    keyIn 360ms var(--ease-out-expo) both,
+    tap 360ms var(--ease-out-quart) 1;
+  animation-delay: calc(140ms + var(--i, 0) * 60ms), 0ms;
+}
+
+/* Нажатие: короткое сжатие и вспышка поверх, дальше кнопка остаётся отмеченной */
+.key[data-press]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--fg-inverse);
+  opacity: 0;
+  pointer-events: none;
+  animation: flash 420ms var(--ease-out-quart) 1;
+}
+
+@keyframes tap {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(0.96);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 .sys {
   align-self: center;
   padding: 4px 10px;
-  background: var(--bg-subtle);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--bg-subtle) 80%, transparent);
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
+  line-height: 14px;
   color: var(--fg-tertiary);
   text-align: center;
-  animation: msgIn 480ms var(--ease-out-expo) both;
+  animation: sysIn 420ms var(--ease-out-expo) both;
+}
+
+@keyframes sysIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 
 .typing {
   display: flex;
-  gap: 4px;
-  padding-block: 14px;
+  align-items: center;
+  gap: 8px;
+  padding-block: 12px;
 }
 
-.typing i {
+.typingText {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  line-height: 14px;
+  color: var(--fg-tertiary);
+}
+
+.wave {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.wave i {
   inline-size: 6px;
   block-size: 6px;
   border-radius: 50%;
   background: var(--fg-tertiary);
-  animation: typing 1.1s ease-in-out infinite;
+  animation: wave 1.2s ease-in-out infinite;
 }
 
-.typing i:nth-child(2) {
-  animation-delay: 150ms;
+.wave i:nth-child(2) {
+  animation-delay: 160ms;
 }
 
-.typing i:nth-child(3) {
-  animation-delay: 300ms;
+.wave i:nth-child(3) {
+  animation-delay: 320ms;
 }
 
-@keyframes typing {
-  40% {
+@keyframes wave {
+  30% {
     transform: translateY(-4px);
     opacity: 1;
   }
 
   0%,
-  80%,
+  70%,
   100% {
     opacity: 0.4;
+  }
+}
+
+.msg[data-leaving] {
+  animation: msgOut 200ms var(--ease-out-quart) both;
+}
+
+@keyframes msgOut {
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
   }
 }
 
 @media (max-width: 767px) {
   .bubble {
     font-size: 14px;
+    line-height: 19px;
   }
 
   .feed {
@@ -237,8 +484,18 @@
 @media (prefers-reduced-motion: reduce) {
   .msg,
   .sys,
-  .typing i,
+  .key,
+  .key[data-press],
+  .key[data-press]::after,
+  .wave i,
   .dot[data-on] {
     animation: none;
+  }
+
+  .key,
+  .ticks,
+  .tickB,
+  .chat[data-fit] {
+    transition: none;
   }
 }
