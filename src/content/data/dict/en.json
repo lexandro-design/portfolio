@@ -16,9 +16,8 @@
     "menuClose": "Close menu",
     "theme": "Theme",
     "themes": {
-      "dark": "Dark theme",
-      "light": "Light theme",
-      "steel": "Steel theme"
+      "space": "Space",
+      "moon": "Moon"
     },
     "language": "Language",
     "search": "Search and commands"
@@ -271,7 +270,7 @@
         },
         {
           "title": "Background",
-          "text": "The steel sheet is a WebGL shader, with no image textures."
+          "text": "The Moon and the stars run on WebGL2. A script bakes the map of seas and craters, no photo involved."
         }
       ],
       "numbers": {

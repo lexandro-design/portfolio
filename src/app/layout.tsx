@@ -5,8 +5,7 @@ import { Nav } from '@/components/layout/Nav'
 import { CommandPalette, type PaletteCase } from '@/components/layout/CommandPalette/CommandPalette'
 import { getCases } from '@/content/cases-i18n'
 import { features } from '@/content/site'
-import { Steel } from '@/components/layout/Steel'
-import { Fitting, Surface } from '@/components/layout/Surface'
+import { Sky } from '@/components/layout/Sky'
 import { LOCALES, type Locale } from '@/i18n/config'
 import { ThemeScript } from '@/components/layout/ThemeScript'
 import { Metrika } from '@/components/layout/Metrika'
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a0a',
+  themeColor: '#000000',
 }
 
 /* Один корневой layout на все языки: <html lang> для /en, /zh, /ja
@@ -45,13 +44,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeScript />
       </head>
       <body>
-        {features.steel && <Steel />}
-        {features.fitting && <Surface />}
+        <Sky />
         <Nav />
         <main>{children}</main>
         <Footer />
         {features.palette && <CommandPalette index={paletteIndex} />}
-        {features.fitting && <Fitting />}
         <Metrika />
       </body>
     </html>

@@ -9,18 +9,18 @@ export const contacts = data.contacts
 
 export const COORDS = data.coords
 
-export type Theme = 'dark' | 'light' | 'steel'
+export type Theme = 'space' | 'moon'
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
-export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean; fitting: boolean }
+export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean }
 
-/** Порядок кнопок в переключателе. Сталь отключается своим флагом */
-export const THEMES: Theme[] = ['dark', 'light', ...(features.steel ? (['steel'] as const) : [])]
+/** Порядок кнопок в переключателе */
+export const THEMES: Theme[] = ['space', 'moon']
 
 /** Тема для тех, кто ещё не выбирал сам */
 export const DEFAULT_THEME = (THEMES as string[]).includes(data.defaultTheme)
   ? (data.defaultTheme as Theme)
-  : 'dark'
+  : 'space'
 
 /** Цвета акцента, которые можно выбрать в песочнице блока «Система» */
 export const SANDBOX_ACCENTS: string[] = data.sandbox.accents

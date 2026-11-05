@@ -96,7 +96,12 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section id="about" className={styles.section}>
         <div className="container">
           <SectionHeader index={sectionIndex('about')} copy={t.sections.about} />
-          <About t={t.about} where={t.works.where} counts={counts} />
+          <About
+            t={t.about}
+            photo={{ alt: t.hero.photoAlt, caption: t.hero.photoCaption }}
+            where={t.works.where}
+            counts={counts}
+          />
         </div>
       </section>
 

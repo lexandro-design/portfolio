@@ -21,11 +21,7 @@
   --cast-warn: #e8604a;
 }
 
-:global([data-theme='light']) :is(.sheet, .desks, .sketch, .doc) {
-  --cast-warn: #c0341d;
-}
-
-:global([data-theme='steel']) :is(.sheet, .desks, .sketch, .doc) {
+:global([data-theme='moon']) :is(.sheet, .desks, .sketch, .doc) {
   --cast-warn: #8f1d0a;
 }
 
