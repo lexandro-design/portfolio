@@ -38,6 +38,23 @@
   position: relative;
 }
 
+/* Снимок лежит над хромовым узлом и бросает на него тень */
+.photo[data-chrome] > figure {
+  position: relative;
+  z-index: 1;
+}
+
+.photo[data-chrome] > figure > div:first-child {
+  box-shadow: -20px 18px 48px rgb(0 0 0 / 0.42);
+}
+
+/* Одна колонка: снимок уступает узлу место справа. Условия те же, при которых узел виден */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  :global(html:not([data-theme='calm'], [data-theme='space'])) .photo[data-chrome] {
+    max-inline-size: 70%;
+  }
+}
+
 .title {
   font-size: clamp(56px, 5.8vw, calc(var(--type-h1) * 0.72));
   font-weight: 450;

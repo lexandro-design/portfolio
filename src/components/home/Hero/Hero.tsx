@@ -49,9 +49,9 @@ export function Hero({ t, calm, locale }: Props) {
           ))}
         </h1>
 
-        <div className={styles.photo}>
-          <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
+        <div className={styles.photo} data-chrome={features.chrome || undefined}>
           {features.chrome && <HeroChrome />}
+          <HeroPhoto alt={t.photoAlt} caption={t.photoCaption} />
         </div>
         <div className={styles.moon} data-moon="" aria-hidden="true" />
       </div>

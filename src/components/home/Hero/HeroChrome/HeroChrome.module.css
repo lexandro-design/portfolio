@@ -1,27 +1,60 @@
-/* Заходит на левый нижний угол фото: связывает снимок с заголовком и не касается текста */
+/* В свободном месте между заголовком и фото, правый край уходит за снимок */
 .chrome {
+  --max: 360px;
+  --size: min(var(--max), var(--room, 100vw));
   position: absolute;
-  inset-block-end: -5%;
-  inset-inline-start: -19%;
-  z-index: 1;
-  inline-size: 46%;
-  block-size: auto;
+  inset-block-end: 8%;
+  inset-inline-end: calc(100% - var(--size) * 0.23);
+  z-index: 0;
+  inline-size: var(--size);
   pointer-events: none;
   animation: appear var(--dur-reveal) var(--ease-out-expo) both;
+}
+
+.chrome[data-tight] {
+  display: none;
+}
+
+.chrome img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+/* Пятно под узлом: на тёмном свет, на светлом тень */
+.chrome::after {
+  content: '';
+  position: absolute;
+  inset-inline: 12% 10%;
+  inset-block-end: -9%;
+  block-size: 14%;
+  background: radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--fg-primary) 24%, transparent), transparent 100%);
 }
 
 @keyframes appear {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateX(24px);
   }
 }
 
-/* Одна колонка: фото на всю ширину, узел в правом нижнем углу */
+@media (max-width: 1199px) {
+  .chrome {
+    --max: 250px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .chrome {
+    --max: 176px;
+  }
+}
+
+/* Одна колонка: фото уже, узел справа от него и уходит за край экрана */
 @media (max-width: 767px) {
   .chrome {
-    inset-inline: auto 3%;
-    inset-block-end: 7%;
-    inline-size: 34%;
+    --size: 58%;
+    inset-block-end: 22%;
+    inset-inline: auto -44%;
   }
 }
