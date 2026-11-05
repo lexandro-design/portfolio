@@ -3,7 +3,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { asset } from '@/lib/asset'
 import type { SceneProps } from '../types'
-import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Title, Typing, usePlay } from '../kit'
+import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Title, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
 
@@ -103,10 +103,11 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   // Первый экран и листание не ждут: сообщение бота уже на месте, обложка и кнопки видны с первой секунды
   const quiet = step === 0
   const typing = !quiet && n < 2
-  const leaving = n === 1
-  const reply = quiet || n >= 2
-  const follow = n >= 3
-  const press = n >= 4 ? 0 : undefined
+  // Как в настоящем Telegram: пока бот печатает (это видно в шапке), прошлое сообщение стоит на месте, окно не пустеет
+  const shown = typing ? step - 1 : step
+  const past = shown < step
+  const follow = past || n >= 3
+  const press = past || n >= 4 ? 0 : undefined
   const said = (l: string[]) => l.map((x) => x.replace('{d}', DASH)).join('\n')
 
   const side = [d.cols[0], d.cols[1], d.cols[2], d.cols[3]]
@@ -160,7 +161,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
 
           <div className={styles.phone}>
             <Chat title={d.chat.title} sub={typing ? d.chat.typing : d.chat.sub} avatar={<Logo />} live={play.playing} className={styles.chat}>
-              {step === 0 && (
+              {shown === 0 && (
                 <>
                   <Msg side="in" time={d.start.time} tail={false} className={styles.first}>
                     <span className={styles.cover}>
@@ -171,31 +172,21 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   <Pad rows={[{ items: d.start.pager }, { items: d.start.keys, stack: true }]} />
                 </>
               )}
-              {step === 1 && (
+              {shown === 1 && (
                 <>
-                  {typing && <Typing leaving={leaving} />}
-                  {reply && (
-                    <>
-                      <Msg side="in" time={CLOCK[1]} tail={false} className={styles.first}>
-                        <Pic src={TEMPLATE} className={styles.pic} />
-                        <span className={styles.said}>{said(d.demo.text)}</span>
-                      </Msg>
-                      <Pad rows={[{ items: d.demo.pager }, { items: d.demo.keys, stack: true, pressed: press }]} />
-                    </>
-                  )}
+                  <Msg side="in" time={CLOCK[1]} tail={false} className={styles.first}>
+                    <Pic src={TEMPLATE} className={styles.pic} />
+                    <span className={styles.said}>{said(d.demo.text)}</span>
+                  </Msg>
+                  <Pad rows={[{ items: d.demo.pager }, { items: d.demo.keys, stack: true, pressed: press }]} />
                 </>
               )}
-              {step === 2 && (
+              {shown === 2 && (
                 <>
-                  {typing && <Typing leaving={leaving} />}
-                  {reply && (
-                    <>
-                      <Msg side="in" time={CLOCK[2]} tail={false} className={styles.first}>
-                        <span className={styles.said}>{said(d.upload.text)}</span>
-                      </Msg>
-                      <Pad rows={[{ items: d.upload.keys, stack: true, pressed: press }]} />
-                    </>
-                  )}
+                  <Msg side="in" time={CLOCK[2]} tail={false} className={styles.first}>
+                    <span className={styles.said}>{said(d.upload.text)}</span>
+                  </Msg>
+                  <Pad rows={[{ items: d.upload.keys, stack: true, pressed: press }]} />
                   {follow && (
                     <Msg side="out" time={CLOCK[2]} status={press === 0 ? 'read' : 'sent'} className={styles.selfies}>
                       <span className={styles.shots}>
@@ -207,45 +198,30 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                   )}
                 </>
               )}
-              {step === 3 && (
+              {shown === 3 && (
                 <>
-                  {typing && <Typing leaving={leaving} />}
-                  {reply && (
-                    <>
-                      <Msg side="in" time={CLOCK[3]} tail={false} className={styles.first}>
-                        <span className={styles.said}>{said(d.gen.text)}</span>
-                        <Progress run={SPANS[3] - MARKS[1]} label={d.gen.eta} className={styles.prog} />
-                      </Msg>
-                      <Pad rows={[{ items: d.gen.pager }]} />
-                    </>
-                  )}
+                  <Msg side="in" time={CLOCK[3]} tail={false} className={styles.first}>
+                    <span className={styles.said}>{said(d.gen.text)}</span>
+                    <Progress run={SPANS[3] - MARKS[1]} label={d.gen.eta} className={styles.prog} />
+                  </Msg>
+                  <Pad rows={[{ items: d.gen.pager }]} />
                 </>
               )}
-              {step === 4 && (
+              {shown === 4 && (
                 <>
-                  {typing && <Typing leaving={leaving} />}
-                  {reply && (
-                    <>
-                      <Msg side="in" tone="ok" time={CLOCK[4]} tail={false} className={styles.first}>
-                        <Pic src={byId.red.you ?? byId.red.src} className={styles.pic} />
-                        <span className={styles.said}>{said(d.done.text)}</span>
-                      </Msg>
-                      <Pad rows={[{ items: d.done.keys, stack: true, pressed: press }]} />
-                    </>
-                  )}
+                  <Msg side="in" tone="ok" time={CLOCK[4]} tail={false} className={styles.first}>
+                    <Pic src={byId.red.you ?? byId.red.src} className={styles.pic} />
+                    <span className={styles.said}>{said(d.done.text)}</span>
+                  </Msg>
+                  <Pad rows={[{ items: d.done.keys, stack: true, pressed: press }]} />
                 </>
               )}
-              {step === 5 && (
+              {shown === 5 && (
                 <>
-                  {typing && <Typing leaving={leaving} />}
-                  {reply && (
-                    <>
-                      <Msg side="in" time={CLOCK[5]} tail={false} className={styles.first}>
-                        <span className={styles.said}>{d.menu.text}</span>
-                      </Msg>
-                      <Pad rows={[{ items: d.menu.keys, stack: true, pressed: press }]} />
-                    </>
-                  )}
+                  <Msg side="in" time={CLOCK[5]} tail={false} className={styles.first}>
+                    <span className={styles.said}>{d.menu.text}</span>
+                  </Msg>
+                  <Pad rows={[{ items: d.menu.keys, stack: true, pressed: press }]} />
                 </>
               )}
             </Chat>
