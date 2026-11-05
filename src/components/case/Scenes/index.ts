@@ -19,7 +19,7 @@ export const SCENES: Record<string, ComponentType<SceneProps>> = {
   // 'packaging-bots': dynamic(() => import('./packaging-bots/Scene').then((m) => m.Scene)),
   'mail-to-crm': dynamic(() => import('./mail-to-crm/Scene').then((m) => m.Scene)),
   'salon-booking': dynamic(() => import('./salon-booking/Scene').then((m) => m.Scene)),
-  // 'art-school': dynamic(() => import('./art-school/Scene').then((m) => m.Scene)),
+  'art-school': dynamic(() => import('./art-school/Scene').then((m) => m.Scene)),
   // 'rag-mentor': dynamic(() => import('./rag-mentor/Scene').then((m) => m.Scene)),
   // 'fitness-bot': dynamic(() => import('./fitness-bot/Scene').then((m) => m.Scene)),
   // 'uni-bot': dynamic(() => import('./uni-bot/Scene').then((m) => m.Scene)),
