@@ -1,5 +1,5 @@
 {
-  "chat": { "title": "MiMiMi AI", "sub": "бот в Telegram" },
+  "chat": { "title": "MiMiMi AI", "sub": "бот в Telegram", "typing": "печатает…" },
   "wall": { "title": "стена шаблонов", "note": "кадры лежат в базе и меняются без кода" },
   "tiles": [
     { "id": "studio", "src": "/cases/mimimibot/gen/tpl-studio.webp", "you": "/cases/mimimibot/gen/you-studio.webp" },

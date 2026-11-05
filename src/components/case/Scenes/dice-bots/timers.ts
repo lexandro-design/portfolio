@@ -3,17 +3,19 @@
 import { useEffect, useState } from 'react'
 
 /**
- * true, когда on выключен, и через ms после включения. Нужен, чтобы ответ бота
- * появлялся после паузы на анимацию, а у уже сыгранных бросков был виден сразу
+ * Номер фазы: 0 до первой отметки, дальше +1 на каждую (marks в мс от появления).
+ * Когда on выключен (бросок уже сыгран), сразу последняя фаза, чтобы история чата
+ * показывалась целиком. Нужен для цепочки «ждём анимацию, печатает, ответ»
  */
-export function useAfter(on: boolean, ms: number) {
-  const [done, setDone] = useState(false)
+export function usePhase(on: boolean, marks: number[]) {
+  const [n, setN] = useState(0)
+  const key = marks.join(',')
   useEffect(() => {
     if (!on) return
-    const id = window.setTimeout(() => setDone(true), ms)
-    return () => window.clearTimeout(id)
-  }, [on, ms])
-  return !on || done
+    const ids = key.split(',').map((m, i) => window.setTimeout(() => setN(i + 1), Number(m)))
+    return () => ids.forEach((id) => window.clearTimeout(id))
+  }, [on, key])
+  return on ? n : marks.length
 }
 
 /** Значение растёт с задержкой ms (счётчик ждёт ответа бота), а падает сразу */

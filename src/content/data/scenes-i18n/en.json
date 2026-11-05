@@ -438,20 +438,15 @@
       "note": "Prizes of one of the four bots. The others have the same values, higher prizes."
     },
     "wait": "waiting for the animation to end",
+    "typing": "typing…",
     "miss": "a miss, the bot stays silent",
     "reply": {
       "lucky": "🍀You're lucky, {name}!🍀\n{left} more to go\nand you'll get {prize}⭐️",
       "won": "🎉 Congratulations, {name}!\nWe've sent you {prize}⭐️, expect it within a few minutes! 🎁",
       "keysLucky": [
-        "Games for 50⭐️",
-        "Games for 100⭐️",
-        "Games for 250⭐️",
         "🔗Our channel🔗"
       ],
       "keysWon": [
-        "Games for 50⭐️",
-        "Games for 100⭐️",
-        "Games for 250⭐️",
         "🔗Our channel🔗"
       ]
     },
@@ -493,7 +488,7 @@
         "cap": "\"New winner\" goes to the admin: nickname, ID, combination, time. The player's counter resets."
       },
       {
-        "cap": "A bullseye in darts pays at once. Bowling and the ball work the same way: each emoji has its own values and its own prizes."
+        "cap": "A bullseye in darts pays at once. Bowling and basketball work the same way: each emoji has its own values and its own prizes."
       },
       {
         "cap": "One mechanism for five emojis. The game runs on its own, the admin steps in only for the payout."
@@ -1338,7 +1333,8 @@
   "mimimibot": {
     "chat": {
       "title": "MiMiMi AI",
-      "sub": "Telegram bot"
+      "sub": "Telegram bot",
+      "typing": "typing…"
     },
     "wall": {
       "title": "template wall",

@@ -83,7 +83,7 @@
     ]
   },
   "mimimibot": {
-    "chat": { "title": "MiMiMi AI", "sub": "Telegram 机器人" },
+    "chat": { "title": "MiMiMi AI", "sub": "Telegram 机器人", "typing": "正在输入…" },
     "wall": { "title": "模板墙", "note": "画面存在数据库里，无需改代码" },
     "tiles": [
       { "id": "studio", "src": "/cases/mimimibot/gen/tpl-studio.webp", "you": "/cases/mimimibot/gen/you-studio.webp" },
@@ -1250,12 +1250,13 @@
       "note": "这是四个机器人之一的奖品。其他机器人规则相同，奖品更高。"
     },
     "wait": "等动画结束",
+    "typing": "正在输入…",
     "miss": "没中，机器人不出声",
     "reply": {
       "lucky": "🍀{name}，你运气不错！🍀\n再中 {left} 次\n就能拿到 {prize}⭐️",
       "won": "🎉 恭喜 {name}！\n我们已向您发送 {prize}⭐️，请在几分钟内查收！🎁",
-      "keysLucky": ["50⭐️ 的游戏", "100⭐️ 的游戏", "250⭐️ 的游戏", "🔗我们的频道🔗"],
-      "keysWon": ["50⭐️ 的游戏", "100⭐️ 的游戏", "250⭐️ 的游戏", "🔗我们的频道🔗"]
+      "keysLucky": ["🔗我们的频道🔗"],
+      "keysWon": ["🔗我们的频道🔗"]
     },
     "adminCard": "🎉 新的中奖者！\n\n🪪 用户名：@{name}\n🆔 Telegram ID：{id}\n🎰 组合：{combo}\n🕐 中奖时间：{time}\n\n🔗 查看资料：https://t.me/{name}",
     "players": [

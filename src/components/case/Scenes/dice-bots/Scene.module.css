@@ -12,6 +12,10 @@
     'rules chat admin';
   gap: var(--space-sm) var(--space-md);
   block-size: 660px;
+}
+
+/* Стол и подпись с панелью под ним: на телефоне подпись идёт сразу за чатом */
+.table {
   margin-block-start: var(--space-2xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
 }
@@ -196,35 +200,35 @@
   place-items: start;
 }
 
+.sticker > div {
+  --bub: transparent;
+  box-shadow: none;
+}
+
 .wait {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 10px;
+  gap: 6px 10px;
+  max-inline-size: 260px;
   margin-block-start: 6px;
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   color: var(--fg-tertiary);
+  animation: fade 360ms ease both;
 }
 
-.wait i {
-  position: relative;
-  inline-size: 56px;
-  block-size: 2px;
-  background: var(--border-hover);
+.wait[data-done] {
+  color: var(--fg-secondary);
 }
 
-.wait i::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--case-color, var(--accent));
-  transform-origin: left;
-  animation: fillBar 2700ms linear both;
+.progress {
+  grid-column: 1 / -1;
 }
 
-@keyframes fillBar {
+@keyframes fade {
   from {
-    transform: scaleX(0);
+    opacity: 0;
   }
 }
 
@@ -237,23 +241,7 @@
 }
 
 .verdict[data-late] {
-  animation: fade 400ms ease 2.5s both;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-}
-
-.reply > div {
-  outline: 1px solid var(--case-color, var(--accent));
-  outline-offset: -1px;
-}
-
-.keys {
-  display: block;
-  margin-block-start: 10px;
+  animation: fade 400ms ease 1.5s both;
 }
 
 .card {
@@ -322,18 +310,39 @@
 }
 
 @media (max-width: 767px) {
-  .stage {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 540px auto auto 380px;
-    grid-template-areas:
-      'chat'
-      'board'
-      'rules'
-      'admin';
+  .table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
     margin-block-start: var(--space-lg);
   }
 
+  /* Ячейки стола разложены по порядку: чат, подпись с панелью, счётчик, правила, админ */
+  .stage {
+    display: contents;
+  }
+
+  .chat {
+    order: 1;
+    block-size: 520px;
+  }
+
+  .under {
+    order: 2;
+    margin-block-start: 0;
+  }
+
+  .board {
+    order: 3;
+  }
+
+  .rules {
+    order: 4;
+  }
+
   .admin {
+    order: 5;
+    block-size: 320px;
     min-block-size: 0;
   }
 
@@ -341,12 +350,16 @@
   .rules {
     padding: 14px;
   }
+
+  .fine {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage,
+  .table,
   .verdict[data-late],
-  .wait i::after {
+  .wait {
     animation: none;
   }
 }
