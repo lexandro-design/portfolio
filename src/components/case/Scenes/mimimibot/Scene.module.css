@@ -6,8 +6,8 @@
 .stage {
   --g: 16px;
   position: relative;
-  --chat-h: 812px;
-  min-block-size: calc(var(--chat-h) + 140px);
+  --chat-h: clamp(720px, calc(100vh - 112px), 840px);
+  min-block-size: calc(var(--chat-h) + 148px);
   margin-block-start: var(--space-xl);
   animation: rise var(--dur-reveal) var(--ease-out-expo) both;
 }
@@ -22,39 +22,100 @@
 /* Стена: шесть колонок, средние две спрятаны под чатом. Колонки сдвинуты, как доска пинов */
 .wall {
   position: absolute;
-  inset: 0 0 150px;
+  inset: 0 0 158px;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: var(--g);
   align-items: start;
-  /* Очень широкий экран: нижний ряд обрезается над подписью, рамка активного кадра сверху и с боков целая */
-  clip-path: inset(-8px -8px 0);
+  /* Нижний ряд обрезается над подписью. Сверху запас под параллакс и рамку активного кадра */
+  clip-path: inset(-48px -8px 0);
+}
+
+/* Блик по стене: широкая полоса света идёт редко и медленно, как отражение на металле */
+.wall::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  inline-size: 34%;
+  background: linear-gradient(105deg, transparent 20%, rgb(255 255 255 / 0.1) 48%, rgb(255 255 255 / 0.2) 50%, rgb(255 255 255 / 0.1) 52%, transparent 80%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage[data-live] .wall::after {
+  animation: pass 11s var(--ease-in-out) 1.2s infinite;
+}
+
+@keyframes pass {
+  0% {
+    opacity: 1;
+    transform: translateX(-110%);
+  }
+
+  36% {
+    opacity: 1;
+    transform: translateX(310%);
+  }
+
+  37%,
+  100% {
+    opacity: 0;
+    transform: translateX(310%);
+  }
 }
 
 .col {
+  --drift: 18px;
   display: grid;
   gap: var(--g);
 }
 
+/* Параллакс без скрипта: колонки едут с разной скоростью, пока сцена проходит экран */
+@supports (animation-timeline: view()) {
+  @media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
+    .col {
+      animation: drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translateY(var(--drift));
+  }
+
+  to {
+    transform: translateY(calc(var(--drift) * -1));
+  }
+}
+
 .col[data-i='0'] {
+  --drift: 30px;
   margin-block-start: 56px;
 }
 
 .col[data-i='1'] {
+  --drift: -22px;
   margin-block-start: 8px;
 }
 
 .col[data-i='4'] {
+  --drift: -30px;
   margin-block-start: 40px;
 }
 
 .col[data-i='5'] {
+  --drift: 22px;
   margin-block-start: 0;
 }
 
+/* Кадры под чатом: не прозрачные, а притушенные, иначе на светлых темах стена становится мутной */
 .col[data-hide] {
   margin-block-start: 24px;
-  opacity: 0.35;
+  filter: brightness(0.5) saturate(0.8);
 }
 
 .tile {
@@ -65,14 +126,59 @@
   outline: 2px solid transparent;
   outline-offset: 4px;
   transition:
-    opacity var(--dur-slow) var(--ease-out-quart),
     filter var(--dur-slow) var(--ease-out-quart),
     outline-color var(--dur-base);
 }
 
+.tile[data-tall] {
+  aspect-ratio: 9 / 16;
+}
+
 .tile[data-s='idle'] {
-  opacity: 0.72;
-  filter: saturate(0.7);
+  filter: brightness(0.9);
+}
+
+/* Зерно плёнки на каждом кадре: стена и окно чата становятся одной фактурой */
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Блик по кадру, когда с ним что-то происходит в чате */
+.tile::after,
+.media[data-glint]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(112deg, transparent 32%, rgb(255 255 255 / 0.34) 48%, rgb(255 255 255 / 0.06) 56%, transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tile[data-s='look']::after,
+.tile[data-s='pick']::after,
+.tile[data-s='you']::after,
+.media[data-glint]::after {
+  animation: glint 1300ms var(--ease-out-quart) 240ms both;
+}
+
+@keyframes glint {
+  from {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(100%);
+  }
 }
 
 .tile[data-s='look'],
@@ -192,9 +298,10 @@
   inset-block-start: 0;
   inset-inline-start: 50%;
   display: grid;
-  gap: 8px;
-  inline-size: max(320px, calc((100% - 5 * var(--g)) / 3 + var(--g)));
-  max-inline-size: 400px;
+  gap: 16px;
+  z-index: 3;
+  inline-size: max(344px, calc((100% - 5 * var(--g)) / 3 + var(--g)));
+  max-inline-size: 430px;
   transform: translateX(-50%);
 }
 
@@ -202,30 +309,35 @@
   block-size: var(--chat-h);
 }
 
-/* Окно фиксированной высоты: шаги не двигают страницу, лента от верха */
-.chat > ol {
-  justify-content: flex-start;
+/* Фото во всю ширину пузыря, как в Telegram: пузырь отдаёт ему свои поля */
+.media {
+  position: relative;
+  display: block;
+  margin: -8px -12px 8px;
+  overflow: hidden;
+  border-radius: var(--bub-r) var(--bub-r) 4px 4px;
 }
 
-
-.first .pic {
-  aspect-ratio: 1;
-  object-position: 50% 24%;
-}
-
-.pic {
+.shot {
   display: block;
   inline-size: 100%;
-  aspect-ratio: 3 / 4;
-  margin-block-end: 10px;
+  block-size: auto;
+  aspect-ratio: 1;
   object-fit: cover;
+  object-position: 50% 10%;
   animation: swap 520ms var(--ease-out-expo) both;
+}
+
+/* Шаблон с тремя рядами кнопок: снимок ниже, иначе лицо уезжает под шапку окна */
+.media[data-low] .shot {
+  aspect-ratio: 5 / 4;
+  object-position: 50% 14%;
 }
 
 @keyframes swap {
   from {
     opacity: 0;
-    transform: translateX(14px);
+    transform: scale(1.04);
   }
 }
 
@@ -237,16 +349,14 @@
   max-inline-size: 70%;
 }
 
-/* Первое сообщение как у настоящего бота: обложка во всю ширину пузыря, текст как в оригинале, кнопки под ним */
+/* Сообщения бота шириной с кнопки, как у настоящего: обложка, текст, под ними клавиатура */
 .first {
-  inline-size: 94%;
-  max-inline-size: 94%;
+  inline-size: 100%;
+  max-inline-size: 100%;
 }
 
 .said {
   display: block;
-  font-size: 13px;
-  line-height: 17px;
   text-align: start;
   white-space: pre-wrap;
 }
@@ -254,29 +364,30 @@
 .real {
   display: grid;
   gap: 4px;
-  inline-size: 94%;
+  inline-size: 100%;
   align-self: flex-start;
+  margin-block-end: 6px;
 }
 
 .real > span {
   margin-block-start: 0;
-  gap: 3px;
+  gap: 4px;
 }
 
 .real > span > span {
-  padding: 5px 8px;
-  font-size: 12px;
-  line-height: 16px;
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 18px;
   white-space: normal;
 }
 
 .cover {
   position: relative;
   display: block;
-  aspect-ratio: 3 / 2;
-  margin: -10px -14px 8px;
+  aspect-ratio: 1;
+  margin: -8px -12px 8px;
   overflow: hidden;
-  border-radius: var(--bub-r) var(--bub-r) 0 0;
+  border-radius: var(--bub-r) var(--bub-r) 4px 4px;
   background: #d9b48c;
 }
 
@@ -285,7 +396,7 @@
   block-size: 100%;
   aspect-ratio: auto;
   margin: 0;
-  object-position: 50% 6%;
+  object-fit: cover;
 }
 
 /* Логотип заполняет кружок шапки целиком */
@@ -341,6 +452,22 @@
   animation: tagIn 400ms var(--ease-out-quart) both;
 }
 
+/* Журнал сервера: шаги копятся, текущий ярче. Панель не пустеет, высота та же */
+.log {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  list-style: none;
+}
+
+.log li {
+  opacity: 0.55;
+}
+
+.log li[data-now] {
+  opacity: 1;
+}
+
 .speed {
   display: grid;
   gap: 6px;
@@ -380,7 +507,7 @@
   inset-inline: 0;
   inset-block-end: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(320px, calc((100% - 5 * var(--g)) / 3 + var(--g)), 400px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) clamp(344px, calc((100% - 5 * var(--g)) / 3 + var(--g)), 430px) minmax(0, 1fr);
   gap: var(--space-xs) var(--space-lg);
   align-items: end;
 }
@@ -414,7 +541,7 @@
 /* Планшет и телефон: стена превращается в ленту над чатом */
 @media (max-width: 1099px) {
   .stage {
-    --chat-h: 842px;
+    --chat-h: 760px;
     display: grid;
     gap: var(--space-md);
     justify-items: center;
@@ -422,11 +549,26 @@
   }
 
   .wall {
-    position: static;
+    position: relative;
+    inset: auto;
     clip-path: none;
     grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 8px;
     inline-size: 100%;
+  }
+
+  /* Зерно и общий блик только на большой стене: на телефоне кадры маленькие, а смешивание дорогое */
+  .tile::before,
+  .wall::after {
+    display: none;
+  }
+
+  .tile[data-extra] {
+    display: none;
+  }
+
+  .tile[data-tall] {
+    aspect-ratio: 3 / 4;
   }
 
   .col {
@@ -452,6 +594,10 @@
     transform: none;
   }
 
+  .dock {
+    margin-block-start: 0;
+  }
+
   .under {
     position: static;
     grid-template-columns: minmax(0, 1fr);
@@ -468,7 +614,7 @@
 
 @media (max-width: 599px) {
   .stage {
-    --chat-h: 792px;
+    --chat-h: 700px;
     margin-block-start: var(--space-lg);
   }
 
@@ -497,8 +643,11 @@
   .tag,
   .sweep,
   .fill,
-  .pic,
+  .shot,
   .selfie,
+  .tile::after,
+  .media[data-glint]::after,
+  .stage[data-live] .wall::after,
   .bar i,
   .dock,
   .speed i {
