@@ -4,7 +4,7 @@ import type { CastMedia } from '@/content/casts'
 import { asset } from '@/lib/asset'
 import styles from './Cast.module.css'
 
-const SIZE = { '16:10': [800, 500], '1:1': [640, 640] } as const
+const SIZE = { '16:10': [800, 500], '1:1': [640, 640], '3:4': [600, 800] } as const
 
 /** Настоящий кадр или петля в записи экрана: место держит пропорция, видео грузится только на экране */
 export function Frame({ media, alt = '' }: { media: CastMedia; alt?: string }) {
@@ -27,6 +27,7 @@ export function Frame({ media, alt = '' }: { media: CastMedia; alt?: string }) {
     // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет
     <img
       className={styles.frame}
+      data-tall={media.ratio === '3:4' || undefined}
       src={asset(media.src)}
       alt={media.alt ?? alt}
       width={width}

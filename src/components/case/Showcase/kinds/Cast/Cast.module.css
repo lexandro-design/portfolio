@@ -121,6 +121,7 @@
 .in p,
 .out p {
   padding: 9px 12px;
+  white-space: pre-line;
 }
 
 .in p {
@@ -155,6 +156,10 @@
   transition:
     background-color 200ms var(--ease-out-quart),
     color 200ms var(--ease-out-quart);
+}
+
+.btns[data-stack] .btn {
+  flex-basis: 100%;
 }
 
 .btn[data-press] {
@@ -196,6 +201,33 @@
 
 .frames .frame {
   inline-size: 100%;
+}
+
+/* Несколько вертикальных кадров одним сообщением, как альбом в чате */
+.frames[data-n='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  inline-size: min(300px, 100%);
+}
+
+.frames[data-n='1'] {
+  grid-template-columns: minmax(0, 1fr);
+  inline-size: min(150px, 100%);
+}
+
+.in:has(> .frame[data-tall]) {
+  max-inline-size: min(84%, 260px);
+}
+
+.frame[data-tall] {
+  inline-size: 100%;
+}
+
+.frames .frame[data-tall] {
+  inline-size: 100%;
+}
+
+.root[data-tall] .screen {
+  block-size: clamp(560px, 45vw, 640px);
 }
 
 .photos {

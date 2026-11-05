@@ -2,128 +2,226 @@
  "mimimibot": {
   "app": "MiMiMi AI",
   "sub": "bot",
+  "note": "Illustration, mood only. Not a result or a client photo. The heroine is fictional.",
   "view": {
-   "title": "The bot's four processes",
+   "title": "Shots live in the database and change without code",
    "rows": [
     {
      "c": [
-      "request intake"
+      "vacation"
      ]
     },
     {
      "c": [
-      "generation queue"
+      "studio"
      ]
     },
     {
      "c": [
-      "payment"
+      "New York"
      ]
     },
     {
      "c": [
-      "delivery of the result"
+      "retro"
+     ]
+    },
+    {
+     "c": [
+      "café"
+     ]
+    },
+    {
+     "c": [
+      "evening"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "The person opens the bot and picks a photoshoot.",
+    "cap": "The person taps /start. A carousel of ready-made shots comes first.",
     "log": "dialog start: one PostgreSQL function, 60 ms instead of ~2 s",
     "msg": {
-     "text": "Which photoshoot are we doing?",
+     "label": "Carousel of examples",
+     "text": "MIMIMI: a neural network that makes those Pinterest photos. No prompts, everything in one click! Scroll and see what I can do 👇",
      "btns": [
-      "Vacation",
-      "Studio"
-     ]
-    },
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "Taps “Vacation”.",
-    "log": "each button leads to its own branch of the scenario",
-    "msg": {}
-   },
-   {
-    "cap": "The bot shows a carousel of ready shots. The owner fills it, no code needed.",
-    "log": "shots and captions are in the database, changed through the admin panel",
-    "msg": {
-     "label": "Vacation",
-     "btns": [
-      "Generate this shot"
+      "Try for free"
      ]
     }
    },
    {
-    "cap": "Likes a shot: the person presses “Generate”.",
-    "msg": {}
+    "cap": "The slides flip in the same message: the bot edits it instead of sending a new one.",
+    "log": "shots and captions live in the database"
    },
    {
-    "cap": "The first shot is free. The bot asks for a photo and explains which kind works.",
-    "log": "the trial shot is given once",
+    "cap": "Studio, city, retro, mirror, sea: these are template shots, the owner fills them in."
+   },
+   {
+    "cap": "The person taps “Try for free”."
+   },
+   {
+    "cap": "The bot shows three demo shots to choose from. No prompt, no settings.",
+    "log": "demo shots: a separate table",
     "msg": {
-     "text": "Let's start with a trial shot. Send a photo: face clearly visible, no glasses or shadows."
+     "label": "Demo shots",
+     "text": "Browse the carousel, pick the shot that speaks to you most and tap the button below. 👇",
+     "btns": [
+      "Generate this exact shot",
+      "Do I need prompts?"
+     ]
     }
    },
    {
-    "cap": "The person sends a photo right into the chat.",
-    "log": "photo saved",
-    "msg": {
-     "label": "photo"
-    },
-    "v": [
-     {}
-    ]
+    "cap": "Scrolls on."
    },
    {
-    "cap": "The request joins the generation queue, the bot warns about the wait.",
+    "cap": "Stops at a terrace above the sea."
+   },
+   {
+    "cap": "That's the shot we generate. The trial one is given once.",
+    "log": "trial-shot flag in the database"
+   },
+   {
+    "cap": "To get your own face in the shot, the bot asks for photos right in the chat.",
+    "log": "at least 3 photos, at most 5",
+    "msg": {
+     "text": "Great choice! Now upload 3-5 of your photos and I'll generate a character for you.",
+     "btns": [
+      "I've uploaded all the photos"
+     ]
+    }
+   },
+   {
+    "cap": "The person sends three ordinary selfies.",
+    "log": "uploaded 3/5",
+    "msg": {
+     "label": "Uploaded 3/5"
+    }
+   },
+   {
+    "cap": "Confirms with the button."
+   },
+   {
+    "cap": "The request goes to the model: the shot's prompt from the database and all the person's photos.",
+    "log": "status polled every 10 seconds",
+    "msg": {
+     "label": "Great! Generation started. It takes about 1-2 minutes."
+    }
+   },
+   {
+    "cap": "The same shot, but with the person's face. Arrives as a file, uncompressed.",
+    "log": "delivering the result: one shot per tap",
+    "msg": {
+     "label": "Finished shot",
+     "text": "Your shot is ready! That was a free trial generation.",
+     "btns": [
+      "See pricing",
+      "Damn, doesn't look much like me..."
+     ]
+    }
+   },
+   {
+    "cap": "Next, the pricing. The buttons are built from a table."
+   },
+   {
+    "cap": "Full access is bought in token packs.",
+    "log": "pricing lives in a table",
+    "msg": {
+     "text": "To unlock full access, buy an energy pack ⚡️",
+     "btns": [
+      "Up to 35 photos: 390₽",
+      "Up to 105 photos: 790₽",
+      "Up to 190 photos: 1390₽"
+     ]
+    }
+   },
+   {
+    "cap": "Picks the middle one."
+   },
+   {
+    "cap": "Payment inside the bot, the link leads to YooKassa.",
+    "log": "payment through YooKassa",
+    "msg": {
+     "text": "Plan “Up to 105 photos”. Price: 790₽. You'll get: 1050⚡️",
+     "btns": [
+      "💳 Pay 790₽"
+     ]
+    }
+   },
+   {
+    "cap": "After payment the main menu opens: three models, each with its own price in tokens.",
+    "log": "tokens are charged atomically and returned on failure",
+    "msg": {
+     "text": "Thanks for paying! ✨ Credited: 1050⚡",
+     "btns": [
+      "LITE TEMPLATES (20⚡️)",
+      "ART TEMPLATES (6⚡️)",
+      "PRO TEMPLATES (40⚡️)",
+      "Pinterest+",
+      "MAGIC+"
+     ]
+    }
+   },
+   {
+    "cap": "The person picks the PRO model."
+   },
+   {
+    "cap": "A category, then a carousel of shots. Each shot has its own prompt in the database.",
+    "log": "category pages with 4 buttons each",
+    "msg": {
+     "label": "Category shots",
+     "text": "PRO model. Studio.",
+     "btns": [
+      "Generate this shot (40⚡️)",
+      "Back"
+     ]
+    }
+   },
+   {
+    "cap": "One tap on a shot."
+   },
+   {
+    "cap": "Tokens are charged, the bot promises a time and writes on its own when it's ready.",
     "log": "generation queue: 1–3 minutes",
     "msg": {
-     "label": "Generating now, it takes 1–3 minutes"
-    },
-    "v": [
-     {}
-    ]
+     "label": "Great! Now we'll generate this exact shot with your face. It takes about 1–3 minutes."
+    }
    },
    {
-    "cap": "The shot is ready and arrives in the same chat.",
-    "log": "delivery of the result",
+    "cap": "The same face as on the terrace: the bot keeps the person consistent between shots.",
     "msg": {
-     "label": "Shot ready",
+     "label": "Finished shot",
+     "text": "Your shot is ready!",
      "btns": [
-      "Go to the photoshoot"
+      "Generate another",
+      "Main menu"
      ]
-    },
-    "v": [
-     {},
-     {}
-    ]
+    }
    },
    {
-    "cap": "Next is payment, also inside the bot.",
-    "log": "payment through YooKassa",
-    "msg": {},
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "After payment the person uploads 10–20 of their own photos and a digital twin is built from them.",
-    "log": "a twin from 10–20 photos",
+    "cap": "“Pinterest+” mode: the person sends any shot they like.",
+    "log": "one reference, the model describes it first",
     "msg": {
-     "label": "10–20 photos"
-    },
-    "v": [
-     {}
-    ]
+     "label": "Photo reference"
+    }
+   },
+   {
+    "cap": "The bot builds the same shot with the person as the hero.",
+    "msg": {
+     "label": "Recreating the Pinterest look... It takes 1–3 minutes."
+    }
+   },
+   {
+    "cap": "The result arrives in the same chat.",
+    "msg": {
+     "label": "Finished shot",
+     "text": "Done! The Pinterest look is recreated! 💕"
+    }
    },
    {
     "cap": "More than 3000 people use this bot.",
     "big": {
-     "v": "3000+",
      "l": "users"
     }
    }
@@ -348,7 +446,6 @@
  },
  "tg-assistant": {
   "app": "LEXANDRO",
-  "sub": "lexandro_assistant_bot",
   "view": {
    "title": "Ways to reply",
    "rows": [
@@ -376,88 +473,82 @@
   },
   "beats": [
    {
-    "cap": "I'm away from the computer. The agent needs an answer, and the question arrives in Telegram with buttons.",
-    "log": "the desk is waiting for a decision, the question went to the phone",
+    "cap": "I'm away from the computer. A desk needs an answer, and the question arrives in Telegram with buttons.",
+    "log": "the desk's question went to the phone",
     "msg": {
-     "text": "The Web desk is waiting for a decision: publish the site?",
+     "text": "❓ #012 web: publishing the site?\nmine: yes",
      "btns": [
-      "Yes",
-      "No"
+      "✅ Yes",
+      "❌ No",
+      "✍️ My own"
      ]
     }
    },
    {
     "cap": "I answer with a button without opening the laptop.",
-    "log": "the answer goes straight to the agent",
-    "msg": {},
-    "v": [
-     {}
-    ]
+    "log": "the answer goes to the Dispatcher"
    },
    {
-    "cap": "Work continued. The next question awaits permission for an action.",
+    "cap": "The bot confirms the answer arrived.",
+    "msg": {
+     "text": "passed to the Dispatcher"
+    }
+   },
+   {
+    "cap": "The next request: an action the desk can't take on its own.",
     "log": "irreversible steps only through me",
     "msg": {
-     "text": "The agent asks permission for an action",
+     "text": "The desk asks permission for an action",
      "btns": [
-      "Allow",
-      "No"
+      "✅ Allow",
+      "❌ No"
      ]
+    }
+   },
+   {
+    "cap": "I allow it with one button."
+   },
+   {
+    "cap": "The work carries on by itself.",
+    "msg": {
+     "text": "✅ Allowed, the desk will continue in a couple of seconds."
     }
    },
    {
     "cap": "When the thought is long, voice is faster.",
-    "log": "the voice is recognized and sent on as text",
+    "log": "the voice is recognized locally and sent on as text",
     "msg": {
-     "text": "Allowed, but show me a screenshot first"
-    },
-    "v": [
-     {},
-     {}
-    ]
+     "text": "Only show me a screenshot first"
+    }
    },
    {
-    "cap": "The agent did it and sent the result as a screenshot.",
-    "log": "screenshot of the finished work",
+    "cap": "The desk did it and sent the result as a picture.",
+    "log": "a “screenshot:” line arrives as a photo",
     "msg": {
-     "label": "Done: a screenshot of the work",
-     "btns": [
-      "Open"
-     ]
+     "label": "screenshot of the finished work"
     }
    },
    {
     "cap": "You can write in your own words.",
-    "log": "the text goes to the agent as is",
+    "log": "the text goes as is",
     "msg": {
      "text": "Make the heading bigger, leave the rest"
-    },
-    "v": [
-     {},
-     {}
-    ]
+    }
    },
    {
-    "cap": "A fix is easier to show with a photo.",
-    "log": "the photo reaches the agent together with the question",
+    "cap": "And a fix is easier to show with a photo.",
+    "log": "the photo arrives with a caption",
     "msg": {
      "label": "like in this photo"
-    },
-    "v": [
-     {},
-     {}
-    ]
+    }
    },
    {
-    "cap": "The bot doesn't pester: the same question comes at most once every half hour.",
-    "log": "repeat no sooner than in 30 minutes",
+    "cap": "The bot doesn't nag: the same question comes at most once every half hour, and only urgent ones at night.",
+    "log": "no repeat sooner than 30 minutes",
     "big": {
      "v": "30 min",
      "l": "minimum between repeats"
-    },
-    "v": [
-     {}
-    ]
+    }
    }
   ]
  },
@@ -804,92 +895,110 @@
    "cols": [
     "order",
     "scoring",
-    "outcome"
+    "status"
    ],
    "rows": [
     {
      "c": [
       "Landing page for a coffee shop",
-      "86",
+      "",
       "card to the chat"
      ]
     },
     {
      "c": [
-      "Warehouse accounting",
-      "12",
-      "not our profile"
+      "Staff vacancy",
+      "",
+      "filtered out"
      ]
     },
     {
      "c": [
-      "Bid on the landing page",
+      "Warehouse accounting",
       "",
-      "draft"
+      "below the threshold"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "The agent reads channels and the freelance exchange and sends a suitable order as a card.",
-    "log": "channels folder and the exchange feed",
+    "cap": "Every 15 minutes the agent reads the channels and the exchange and sends a suitable order as a card.",
+    "log": "channels and the exchange, every 15 minutes",
     "msg": {
-     "text": "Need a landing page for a coffee shop: a design in Figma and front-end.\nScore 86 · price per the price list · 5 days",
+     "text": "🟢 86 · Kwork · website\nLanding page for a coffee shop\nNeed a layout and front-end\nour price range from the price list · 3 bids\n📎 Reply only on Kwork, from the account",
      "btns": [
-      "Prepare a bid",
-      "Skip"
-     ]
-    },
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "The agent filters out an unsuitable order itself, it never reaches the chat.",
-    "log": "exchange: not our profile",
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "On a button press the agent prepares a draft.",
-    "log": "bid draft",
-    "msg": {},
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "The draft comes in for review, prices only from the price list.",
-    "log": "prices only from the price list",
-    "msg": {
-     "text": "I'll make the landing page turnkey: design, front-end, responsive. I'll show similar work.",
-     "btns": [
-      "Send",
-      "Edit"
+      "Open the order",
+      "✍️ Draft",
+      "✅ Wrote",
+      "🙈 Skip"
      ]
     }
    },
    {
-    "cap": "The last word is the person's.",
-    "log": "the decision is always the person's",
-    "msg": {},
+    "cap": "Ads, vacancies and duplicates are filtered out before the model.",
+    "log": "pre-filter without a model"
+   },
+   {
+    "cap": "The model scores the rest in batches. Anything below the threshold doesn't reach the chat.",
+    "log": "score threshold: 50"
+   },
+   {
+    "cap": "On a button press the agent prepares the first message.",
+    "log": "prices only from the price list, cases only from the database"
+   },
+   {
+    "cap": "The draft is copied with a tap. The bot itself doesn't write to clients.",
+    "log": "a person sends it",
+    "msg": {
+     "text": "We'll build the landing page turnkey: layout, front-end, responsive. We'll show similar work."
+    }
+   },
+   {
+    "cap": "I wrote to the client myself and marked it on the card.",
+    "log": "the status is visible to the whole team: we won't both write"
+   },
+   {
+    "cap": "Next the card carries the order through stages.",
+    "msg": {
+     "text": "Wrote: waiting for a reply",
+     "btns": [
+      "💬 Replied",
+      "🔇 Silent"
+     ]
+    }
+   },
+   {
+    "cap": "The client replied."
+   },
+   {
+    "cap": "The outcome is also marked with a button.",
+    "msg": {
+     "text": "The client replied",
+     "btns": [
+      "🤝 Took it",
+      "💸 Too expensive",
+      "❌ Declined"
+     ]
+    }
+   },
+   {
+    "cap": "The order is taken. The price goes into the statistics.",
+    "log": "all transitions are stored in the database",
     "v": [
      {
       "c": [
-       "Bid on the landing page",
+       "Landing page for a coffee shop",
        "",
-       "sent"
+       "taken"
       ]
      }
     ]
    },
    {
-    "cap": "No more than ten cold messages a day.",
+    "cap": "The decision at every step is the person's.",
     "big": {
-     "v": "10",
-     "l": "cold messages a day, at most"
+     "l": "score threshold: below it no card arrives"
     }
    }
   ]
@@ -907,22 +1016,22 @@
     },
     {
      "c": [
-      "draft"
+      "author writes"
      ]
     },
     {
      "c": [
-      "clichés and bureaucratese"
+      "code catches clichés"
      ]
     },
     {
      "c": [
-      "assembly and a template gif"
+      "editor by checklist"
      ]
     },
     {
      "c": [
-      "bot: approve"
+      "bot: publish"
      ]
     }
    ]
@@ -933,70 +1042,60 @@
     "log": "topic and primary source",
     "msg": {
      "label": "The draft goes through rounds"
-    },
-    "v": [
-     {}
-    ]
+    }
    },
    {
     "cap": "The first pass writes the text.",
-    "log": "draft",
-    "v": [
-     {},
-     {}
-    ]
+    "log": "author"
    },
    {
-    "cap": "The second pass hunts for clichés and swaps generic words for lively text.",
-    "log": "clichés and bureaucratese",
+    "cap": "Code checks clichés, dashes, length and the start of the post.",
+    "log": "a code check, no model",
     "msg": {
      "was": "In the modern world of design it is important to follow trends.",
      "now": "A new feature came out in Figma, and I've already moved two designs onto it."
-    },
-    "v": [
-     {},
-     {}
-    ]
+    }
    },
    {
-    "cap": "The third pass assembles the text, the gif is built from the channel template.",
-    "log": "assembly and gif",
-    "v": [
-     {},
-     {}
-    ]
+    "cap": "The editor goes through the checklist, the code checks again. The gif is built from the channel template.",
+    "log": "the editor and a repeat check"
    },
    {
-    "cap": "The finished post comes to me in the bot, with buttons.",
-    "log": "the bot sends a post for approval",
+    "cap": "The finished draft comes to me in the bot, with buttons.",
+    "log": "a draft with a rubric and a slot",
     "msg": {
-     "text": "Today's post is ready",
+     "text": "Draft · Tip · Tue 15:00",
      "btns": [
-      "Approve",
-      "Edit"
+      "✅ Publish",
+      "✏️ Edit",
+      "🕒 Time",
+      "🔄 Replace",
+      "🗑 Discard"
      ]
-    },
-    "v": [
-     {},
-     {}
-    ]
+    }
    },
    {
     "cap": "I approve with one button and the post takes its slot.",
-    "log": "publishing on schedule",
-    "msg": {},
-    "v": [
-     {}
-    ]
+    "log": "publishing on schedule"
    },
    {
-    "cap": "Each edit is saved as a “was → became” pair and teaches the next drafts.",
-    "log": "a “was → became” pair goes into training"
+    "cap": "The status changes, the post can still be pulled back.",
+    "msg": {
+     "text": "✅ Queued · Tue 15:00",
+     "btns": [
+      "⚡ Now",
+      "🕒 Time",
+      "↩ Pull back"
+     ]
+    }
+   },
+   {
+    "cap": "Every edit and every reason for rejection is saved and teaches the next drafts.",
+    "log": "edits go into training"
    },
    {
     "cap": "The channel runs on a schedule.",
     "big": {
-     "v": "3",
      "l": "posts a day"
     }
    }
@@ -1032,64 +1131,48 @@
   },
   "beats": [
    {
-    "cap": "The bot wakes up every 15 minutes and stays quiet if there is nothing to say. In the evening it sends tomorrow's classes.",
+    "cap": "The bot wakes up every 15 minutes and stays quiet if it has nothing to say. After 20:00 it sends tomorrow's classes.",
     "log": "a cloud function checks the portal",
     "msg": {
-     "text": "Tomorrow 2 classes, the first at 10:00"
-    },
-    "v": [
-     {}
-    ]
+     "text": "Tomorrow's classes\n10:00–11:30 · 1. 💻 Lecture, webinar\n12:00–13:30 · 2. 📍 Practice",
+     "btns": [
+      "🗓 Whole week",
+      "🏠 Menu"
+     ]
+    }
    },
    {
-    "cap": "Shortly before it starts, the webinar link arrives.",
+    "cap": "The webinar link arrives 15–45 minutes before it starts.",
     "log": "before a webinar",
     "msg": {
-     "text": "Webinar link",
+     "text": "🎥 Webinar in 30 min",
      "btns": [
-      "Open",
-      "Portal"
+      "🎥 Join the webinar"
      ]
-    },
-    "v": [
-     {},
-     {}
-    ]
+    }
    },
    {
     "cap": "Three days before the deadline the bot reminds about unsubmitted work.",
     "log": "three days ahead",
     "msg": {
-     "text": "Deadline soon: practical work"
-    },
-    "v": [
-     {},
-     {}
-    ]
+     "text": "⏰ Not submitted, due soon\n🟡 Practical work\n⏳ 3 days left"
+    }
    },
    {
     "cap": "A day before it reminds again. The bot leaves submitted work alone.",
     "log": "a day ahead",
     "msg": {
-     "text": "Deadline in a day: practical work"
-    },
-    "v": [
-     {},
-     {}
-    ]
+     "text": "⏰ Not submitted, due soon\n🔴 Practical work\n⏳ 24 h left"
+    }
    },
    {
     "cap": "The bot marks what has already been sent in the repository, so it doesn't repeat.",
-    "log": "marks in the repository",
-    "v": [
-     {}
-    ]
+    "log": "marks in the repository"
    },
    {
     "cap": "There's no server of its own, so running the bot costs nothing.",
     "log": "no server of its own",
     "big": {
-     "v": "0 ₽",
      "l": "a month"
     }
    }
@@ -1099,98 +1182,124 @@
   "app": "Andrey",
   "sub": "CRM chat",
   "view": {
-   "title": "Where a request goes",
+   "title": "Where a message goes",
    "rows": [
     {
      "c": [
-      "SQL on the catalog",
-      "no neural network",
-      ""
+      "catalog",
+      "SQL, no neural network"
      ]
     },
     {
      "c": [
-      "cheap model",
-      "simple question",
-      ""
+      "model",
+      "company knowledge base"
      ]
     },
     {
      "c": [
-      "powerful model",
-      "complex question",
-      ""
+      "ready answer",
+      "price list and standard topics"
      ]
     },
     {
      "c": [
       "manager",
-      "sees the conversation",
-      ""
+      "gets a card"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "The customer asks about a product. No neural network needed, a catalog query is enough.",
-    "log": "route: catalog",
+    "cap": "A new customer writes in the CRM chat. First thing, the bot asks for a phone number.",
+    "log": "Bitrix24 chat: Open Channel",
     "msg": {
      "text": "Do you have hot dog buns?"
+    }
+   },
+   {
+    "cap": "Without a number the conversation goes no further: it's needed for the lead.",
+    "log": "new customer without a phone number",
+    "msg": {
+     "text": "Ivan, hi! I'm Andrey from the company. Please leave your phone number so we can reach you."
+    }
+   },
+   {
+    "cap": "The number is checked and goes into the lead.",
+    "log": "phone saved to the lead"
+   },
+   {
+    "cap": "The model detects the intent: it's a product. Then a direct SQL query runs and code builds the answer.",
+    "log": "intent: product",
+    "msg": {
+     "text": "Here's what I found for your request:\n1. Hot dog bun\nPrice, packaging and SKU from the catalog\nWant to place an order or need other information?"
     },
     "v": [
      {
       "c": [
-       "SQL on the catalog",
-       "no neural network",
+       "catalog",
+       "SQL, no neural network",
        "do you have hot dog buns?"
       ]
      }
     ]
    },
    {
-    "cap": "The answer comes straight from the catalog.",
+    "cap": "Three messages later the bot asks for the city, three more and it asks the business type.",
+    "log": "the model parses the city and business type and writes them to the lead",
     "msg": {
-     "text": "We do. Showing options from the catalog."
+     "text": "Ivan, which city are you in? I'll work out the terms for free delivery."
     }
    },
    {
-    "cap": "A simple question goes to the cheap model.",
-    "log": "route: cheap model",
+    "cap": "A delivery question: the model answers from the company knowledge base.",
+    "log": "intent: question",
     "msg": {
      "text": "When is delivery to my city?"
     },
     "v": [
-     {},
      {
       "c": [
-       "cheap model",
-       "simple question",
+       "model",
+       "company knowledge base",
        "when is delivery to my city?"
       ]
      }
     ]
    },
    {
-    "cap": "A complex question goes to the powerful model.",
-    "log": "route: powerful model",
+    "cap": "If the city is outside the delivery area, the bot says so.",
     "msg": {
-     "text": "How is brioche different from regular bread?"
+     "text": "We deliver across Moscow, the region and St. Petersburg. A manager will clarify other cities."
+    }
+   },
+   {
+    "cap": "Standard topics are covered by ready text, no model needed.",
+    "log": "intent: halal",
+    "msg": {
+     "text": "Is there halal?"
     },
     "v": [
      {},
      {
       "c": [
-       "powerful model",
-       "complex question",
-       "how is brioche different from regular bread?"
+       "ready answer",
+       "price list and standard topics",
+       "is there halal?"
       ]
      }
     ]
    },
    {
-    "cap": "The order is handed to a person. The bot filled in the lead itself: phone, city, business type.",
-    "log": "lead filled in, the manager sees the conversation",
+    "cap": "The answer immediately suggests what to do next.",
+    "msg": {
+     "text": "We don't have strictly halal products, but there's meat, sausages and semi-finished products without pork. Which category interests you?"
+    }
+   },
+   {
+    "cap": "An order is always placed by a person.",
+    "log": "intent: call the manager",
     "msg": {
      "text": "I want to place an order"
     },
@@ -1199,22 +1308,22 @@
      {
       "c": [
        "manager",
-       "sees the conversation",
-       "I want to place an order"
+       "gets a card",
+       "i want to place an order"
       ]
      }
     ]
    },
    {
-    "cap": "The client isn't asked again: the manager sees the whole conversation.",
+    "cap": "The manager gets a card: customer, lead, reason and the whole dialog. The lead is already filled in.",
+    "log": "phone, city, business type in the lead",
     "msg": {
-     "text": "Passing you to the manager, they can already see our conversation."
+     "text": "Ivan, great! I'm passing your request to a manager to place the order."
     }
    },
    {
-    "cap": "A model is brought in only where you can't do without it.",
+    "cap": "The bot for employees runs on the same infrastructure.",
     "big": {
-     "v": "2",
      "l": "bots on one infrastructure"
     }
    }
@@ -1222,32 +1331,32 @@
  },
  "packaging-bots": {
   "app": "Packaging",
-  "sub": "three scenarios",
+  "sub": "product-range bot",
   "view": {
-   "title": "Card in the CRM",
+   "title": "Lead in the CRM",
    "rows": [
     {
      "c": [
       "Source",
-      "chat with the bot"
+      "Bitrix24 chat"
      ]
     },
     {
      "c": [
-      "Contact",
-      "name and phone"
-     ]
-    },
-    {
-     "c": [
-      "Request gist",
+      "Question",
       "takeaway sushi packaging"
      ]
     },
     {
      "c": [
-      "Deal",
-      "lead created"
+      "Phone",
+      "verified"
+     ]
+    },
+    {
+     "c": [
+      "Dialog",
+      "with the manager"
      ]
     }
    ]
@@ -1255,120 +1364,96 @@
   "beats": [
    {
     "cap": "The client describes the task in their own words.",
-    "log": "product type: sushi",
+    "log": "search in the vector database of the range",
     "msg": {
      "text": "I need takeaway sushi packaging"
-    },
-    "v": [
-     {},
-     {}
-    ]
-   },
-   {
-    "cap": "The bot picks packaging from the vector database of the range and creates a lead.",
-    "log": "search in the vector database, lead in the CRM",
-    "msg": {
-     "text": "Found some options, a manager will get in touch"
-    },
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "Second scenario: an internal bot answers an employee from the procedures of their department.",
-    "log": "access by department",
-    "msg": {
-     "text": "How do I work by the department procedure?"
     }
    },
    {
-    "cap": "The answer comes only from the materials of their own department.",
+    "cap": "The bot answers only with what's in the range database.",
+    "log": "answer only from the database",
     "msg": {
-     "text": "Here is the section of the procedure for your department.",
-     "btns": [
-      "Open"
-     ]
+     "text": "For takeaway sushi the database has lidded containers and bags. Descriptions and sizes below."
     }
    },
    {
-    "cap": "Third scenario: a call recording turns into text.",
-    "log": "the call is turned into text",
+    "cap": "If there's no data, the bot says so and makes nothing up.",
     "msg": {
-     "label": "Call recording: name, phone, what they asked for"
-    },
-    "v": [
-     {
-      "c": [
-       "Source",
-       "call recording"
-      ]
-     },
-     {},
-     {},
-     {}
-    ]
-   },
-   {
-    "cap": "The contact and the deal fill in by themselves.",
-    "log": "deal filled in",
-    "v": [
-     {},
-     {
-      "c": [
-       "Request gist",
-       "container for rolls"
-      ]
-     },
-     {
-      "c": [
-       "Deal",
-       "filled in"
-      ]
-     }
-    ]
-   },
-   {
-    "cap": "The manager opens the ready card.",
-    "big": {
-     "v": "3",
-     "l": "scenarios on one stack"
+     "text": "Will it survive freezing?"
     }
+   },
+   {
+    "cap": "An honest answer instead of a guess.",
+    "log": "no data in the database",
+    "msg": {
+     "text": "Unfortunately, the database has no exact information on this."
+    }
+   },
+   {
+    "cap": "In the Bitrix24 chat the bot gently asks for a phone number.",
+    "msg": {
+     "text": "Leave a phone number, a manager will clarify and send options."
+    }
+   },
+   {
+    "cap": "A number with a mistake doesn't pass.",
+    "log": "the model checks the number format"
+   },
+   {
+    "cap": "The bot asks for a correct one.",
+    "msg": {
+     "text": "Looks like the number is missing digits. Please send the full number."
+    }
+   },
+   {
+    "cap": "Number received: the bot goes quiet, the manager takes over.",
+    "log": "bot stopped, dialog with the manager"
+   },
+   {
+    "cap": "The database updates itself: new files from Yandex Disk are checked by MD5 and added.",
+    "log": "sync on a schedule"
    }
   ]
  },
  "resort-bot": {
   "app": "Holiday resort",
-  "sub": "booking bot",
+  "sub": "booking request",
   "view": {
-   "title": "Cabins for the weekend",
-   "cols": [
-    "Fri",
-    "Sat",
-    "Sun"
-   ],
+   "title": "Request in Bitrix24",
    "rows": [
     {
      "c": [
-      "cabin 1",
-      "busy",
-      "busy",
-      "free"
+      "Check-in",
+      "July 15"
      ]
     },
     {
      "c": [
-      "cabin 2",
-      "free",
-      "free",
-      "free"
+      "Check-out",
+      "July 17"
      ]
     },
     {
      "c": [
-      "cabin 3",
-      "busy",
-      "free",
-      "busy"
+      "Adults"
+     ]
+    },
+    {
+     "c": [
+      "Children",
+      "2, the youngest is one year old"
+     ]
+    },
+    {
+     "c": [
+      "Phone",
+      "saved"
+     ]
+    },
+    {
+     "c": [
+      "Deal",
+      "with the manager"
      ]
     }
    ]
@@ -1376,57 +1461,77 @@
   "beats": [
    {
     "cap": "The guest writes however is convenient, no forms.",
-    "log": "dates: weekend, guests: 4",
+    "log": "intent: booking",
     "msg": {
      "text": "We want a cabin for the weekend, four of us"
     }
    },
    {
-    "cap": "The bot checks free cabins and calculates the price.",
-    "log": "free cabins checked",
+    "cap": "The bot answers a new guest first on its own.",
+    "log": "first message in the Open Channel",
     "msg": {
-     "label": "Checking free cabins"
+     "text": "Hello. Please introduce yourself while we process your request!"
     }
    },
    {
-    "cap": "Offers to book.",
-    "log": "price calculated",
+    "cap": "The model parses the message into fields. “Weekend” with no numbers isn't a date, so the bot will ask.",
+    "log": "no dates found: asking",
     "msg": {
-     "text": "The cabin is free, the price is calculated. Shall we book?",
-     "btns": [
-      "Yes",
-      "Other dates"
-     ]
+     "text": "Please tell me the exact check-in and check-out dates and how many adults and children."
     }
    },
    {
-    "cap": "The guest agrees and the cabin is blocked for those dates.",
-    "log": "booking and lead in Bitrix24",
-    "msg": {},
-    "v": [
-     {
-      "c": [
-       "cabin 2",
-       "mine",
-       "mine",
-       "mine"
-      ]
-     }
-    ]
-   },
-   {
-    "cap": "The manager gets a ready booking and sees the whole conversation.",
-    "log": "Bitrix24 Open Channels",
+    "cap": "The guest replies with an ordinary sentence.",
+    "log": "dates and guests parsed into fields",
     "msg": {
-     "text": "Booked, a manager will call to confirm"
+     "text": "From July 15 to 17, two adults and two children, the youngest is one"
     }
    },
    {
-    "cap": "Everything runs on the client's server.",
-    "log": "client's server",
-    "big": {
-     "v": "152-FZ",
-     "l": "client's server in Russia"
+    "cap": "A child under two: the bot asks the right question itself.",
+    "log": "cradle up to 2 years, bed up to 5 years",
+    "msg": {
+     "text": "Do you need a cradle for the baby?"
+    }
+   },
+   {
+    "cap": "All that's left is the contact.",
+    "log": "phone saved",
+    "msg": {
+     "text": "Yes, we do. Phone +7 900 000-00-00"
+    }
+   },
+   {
+    "cap": "Everything is collected: the request goes to Bitrix24, the manager confirms availability and price.",
+    "log": "lead and deal in Bitrix24",
+    "msg": {
+     "text": "Thanks for getting in touch! I'm checking room availability. I'll contact you shortly."
+    }
+   },
+   {
+    "cap": "For questions about the resort the bot answers by searching documents.",
+    "log": "search in the resort's documents",
+    "msg": {
+     "text": "What time is check-in?"
+    }
+   },
+   {
+    "cap": "The answer comes from the rules and room descriptions.",
+    "msg": {
+     "label": "Searching the stay rules"
+    }
+   },
+   {
+    "cap": "Complex cases go straight to a person.",
+    "log": "6 people and more, and corporate events: to the manager",
+    "msg": {
+     "text": "There will be 20 of us, a corporate event"
+    }
+   },
+   {
+    "cap": "The bot honestly says this is beyond its level.",
+    "msg": {
+     "text": "Sorry, I'm an intern and this question is too complex for me. I've sent your request to a colleague, she'll definitely reply during working hours."
     }
    }
   ]
@@ -1437,27 +1542,27 @@
   "rows": [
    {
     "name": "Price request for boxes",
-    "note": "incoming"
+    "note": "new deal"
    },
    {
     "name": "Invoice for a film delivery",
-    "note": "incoming"
+    "note": "new deal"
+   },
+   {
+    "name": "You won a prize",
+    "note": "new deal"
    },
    {
     "name": "Need bags with a logo",
-    "note": "incoming"
-   },
-   {
-    "name": "Price request for boxes",
-    "note": "incoming"
+    "note": "new deal"
    }
   ],
   "view": {
-   "title": "Bitrix24 funnels",
+   "title": "Request type in the deal",
    "cols": [
-    "clients",
-    "suppliers",
-    "duplicates"
+    "customer",
+    "supplier",
+    "spam"
    ],
    "rows": [
     {
@@ -1472,64 +1577,52 @@
     },
     {
      "c": [
-      "Bags with a logo"
+      "Prize"
      ]
     },
     {
      "c": [
-      "Boxes: repeat"
+      "Bags with a logo"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "Emails arrive at a shared mailbox. No more sorting them by hand.",
-    "log": "the email and attachments are parsed automatically"
+    "cap": "An email arrives at the shared mailbox and Bitrix24 creates a deal from it. Then the bot takes over.",
+    "log": "webhook: new deal from email"
    },
    {
-    "cap": "First email: the client asks for a price.",
-    "log": "request type: customer",
+    "cap": "The bot takes the email text, strips HTML and quotes, and the model answers with one word.",
+    "log": "model answer: CUSTOMER",
     "set": {
-     "note": "client → deal"
-    },
-    "v": [
-     {}
-    ]
+     "note": "customer"
+    }
    },
    {
-    "cap": "A supplier's invoice goes to its own funnel.",
-    "log": "request type: supplier",
+    "cap": "A supplier's invoice gets its own type.",
+    "log": "model answer: SUPPLIER",
     "set": {
-     "note": "supplier → deal"
-    },
-    "v": [
-     {}
-    ]
+     "note": "supplier"
+    }
    },
    {
-    "cap": "A new request with a logo becomes a deal for the person in charge.",
-    "log": "deal in the right funnel with the original email",
+    "cap": "Everything else counts as spam, and so does anything doubtful.",
+    "log": "model answer: SPAM",
     "set": {
-     "note": "client → deal"
-    },
-    "v": [
-     {}
-    ]
+     "note": "spam → rejection stage"
+    }
    },
    {
-    "cap": "A repeat email doesn't create another deal: the duplicate is dropped.",
-    "log": "duplicates are dropped",
+    "cap": "A customer again gets a mark, and the deal counts as processed.",
+    "log": "type field and a “processed” flag in the deal",
     "set": {
-     "note": "duplicate"
-    },
-    "v": [
-     {}
-    ]
+     "note": "customer"
+    }
    },
    {
-    "cap": "Managers open deals that are already sorted.",
-    "log": "managers no longer sort the mail"
+    "cap": "Managers open deals that already have a type, and spam doesn't get in their way.",
+    "log": "spam leaves the workflow right away"
    }
   ]
  },
@@ -1537,24 +1630,30 @@
   "app": "Art school",
   "sub": "assistant",
   "view": {
-   "title": "Drawing and the teacher's reference",
+   "title": "Drawing and the nearest reference",
    "rows": [
     {
      "c": [
       "composition",
-      "good"
+      "the sheet is filled evenly"
      ]
     },
     {
      "c": [
-      "proportions",
-      "head is too big"
+      "structure",
+      "check the ellipse"
      ]
     },
     {
      "c": [
-      "light and shade",
-      "shadow on the wrong side"
+      "tone",
+      "not enough reflected light"
+     ]
+    },
+    {
+     "c": [
+      "stroke",
+      "follow the form"
      ]
     }
    ]
@@ -1568,60 +1667,59 @@
     }
    },
    {
-    "cap": "The bot compares it with the teacher's references.",
-    "log": "comparison with the references",
+    "cap": "The model describes the work: subject, style, technique, level.",
+    "log": "description of the work goes to the vector database",
     "msg": {
-     "label": "Comparing with the references"
+     "label": "Looking at the drawing"
     }
    },
    {
-    "cap": "The composition is fine and the bot says so right away.",
-    "log": "composition: OK",
-    "msg": {
-     "text": "The composition is good."
-    },
-    "v": [
-     {}
-    ]
+    "cap": "The bot finds the teacher's nearest reference.",
+    "log": "nearest reference: 0.6 by vector and 0.4 by description"
    },
    {
-    "cap": "The comments are specific: what to fix and where.",
-    "log": "proportions, light and shade",
-    "msg": {
-     "text": "Fix what is marked: head proportions and the shadow direction"
-    },
-    "v": [
-     {},
-     {}
-    ]
+    "cap": "The reference counts as 100 points, only the deviation from it is graded.",
+    "log": "comparing two images"
    },
    {
-    "cap": "The student improves it and sends it again.",
+    "cap": "The feedback arrives in the chat: a grade and a breakdown by criteria.",
+    "log": "the feedback is based on textbooks",
+    "msg": {
+     "text": "Grade: 72 out of 100.\nComposition: the sheet is filled evenly.\nStructure: check the ellipse of the jug.\nTonal solution: the shadow lacks reflected light.\nStroke: follow the form."
+    }
+   },
+   {
+    "cap": "The student refines it and sends it again.",
     "log": "new version of the drawing",
     "msg": {
-     "label": "Fixed"
+     "label": "Fixed it"
+    }
+   },
+   {
+    "cap": "Each photo gets its own grade, so progress shows.",
+    "log": "new grade against the same reference",
+    "msg": {
+     "text": "Grade: 84 out of 100.\nStructure: the ellipse is more accurate.\nTonal solution: the shadow holds together."
     },
     "v": [
      {
       "c": [
-       "proportions",
+       "structure",
        "fixed"
       ]
      },
      {
       "c": [
-       "light and shade",
+       "tone",
        "fixed"
       ]
      }
     ]
    },
    {
-    "cap": "The teacher receives a work that is already improved.",
-    "log": "two-step check",
+    "cap": "The breakdown always follows the same criteria.",
     "big": {
-     "v": "2",
-     "l": "check steps"
+     "l": "criteria in every review"
     }
    }
   ]
@@ -1639,7 +1737,7 @@
     },
     {
      "c": [
-      "Return without a receipt: three steps"
+      "Return without a receipt"
      ]
     },
     {
@@ -1661,63 +1759,71 @@
   },
   "beats": [
    {
-    "cap": "A newcomer asks about a work situation.",
+    "cap": "A newcomer joins with an invitation code from HR.",
+    "log": "the code links the account and the role",
+    "msg": {
+     "text": "Hi! I'm Max, a mentor for new employees. Send me the invitation code from HR."
+    }
+   },
+   {
+    "cap": "The bot knows the role and the work day, the menu is at the bottom.",
     "log": "role: salesperson",
+    "msg": {
+     "text": "Ask anything about work, I'll answer from the procedures and show where it comes from.",
+     "btns": [
+      "Training",
+      "Practice mode",
+      "My plan",
+      "In plain words"
+     ]
+    }
+   },
+   {
+    "cap": "The newcomer asks about a work situation.",
     "msg": {
      "text": "How do I process a return without a receipt?"
     }
    },
    {
     "cap": "The search runs in two ways at once and takes the role into account.",
-    "log": "by meaning and by words: “return”, “receipt”",
+    "log": "vectors and words, results merged",
     "msg": {
      "label": "Searching the company base"
-    },
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "The answer is only from company materials and with a link to the document.",
-    "log": "answer with a link to the document",
-    "msg": {
-     "text": "Per the returns policy: three steps [1]"
     }
    },
    {
-    "cap": "For a different question the base has no answer.",
+    "cap": "Facts come only from the base, each with a source number.",
+    "log": "answer with references [1], [2]",
+    "msg": {
+     "text": "A return without a receipt follows the returns procedure, steps and documents are in source [1].",
+     "btns": [
+      "Shall we lock it in? One question about the answer"
+     ]
+    }
+   },
+   {
+    "cap": "For another question the base has no answer.",
     "log": "no answer in the base",
     "msg": {
-     "text": "What if the item is discounted?"
-    },
-    "v": [
-     {},
-     {}
-    ]
-   },
-   {
-    "cap": "The bot doesn't make things up: the question goes to the training specialist.",
-    "log": "question in the training specialist panel",
-    "msg": {
-     "text": "Passed it to the training specialist, I'll write when there's an answer"
+     "text": "And what if the item is discounted?"
     }
    },
    {
-    "cap": "The training specialist answers, and the answer becomes part of the base.",
-    "log": "answer in the base",
-    "v": [
-     {},
-     {}
-    ]
+    "cap": "The bot doesn't make things up and says who to go to. The question goes to the training specialist on its own.",
+    "log": "a gap in the training specialist panel",
+    "msg": {
+     "text": "The base doesn't have this. Ask the shift lead."
+    }
    },
    {
-    "cap": "The bot writes to those who asked on its own.",
+    "cap": "The training specialist answers and the answer becomes part of the base.",
+    "log": "answer in the base"
+   },
+   {
+    "cap": "The bot writes on its own to those who asked.",
     "log": "the bot writes to those who asked",
     "msg": {
-     "text": "There's an answer to your question",
-     "btns": [
-      "Open"
-     ]
+     "text": "Your question “And what if the item is discounted?” now has an answer, the training specialist added it to the base. Now I know this and will answer anyone who asks."
     }
    }
   ]
@@ -1835,102 +1941,94 @@
   ]
  },
  "team-reports": {
-  "app": "Reports",
-  "sub": "WhatsApp",
+  "app": "Raw material intake",
+  "sub": "WhatsApp group",
   "view": {
-   "title": "Reports table",
+   "title": "Table",
    "cols": [
     "employee",
-    "report",
-    "check"
+    "material",
+    "kg"
    ],
    "rows": [
-    {
-     "c": [
-      "Employee 1",
-      "daily",
-      "accepted"
-     ]
-    },
-    {
-     "c": [
-      "Employee 2",
-      "daily",
-      "no field"
-     ]
-    },
-    {
-     "c": [
-      "Summary",
-      "monthly",
-      "KPIs compiled"
-     ]
-    }
+    {},
+    {},
+    {},
+    {}
    ]
   },
   "beats": [
    {
-    "cap": "The employee submits a report as an ordinary message.",
-    "log": "parsing the message into fields",
+    "cap": "The employee writes to the work group in an ordinary message.",
+    "log": "the WhatsApp gateway passes the message on",
     "msg": {
-     "text": "Daily report: calls, meetings, summary"
+     "text": "Ivanov I.\nPP - 500 kg\nHDPE - 320 kg"
     }
    },
    {
-    "cap": "The fields are parsed and the row went into the table.",
-    "log": "added to the table",
-    "msg": {
-     "text": "Got it, added to the table"
-    },
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "The next report came without the field.",
-    "log": "field check: a field is missing",
-    "msg": {
-     "text": "Daily report: calls, meetings"
-    },
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "The bot asks for a fix right away instead of waiting for the end of the month.",
-    "log": "request to fix",
-    "msg": {
-     "text": "The “summary” field is missing, please fix it"
-    }
-   },
-   {
-    "cap": "The employee adds the missing part, the row in the table is fixed.",
-    "log": "field added",
-    "msg": {
-     "text": "Outcome: contract out for signing"
-    },
+    "cap": "The bot splits the text into lines and writes them to the table. It doesn't reply in the chat, to keep it quiet.",
+    "log": "name, phone, material, weight, date",
     "v": [
      {
       "c": [
-       "Employee 2",
-       "daily",
-       "accepted"
+       "Ivanov I.",
+       "PP"
+      ]
+     },
+     {
+      "c": [
+       "Ivanov I.",
+       "HDPE"
       ]
      }
     ]
    },
    {
-    "cap": "At the start of the month the summary builds itself.",
-    "log": "summary KPI report",
+    "cap": "If the material isn't repeated, the bot fills it in from the line above.",
+    "log": "the material is remembered for the next lines",
     "msg": {
-     "text": "The monthly summary is ready",
-     "btns": [
-      "Open"
-     ]
+     "text": "Petrov P.\nPS - 210 kg; 150 kg"
     },
     "v": [
-     {}
+     {
+      "c": [
+       "Petrov P.",
+       "PS"
+      ]
+     },
+     {
+      "c": [
+       "Petrov P.",
+       "PS"
+      ]
+     }
     ]
+   },
+   {
+    "cap": "The employee edited the message and the table row updated itself.",
+    "log": "editing a message updates its rows by id",
+    "msg": {
+     "text": "message edited: PS - 250 kg"
+    },
+    "v": [
+     {
+      "c": [
+       "Petrov P.",
+       "PS"
+      ]
+     }
+    ]
+   },
+   {
+    "cap": "Deleted the message: the rows disappear from the table too.",
+    "log": "deleting a message deletes the rows",
+    "msg": {
+     "text": "message deleted"
+    }
+   },
+   {
+    "cap": "At the end of the month, a summary: weight and number of entries for each person.",
+    "log": "the summary is started manually, the sheet is cleared"
    }
   ]
  },
@@ -1951,232 +2049,191 @@
    "rows": [
     {
      "c": [
-      "workout",
-      "mine",
-      "none",
-      "mine",
-      "none",
-      "none",
-      "none",
-      "none"
+      "workout"
      ]
     },
     {
      "c": [
-      "diet",
-      "mine",
-      "mine",
-      "mine",
-      "mine",
-      "none",
-      "none",
-      "none"
+      "diet"
      ]
     },
     {
      "c": [
-      "weight",
-      "mine",
-      "none",
-      "none",
-      "mine",
-      "none",
-      "none",
-      "none"
+      "weight"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "The person writes about the workout and lunch in an ordinary message.",
-    "log": "workout logged",
+    "cap": "It all starts with the menu: nutrition, workouts, measurements, reminders.",
+    "log": "menu of sections",
     "msg": {
-     "text": "Legs today, buckwheat with chicken for lunch"
+     "text": "Hi! 👋 I'm your assistant for fitness, nutrition and taking care of yourself. Pick a section.",
+     "btns": [
+      "🍏 Nutrition",
+      "🏋️ Workouts",
+      "📊 My measurements",
+      "💡 Reminders"
+     ]
+    }
+   },
+   {
+    "cap": "The person opens nutrition."
+   },
+   {
+    "cap": "A meal is logged from a photo.",
+    "log": "the model recognizes the dish from the photo",
+    "msg": {
+     "label": "photo of lunch"
+    }
+   },
+   {
+    "cap": "The bot checks whether it understood the dish correctly.",
+    "msg": {
+     "text": "Is it buckwheat with chicken in the photo?",
+     "btns": [
+      "Yes",
+      "No"
+     ]
+    }
+   },
+   {
+    "cap": "Confirmation with one button."
+   },
+   {
+    "cap": "Calories and macros are calculated and saved.",
+    "log": "diet: calories and macros in the database",
+    "msg": {
+     "text": "Buckwheat with chicken, 300 g\nCalories, protein, fat and carbs calculated.\n✔️ saved to memory",
+     "btns": [
+      "🚫 don't save"
+     ]
     },
     "v": [
      {
       "c": [
-       "workout",
-       "mine",
-       "none",
-       "mine",
-       "none",
-       "mine",
-       "none",
-       "none"
-      ]
-     },
-     {
-      "c": [
-       "diet",
-       "mine",
-       "mine",
-       "mine",
-       "mine",
-       "mine",
-       "none",
-       "none"
+       "diet"
       ]
      }
     ]
    },
    {
-    "cap": "The bot logs and counts calories.",
-    "log": "diet: calories calculated",
+    "cap": "A workout is logged separately, in one line.",
+    "log": "format: weight, sets, reps",
     "msg": {
-     "text": "Logged the workout and lunch. Calories calculated."
-    }
-   },
-   {
-    "cap": "Suggests a recipe for the evening.",
-    "log": "recommendations",
-    "msg": {
-     "text": "Here's a dinner recipe",
-     "btns": [
-      "Open"
-     ]
-    }
-   },
-   {
-    "cap": "Handles complaints about well-being.",
-    "log": "well-being check",
-    "msg": {
-     "text": "My knee aches after squats"
-    }
-   },
-   {
-    "cap": "And reminds you if a day is missed.",
-    "log": "reminders",
-    "msg": {
-     "text": "No weight logged yet today"
+     "text": "80 kg, 4, 10"
     },
     "v": [
      {
       "c": [
-       "weight",
-       "mine",
-       "none",
-       "none",
-       "mine",
-       "mine",
-       "none",
-       "none"
+       "workout"
       ]
      }
     ]
    },
    {
-    "cap": "At the end of the week a progress report arrives.",
-    "log": "progress report",
+    "cap": "The person sets reminders for themselves.",
+    "log": "the reminders table is checked every 3 minutes",
     "msg": {
-     "text": "The weekly report is ready",
-     "btns": [
-      "Open"
-     ]
+     "text": "Remind me to drink water in 2 hours"
     }
    },
    {
-    "cap": "Progress shows without manual tracking, the owner exports the data.",
-    "log": "data export for the owner"
+    "cap": "In the evening a daily report arrives.",
+    "log": "evening report on a schedule",
+    "msg": {
+     "text": "Evening report: today's nutrition and workouts."
+    }
    }
   ]
  },
  "dice-bots": {
-  "app": "Dice",
-  "sub": "mini-game in Telegram",
+  "app": "Games in chat",
+  "sub": "Telegram emoji",
   "view": {
-   "title": "Telegram dice",
+   "title": "Winner counter",
    "rows": [
     {
      "c": [
-      "1"
+      "Game",
+      "🎰 slot"
      ]
     },
     {
      "c": [
-      "Bet",
-      "accepted"
+      "Value"
      ]
     },
     {
      "c": [
-      "Result",
-      "calculated"
+      "Wins today",
+      "3 of 3"
      ]
     },
     {
      "c": [
-      "Statistics",
-      "in the database"
+      "Payout",
+      "request to the admin"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "The player places a bet.",
-    "log": "bet accepted",
+    "cap": "The player throws a built-in Telegram emoji into the group chat. No bets, no buttons.",
+    "log": "the branch is chosen by the emoji"
+   },
+   {
+    "cap": "The value is rolled on Telegram's side and can't be faked. The bot waits for the animation to end.",
+    "log": "a 3–4 second pause",
     "msg": {
-     "text": "Place your bet",
-     "btns": [
-      "Place a bet"
-     ]
+     "label": "The animation is spinning"
     }
    },
    {
-    "cap": "Taps the button.",
-    "msg": {},
-    "v": [
-     {}
-    ]
-   },
-   {
-    "cap": "A throw with Telegram's built-in dice.",
-    "log": "throw: Telegram dice",
+    "cap": "The bot replies only to a win.",
+    "log": "BAR BAR BAR: the day counter +1",
     "msg": {
-     "label": "Throw"
-    },
-    "v": [
-     {}
-    ]
+     "text": "🍀 You're lucky! 🍀 2 more to go and you get 500⭐️"
+    }
    },
    {
-    "cap": "The result is calculated immediately.",
-    "log": "result calculated",
+    "cap": "Three such wins a day in one chat earn a prize.",
+    "log": "the counter resets daily"
+   },
+   {
+    "cap": "The player gets a message, the admin gets a payout request.",
+    "log": "to the admin: “New winner”",
     "msg": {
-     "text": "Rolled 5. Result and statistics updated."
-    },
-    "v": [
-     {
-      "c": [
-       "5"
-      ]
-     },
-     {}
-    ]
+     "text": "🎉 Congratulations! We've sent you 500⭐️, expect it within a few minutes! 🎁"
+    }
    },
    {
-    "cap": "Statistics go into the database, the owner sees a report without opening it.",
-    "log": "statistics in the database",
+    "cap": "Dice, bowling, darts and ball work the same way, each game has its own prizes.",
+    "log": "the prizes live in probability tables"
+   },
+   {
+    "cap": "Hit the bullseye.",
+    "msg": {
+     "text": "BULLSEYE = 100⭐️"
+    }
+   },
+   {
+    "cap": "One mechanism for all the built-in emoji.",
     "big": {
-     "v": "2",
-     "l": "bots"
-    },
-    "v": [
-     {}
-    ]
+     "l": "games on Telegram emoji"
+    }
    }
   ]
  },
  "media-to-rag": {
-  "app": "A knowledge base from video",
+  "app": "A knowledge base from files",
   "sub": "Yandex Disk → vector database",
   "view": {
-   "title": "",
    "cols": [
     "Yandex Disk",
-    "transcript",
+    "text",
     "chunks",
     "embeddings",
     "vector database"
@@ -2184,68 +2241,44 @@
    "rows": [
     {
      "c": [
-      "video"
+      "contract.docx"
      ]
     },
     {
      "c": [
-      "voice message"
+      "price-list.pdf"
      ]
     }
    ]
   },
   "beats": [
    {
-    "cap": "A new file appeared on the Disk, it's picked up automatically.",
-    "log": "new file on the Disk",
-    "v": [
-     {}
-    ]
+    "cap": "The Disk folder is checked on a schedule. A new file is matched by MD5.",
+    "log": "new file on the Disk"
    },
    {
-    "cap": "The file is converted and transcribed into text.",
-    "log": "conversion and transcription",
-    "v": [
-     {}
-    ]
+    "cap": "Text is extracted from the file: docx, pdf or txt.",
+    "log": "text extraction"
    },
    {
-    "cap": "The text is cut into chunks. Next, a voice message arrived on the Disk.",
-    "log": "cutting into chunks",
-    "v": [
-     {},
-     {}
-    ]
+    "cap": "The text is cut into chunks, each with its own context. Then a second file appeared on the Disk.",
+    "log": "cutting into chunks"
    },
    {
     "cap": "An embedding is calculated for each chunk.",
-    "log": "embeddings",
-    "v": [
-     {},
-     {}
-    ]
+    "log": "embeddings"
    },
    {
     "cap": "Everything is loaded into the vector database.",
-    "log": "loading into the vector database",
-    "v": [
-     {},
-     {}
-    ]
+    "log": "loading into the vector database"
    },
    {
-    "cap": "A voice message goes the same way.",
-    "log": "local, per 152-FZ",
-    "v": [
-     {}
-    ]
+    "cap": "The second file goes the same way. A changed file gets updated, a deleted one disappears from the base.",
+    "log": "file tracking by MD5"
    },
    {
-    "cap": "The assistant answers from the content of the videos and voice messages.",
-    "log": "the assistant searches the base",
-    "v": [
-     {}
-    ]
+    "cap": "The assistant answers from the content of the files.",
+    "log": "the assistant searches the base"
    }
   ]
  }

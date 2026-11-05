@@ -233,6 +233,23 @@ function Sketch({ rows, media }: { rows: Row[]; media?: CastView['media'] }) {
   )
 }
 
+/** Подборка кадров: выбранный подсвечен, готовый встаёт на его место с лицом человека */
+function Pins({ rows, media = [] }: { rows: Row[]; media?: CastView['media'] }) {
+  return (
+    <ul className={styles.pins}>
+      {rows.map((r) => {
+        const shot = media[r.at ?? 0]
+        return (
+          <li key={r.c[0]} data-s={r.s}>
+            {shot && <Frame key={shot.src} media={shot} alt={r.c[0]} />}
+            <span>{r.c[0]}</span>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 function Doc({ rows }: { rows: Row[] }) {
   return (
     <ul className={styles.doc}>
@@ -283,6 +300,8 @@ export function View({ view }: { view: CastView }) {
       return <Sketch rows={rows} media={media} />
     case 'doc':
       return <Doc rows={rows} />
+    case 'pins':
+      return <Pins rows={rows} media={media} />
     case 'die':
       return <DieView rows={rows} />
   }
