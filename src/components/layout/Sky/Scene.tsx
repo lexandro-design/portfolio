@@ -11,8 +11,10 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 /** Сколько пикселей считаем за кадр: на широком мониторе холст рисуется мельче и растягивается */
 const BUDGET = 2_400_000
 const BUDGET_WEAK = 620_000
-/** Движение не чаще 30 кадров в секунду: Луна поворачивается медленно, больше глаз не заметит */
+/** Медленное вращение рисуем раз в 33 мс: за кадр Луна сдвигается меньше пикселя. Курсор, скролл и жест рисуются на каждом кадре */
 const FRAME = 33
+/** Градусов в секунду: вращение едва заметное */
+const SPIN = 0.5
 const HEAVY = 22
 
 const D = Math.PI / 180
@@ -175,7 +177,7 @@ export default function Scene() {
       }
     }
 
-    const draw = () => {
+    const draw = (at: ReturnType<typeof place>) => {
       const W = el.width
       const H = el.height
       const k = W / innerWidth
@@ -184,17 +186,18 @@ export default function Scene() {
       const fov = 26 * D
       const focal = H / 2 / Math.tan(fov / 2)
 
-      /* Космос: сфера нужного размера в нужном месте экрана */
-      const at = place()
+      /* Сфера нужного размера в нужном месте экрана */
       const dist = (focal / k / at.r) * (1 + Math.min(y / vh, 1.4) * 0.3)
-      const sx = (((at.x - innerWidth / 2) * k) / focal) * dist
-      const sy = (((innerHeight / 2 - at.y - y * 0.22) * k) / focal) * dist
+      /* Параллакс: шар чуть отстаёт от страницы при скролле и плывёт навстречу курсору, звёзды глубже и двигаются меньше */
+      const sx = (((at.x - innerWidth / 2 - pointer.x * 18) * k) / focal) * dist
+      const sy = (((innerHeight / 2 - at.y - y * 0.22 + pointer.y * 14) * k) / focal) * dist
       const far: V3 = [sx, sy, -dist]
 
       const C = far
 
-      const lat = 4 * D + turn.lat
-      const lon = -6 * D + spin + turn.lon
+      /* Со скроллом и курсором шар чуть поворачивается, как будто смотришь на него с разных сторон */
+      const lat = 4 * D + turn.lat - pointer.y * 3 * D - (y / vh) * 2.5 * D
+      const lon = -6 * D + spin + turn.lon + pointer.x * 4 * D + (y / vh) * 5 * D
       const body = bodyMatrix(C, lat, lon)
 
       const sun = norm([
@@ -248,25 +251,29 @@ export default function Scene() {
     const tick = (now: number) => {
       frame = 0
       if (!waiting && shown < 1) shown = Math.min(1, shown + 0.04)
-      pointer.x += (pointer.tx - pointer.x) * 0.08
-      pointer.y += (pointer.ty - pointer.y) * 0.08
+      const dtf = lastSpin ? Math.min(now - lastSpin, 100) : 16
+      const ease = 1 - 0.92 ** (dtf / 33)
+      pointer.x += (pointer.tx - pointer.x) * ease
+      pointer.y += (pointer.ty - pointer.y) * ease
       if (!grab.on) {
         turn.lon += grab.vx
         grab.vx *= 0.94
       }
       const dt = lastSpin ? Math.min(now - lastSpin, 100) : 0
       lastSpin = now
-      const turning = !still && !document.hidden && scrollY < innerHeight * 1.2 && place().top !== -1
-      if (turning) spin += dt * 0.0000135
+      const at = place()
+      const turning = !still && !document.hidden && scrollY < innerHeight * 1.2 && at.top !== -1
+      if (turning) spin += dt * SPIN * D * 0.001
       const settling =
         (!waiting && shown < 1) ||
         Math.abs(grab.vx) > 1e-5 ||
         Math.abs(pointer.tx - pointer.x) + Math.abs(pointer.ty - pointer.y) > 0.002
       const key = `${scrollY} ${el.width} ${el.height} ${waiting}`
       const moving = turning || settling
-      if (moving ? now - last >= FRAME : key !== drawn) {
+      /* Курсор, скролл и жест рисуем на каждом кадре, одно вращение раз в FRAME */
+      if (settling || key !== drawn || (turning && now - last >= FRAME)) {
         last = now
-        draw()
+        draw(at)
         drawn = key
       }
       if (moving && !document.hidden) frame = requestAnimationFrame(tick)

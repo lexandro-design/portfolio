@@ -272,7 +272,7 @@
         },
         {
           "title": "Background",
-          "text": "Steel and Space run on WebGL. A script bakes the map of seas and craters, no photo involved."
+          "text": "Steel and Space run on WebGL. The Moon is built from open NASA data, LROC imagery and LOLA relief, with light and shadow computed in a shader."
         }
       ],
       "numbers": {
