@@ -1,0 +1,577 @@
+.root {
+  --h-meal: 150px;
+  --h-train: 112px;
+  --h-weight: 96px;
+  --h-bot: 52px;
+  --h-head: 52px;
+  --lab: 112px;
+  padding-block-end: 0;
+}
+
+/* ───────── Лента недели ───────── */
+.scroll {
+  margin-block-start: var(--space-2xl);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  animation: rise var(--dur-reveal) var(--ease-out-expo) 240ms both;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+.ribbon {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--lab) repeat(7, minmax(0, 1fr));
+  grid-template-rows: var(--h-head) var(--h-meal) var(--h-train) var(--h-weight) var(--h-bot);
+  border-block: 1px solid var(--border-hair);
+}
+
+/* Подложка сегодняшнего дня на всю высоту ленты */
+.todayBg {
+  grid-row: 1 / -1;
+  margin-block: -1px;
+  border: 1px solid var(--case-color, var(--accent));
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 7%, transparent);
+  transition: background var(--dur-slow) var(--ease-out-quart);
+  pointer-events: none;
+}
+
+.todayBg[data-done] {
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 15%, transparent);
+}
+
+.corner,
+.lab {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  padding-inline-end: var(--space-sm);
+  background: var(--bg-base);
+}
+
+.lab {
+  border-block-start: 1px solid var(--border-hair);
+}
+
+.lab > span,
+.corner > span {
+  line-height: 1.3;
+}
+
+.dayHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding-block-start: 16px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+}
+
+.dayHead small {
+  font-size: var(--type-mono-sm);
+  color: var(--case-color, var(--accent));
+}
+
+.dayHead[data-today] {
+  color: var(--fg-primary);
+}
+
+.dayHead[data-future] {
+  color: var(--fg-tertiary);
+}
+
+.cell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding-block: 12px;
+  border-block-start: 1px solid var(--border-hair);
+}
+
+.cell[data-bot] {
+  align-items: center;
+  gap: 2px;
+}
+
+/* Колодец под столбик: пунктирная земля, столбик растёт со дна */
+.well {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  inline-size: 44%;
+  max-inline-size: 56px;
+  border-block-end: 1px dashed var(--border-hair);
+}
+
+.well[data-flat] {
+  justify-content: center;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  block-size: calc(var(--v) * 1%);
+  transition: block-size 1100ms var(--ease-out-expo);
+}
+
+.bar i {
+  display: block;
+  min-block-size: 0;
+  background: var(--case-color, var(--accent));
+}
+
+.bar i:nth-child(2) {
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 60%, var(--bg-base));
+}
+
+.bar i:nth-child(3) {
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 32%, var(--bg-base));
+}
+
+.cell[data-state='past'] .bar,
+.cell[data-state='past'] .dot {
+  opacity: 0.45;
+}
+
+/* Приём пищи на распознавании: пунктирный контур дышит */
+.ghost {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: 42%;
+  border: 1px dashed var(--case-color, var(--accent));
+  animation: breathe 1.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.dot {
+  position: absolute;
+  inset-block-end: calc(var(--v) * 1%);
+  inline-size: 11px;
+  block-size: 11px;
+  margin-block-end: -5px;
+  border-radius: 50%;
+  background: var(--case-color, var(--accent));
+  animation: dotIn 700ms var(--ease-out-expo) both;
+}
+
+.dot[data-today] {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--case-color, var(--accent)) 25%, transparent);
+}
+
+@keyframes dotIn {
+  from {
+    transform: scale(0);
+  }
+}
+
+/* Линия веса поверх строки веса, от первой записи к сегодняшней */
+.line {
+  grid-row: 4;
+  grid-column: 2 / -1;
+  z-index: 2;
+  padding-block: 12px;
+  pointer-events: none;
+}
+
+.line svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+  clip-path: inset(-6px 93% -6px 0);
+  transition: clip-path 1800ms var(--ease-out-quart);
+}
+
+.line[data-on] svg {
+  clip-path: inset(-6px 49% -6px 0);
+}
+
+.line line {
+  stroke: var(--case-color, var(--accent));
+  stroke-width: 1.5;
+}
+
+.chip {
+  display: grid;
+  place-items: center;
+  inline-size: 24px;
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+}
+
+.chip[data-show] {
+  opacity: 1;
+  transform: none;
+}
+
+.cell[data-state='past'] .chip[data-show] {
+  opacity: 0.4;
+}
+
+/* ───────── Низ: журнал бота и телефон ───────── */
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: var(--space-3xl);
+  align-items: stretch;
+  margin-block-start: var(--space-xl);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.ledger {
+  display: grid;
+  list-style: none;
+  border-block-start: 1px solid var(--border-hair);
+}
+
+.ledger button {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  inline-size: 100%;
+  padding: 7px 0 7px 12px;
+  border: 0;
+  border-block-end: 1px solid var(--border-hair);
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--type-body-sm);
+  line-height: 1.35;
+  color: var(--fg-tertiary);
+  text-align: start;
+  cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out-quart);
+}
+
+.ledger button span {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  letter-spacing: 0.08em;
+  padding-block-start: 2px;
+}
+
+.ledger button[data-state='past'] {
+  color: var(--fg-secondary);
+}
+
+.ledger button[data-state='now'] {
+  color: var(--fg-primary);
+  box-shadow: inset 2px 0 0 var(--case-color, var(--accent));
+}
+
+.ledger button[data-state='now'] span {
+  color: var(--case-color, var(--accent));
+}
+
+.ledger button:hover {
+  color: var(--fg-primary);
+}
+
+.ledger button:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.cap {
+  margin-block-start: var(--space-xs);
+  font-size: var(--type-body-lg);
+}
+
+.phone {
+  block-size: 600px;
+  min-block-size: 0;
+}
+
+.phone ol {
+  mask-image: linear-gradient(to bottom, transparent 0, #000 48px);
+}
+
+/* Ответы бота приходят чуть позже реплики человека */
+.phone .late1 {
+  animation-delay: 1000ms;
+}
+
+.phone .late2 {
+  animation-delay: 1900ms;
+}
+
+.phone b {
+  display: block;
+  font-weight: 600;
+}
+
+.phone small {
+  display: block;
+  margin-block-start: 6px;
+  font-size: 13px;
+  color: var(--fg-secondary);
+}
+
+/* Подставка «фото» в сообщении: рамка, камера, строка сканирования */
+.photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  inline-size: 160px;
+  block-size: 104px;
+  overflow: hidden;
+  border: 1px solid var(--border-hover);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--fg-secondary);
+}
+
+.photo b {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.photo i {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 2px;
+  background: var(--case-color, var(--accent));
+  opacity: 0;
+}
+
+.photo[data-scan] i {
+  opacity: 1;
+  animation: scan 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes scan {
+  to {
+    transform: translateY(102px);
+  }
+}
+
+/* Калории и БЖУ полосками: цифр в кейсе нет, полоски только показывают, что посчитано */
+.meter {
+  display: grid;
+  gap: 5px;
+  margin-block: 8px 2px;
+}
+
+.meter > span {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.meter em,
+.digest em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-sm);
+  color: var(--fg-secondary);
+}
+
+.meter i {
+  display: block;
+  block-size: 6px;
+  inline-size: calc(var(--v) * 1%);
+  background: var(--case-color, var(--accent));
+  animation: grow 900ms var(--ease-out-expo) 200ms both;
+}
+
+@keyframes grow {
+  from {
+    inline-size: 0;
+  }
+}
+
+.digest {
+  display: grid;
+  gap: 4px;
+  margin-block-start: 8px;
+}
+
+.digest .split + em {
+  margin-block-start: 4px;
+}
+
+.split {
+  display: flex;
+  block-size: 8px;
+  transform-origin: left;
+  animation: stretch 900ms var(--ease-out-expo) 200ms both;
+}
+
+.split i {
+  display: block;
+  background: var(--case-color, var(--accent));
+}
+
+.split i:nth-child(2) {
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 60%, var(--bg-subtle));
+}
+
+.split i:nth-child(3) {
+  background: color-mix(in oklab, var(--case-color, var(--accent)) 32%, var(--bg-subtle));
+}
+
+@keyframes stretch {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-3xl);
+}
+
+.facts {
+  margin-block-start: 0;
+}
+
+/* ───────── Планшет ───────── */
+@media (max-width: 1023px) {
+  .root {
+    --lab: 96px;
+    --h-meal: 128px;
+    --h-train: 96px;
+    --h-weight: 80px;
+  }
+
+  .scroll {
+    margin-block-start: var(--space-xl);
+  }
+
+  .ribbon {
+    min-inline-size: 640px;
+  }
+
+  .lower {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: var(--space-xl);
+  }
+}
+
+/* ───────── Телефон ───────── */
+@media (max-width: 767px) {
+  .root {
+    --lab: 92px;
+    --h-meal: 112px;
+    --h-train: 84px;
+    --h-weight: 72px;
+    --h-bot: 48px;
+    --h-head: 44px;
+  }
+
+  .scroll {
+    margin-inline: calc(var(--space-sm) * -1);
+    margin-block-start: var(--space-lg);
+  }
+
+  .ribbon {
+    min-inline-size: 600px;
+  }
+
+  .corner,
+  .lab {
+    padding-inline-start: var(--space-sm);
+  }
+
+  .chip {
+    inline-size: 22px;
+  }
+
+  .lab > span {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .lower {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-md);
+    margin-block-start: var(--space-md);
+  }
+
+  .left {
+    display: contents;
+  }
+
+  /* На узком экране журнал свёрнут: остаётся подпись шага и панель */
+  .left > span,
+  .ledger {
+    display: none;
+  }
+
+  .phone {
+    order: 1;
+    block-size: 480px;
+  }
+
+  .cap {
+    order: 2;
+  }
+
+  .left > :global(div) {
+    order: 3;
+  }
+
+  .left > p:last-child {
+    order: 4;
+  }
+
+  .intro {
+    margin-block-start: var(--space-xl);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll,
+  .dot,
+  .ghost,
+  .photo[data-scan] i,
+  .meter i,
+  .split {
+    animation: none;
+  }
+
+  .bar,
+  .chip,
+  .line svg {
+    transition: none;
+  }
+}
