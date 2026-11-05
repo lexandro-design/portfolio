@@ -44,14 +44,36 @@
   animation-play-state: paused;
 }
 
-/* Пауза наверху, проезд вниз, пауза внизу. min() — страница ниже окна не едет вверх */
+/* Низкая страница стоит целиком, вписанная в окно: ничего не листается, едет только полоска до следующей */
+.view[data-still] .page {
+  inset-block: 0;
+  block-size: 100%;
+  object-fit: contain;
+  object-position: center;
+  animation: none;
+  will-change: auto;
+}
+
+/* Поля вокруг вписанной страницы: её же цвета, а не чёрные полосы */
+.fill {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  filter: blur(28px);
+  transform: scale(1.2);
+  pointer-events: none;
+}
+
+/* Короткая пауза наверху, проезд вниз, пауза внизу. min() — страница ниже окна не едет вверх */
 @keyframes pan {
   0%,
-  10% {
+  6% {
     transform: translateY(0);
   }
 
-  88%,
+  90%,
   100% {
     transform: translateY(min(0px, calc(100cqh - 100%)));
   }

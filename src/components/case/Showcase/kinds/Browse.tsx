@@ -9,18 +9,29 @@ import styles from './Browse.module.css'
 
 type Props = { pages: { shot: number; label: string }[]; shots: Shot[] }
 
+/** Окно 16:10. Страница не выше ~1,4 окна (отношение сторон до 0,9) целиком видна сразу, листать нечего */
+const WINDOW = 10 / 16
+const STILL = 0.9
+/** Сколько страница стоит неподвижной, прежде чем включится следующая вкладка */
+const HOLD = 3.5
+
 /**
- * Сайт в окне браузера: вкладки страниц сверху, страница целиком медленно
- * проезжает в окне сверху вниз, как при прокрутке, потом включается
- * следующая. Наведение ставит на паузу, клик открывает страницу целиком
+ * Сайт в окне браузера: вкладки страниц сверху. Низкая страница стоит целиком
+ * (вписана в окно), высокая проезжает сверху вниз за 5-11 секунд, как при
+ * прокрутке. Потом включается следующая. Наведение ставит на паузу,
+ * клик открывает страницу целиком
  */
 export function Browse({ pages, shots }: Props) {
   const [ref, inView] = useInView<HTMLDivElement>()
   const [i, setI] = useState(0)
   const page = pages[i]
   const shot = shots[page.shot]
-  // Чем длиннее страница, тем дольше проезд: 6–22 секунды
-  const dur = Math.min(22, Math.max(6, (shot.h / shot.w) * 4.2))
+  const ratio = shot.h / shot.w
+  const still = ratio <= STILL
+  // Окон в странице: 1,4 окна проезжаются за ~5 с, длинная страница не дольше 11 с
+  const dur = still ? HOLD : Math.min(11, Math.max(5, 3 + (ratio / WINDOW) * 1.4))
+
+  const next = () => setI((k) => (k + 1) % pages.length)
 
   return (
     <div ref={ref} className={styles.root}>
@@ -50,7 +61,12 @@ export function Browse({ pages, shots }: Props) {
             {String(i + 1).padStart(2, '0')} / {String(pages.length).padStart(2, '0')}
           </span>
         </div>
-        <div className={styles.view} data-play={inView || undefined}>
+        <div className={styles.view} data-play={inView || undefined} data-still={still || undefined}>
+          {still && (
+            // Размытая копия той же страницы закрывает поля вокруг вписанного кадра
+            // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка
+            <img key={`${shot.src}-fill`} src={asset(shot.src)} alt="" aria-hidden="true" className={styles.fill} />
+          )}
           {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
           <img
             key={shot.src}
@@ -63,10 +79,10 @@ export function Browse({ pages, shots }: Props) {
             loading="lazy"
             decoding="async"
             data-zoom
-            onAnimationEnd={() => setI((k) => (k + 1) % pages.length)}
+            onAnimationEnd={still ? undefined : next}
           />
           <span className={styles.progress} aria-hidden="true">
-            <i key={shot.src} style={{ '--dur': `${dur}s` } as CSSProperties} />
+            <i key={shot.src} style={{ '--dur': `${dur}s` } as CSSProperties} onAnimationEnd={still ? next : undefined} />
           </span>
         </div>
       </div>
