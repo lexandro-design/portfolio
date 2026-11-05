@@ -53,7 +53,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <div lang={HTML_LANG[locale]}>
-      <Hero t={t.hero} locale={locale} />
+      <Hero t={t.hero} calm={t.nav.calm} locale={locale} />
 
       <section id="services" className={styles.section}>
         <div className="container">

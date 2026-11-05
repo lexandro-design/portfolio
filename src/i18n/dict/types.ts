@@ -36,7 +36,8 @@ export type Dict = {
     menuOpen: string
     menuClose: string
     theme: string
-    themes: { dark: string; light: string; steel: string; space: string }
+    themes: { dark: string; light: string; steel: string; space: string; calm: string }
+    calm: { on: string; off: string; hint: string }
     language: string
     /** Кнопка палитры команд (Ctrl+K) */
     search: string

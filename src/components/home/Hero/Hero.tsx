@@ -4,17 +4,18 @@ import type { Dict } from '@/i18n/dict'
 import { Button } from '@/components/ui/Button'
 import { Clock } from '@/components/ui/Clock'
 import { Ticker } from '@/components/ui/Ticker'
+import { CalmToggle } from '@/components/layout/CalmToggle'
 import { HeroPhoto } from './HeroPhoto'
 import styles from './Hero.module.css'
 
-type Props = { t: Dict['hero']; locale: Locale }
+type Props = { t: Dict['hero']; calm: Dict['nav']['calm']; locale: Locale }
 
 /**
  * Первый экран: мета по краям, заголовок слева и фото справа, под ними
  * описание и действия. Высота по содержимому, а не на весь экран:
  * растянутый первый экран давал дыру между метой и заголовком.
  */
-export function Hero({ t, locale }: Props) {
+export function Hero({ t, calm, locale }: Props) {
   const lines = [
     ...t.title.map((text) => ({ text, accent: false })),
     ...t.accent.map((text) => ({ text, accent: true })),
@@ -62,6 +63,7 @@ export function Hero({ t, locale }: Props) {
               {t.secondary}
             </Button>
           </div>
+          <CalmToggle t={calm} place="hero" />
           <Ticker label={t.ticker} items={t.tickerItems} />
         </div>
       </div>

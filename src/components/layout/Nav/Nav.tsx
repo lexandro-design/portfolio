@@ -6,6 +6,7 @@ import { contacts, features } from '@/content/site'
 import { HTML_LANG, localePath } from '@/i18n/config'
 import { Button } from '@/components/ui/Button'
 import { PaletteButton } from '../CommandPalette/CommandPalette'
+import { CalmToggle } from '../CalmToggle'
 import { LangSwitch } from '../LangSwitch'
 import { Logo } from './Logo'
 import { MobileMenu } from '../MobileMenu'
@@ -53,6 +54,7 @@ export function Nav() {
             {t.nav.status}
           </span>
           {features.palette && <PaletteButton label={t.nav.search} />}
+          <CalmToggle t={t.nav.calm} place="nav" />
           <LangSwitch locale={locale} rest={rest} label={t.nav.language} />
           <ThemeSwitch labels={t.nav.themes} label={t.nav.theme} />
           <Button href={contacts.telegram} external className={styles.cta}>

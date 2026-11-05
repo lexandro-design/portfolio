@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { stillMotion } from '@/lib/still'
 
 // Первое число в строке: «450+», «~17 000», «60 мс». Годы и составные значения («15 с → 1 с») не считаем
 const NUM = /^([^\d]*)(\d(?:[\d\s]*\d)?)(.*)$/
@@ -16,7 +17,7 @@ export function CountUp({ value, className }: { value: string; className?: strin
   useEffect(() => {
     const m = value.match(NUM)
     const el = ref.current
-    if (!m || !el || value.includes('→') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!m || !el || value.includes('→') || stillMotion()) return
     const target = Number(m[2].replace(/\s/g, ''))
     // Год и маленькие числа не анимируем: «2025» не должен набегать от нуля
     if (target < 5 || (target >= 1990 && target <= 2100) || m[2].startsWith('0')) return

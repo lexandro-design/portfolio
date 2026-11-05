@@ -230,3 +230,84 @@
     transform: none;
   }
 }
+
+/* Спокойный вид: заголовок, текст и кнопки слева, большое фото справа, служебных строк нет */
+:global([data-theme='calm']) .hero {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  grid-template-rows: auto 1fr;
+  column-gap: var(--space-3xl);
+  row-gap: var(--space-lg);
+  align-items: start;
+  padding-block: var(--space-3xl);
+}
+
+:global([data-theme='calm']) :is(.meta, .foot, .moon) {
+  display: none;
+}
+
+:global([data-theme='calm']) .main {
+  display: contents;
+}
+
+:global([data-theme='calm']) .title {
+  grid-column: 1;
+  font-size: calc(var(--type-h2) * 1.25);
+  line-height: 1.15;
+  font-weight: 500;
+}
+
+:global([data-theme='calm']) .line {
+  display: inline;
+  white-space: normal;
+}
+
+:global([data-theme='calm']) .line::after {
+  content: ' ';
+}
+
+:global([data-theme='calm']) .line[data-accent] {
+  color: inherit;
+}
+
+:global([data-theme='calm']) .photo {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+:global([data-theme='calm']) .bottom {
+  grid-column: 1;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+:global([data-theme='calm']) .buttons {
+  justify-content: start;
+}
+
+:global([data-theme='calm']) .actions > :last-child:not(.buttons) {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  :global([data-theme='calm']) .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+    column-gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 767px) {
+  :global([data-theme='calm']) .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    padding-block: var(--space-xl);
+  }
+
+  :global([data-theme='calm']) :is(.title, .photo, .bottom) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  :global([data-theme='calm']) .photo {
+    max-inline-size: 360px;
+  }
+}

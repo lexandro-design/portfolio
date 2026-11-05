@@ -4,6 +4,7 @@ import { useEffect, useState, type CSSProperties } from 'react'
 import { PHOTO } from '@/content/site'
 import { asset } from '@/lib/asset'
 import styles from './HeroPhoto.module.css'
+import { useReduced } from '@/components/case/Showcase/hooks'
 
 type Props = { alt: string; caption: string }
 
@@ -30,8 +31,10 @@ export function HeroPhoto({ alt, caption }: Props) {
   // Лишний «тик», чтобы перезапустить ожидание, пока вкладка скрыта
   const [tick, setTick] = useState(0)
 
+  const still = useReduced()
+
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (still) return
 
     if (next !== null) {
       const done = window.setTimeout(() => {
@@ -46,9 +49,10 @@ export function HeroPhoto({ alt, caption }: Props) {
       else setTick((t) => t + 1)
     }, HOLD)
     return () => window.clearTimeout(wait)
-  }, [current, next, tick])
+  }, [current, next, tick, still])
 
-  const shownIndex = next ?? current
+  /* Спокойный вид: обычное фото вместо текущего формата */
+  const shownIndex = still ? 0 : (next ?? current)
   /* В разметке только текущий кадр и следующий: остальные не грузятся, пока до них не дошла очередь */
   const coming = (shownIndex + 1) % PHOTO.formats.length
 

@@ -5,6 +5,7 @@ import type { Block } from '@/content/showcase'
 import { useInView } from '../hooks'
 import kit from './kit.module.css'
 import styles from './Console.module.css'
+import { stillMotion } from '@/lib/still'
 
 type Props = { block: Extract<Block, { kind: 'console' }> }
 
@@ -21,7 +22,7 @@ export function Console({ block }: Props) {
     if (!inView || booted.current) return
     booted.current = true
     // Без движения — все сразу. Таймеры не снимаются при перерисовке: включение идёт один раз до конца
-    const gap = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 450
+    const gap = stillMotion() ? 0 : 450
     block.services.forEach((_, i) =>
       window.setTimeout(() => setOn((v) => v.map((x, k) => (k === i ? true : x))), gap && 500 + i * gap),
     )

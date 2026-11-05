@@ -5,6 +5,7 @@ import type { ChatLine } from '@/content/cases'
 import { PHOTO } from '@/content/site'
 import { asset } from '@/lib/asset'
 import styles from './ChatPreview.module.css'
+import { stillMotion } from '@/lib/still'
 
 type Props = { lines: ChatLine[] }
 
@@ -109,7 +110,7 @@ export function ChatPreview({ lines }: Props) {
   const [step, setStep] = useState(phases.length - 1)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (stillMotion()) return
     const timer = window.setInterval(() => setStep((s) => (s + 1) % phases.length), STEP)
     return () => window.clearInterval(timer)
   }, [phases])

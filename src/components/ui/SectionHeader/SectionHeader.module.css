@@ -31,3 +31,12 @@
     display: none;
   }
 }
+
+/* Спокойный вид: только заголовок, с заглавной буквы */
+:global([data-theme='calm']) .meta {
+  display: none;
+}
+
+:global([data-theme='calm']) .title::first-letter {
+  text-transform: uppercase;
+}

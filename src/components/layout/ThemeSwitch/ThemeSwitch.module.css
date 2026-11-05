@@ -51,8 +51,8 @@
   display: none;
 }
 
-/* Узкий телефон: вместо пяти кнопок по 23 px одна на 44 px */
-@media (max-width: 419px) {
+/* Узкая шапка: вместо ряда кнопок одна на 44 px */
+@media (max-width: 899px) {
   .switch:not([data-full]) {
     display: none;
   }

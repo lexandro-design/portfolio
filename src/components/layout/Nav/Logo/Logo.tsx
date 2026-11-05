@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import styles from './Logo.module.css'
+import { stillMotion } from '@/lib/still'
 
 const WORD = 'LEXANDRO'
 const GLYPHS = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*/<>'
@@ -32,7 +33,7 @@ export function Logo({ href }: Props) {
   )
 
   const scramble = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (stillMotion()) return
     if (frame.current) cancelAnimationFrame(frame.current)
     const start = performance.now()
 

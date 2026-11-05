@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import styles from './InboxPreview.module.css'
+import { stillMotion } from '@/lib/still'
 
 type Props = {
   /** Воронки, по которым раскладывается почта */
@@ -23,7 +24,7 @@ export function InboxPreview({ columns, mails }: Props) {
   const [step, setStep] = useState(total - 1)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (stillMotion()) return
     const timer = window.setInterval(() => setStep((s) => (s + 1) % total), STEP)
     return () => window.clearInterval(timer)
   }, [total])

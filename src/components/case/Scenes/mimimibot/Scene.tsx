@@ -6,6 +6,7 @@ import type { SceneProps } from '../types'
 import { Back, Brief, Cap, Chat, Controls, Facts, Keys, Lead, Meta, Mono, Msg, Note, Progress, Reveal, Title, usePlay } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
+import { stillMotion } from '@/lib/still'
 
 /** Готовый кадр есть только у шаблона из сценария: остальные на стене просто шаблоны. tall: кадр 9:16 целиком */
 type Tile = { id: string; src: string; you?: string; tall?: boolean }
@@ -149,7 +150,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
     const grew = feed.height - was.current
     const first = was.current === 0
     was.current = feed.height
-    if (first || grew <= 0 || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (first || grew <= 0 || stillMotion()) return
     feed.items.forEach((el) => el.animate([{ transform: `translateY(${grew}px)` }, { transform: 'none' }], { duration: 460, easing: GLIDE }))
   }, [shown, follow])
 
@@ -162,7 +163,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
     const over = feed.height - feed.ol.clientHeight + 24
     if (over <= 0) return
     const frames = [{ transform: `translateY(${over}px)` }, { transform: 'none' }]
-    const hold = play.stopped || matchMedia('(prefers-reduced-motion: reduce)').matches
+    const hold = play.stopped || stillMotion()
     const runs = feed.items.map((el) =>
       hold
         ? el.animate([frames[0], frames[0]], { duration: 1, fill: 'forwards' })

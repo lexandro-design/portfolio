@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { contacts } from '@/content/site'
 import { LOCALE_LABELS, LOCALES, localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
+import { CalmToggle } from '../CalmToggle'
 import styles from './MobileMenu.module.css'
 
 type Props = {
@@ -85,6 +86,7 @@ export function MobileMenu({ links, locale, rest, t }: Props) {
         </nav>
 
         <div className={`container ${styles.foot}`}>
+          <CalmToggle t={t.calm} place="menu" />
           <div className={styles.langs} aria-label={t.language}>
             {LOCALES.map((l) => (
               <Link
