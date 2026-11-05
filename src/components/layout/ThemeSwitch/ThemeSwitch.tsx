@@ -1,7 +1,7 @@
 'use client'
 
 import { useSyncExternalStore } from 'react'
-import { BASE_THEMES, DEFAULT_THEME, THEMES, type Theme } from '@/content/site'
+import { BASE_THEMES, DEFAULT_THEME, SKY_THEMES, THEMES, type Theme } from '@/content/site'
 import styles from './ThemeSwitch.module.css'
 
 /* Тема живёт в data-theme на <html> (его же ставит ThemeScript до
@@ -15,10 +15,56 @@ export const subscribeTheme = (cb: () => void) => {
 export const readTheme = () =>
   (document.documentElement.dataset.theme as Theme | undefined) ?? DEFAULT_THEME
 
+/* Космос тяжёлый: перед включением SkyGuard показывает окно. Выбор «не спрашивать» и тема, куда
+   вернуться, живут в localStorage */
+export const SKY_ASK = 'skyask'
+export type SkyAskDetail = { next: Theme; stay?: Theme }
+const ASK_KEY = 'sky-ask'
+const BACK_KEY = 'sky-back'
+
+const skyAsks = () => {
+  try {
+    return localStorage.getItem(ASK_KEY) !== 'no'
+  } catch {
+    return true
+  }
+}
+
+export const neverAskSky = () => {
+  try {
+    localStorage.setItem(ASK_KEY, 'no')
+  } catch {}
+}
+
+/** Выбор темы человеком. stay: куда перейти, если он откажется от Космоса (перебор тем по кругу иначе упрётся в окно) */
+export function pickTheme(next: Theme, stay?: Theme) {
+  if (SKY_THEMES.includes(next) && !SKY_THEMES.includes(readTheme()) && skyAsks()) {
+    window.dispatchEvent(new CustomEvent<SkyAskDetail>(SKY_ASK, { detail: { next, stay } }))
+    return
+  }
+  applyTheme(next)
+}
+
+/** Откат из Космоса одним нажатием: на тему, с которой включили, иначе на первую обычную */
+export function leaveSky() {
+  let back: string | null = null
+  try {
+    back = localStorage.getItem(BACK_KEY)
+  } catch {}
+  const usable = THEMES.filter((t) => !SKY_THEMES.includes(t))
+  applyTheme(usable.find((t) => t === back) ?? usable.find((t) => t === DEFAULT_THEME) ?? usable[0])
+}
+
 /** Сменить тему сайта: шапка, блок «Система» и палитра команд подписаны на событие */
 export function applyTheme(next: Theme) {
   const root = document.documentElement
+  const was = readTheme()
   const commit = () => {
+    if (SKY_THEMES.includes(next) && !SKY_THEMES.includes(was)) {
+      try {
+        localStorage.setItem(BACK_KEY, was)
+      } catch {}
+    }
     root.dataset.theme = next
     try {
       localStorage.setItem('theme', next)
@@ -55,6 +101,7 @@ export function ThemeSwitch({ label, labels, full }: Props) {
   const theme = useSyncExternalStore(subscribeTheme, readTheme, () => DEFAULT_THEME)
 
   const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
+  const afterNext = THEMES[(THEMES.indexOf(next) + 1) % THEMES.length]
 
   return (
     <>
@@ -69,7 +116,7 @@ export function ThemeSwitch({ label, labels, full }: Props) {
             title={labels[id]}
             className={styles.option}
             data-extra={BASE_THEMES.includes(id) ? undefined : ''}
-            onClick={() => applyTheme(id)}
+            onClick={() => pickTheme(id)}
           >
             <Icon id={id} />
           </button>
@@ -82,7 +129,7 @@ export function ThemeSwitch({ label, labels, full }: Props) {
         data-full={full || undefined}
         aria-label={`${label}: ${labels[theme]}`}
         title={labels[next]}
-        onClick={() => applyTheme(next)}
+        onClick={() => pickTheme(next, afterNext)}
       >
         <Icon id={theme} />
       </button>

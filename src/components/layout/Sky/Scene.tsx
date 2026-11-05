@@ -1,6 +1,8 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { SKY_HEAVY, SKY_READY } from './events'
 import { QUAD, SCENE, STAR_F, STAR_V } from './shader'
 import styles from './Sky.module.css'
 
@@ -11,11 +13,19 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 /** Сколько пикселей считаем за кадр: на широком мониторе холст рисуется мельче и растягивается */
 const BUDGET = 4_200_000
 const BUDGET_WEAK = 1_000_000
-/** Медленное вращение рисуем раз в 33 мс: за кадр Луна сдвигается меньше пикселя. Курсор, скролл и жест рисуются на каждом кадре */
-const FRAME = 33
+/** Вращение рисуем раз в 66 мс: край Луны за это время сдвигается на четверть пикселя, глазу разницы нет, а видеокарте вдвое легче. Курсор и жест рисуются на каждом кадре */
+const FRAME = 66
+/** Скролл без Луны в кадре на слабом устройстве: звёзды рисуем не чаще 30 раз в секунду */
+const FRAME_SCROLL = 33
 /** Градусов в секунду: вращение едва заметное */
 const SPIN = 0.5
-const HEAVY = 22
+/** Кадр считается тяжёлым, если видеокарта не закончила его к следующему кадру браузера */
+const HEAVY = 30
+/** Разрешение карт: 1 тексель на пиксель в центре диска держится, пока длина карты не меньше окружности Луны на экране */
+const TIERS = [
+  { tag: '-mid', size: 3072 },
+  { tag: '', size: 6144 },
+]
 
 const D = Math.PI / 180
 const norm = (a: V3): V3 => {
@@ -57,6 +67,11 @@ function skyMatrix(yaw: number, pitch: number) {
 export default function Scene() {
   const canvas = useRef<HTMLCanvasElement>(null)
   const [gen, setGen] = useState(0)
+  const path = usePathname()
+  const rouse = useRef(() => {})
+
+  /* Переход на главную: скролла нет, а Луна должна появиться */
+  useEffect(() => rouse.current(), [path])
 
   useEffect(() => {
     const el = canvas.current
@@ -71,6 +86,7 @@ export default function Scene() {
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
     const nav = navigator as Nav
     const weak = matchMedia('(pointer: coarse)').matches || (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4
+    if (weak) document.documentElement.dataset.skyLite = ''
 
     const program = (vs: string, fs: string) => {
       const p = gl.createProgram()!
@@ -132,28 +148,85 @@ export default function Scene() {
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, blank)
       gl.uniform1i(loc(scene, name), i)
     })
-    const tag = weak ? '-lo' : ''
-    const files = [`moon-albedo${tag}`, `moon-nx${tag}`, `moon-ny${tag}`, 'sky']
-    let waiting = files.length
-    let shown = 0
     let mounted = true
     const aniso = gl.getExtension('EXT_texture_filter_anisotropic')
-    files.forEach((name, i) => {
-      const img = new Image()
-      img.onload = () => {
-        if (!mounted) return
-        gl.activeTexture(gl.TEXTURE0 + i)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
-        gl.generateMipmap(gl.TEXTURE_2D)
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-        if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 4 : 8)
-        waiting -= 1
-        wake()
+    const put = (i: number, src: TexImageSource) => {
+      gl.activeTexture(gl.TEXTURE0 + i)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src)
+      gl.generateMipmap(gl.TEXTURE_2D)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT)
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+      if (aniso) gl.texParameterf(gl.TEXTURE_2D, aniso.TEXTURE_MAX_ANISOTROPY_EXT, weak ? 4 : 8)
+    }
+    /* Картинку разжимает фоновый поток браузера: через <img> то же самое шло бы в texImage2D на главном потоке */
+    const fetchImage = async (name: string): Promise<TexImageSource> => {
+      const url = `${BASE}/space/${name}.webp`
+      try {
+        return await createImageBitmap(await (await fetch(url)).blob())
+      } catch {
+        const img = new Image()
+        img.src = url
+        await img.decode()
+        return img
       }
-      img.src = `${BASE}/space/${name}.webp`
+    }
+    /* По одной текстуре на кадр: пачка загрузок подряд это одна длинная заминка */
+    const nextFrame = () => new Promise((done) => requestAnimationFrame(done))
+    const upload = async (names: string[], slots: number[]) => {
+      const images = names.map(fetchImage)
+      for (const [i, image] of images.entries()) {
+        const src = await image
+        if (i) await nextFrame()
+        if (!mounted) return false
+        put(slots[i], src)
+        if ('close' in src) src.close()
+      }
+      return true
+    }
+
+    let shown = 0
+    let skyIn = false
+    let moonIn = false
+    let moonAsked = false
+    let rank = -1
+    let climbing = false
+    void upload(['sky'], [3]).then((ok) => {
+      if (!ok) return
+      skyIn = true
+      wake()
     })
+    /* На страницах кейсов Луны нет: её карты грузятся только когда на странице появился блок data-moon */
+    const askMoon = () => {
+      moonAsked = true
+      void upload(['moon-albedo-lo', 'moon-nx-lo', 'moon-ny-lo'], [0, 1, 2]).then((ok) => {
+        if (!ok) return
+        moonIn = true
+        wake()
+      })
+    }
+    /* Луна уже видна в лёгких картах, чёткие подтягиваются в паузе и только те, что нужны этому экрану */
+    const climb = (r: number) => {
+      if (weak || climbing || slowed || shown < 1 || r <= 0) return
+      const need = 2 * Math.PI * r * (el.width / innerWidth)
+      const want = TIERS.findIndex((t) => t.size >= need)
+      const next = want < 0 ? TIERS.length - 1 : want
+      if (next <= rank) return
+      climbing = true
+      const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 300))
+      idle(() => {
+        const { tag } = TIERS[next]
+        void upload([`moon-nx${tag}`, `moon-ny${tag}`, `moon-albedo${tag}`], [1, 2, 0])
+          .catch(() => false)
+          .then((ok) => {
+            climbing = false
+            if (!ok) return
+            rank = next
+            drawn = ''
+            wake()
+          })
+      })
+    }
 
     let spin = 0
     let lastSpin = 0
@@ -168,7 +241,10 @@ export default function Scene() {
     let slowed = 0
     let still = calm
     let drawnCount = 0
-    const pixel = new Uint8Array(4)
+    let fence: WebGLSync | null = null
+    let fenceAt = 0
+    let ready = false
+    let lastTick = 0
 
     /* Где стоит Луна, решает вёрстка: первый экран держит пустой блок data-moon. Нет блока, Луны на странице нет */
     const place = () => {
@@ -239,15 +315,28 @@ export default function Scene() {
       gl.uniform1f(s.uPx, Math.max(k, 0.8))
       gl.uniform1f(s.uDim, 1)
       gl.drawArrays(gl.POINTS, 0, count)
-      if (!watched || still) return
-      /* rAF о загрузке видеокарты не говорит: readPixels ждёт, пока кадр дорисуется */
-      gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel)
-      slow = performance.now() - start > HEAVY ? slow + 1 : Math.max(0, slow - 1)
+      if (!watched || still || fence) return
+      /* rAF о загрузке видеокарты не говорит. Метка в очереди команд покажет, когда кадр дорисован, и не останавливает конвейер, как readPixels */
+      fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0)
+      fenceAt = start
+      gl.flush()
+    }
+
+    const judge = (now: number, gap: number) => {
+      if (!fence || gl.getSyncParameter(fence, gl.SYNC_STATUS) !== gl.SIGNALED) return
+      gl.deleteSync(fence)
+      fence = null
+      /* Цикл спал или главный поток был занят: это не видеокарта */
+      if (gap > 100) return
+      slow = now - fenceAt > HEAVY ? slow + 1 : Math.max(0, slow - 1)
       if (slow < 6) return
       slow = 0
       slowed += 1
-      if (slowed > 2) still = true
-      else {
+      document.documentElement.dataset.skyLite = ''
+      if (slowed > 2) {
+        still = true
+        dispatchEvent(new Event(SKY_HEAVY))
+      } else {
         scale *= 0.74
         resize()
       }
@@ -256,7 +345,9 @@ export default function Scene() {
     let drawn = ''
     const tick = (now: number) => {
       frame = 0
-      if (!waiting && shown < 1) shown = Math.min(1, shown + 0.04)
+      judge(now, lastTick ? now - lastTick : 0)
+      lastTick = now
+      if (moonIn && shown < 1) shown = Math.min(1, shown + 0.04)
       const dtf = lastSpin ? Math.min(now - lastSpin, 100) : 16
       const ease = 1 - 0.92 ** (dtf / 33)
       pointer.x += (pointer.tx - pointer.x) * ease
@@ -268,20 +359,27 @@ export default function Scene() {
       const dt = lastSpin ? Math.min(now - lastSpin, 100) : 0
       lastSpin = now
       const at = place()
+      if (at.top !== -1 && !moonAsked) askMoon()
+      climb(at.top === -1 ? 0 : at.r)
+      if (!ready && (at.top === -1 ? skyIn : shown >= 1)) {
+        ready = true
+        dispatchEvent(new Event(SKY_READY))
+      }
       const turning = !still && !document.hidden && scrollY < innerHeight * 1.2 && at.top !== -1
       if (turning) spin += dt * SPIN * D * 0.001
       const settling =
-        (!waiting && shown < 1) ||
+        (moonIn && shown < 1) ||
         Math.abs(grab.vx) > 1e-5 ||
         Math.abs(pointer.tx - pointer.x) + Math.abs(pointer.ty - pointer.y) > 0.002
-      const key = `${scrollY} ${el.width} ${el.height} ${waiting}`
-      const moving = turning || settling
+      const key = `${scrollY} ${el.width} ${el.height} ${skyIn} ${at.top === -1}`
+      const lazy = (weak || slowed > 0) && (at.top === -1 || scrollY > innerHeight * 1.2)
       /* Курсор, скролл и жест рисуем на каждом кадре, одно вращение раз в FRAME */
-      if (settling || key !== drawn || (turning && now - last >= FRAME)) {
+      if (settling || (key !== drawn && (!lazy || now - last >= FRAME_SCROLL)) || (turning && now - last >= FRAME)) {
         last = now
         draw(at)
         drawn = key
       }
+      const moving = turning || settling || key !== drawn || !!fence
       if (moving && !document.hidden) frame = requestAnimationFrame(tick)
     }
     function wake() {
@@ -328,6 +426,7 @@ export default function Scene() {
       document.documentElement.style.cursor = ''
     }
 
+    rouse.current = wake
     addEventListener('resize', resize)
     addEventListener('scroll', wake, { passive: true })
     addEventListener('visibilitychange', wake)
@@ -342,6 +441,8 @@ export default function Scene() {
 
     return () => {
       mounted = false
+      rouse.current = () => {}
+      delete document.documentElement.dataset.skyLite
       gl.getExtension('WEBGL_lose_context')?.loseContext()
       cancelAnimationFrame(frame)
       removeEventListener('resize', resize)

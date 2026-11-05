@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import { contacts, features, THEMES } from '@/content/site'
 import { LOCALE_LABELS, LOCALES, localePath, type Locale } from '@/i18n/config'
-import { applyTheme, readTheme, ThemeIcon } from '../ThemeSwitch'
+import { pickTheme, readTheme, ThemeIcon } from '../ThemeSwitch'
 import { useLocale } from '../useLocale'
 import styles from './CommandPalette.module.css'
 
@@ -180,7 +180,7 @@ export function CommandPalette({ index }: Props) {
       find: `${t.nav.themes[id]} theme ${id}`,
       on: theme === id,
       icon: <ThemeIcon id={id} />,
-      run: () => (applyTheme(id), close()),
+      run: () => (close(), pickTheme(id)),
     }))
     const languages: Item[] = LOCALES.map((l) => ({
       id: `l-${l}`,
