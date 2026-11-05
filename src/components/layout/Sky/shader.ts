@@ -1,5 +1,5 @@
 /** Вся сцена в одном проходе: луч из камеры, сфера считается формулой, поэтому Луна стоит
-    как один полноэкранный прямоугольник и на телефоне тоже. Текстуры запечены в tools/space */
+    как один полноэкранный прямоугольник и на телефоне тоже. Текстуры Луны из данных NASA, готовит tools/space/moon-nasa.py */
 export const QUAD = `#version 300 es
 in vec2 p;
 void main() { gl_Position = vec4(p, 0., 1.); }
@@ -13,12 +13,10 @@ uniform vec3 uC;
 uniform mat3 uBody;
 uniform mat3 uSkyM;
 uniform vec3 uSun;
-uniform float uView;
 uniform float uIn;
 uniform sampler2D uAlb;
 uniform sampler2D uNx;
 uniform sampler2D uNy;
-uniform sampler2D uTile;
 uniform sampler2D uSky;
 out vec4 o;
 
@@ -37,14 +35,15 @@ vec2 mapUv(vec2 ll) {
 vec3 sky(vec3 d) {
   vec3 m = uSkyM * d;
   vec3 c = texture(uSky, mapUv(lonlat(m))).rgb;
-  return pow(c, vec3(2.2)) * vec3(.72, .84, 1.15) * mix(.09, .05, uView);
+  return pow(c, vec3(2.2)) * vec3(.72, .84, 1.15) * .09;
 }
 
-/* Высота мелкого рельефа: два масштаба, второй повёрнут, чтобы плитка не читалась */
-float relief(vec2 q) {
-  float a = texture(uTile, q).r;
-  float b = texture(uTile, vec2(q.x * .8 - q.y * .6, q.x * .6 + q.y * .8) * 4.3 + .37).r;
-  return a + b * .16;
+/* Наклон поверхности на восток и на север по картам NASA LOLA: в текстуре корень от |s| / SMAX,
+   так тонкие склоны получают больше градаций. Тот же SMAX в tools/space/moon-nasa.py */
+const float SMAX = .5;
+vec2 slope(vec2 uv) {
+  vec2 v = vec2(texture(uNx, uv).r, texture(uNy, uv).r) * 2. - 1.;
+  return sign(v) * v * v * SMAX;
 }
 
 vec3 moon(vec3 d, vec3 P) {
@@ -54,42 +53,30 @@ vec3 moon(vec3 d, vec3 P) {
   vec3 V = uBody * -d;
   vec2 ll = lonlat(M);
   vec2 uv = mapUv(ll);
-  float alb = pow(texture(uAlb, uv).r, 2.2);
-  vec2 s = vec2(texture(uNx, uv).r, texture(uNy, uv).r) * 2. - 1.;
-  s *= mix(1.5, .04, uView);
+  vec3 tex = texture(uAlb, uv).rgb;
+  /* Цвет снимков чуть приглушён: настоящая Луна почти серая, тёплые нагорья и холодные моря едва различимы */
+  vec3 alb = pow(mix(vec3(dot(tex, vec3(.3, .59, .11))), tex, .75), vec3(2.2));
+  /* Рельеф с запасом: на полной фазе склоны почти не видны, у терминатора они и лепят шар */
+  vec2 s = slope(uv) * 2.8;
   vec3 E = normalize(vec3(M.z, 0., -M.x) + 1e-5);
   vec3 Nn = cross(M, E);
-  float shade = 1.;
-  if (uView > .02) {
-    vec2 q = vec2(ll.x * cos(ll.y), ll.y) * 5.;
-    float e = 2.5 / 2048.;
-    float h = relief(q);
-    vec2 g = vec2(relief(q + vec2(e, 0.)) - h, relief(q + vec2(0., e)) - h) / e;
-    s += g * .011 * uView;
-    /* Тень от склонов: несколько шагов по рельефу к Солнцу */
-    vec2 sd = normalize(vec2(dot(S, E), dot(S, Nn)) + 1e-4);
-    float rise = max(dot(S, M), .06);
-    float block = 0.;
-    for (int i = 1; i <= 7; i++) {
-      float t = float(i) * float(i) * .0006;
-      block = max(block, (relief(q + sd * t) - h) - rise * t * 60.);
-    }
-    shade = 1. - smoothstep(.02, .22, block) * .38 * uView;
-    /* Вблизи морей не видно: пятна альбедо читались бы кляксами, остаётся мелкий рельеф */
-    alb = mix(alb, .34 * (.86 + h * .28), uView * .9);
-  }
   vec3 n = normalize(M - s.x * E - s.y * Nn);
-  float mu0 = max(dot(n, S), 0.);
-  float mu = max(dot(n, V), .02);
-  float day = smoothstep(-.03, .05, dot(M, S));
+  float g = dot(M, S);
+  /* Склон влияет не на всю силу: чёрные ямы-провалы в кратерах смягчены, лепка остаётся */
+  float mu0 = max(mix(dot(M, S), dot(n, S), .88), 0.);
+  float mu = max(dot(n, V), .04);
+  /* Терминатор мягкий: свет уходит плавно, без ступеньки между днём и ночью */
+  float day = smoothstep(-.16, .24, g);
   /* Лунная пыль рассеивает назад: диск почти плоский, край не темнеет, как у шара из пластика */
   float ls = mu0 / (mu0 + mu);
   float phase = dot(S, V);
   float light = (ls * 1.5 + mu0 * .55) * (1. + .35 * pow(max(phase, 0.), 6.));
-  vec3 sun = vec3(1., .975, .94) * alb * light * day * shade * 1.75 * mix(1., .6, uView);
+  vec3 sun = vec3(1., .975, .94) * alb * light * day * 1.9;
   /* Пепельный свет: ночная сторона светится отражённой Землёй */
-  vec3 earth = vec3(.62, .74, 1.) * alb * .012 * max(N.z * .6 + .4, 0.);
-  return sun + earth;
+  vec3 earth = vec3(.62, .74, 1.) * alb * .014 * max(N.z * .6 + .4, 0.);
+  /* Лёгкое свечение у самого края с освещённой стороны */
+  float rim = pow(1. - clamp(dot(N, vec3(0., 0., 1.)), 0., 1.), 3.) * smoothstep(-.1, .5, dot(N, uSun));
+  return sun + earth + vec3(.55, .62, .8) * rim * .05;
 }
 
 void main() {
@@ -97,8 +84,17 @@ void main() {
   float b = dot(d, uC);
   float cc = dot(uC, uC);
   float near = sqrt(max(cc - b * b, 0.));
-  float cover = b > 0. ? clamp((1. - near) / (b / uFocal) + .5, 0., 1.) : 0.;
+  float px = b / uFocal;
+  float cover = b > 0. ? clamp((1. - near) / px + .5, 0., 1.) : 0.;
   vec3 c = sky(d);
+  if (b > 0. && near > .96) {
+    /* Ореол: рассеянный свет вокруг диска, гуще со стороны Солнца и на фазе ближе к полной */
+    vec3 q = d * b - uC;
+    float lit = max(dot(normalize(q), uSun) * .5 + .5, 0.);
+    float full = uSun.z * .5 + .5;
+    float k = exp(-max(near - 1., 0.) * 16.);
+    c += vec3(.72, .8, 1.) * k * lit * lit * (.012 + .05 * full) * uIn;
+  }
   if (cover > 0. && uIn > 0.) {
     float t = b - sqrt(max(1. - near * near, 0.));
     vec3 m = moon(d, d * t - uC);
@@ -106,9 +102,6 @@ void main() {
   }
   c = 1. - exp(-c * 1.5);
   c = pow(c, vec3(1. / 2.2));
-  /* На низкой орбите поверхность становится фоном для текста: полоса яркости узкая */
-  vec3 ground = vec3(.60, .595, .575) + (c - vec3(.58)) * .9;
-  c = mix(c, mix(c, ground, cover), uView);
   o = vec4(c + (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - .5) / 255., 1.);
 }
 `

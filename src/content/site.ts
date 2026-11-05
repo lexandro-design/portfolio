@@ -9,7 +9,7 @@ export const contacts = data.contacts
 
 export const COORDS = data.coords
 
-export type Theme = 'dark' | 'light' | 'steel' | 'moon' | 'space'
+export type Theme = 'dark' | 'light' | 'steel' | 'space'
 
 /** Что включено на сайте — переключается во вкладке «Настройки» админки */
 export const features = data.features as { brief: boolean; palette: boolean; sandbox: boolean; steel: boolean }
@@ -18,10 +18,10 @@ export const features = data.features as { brief: boolean; palette: boolean; san
 export const BASE_THEMES: Theme[] = ['dark', 'light']
 
 /** Порядок кнопок в переключателе. Сталь отключается своим флагом */
-export const THEMES: Theme[] = [...BASE_THEMES, ...(features.steel ? (['steel'] as const) : []), 'moon', 'space']
+export const THEMES: Theme[] = [...BASE_THEMES, ...(features.steel ? (['steel'] as const) : []), 'space']
 
 /** Темы, у которых фон рисует сцена Sky: её код и текстуры грузятся только при выборе такой темы */
-export const SKY_THEMES: Theme[] = ['moon', 'space']
+export const SKY_THEMES: Theme[] = ['space']
 
 /** Тема для тех, кто ещё не выбирал сам */
 export const DEFAULT_THEME = (THEMES as string[]).includes(data.defaultTheme)

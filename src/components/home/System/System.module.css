@@ -109,8 +109,12 @@
 
 .sample {
   overflow: hidden;
+  /* Ширина не зависит от толщины букв: пересчёт вёрстки остаётся внутри образца, а не идёт по всей секции */
+  flex: 1 1 0;
+  min-inline-size: 0;
+  contain: layout paint style;
   font-weight: 450;
-  animation: weight 4s var(--ease-in-out) calc(var(--i) * 0.3s) infinite;
+  animation: weight 4s steps(8, end) calc(var(--i) * 0.3s) infinite;
   line-height: 1;
   letter-spacing: -0.03em;
   white-space: nowrap;
@@ -149,7 +153,8 @@
   transform: scaleX(0);
 }
 
-/* Ось толщины переменного шрифта: образцы «дышат» от тонкого к жирному */
+/* Ось толщины переменного шрифта: образцы «дышат» от тонкого к жирному. Девять ступеней вместо плавной кривой:
+   каждый новый вес это новый экземпляр шрифта, плавно на телефоне выходило 40 мс на кадр, со ступенями кэш работает */
 @keyframes weight {
   0%,
   100% {

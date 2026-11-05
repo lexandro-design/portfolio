@@ -25,7 +25,7 @@
   --cast-warn: #c0341d;
 }
 
-:global(:is([data-theme='steel'], [data-theme='moon'])) :is(.sheet, .desks, .sketch, .doc) {
+:global([data-theme='steel']) :is(.sheet, .desks, .sketch, .doc) {
   --cast-warn: #8f1d0a;
 }
 
