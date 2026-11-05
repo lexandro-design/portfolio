@@ -340,11 +340,10 @@
 }
 
 @media (max-width: 767px) {
+  /* Вкладки листаются внутри боковых полей, а не от края до края экрана */
   .tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
-    margin-inline: calc(var(--bleed) * -1);
-    border-inline: 0;
     scrollbar-width: none;
   }
 
