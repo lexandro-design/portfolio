@@ -443,16 +443,15 @@
 .dock {
   display: grid;
   gap: 8px;
-  block-size: 128px;
+  min-block-size: 128px;
   align-content: start;
-  overflow: hidden;
   padding: 12px 14px;
   border: 1px solid var(--border-hair);
   background: var(--bg-elevated);
   animation: tagIn 400ms var(--ease-out-quart) both;
 }
 
-/* Журнал сервера: шаги копятся, текущий ярче. Панель не пустеет, высота та же */
+/* Журнал сервера: шаги копятся, текущий ярче. Панель растёт по тексту: на узком экране строки переносятся */
 .log {
   display: grid;
   gap: 6px;
@@ -594,7 +593,9 @@
     transform: none;
   }
 
+  /* Минимум держит самый длинный шаг: на узком экране строки журнала переносятся, а страница на шагах не прыгает */
   .dock {
+    min-block-size: 144px;
     margin-block-start: 0;
   }
 
@@ -613,6 +614,10 @@
 }
 
 @media (max-width: 599px) {
+  .dock {
+    min-block-size: 168px;
+  }
+
   .stage {
     --chat-h: 700px;
     margin-block-start: var(--space-lg);
@@ -658,5 +663,11 @@
   .you,
   .tile {
     transition: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .dock {
+    min-block-size: 190px;
   }
 }

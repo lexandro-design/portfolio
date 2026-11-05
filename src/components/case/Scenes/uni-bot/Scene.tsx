@@ -172,7 +172,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
                 data-past={slot >= p.at || undefined}
                 style={{ '--a': p.at + 1, '--len': p.len } as CSSProperties}
               >
-                {d.pairs[i].name} {d.pairs[i].kind}
+                {d.pairs[i].name} <i>{d.pairs[i].kind}</i>
               </span>
             ))}
             {Array.from({ length: SLOTS }, (_, i) => {

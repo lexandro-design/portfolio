@@ -38,11 +38,11 @@ const GRADES = [{ v: '3+', at: 66 }, { v: '4+', at: 86 }]
 const WIPE = [100, 100, 50, 100, 100]
 
 /** Рамки пометок на листе в процентах: [слева, сверху, ширина, высота] и сторона подписи */
-const BOXES: { box: [number, number, number, number]; side: 'in' | 'right' | 'bottom' | 'left' }[] = [
+const BOXES: { box: [number, number, number, number]; side: 'in' | 'right' | 'top' | 'bottom' }[] = [
   { box: [4, 5, 92, 88], side: 'in' },
   { box: [26, 6, 29, 15], side: 'right' },
-  { box: [55, 82, 38, 9], side: 'bottom' },
-  { box: [22, 33, 12, 40], side: 'left' },
+  { box: [55, 82, 38, 9], side: 'top' },
+  { box: [22, 33, 12, 40], side: 'bottom' },
 ]
 
 /**
