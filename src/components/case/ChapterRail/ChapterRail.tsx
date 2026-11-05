@@ -30,7 +30,7 @@ export function ChapterRail({ chapters, label }: { chapters: { id: string; title
       setActive(cur)
       if (cur >= 0) {
         const r = els[cur].getBoundingClientRect()
-        setProgress(Math.min(1, Math.max(0, (line - r.top) / r.height)))
+        setProgress(Math.round(Math.min(1, Math.max(0, (line - r.top) / r.height)) * 100) / 100)
       }
     }
     const onScroll = () => {

@@ -83,7 +83,8 @@ export function Steel() {
     }
 
     const resize = () => {
-      const dpr = Math.min(devicePixelRatio || 1, 2)
+      /* На телефоне лист и так фон: полтора пикселя на точку хватает, а считать приходится на 40% меньше */
+      const dpr = Math.min(devicePixelRatio || 1, matchMedia('(pointer: coarse)').matches ? 1.5 : 2)
       el.width = Math.round(innerWidth * dpr)
       el.height = Math.round(innerHeight * dpr)
       gl.viewport(0, 0, el.width, el.height)

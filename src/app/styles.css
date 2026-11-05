@@ -129,6 +129,26 @@ img[data-zoom] {
   }
 }
 
+/* Смена темы (applyTheme): растворение старого вида в новом делает View Transitions, а не transition у каждого узла */
+html[data-swap] *,
+html[data-swap] *::before,
+html[data-swap] *::after {
+  transition: none !important;
+}
+
+::view-transition-group(root) {
+  animation-duration: 360ms;
+  animation-timing-function: var(--ease-out-quart);
+}
+
+/* Секция ушла с экрана (PauseOffscreen): её анимации стоят, вёрстку они не трогают */
+[data-off],
+[data-off] *,
+[data-off] *::before,
+[data-off] *::after {
+  animation-play-state: paused !important;
+}
+
 /* Кадр со своей версией для телефона (Shot, поле mobile) */
 [data-screen='narrow'] {
   display: none;

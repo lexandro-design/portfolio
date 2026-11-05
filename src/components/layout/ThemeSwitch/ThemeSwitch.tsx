@@ -17,11 +17,30 @@ export const readTheme = () =>
 
 /** Сменить тему сайта: шапка, блок «Система» и палитра команд подписаны на событие */
 export function applyTheme(next: Theme) {
-  document.documentElement.dataset.theme = next
+  const root = document.documentElement
+  const commit = () => {
+    root.dataset.theme = next
+    try {
+      localStorage.setItem('theme', next)
+    } catch {}
+    window.dispatchEvent(new Event(THEME_EVENT))
+  }
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } }
+  if (!doc.startViewTransition || next === readTheme() || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    commit()
+    return
+  }
+  /* Плавность даёт браузер: он делает снимок старой страницы и растворяет его в новую на видеокарте.
+     Покрасочные transition у всех элементов на это время выключены (data-swap), иначе тысяча узлов
+     пересчитывает цвет на каждом кадре и телефон теряет половину кадров */
+  root.dataset.swap = ''
+  const done = () => delete root.dataset.swap
   try {
-    localStorage.setItem('theme', next)
-  } catch {}
-  window.dispatchEvent(new Event(THEME_EVENT))
+    doc.startViewTransition(commit).finished.then(done, done)
+  } catch {
+    commit()
+    done()
+  }
 }
 
 type Props = { label: string; labels: Record<Theme, string> }
