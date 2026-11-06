@@ -1,21 +1,29 @@
+import Link from 'next/link'
 import { COORDS, SECTION_COUNT } from '@/content/site'
 import { localePath, type Locale } from '@/i18n/config'
 import type { Dict } from '@/i18n/dict'
 import { Button } from '@/components/ui/Button'
+import { asset } from '@/lib/asset'
 import { Clock } from '@/components/ui/Clock'
 import { Ticker } from '@/components/ui/Ticker'
 import { CalmToggle } from '@/components/layout/CalmToggle'
 import { HeroPhoto } from './HeroPhoto'
 import styles from './Hero.module.css'
 
-type Props = { t: Dict['hero']; calm: Dict['nav']['calm']; locale: Locale }
+type Props = {
+  t: Dict['hero']
+  calm: Dict['nav']['calm']
+  locale: Locale
+  /** Спокойный вид: три настоящие работы под кнопками */
+  works: { href: string; title: string; text: string; src: string }[]
+}
 
 /**
  * Первый экран: мета по краям, заголовок слева и фото справа, под ними
  * описание и действия. Высота по содержимому, а не на весь экран:
  * растянутый первый экран давал дыру между метой и заголовком.
  */
-export function Hero({ t, calm, locale }: Props) {
+export function Hero({ t, calm, locale, works }: Props) {
   const lines = [
     ...t.title.map((text) => ({ text, accent: false })),
     ...t.accent.map((text) => ({ text, accent: true })),
@@ -67,6 +75,19 @@ export function Hero({ t, calm, locale }: Props) {
           <Ticker label={t.ticker} items={t.tickerItems} />
         </div>
       </div>
+
+      <ul className={styles.calmWorks}>
+        {works.map((w) => (
+          <li key={w.href}>
+            <Link href={w.href}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка, оптимизатора next/image нет */}
+              <img src={asset(w.src)} alt="" loading="lazy" />
+              <b>{w.title}</b>
+              <span>{w.text}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <div className={styles.foot}>
         <span>01 / {String(SECTION_COUNT).padStart(2, '0')} · intro</span>
