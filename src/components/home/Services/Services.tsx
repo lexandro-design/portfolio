@@ -68,12 +68,6 @@ export function Services({ t, services, steps, route, hello, need }: Props) {
             )
           })}
         </ul>
-      </div>
-
-      <div className={styles.side}>
-        <div className={styles.figure}>
-          <Stack codes={services.map((s) => s.code)} on={codes} hot={hot} />
-        </div>
 
         <div className={styles.order}>
           <div className={styles.route}>
@@ -108,6 +102,12 @@ export function Services({ t, services, steps, route, hello, need }: Props) {
               {t.write}
             </a>
           </div>
+        </div>
+      </div>
+
+      <div className={styles.side}>
+        <div className={styles.figure}>
+          <Stack codes={services.map((s) => s.code)} on={codes} hot={hot} />
         </div>
       </div>
     </div>
