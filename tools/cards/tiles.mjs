@@ -161,7 +161,7 @@ async function scene(slug, s, locale, ctx) {
 }
 
 /* Обложки подборки собирает stage.mjs: здесь их не перезаписывать */
-const STAGED = ['prosoft', 'garden-td', 'otrx', 'meeting-rooms', 'mimimibot', 'osq', 'svarnoy52']
+const STAGED = ['prosoft', 'garden-td', 'otrx', 'meeting-rooms', 'mimimibot', 'osq', 'svarnoy52', 'prof-study', 'reckon']
 const want = (s) => !STAGED.includes(s) && (!only.length || only.includes(s))
 for (const [slug, s] of Object.entries(SITES)) if (want(slug)) await site(slug, s)
 for (const [slug, n] of Object.entries(WALL)) if (want(slug)) await wall(slug, n)
