@@ -373,6 +373,80 @@
   }
 }
 
+/* ПК: всё крупнее, текст и обломки держатся сетки сайта, а не левого края окна */
+@media (min-width: 1024px) {
+  .debris {
+    inset-inline: 0;
+    inline-size: min(100%, var(--container));
+    margin-inline: auto;
+  }
+
+  .report {
+    inline-size: 100%;
+    max-inline-size: var(--container);
+    margin-inline: auto;
+    padding-block: var(--space-2xl) var(--space-xl);
+    gap: var(--space-md);
+  }
+
+  .log {
+    font-size: var(--type-body-sm);
+    line-height: 1.7;
+  }
+
+  .title {
+    font-size: calc(var(--type-h1) * 0.9);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .text {
+    max-inline-size: 22em;
+    font-size: var(--type-h4);
+    line-height: 1.4;
+  }
+
+  .actions {
+    gap: var(--space-sm);
+    margin-block-start: var(--space-sm);
+  }
+
+  .fix {
+    min-block-size: 60px;
+    padding-inline: 28px;
+    gap: 14px;
+    font-size: calc(var(--type-mono) * 1.3);
+  }
+
+  .actions > a[data-variant] {
+    min-block-size: 60px;
+    padding-inline: 28px;
+    font-size: calc(var(--type-mono) * 1.3);
+  }
+
+  .chip,
+  .strip,
+  .tag {
+    font-size: var(--type-body-sm);
+  }
+
+  .chip {
+    padding: 16px 24px;
+  }
+
+  .strip {
+    padding: 14px 22px;
+  }
+
+  .photo {
+    inline-size: min(19vw, 360px);
+  }
+
+  .first {
+    --y: calc(100svh - var(--nav-h) - var(--g) * 0.86 + 6vh);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page,
   .piece,
