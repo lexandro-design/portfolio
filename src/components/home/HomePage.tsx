@@ -26,6 +26,8 @@ const EXAMPLES: { slug: string; did?: number }[] = [
   { slug: 'mimimibot', did: 2 },
 ]
 const GROUPS = ['own', 'freelance', 'titan', 'entersales'] as const
+/** Спокойный вид: три работы прямо на первом экране */
+const CALM_WORKS = ['parfumeria', 'prosoft', 'garden-td']
 
 /** Главная на любом языке: одни и те же секции, тексты из словаря */
 export function HomePage({ locale }: { locale: Locale }) {
@@ -53,7 +55,20 @@ export function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <div lang={HTML_LANG[locale]}>
-      <Hero t={t.hero} calm={t.nav.calm} locale={locale} />
+      <Hero
+        t={t.hero}
+        calm={t.nav.calm}
+        locale={locale}
+        works={CALM_WORKS.flatMap((slug) => {
+          const c = items.find((x) => x.slug === slug)
+          const media = c?.card ?? c?.thumb
+          return c && media ? [{ href: `${base}/cases/${slug}/`, title: c.title, text: c.tagline, src: media.src }] : []
+        })}
+        facts={[
+          { n: items.length, label: t.works.showAll },
+          ...(['design', 'web', 'ai'] as const).map((d) => ({ n: items.filter((c) => c.directions.includes(d)).length, label: t.works.directions[d] })),
+        ]}
+      />
 
       <section id="services" className={styles.section}>
         <div className="container">

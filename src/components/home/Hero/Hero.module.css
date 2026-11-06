@@ -231,6 +231,11 @@
   }
 }
 
+.calmWorks,
+.calmFacts {
+  display: none;
+}
+
 /* Спокойный вид: заголовок, текст и кнопки слева, большое фото справа, служебных строк нет */
 :global([data-theme='calm']) .hero {
   grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
@@ -238,7 +243,7 @@
   column-gap: var(--space-3xl);
   row-gap: var(--space-lg);
   align-items: start;
-  padding-block: var(--space-3xl);
+  padding-block: var(--space-2xl);
 }
 
 :global([data-theme='calm']) :is(.meta, .foot, .moon) {
@@ -309,5 +314,70 @@
 
   :global([data-theme='calm']) .photo {
     max-inline-size: 360px;
+  }
+}
+
+/* Вариант А: три настоящие работы под кнопками */
+:global([data-theme='calm']) .calmWorks {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+
+.calmWorks a {
+  display: grid;
+  gap: 4px;
+}
+
+.calmWorks img {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 1216 / 860;
+  margin-block-end: var(--space-xs);
+  object-fit: cover;
+}
+
+.calmWorks b {
+  font-weight: 500;
+}
+
+.calmWorks span {
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+}
+
+/* Вариант Б: счётчики кейсов на линиях */
+:global([data-theme='calm']) .calmFacts {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid var(--border-hair);
+}
+
+.calmFacts a {
+  display: grid;
+  gap: var(--space-xs);
+  padding-block: var(--space-md);
+  padding-inline-end: var(--space-sm);
+  font-size: var(--type-body-sm);
+  color: var(--fg-secondary);
+}
+
+.calmFacts b {
+  font-size: var(--type-h2);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--fg-primary);
+}
+
+@media (max-width: 767px) {
+  :global([data-theme='calm']) .calmWorks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :global([data-theme='calm']) .calmFacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
