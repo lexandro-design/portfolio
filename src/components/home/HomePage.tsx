@@ -64,10 +64,6 @@ export function HomePage({ locale }: { locale: Locale }) {
           const media = c?.card ?? c?.thumb
           return c && media ? [{ href: `${base}/cases/${slug}/`, title: c.title, text: c.tagline, src: media.src }] : []
         })}
-        facts={[
-          { n: items.length, label: t.works.showAll },
-          ...(['design', 'web', 'ai'] as const).map((d) => ({ n: items.filter((c) => c.directions.includes(d)).length, label: t.works.directions[d] })),
-        ]}
       />
 
       <section id="services" className={styles.section}>

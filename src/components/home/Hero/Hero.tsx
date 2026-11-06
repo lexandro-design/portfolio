@@ -14,9 +14,8 @@ type Props = {
   t: Dict['hero']
   calm: Dict['nav']['calm']
   locale: Locale
-  /** Спокойный вид: настоящие работы и счётчики кейсов */
+  /** Спокойный вид: три настоящие работы под кнопками */
   works: { href: string; title: string; text: string; src: string }[]
-  facts: { n: number; label: string }[]
 }
 
 /**
@@ -24,7 +23,7 @@ type Props = {
  * описание и действия. Высота по содержимому, а не на весь экран:
  * растянутый первый экран давал дыру между метой и заголовком.
  */
-export function Hero({ t, calm, locale, works, facts }: Props) {
+export function Hero({ t, calm, locale, works }: Props) {
   const lines = [
     ...t.title.map((text) => ({ text, accent: false })),
     ...t.accent.map((text) => ({ text, accent: true })),
@@ -86,17 +85,6 @@ export function Hero({ t, calm, locale, works, facts }: Props) {
               <b>{w.title}</b>
               <span>{w.text}</span>
             </Link>
-          </li>
-        ))}
-      </ul>
-
-      <ul className={styles.calmFacts}>
-        {facts.map((f) => (
-          <li key={f.label}>
-            <a href="#works">
-              <b>{String(f.n).padStart(2, '0')}</b>
-              {f.label}
-            </a>
           </li>
         ))}
       </ul>

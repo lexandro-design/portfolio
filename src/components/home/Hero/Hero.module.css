@@ -231,8 +231,7 @@
   }
 }
 
-.calmWorks,
-.calmFacts {
+.calmWorks {
   display: none;
 }
 
@@ -317,7 +316,7 @@
   }
 }
 
-/* Вариант А: три настоящие работы под кнопками */
+/* Три настоящие работы под кнопками */
 :global([data-theme='calm']) .calmWorks {
   grid-column: 1;
   display: grid;
@@ -347,37 +346,26 @@
   color: var(--fg-secondary);
 }
 
-/* Вариант Б: счётчики кейсов на линиях */
-:global([data-theme='calm']) .calmFacts {
-  grid-column: 1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-block: 1px solid var(--border-hair);
-}
-
-.calmFacts a {
-  display: grid;
-  gap: var(--space-xs);
-  padding-block: var(--space-md);
-  padding-inline-end: var(--space-sm);
-  font-size: var(--type-body-sm);
-  color: var(--fg-secondary);
-}
-
-.calmFacts b {
-  font-size: var(--type-h2);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--fg-primary);
-}
-
+/* На телефоне лента вбок: первая плитка по полю страницы, следующая выглядывает */
 @media (max-width: 767px) {
   :global([data-theme='calm']) .calmWorks {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 72%;
+    gap: var(--space-sm);
+    margin-inline: calc(var(--bleed) * -1);
+    padding-inline: var(--bleed);
+    scroll-padding-inline: var(--bleed);
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 
-  :global([data-theme='calm']) .calmFacts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  :global([data-theme='calm']) .calmWorks::-webkit-scrollbar {
+    display: none;
+  }
+
+  .calmWorks li {
+    scroll-snap-align: start;
   }
 }
