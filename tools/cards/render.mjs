@@ -98,14 +98,14 @@ const OG_HOME = {
     title: 'Дизайн, код<br>и AI-агенты —<br>под ключ<br><span>в одних руках.</span>',
     who: 'Алексей Свешников · дизайн, код и ai',
     status: 'открыт к проектам',
-    size: 84,
+    size: 96,
   },
   en: {
     meta: 'LEXANDRO · saint petersburg',
     title: 'Design, code<br>and AI agents,<br>end to end,<br><span>in one pair of hands.</span>',
     who: 'Alexey Sveshnikov · design, code and ai',
     status: 'open to projects',
-    size: 80,
+    size: 90,
   },
   zh: {
     meta: 'LEXANDRO · 圣彼得堡',
@@ -120,72 +120,68 @@ const OG_HOME = {
     title: 'デザイン、コード、<br>AI エージェントまで、<br><span>ひとりで一貫して。</span>',
     who: 'Alexey Sveshnikov · ux/ui と開発',
     status: '案件受付中',
-    size: 92,
+    size: 74,
     ls: 0,
   },
 }
 
+// Главная: название крупно слева, фото в рамке сайта справа, статус внизу. Размер строки подбирается под ширину колонки
 const ogHome = (t, l = OG_HOME.ru) =>
   page(
     t,
     1200,
     630,
     `
-  <div style="position:absolute;inset:56px 64px;display:grid;grid-template-rows:auto 1fr auto">
-    <div class="row m" style="font-size:15px"><span>${l.meta}</span><span>lexandro-design.github.io/portfolio</span></div>
-    <div class="h" style="align-self:end;font-size:${l.size}px;font-family:Inter,'Microsoft YaHei','Yu Gothic UI',sans-serif;${l.ls === 0 ? 'letter-spacing:0;line-height:1.12' : ''}">${l.title.replace('<span>', `<span style="color:${t.fg3}">`)}</div>
-    <div class="row m" style="font-size:15px;margin-top:40px"><span class="m2">${l.who}</span><span style="color:${t.fg}"><i class="dot"></i>${l.status}</span></div>
-  </div>`,
+  <i class="corner tl" style="top:20px;left:20px;width:16px;height:16px"></i><i class="corner br" style="bottom:20px;right:20px;width:16px;height:16px"></i>
+  <div class="row m" style="position:absolute;left:56px;right:56px;top:44px;font-size:19px;color:${t.fg2}"><span>${l.meta}</span><span></span></div>
+  <div style="position:absolute;right:56px;top:84px;bottom:56px;aspect-ratio:4/5;border:1px solid ${t.hover};background:${t.el};overflow:hidden;box-shadow:0 24px 60px rgb(0 0 0/.5)">
+    <img src="/public/me/photo.jpg" style="display:block;width:100%;height:100%;object-fit:cover;object-position:center top">
+  </div>
+  <div id="ogt" class="h" style="position:absolute;left:56px;top:96px;width:660px;font-size:${l.size}px;line-height:1.02;font-family:Inter,'Microsoft YaHei','Yu Gothic UI',sans-serif;letter-spacing:-.05em;${l.ls === 0 ? 'letter-spacing:0;line-height:1.12' : ''}">${l.title.replace('<span>', `<span style="color:${t.fg3}">`)}</div>
+  <div style="position:absolute;left:56px;bottom:56px;width:660px;display:grid;gap:12px">
+    <div class="m" style="font-size:19px;color:${t.fg2}">${l.who}</div>
+    <div class="m" style="font-size:19px;color:${t.fg}"><i class="dot" style="width:8px;height:8px"></i>${l.status}</div>
+  </div>
+  <script>
+  window.fit = () => {
+    const a = document.getElementById('ogt')
+    const box = 660, room = 372
+    for (let s = parseFloat(a.style.fontSize); s >= 40 && (a.scrollWidth > box + 1 || a.offsetHeight > room); s -= 2) a.style.fontSize = s + 'px'
+  }
+  </script>`,
   )
 
-// Картинка кейса целиком в безопасной зоне 1.91:1: слева название, фон из той же картинки, размытой
-const OG_IMG = { w: 780, h: 552, right: 32 }
+// Превью кейса 1200×630: название крупно одной строкой, суть рядом с картинкой, сама работа целиком.
+// Цвета, шрифты и рамки с уголками — как на плитках сайта. Фон ровный, без размытой подложки
 const ogCase = (t, c) => {
   const cover = c.card ?? c.thumb ?? c.shots[0]
-  if (!cover)
-    return page(
-      t,
-      1200,
-      630,
-      `<span class="num" style="position:absolute;right:-20px;bottom:-90px;font-size:520px">${pad(c.index)}</span>
-  <div style="position:absolute;inset:56px 64px;display:grid;grid-template-rows:auto 1fr auto;width:900px">
-    <div class="m" style="font-size:16px">case ${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</div>
-    <div style="align-self:end">
-      <div class="h" style="font-size:88px">${c.title}</div>
-      <div class="h" style="font-size:52px;color:${t.fg2};margin-top:12px;letter-spacing:-.035em;line-height:1.05">${c.tagline}</div>
-    </div>
-    <div class="m" style="font-size:16px;margin-top:44px">LEXANDRO · ${c.year}</div>
-  </div>`,
-    )
   const ratio = (cover.w ?? 1216) / (cover.h ?? 860)
-  const w = Math.min(OG_IMG.w, Math.round(OG_IMG.h * ratio))
-  const h = Math.round(w / ratio)
-  const text = 1200 - OG_IMG.right - OG_IMG.w - 52 - 28
+  const TOP = 204 // нижний край блока названия
+  const h = 630 - TOP - 48
+  const w = Math.round(h * ratio)
+  const text = 1200 - 56 * 2 - w - 48
   return page(
     t,
     1200,
     630,
     `
-  <img src="/public${cover.src}" style="position:absolute;inset:-60px;width:1320px;height:750px;object-fit:cover;filter:blur(38px) saturate(1.25) brightness(.5)">
-  <i style="position:absolute;inset:0;background:linear-gradient(90deg,rgb(8 8 10/.86) 0%,rgb(8 8 10/.7) 34%,rgb(8 8 10/.22) 100%)"></i>
-  <img src="/public${cover.src}" style="position:absolute;right:${OG_IMG.right + (OG_IMG.w - w) / 2}px;top:${(630 - h) / 2}px;width:${w}px;height:${h}px;object-fit:cover;box-shadow:0 0 0 1px rgb(255 255 255/.14),0 30px 70px rgb(0 0 0/.55)">
-  <div style="position:absolute;left:52px;top:44px;bottom:44px;width:${text}px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto">
-    <div class="m" style="font-size:16px;color:rgb(255 255 255/.72)">case ${pad(c.index)} / ${pad(TOTAL)}</div>
-    <div id="og" style="align-self:end">
-      <div id="ogt" class="h" style="font-size:66px;color:#fff;line-height:1">${c.title}</div>
-      <div id="ogs" class="h" style="font-size:32px;color:rgb(255 255 255/.8);margin-top:14px;letter-spacing:-.025em;line-height:1.12">${c.tagline}</div>
-    </div>
-    <div class="m" style="font-size:16px;margin-top:32px;color:rgb(255 255 255/.72)">LEXANDRO · ${c.year}</div>
+  <i class="corner tl" style="top:20px;left:20px;width:16px;height:16px"></i><i class="corner br" style="bottom:20px;right:20px;width:16px;height:16px"></i>
+  <div class="row m" style="position:absolute;left:56px;right:56px;top:44px;font-size:19px;color:${t.fg2}"><span>case ${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</span><span><i class="dot"></i>lexandro</span></div>
+  <div id="ogt" class="h" style="position:absolute;left:56px;right:56px;top:78px;font-size:104px;line-height:1.02;white-space:nowrap;letter-spacing:-.05em">${c.title}</div>
+  <div style="position:absolute;left:56px;top:${TOP + 8}px;bottom:48px;width:${text}px;display:grid;grid-template-rows:1fr auto">
+    <div id="ogs" style="align-self:start;font-size:44px;font-weight:450;letter-spacing:-.03em;line-height:1.1;color:${t.fg2}">${c.tagline}</div>
+    <div class="m" style="font-size:19px;color:${t.fg2}">lexandro · ${c.year}</div>
+  </div>
+  <div style="position:absolute;right:56px;top:${TOP}px;width:${w}px;height:${h}px;border:1px solid ${t.hover};background:${t.el};overflow:hidden;box-shadow:0 24px 60px rgb(0 0 0/.5)">
+    <img src="/public${cover.src}" style="display:block;width:100%;height:100%;object-fit:cover">
   </div>
   <script>
-  /* Самое длинное слово должно влезть в колонку, а весь текст в её высоту */
+  /* Название одной строкой во всю ширину, суть в колонку слева */
   window.fit = () => {
-    const box = document.getElementById('og'), a = document.getElementById('ogt'), b = document.getElementById('ogs')
-    const over = () => a.scrollWidth > box.clientWidth + 1 || b.scrollWidth > box.clientWidth + 1 || box.offsetHeight > 420
-    for (let s = 66; s >= 30 && over(); s -= 2) {
-      a.style.fontSize = s + 'px'
-      b.style.fontSize = Math.max(22, Math.round(s * 0.5)) + 'px'
-    }
+    const a = document.getElementById('ogt'), b = document.getElementById('ogs')
+    for (let s = 104; s >= 60 && a.scrollWidth > 1088; s -= 2) a.style.fontSize = s + 'px'
+    const room = b.parentElement.clientHeight - 60
+    for (let s = 44; s >= 26 && b.offsetHeight > room; s -= 2) b.style.fontSize = s + 'px'
   }
   </script>`,
   )
@@ -576,9 +572,11 @@ const photo = async () => {
   return photoData
 }
 
+// OG_OUT — куда класть превью (для сравнения до/после), по умолчанию public/og
+const OUT = process.env.OG_OUT ?? join(ROOT, 'public/og')
 const mode = process.argv[2]
 if (!mode || mode === 'og') {
-  await mkdir(join(ROOT, 'public/og'), { recursive: true })
+  await mkdir(OUT, { recursive: true })
   // node tools/cards/render.mjs og slug,slug — только эти кейсы, остальные превью не трогать
   const only = process.argv[3]?.split(',')
   for (const [l, copy] of only ? [] : Object.entries(OG_HOME))
@@ -586,10 +584,10 @@ if (!mode || mode === 'og') {
       ogHome(THEMES.dark, copy),
       1200,
       630,
-      join(ROOT, `public/og/home${l === 'ru' ? '' : '-' + l}.png`),
+      join(OUT, `home${l === 'ru' ? '' : '-' + l}.png`),
     )
   for (const c of cases.filter((c) => !only || only.includes(c.slug)))
-    await shot(ogCase(THEMES.dark, c), 1200, 630, join(ROOT, `public/og/${c.slug}.jpg`))
+    await shot(ogCase(THEMES.dark, c), 1200, 630, join(OUT, `${c.slug}.jpg`))
 }
 if (!mode || mode === 'profile') {
   await mkdir(PROFILE, { recursive: true })
