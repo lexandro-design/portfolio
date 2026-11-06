@@ -21,8 +21,6 @@ export function Crash() {
   const router = useRouter()
   const path = useSyncExternalStore(never, () => window.location.pathname, () => '/')
   const [fixing, setFixing] = useState(false)
-  // ВРЕМЕННО: вариант на выбор, после ответа Lexandro останется один
-  const v = useSyncExternalStore(never, () => new URLSearchParams(window.location.search).get('v') ?? 'a', () => 'a')
 
   const fix = () => {
     setFixing(true)
@@ -30,7 +28,7 @@ export function Crash() {
   }
 
   return (
-    <section className={styles.page} data-crash="" data-v={v} data-fixing={fixing || undefined}>
+    <section className={styles.page} data-crash="" data-fixing={fixing || undefined}>
       <div className={styles.debris} aria-hidden="true">
         <svg className={styles.cracks} viewBox="0 0 1000 600" preserveAspectRatio="none">
           <path d="M318 600 356 520 330 470 392 400 372 352 430 300" />

@@ -447,35 +447,6 @@
   }
 }
 
-/* Б только на широких экранах: справа отчёт в рамке, на меньших остаётся как А */
-@media (min-width: 1600px) {
-  .page[data-v='b'] .report {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
-    grid-template-rows: auto auto auto 1fr;
-    column-gap: var(--space-3xl);
-    align-items: start;
-  }
-
-  .page[data-v='b'] .title {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-
-  .page[data-v='b'] .text,
-  .page[data-v='b'] .actions {
-    grid-column: 1;
-  }
-
-  .page[data-v='b'] .log {
-    grid-column: 2;
-    grid-row: 2 / span 3;
-    transform: translateY(calc(var(--g) * 0.44));
-    padding: var(--space-md);
-    border: 1px solid var(--border-hover);
-    background: var(--bg-elevated);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .page,
   .piece,
