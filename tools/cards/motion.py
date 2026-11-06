@@ -1,6 +1,5 @@
 # Обложки с настоящими роликами кейса. Запускать из корня репо после tools/cards/stage.mjs
 #   parfumeria: окно с главной сайта, в нём третий баннер Issey, вокруг размытый тот же ролик
-#   svarnoy52: на готовой плитке оживает маска из кейса
 import subprocess
 import sys
 
@@ -53,22 +52,7 @@ def parfumeria():
     run(['-ss', '3.2', '-i', 'public/cases/parfumeria/card.mp4', '-frames:v', '1', '-q:v', '3', 'public/cases/parfumeria/card.jpg'])
 
 
-def svarnoy():
-    x, y, ww = 470, 150, 800
-    hh = round(960 * ww / 1120)
-    yy, xx = np.mgrid[0:hh, 0:ww]
-    rad = np.hypot((xx - ww / 2) / (ww / 2), (yy - hh / 2) / (hh / 2))
-    mask = np.clip((1 - rad) / 0.38, 0, 1) * 255
-    Image.fromarray(mask.astype('uint8')).save(f'{TMP}-mask.png')
-    graph = (
-        f'[1:v]fps=24,scale={ww}:{hh},format=rgba[s];[2:v]format=gray[m];[s][m]alphamerge[a];'
-        f'[0:v][a]overlay={x}:{y}:shortest=1,format=yuv420p[out]'
-    )
-    run(['-loop', '1', '-i', 'public/cases/svarnoy52/tile.jpg', '-i', 'public/cases/svarnoy52/3d-about.mp4', '-loop', '1', '-i', f'{TMP}-mask.png',
-         '-filter_complex', graph, '-map', '[out]', '-t', '5', *ENC, 'public/cases/svarnoy52/tile.mp4'])
-
-
-JOBS = {'parfumeria': parfumeria, 'svarnoy52': svarnoy}
+JOBS = {'parfumeria': parfumeria}
 for name in sys.argv[1:] or JOBS:
     JOBS[name]()
 import glob

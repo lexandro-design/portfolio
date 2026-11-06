@@ -100,12 +100,31 @@ const SCENES = {
     </div>
     ${pic(c('osq/real/product-box.webp'), 'left:700px;top:430px;width:500px;z-index:3;filter:drop-shadow(0 40px 44px rgb(2 30 26/.6))')}`,
 
-  /* Сайт в синем свете, справа маска из кейса */
+  /* Лендинг в цвете бренда: первый экран крупно, за ним профессии, спереди этапы участия */
+  'prof-study': () => `<div style="position:absolute;inset:0;background:radial-gradient(90% 90% at 78% 10%,#2f7fe0 0%,#0a55b4 40%,#00306f 78%,#001c44 100%)"></div>
+    ${light('inset:0;background:radial-gradient(40% 36% at 92% 92%,rgb(176 255 64/.3),transparent 74%)')}
+    <div class="plane" style="inset:0;transform:perspective(2400px) rotateY(12deg) rotateX(5deg) rotateZ(-1.5deg)">
+      ${screen(c('prof-study/04.jpg'), { x: 640, y: 40, w: 680, h: 520, iw: 900, y0: 566, z: 1, shade: 'rgb(0 28 68/.24)', bg: '#004a9f' })}
+      ${screen(c('prof-study/01.jpg'), { x: 70, y: 130, w: 860, h: 640, z: 2, bg: '#004a9f' })}
+      ${screen(c('prof-study/02.jpg'), { x: 780, y: 440, w: 470, h: 346, iw: 800, y0: 240, x0: 20, z: 3, bg: '#004a9f' })}
+    </div>`,
+
+  /* Монохром бренда: фото из кампании на весь край, спереди экраны магазина на телефоне */
+  reckon: () => {
+    const phone = (x0, x, y, rot, z) => screen(c('reckon/03.jpg'), { x, y, w: 300, h: 650, iw: 1056, x0: x0 * 0.66, y0: 49, r: 26, z, rot: `rotate(${rot}deg)` })
+    return `<div style="position:absolute;inset:0;background:#1b1b1b"></div>
+    <div class="scr" style="left:-40px;top:-30px;width:760px;height:920px;box-shadow:none;background:#fff"><img src="${c('reckon/05.jpg')}" style="position:absolute;height:100%;left:-300px;max-width:none"></div>
+    ${phone(583, 610, 130, -4, 2)}
+    ${phone(1081, 880, 90, 4, 3)}`
+  },
+
+  /* Сайт в синем свете: главная спереди, каталог за ней. Без 3D */
   svarnoy52: () => `<div style="position:absolute;inset:0;background:radial-gradient(80% 90% at 74% 40%,#2a7fb8 0%,#14527f 42%,#061c30 100%)"></div>
-    <div class="plane" style="inset:0;transform:perspective(2200px) rotateY(17deg) rotateX(5deg) rotateZ(-1deg)">
-      ${screen(c('svarnoy52/r1.jpg'), { x: 30, y: 130, w: 800, h: 770, z: 1 })}
-    </div>
-    <img src="${c('svarnoy52/3d-about.jpg')}" style="position:absolute;left:470px;top:150px;width:800px;z-index:2;-webkit-mask-image:radial-gradient(50% 50% at 50% 50%,#000 62%,transparent 100%)">`,
+    ${light('inset:0;background:radial-gradient(40% 34% at 80% 18%,rgb(255 255 255/.28),transparent 72%)')}
+    <div class="plane" style="inset:0;transform:perspective(2200px) rotateY(-14deg) rotateX(7deg) rotateZ(1.5deg)">
+      ${screen(c('svarnoy52/r2.jpg'), { x: 560, y: 60, w: 760, h: 700, z: 1, shade: 'rgb(6 28 48/.22)' })}
+      ${screen(c('svarnoy52/r1.jpg'), { x: 60, y: 150, w: 860, h: 740, z: 2 })}
+    </div>`,
 }
 
 const page = (body) => `<!doctype html><meta charset="utf-8"><style>
