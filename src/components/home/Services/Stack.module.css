@@ -87,9 +87,9 @@
   fill: var(--fg-primary);
 }
 
-/* Разрез и заказ помещаются в экран вместе */
+/* Разрез помещается в экран */
 @media (min-width: 1024px) {
   .stack {
-    max-block-size: max(340px, calc(100dvh - var(--nav-h) - 260px));
+    max-block-size: max(340px, calc(100dvh - var(--nav-h) - 160px));
   }
 }

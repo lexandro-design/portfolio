@@ -29,7 +29,7 @@ export function caseMeta(locale: Locale, slug: string): Metadata {
       path: `/cases/${slug}/`,
       title,
       description: item.lead,
-      image: `/og/${slug}.png`,
+      image: `/og/${slug}.jpg`,
     }),
     title: { absolute: title },
   }

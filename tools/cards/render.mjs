@@ -1,5 +1,5 @@
 // Картинки из HTML тем же шрифтом и токенами, что на сайте:
-//   public/og/*.png            — превью ссылок (Telegram, соцсети), 1200×630
+//   public/og/*.jpg (кейсы), *.png (главная) — превью ссылок (Telegram, соцсети), 1200×630
 //   ../lexandro-design/assets  — блоки README профиля, тёмные и светлые
 // node tools/cards/render.mjs [og|profile]
 import { chromium } from '@playwright/test'
@@ -138,25 +138,56 @@ const ogHome = (t, l = OG_HOME.ru) =>
   </div>`,
   )
 
+// Картинка кейса целиком в безопасной зоне 1.91:1: слева название, фон из той же картинки, размытой
+const OG_IMG = { w: 780, h: 552, right: 32 }
 const ogCase = (t, c) => {
   const cover = c.card ?? c.thumb ?? c.shots[0]
-  const media = cover
-    ? `<div style="position:absolute;left:600px;top:120px;width:680px;height:560px;border:1px solid ${t.hair};background:${t.el}"><img class="shot" src="/public${cover.src}"></div>`
-    : `<span class="num" style="position:absolute;right:-20px;bottom:-90px;font-size:520px">${pad(c.index)}</span>`
+  if (!cover)
+    return page(
+      t,
+      1200,
+      630,
+      `<span class="num" style="position:absolute;right:-20px;bottom:-90px;font-size:520px">${pad(c.index)}</span>
+  <div style="position:absolute;inset:56px 64px;display:grid;grid-template-rows:auto 1fr auto;width:900px">
+    <div class="m" style="font-size:16px">case ${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</div>
+    <div style="align-self:end">
+      <div class="h" style="font-size:88px">${c.title}</div>
+      <div class="h" style="font-size:52px;color:${t.fg2};margin-top:12px;letter-spacing:-.035em;line-height:1.05">${c.tagline}</div>
+    </div>
+    <div class="m" style="font-size:16px;margin-top:44px">LEXANDRO · ${c.year}</div>
+  </div>`,
+    )
+  const ratio = (cover.w ?? 1216) / (cover.h ?? 860)
+  const w = Math.min(OG_IMG.w, Math.round(OG_IMG.h * ratio))
+  const h = Math.round(w / ratio)
+  const text = 1200 - OG_IMG.right - OG_IMG.w - 52 - 28
   return page(
     t,
     1200,
     630,
     `
-  ${media}
-  <div style="position:absolute;inset:56px 64px;display:grid;grid-template-rows:auto 1fr auto;width:${cover ? 500 : 900}px">
-    <div class="m" style="font-size:15px">case ${pad(c.index)} / ${pad(TOTAL)} · ${c.label}</div>
-    <div style="align-self:end">
-      <div class="h" style="font-size:${cover ? 68 : 88}px">${c.title}</div>
-      <div class="h" style="font-size:${cover ? 40 : 52}px;color:${t.fg2};margin-top:12px;letter-spacing:-.035em;line-height:1.05">${c.tagline}</div>
+  <img src="/public${cover.src}" style="position:absolute;inset:-60px;width:1320px;height:750px;object-fit:cover;filter:blur(38px) saturate(1.25) brightness(.5)">
+  <i style="position:absolute;inset:0;background:linear-gradient(90deg,rgb(8 8 10/.86) 0%,rgb(8 8 10/.7) 34%,rgb(8 8 10/.22) 100%)"></i>
+  <img src="/public${cover.src}" style="position:absolute;right:${OG_IMG.right + (OG_IMG.w - w) / 2}px;top:${(630 - h) / 2}px;width:${w}px;height:${h}px;object-fit:cover;box-shadow:0 0 0 1px rgb(255 255 255/.14),0 30px 70px rgb(0 0 0/.55)">
+  <div style="position:absolute;left:52px;top:44px;bottom:44px;width:${text}px;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto">
+    <div class="m" style="font-size:16px;color:rgb(255 255 255/.72)">case ${pad(c.index)} / ${pad(TOTAL)}</div>
+    <div id="og" style="align-self:end">
+      <div id="ogt" class="h" style="font-size:66px;color:#fff;line-height:1">${c.title}</div>
+      <div id="ogs" class="h" style="font-size:32px;color:rgb(255 255 255/.8);margin-top:14px;letter-spacing:-.025em;line-height:1.12">${c.tagline}</div>
     </div>
-    <div class="m" style="font-size:15px;margin-top:44px">LEXANDRO · ${c.year}</div>
-  </div>`,
+    <div class="m" style="font-size:16px;margin-top:32px;color:rgb(255 255 255/.72)">LEXANDRO · ${c.year}</div>
+  </div>
+  <script>
+  /* Самое длинное слово должно влезть в колонку, а весь текст в её высоту */
+  window.fit = () => {
+    const box = document.getElementById('og'), a = document.getElementById('ogt'), b = document.getElementById('ogs')
+    const over = () => a.scrollWidth > box.clientWidth + 1 || b.scrollWidth > box.clientWidth + 1 || box.offsetHeight > 420
+    for (let s = 66; s >= 30 && over(); s -= 2) {
+      a.style.fontSize = s + 'px'
+      b.style.fontSize = Math.max(22, Math.round(s * 0.5)) + 'px'
+    }
+  }
+  </script>`,
   )
 }
 
@@ -510,7 +541,8 @@ const shot = async (markup, w, h, out, scale = 1) => {
   const p = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: scale })
   await p.goto('http://localhost:8798/card', { waitUntil: 'networkidle' })
   await p.evaluate(() => document.fonts.ready)
-  await p.screenshot({ path: out, omitBackground: clear })
+  await p.evaluate(() => window.fit?.())
+  await p.screenshot({ path: out, omitBackground: clear, ...(out.endsWith('.jpg') ? { quality: 88 } : {}) })
   await p.close()
 }
 
@@ -557,7 +589,7 @@ if (!mode || mode === 'og') {
       join(ROOT, `public/og/home${l === 'ru' ? '' : '-' + l}.png`),
     )
   for (const c of cases.filter((c) => !only || only.includes(c.slug)))
-    await shot(ogCase(THEMES.dark, c), 1200, 630, join(ROOT, `public/og/${c.slug}.png`))
+    await shot(ogCase(THEMES.dark, c), 1200, 630, join(ROOT, `public/og/${c.slug}.jpg`))
 }
 if (!mode || mode === 'profile') {
   await mkdir(PROFILE, { recursive: true })
