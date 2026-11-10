@@ -10,6 +10,11 @@
     "label": "design · 3d",
     "group": "freelance",
     "client": "Parfumeria.by · e-commerce, Беларусь",
+    "logo": {
+      "src": "/logos/parfumeria.svg",
+      "w": 170,
+      "h": 24
+    },
     "year": "2026",
     "stack": [
       "Figma",
