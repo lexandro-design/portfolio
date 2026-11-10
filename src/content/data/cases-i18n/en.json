@@ -58,7 +58,14 @@
       "Phone: product page, filters, payment methods.",
       "Phone: stories, gift card design, stores on the map.",
       "Phone: perfume, makeup and skincare catalogs.",
-      "The whole Figma file."
+      "The whole Figma file.",
+      "Cart: empty.",
+      "Product page: out of stock.",
+      "Back-in-stock notification.",
+      "Search: nothing found.",
+      "Sign-in with an SMS code.",
+      "Order placed.",
+      "Design system: buttons and their states."
     ]
   },
   "meeting-rooms": {
@@ -1515,7 +1522,13 @@
       "Web dashboard.",
       "Web dashboard: invoices, dark theme.",
       "Invoice payment page for the client.",
-      "Product website."
+      "Product website.",
+      "Today: empty and loading.",
+      "Today: low on money and below zero.",
+      "Today: offline and the bank not responding.",
+      "Design system: type for mobile and desktop.",
+      "Design system: colours in light and dark modes.",
+      "Design system: data and assistant components."
     ],
     "note": "Concept: data in the layouts is fictional."
   },
