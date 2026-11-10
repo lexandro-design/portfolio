@@ -501,7 +501,9 @@
       "label": "项目概要",
       "task": "任务",
       "did": "我做了什么",
-      "result": "结果"
+      "result": "结果",
+      "role": "角色",
+      "process": "工作过程"
     },
     "show": {
       "example": "示例",

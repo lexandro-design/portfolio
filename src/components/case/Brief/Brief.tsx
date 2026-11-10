@@ -6,9 +6,12 @@ import styles from './Brief.module.css'
 
 /**
  * «Коротко» сразу под шапкой: задача, что сделал, результат и крупные цифры.
- * За десять секунд понятно, что за проект и чем кончился, остальное ниже
+ * За десять секунд понятно, что за проект и чем кончился, остальное ниже.
+ * Вторая строка той же таблицы: кем я был в проекте и как шла работа.
+ * Она есть только там, где это подтверждено материалами кейса
  */
 export function Brief({ brief, t }: { brief: Data; t: Dict['case']['brief'] }) {
+  const process = brief.process ?? []
   return (
     <section className={styles.root} aria-label={t.label}>
       <div className="container">
@@ -33,6 +36,26 @@ export function Brief({ brief, t }: { brief: Data; t: Dict['case']['brief'] }) {
             <p>{brief.result}</p>
           </div>
         </Reveal>
+        {(brief.role || process.length > 0) && (
+          <Reveal className={styles.more} delay={60}>
+            {brief.role && (
+              <div className={styles.col}>
+                <span className={styles.label}>{t.role}</span>
+                <p className={styles.role}>{brief.role}</p>
+              </div>
+            )}
+            {process.length > 0 && (
+              <div className={`${styles.col} ${styles.wide}`}>
+                <span className={styles.label}>{t.process}</span>
+                <ul className={styles.process}>
+                  {process.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </Reveal>
+        )}
         {brief.nums.length > 0 && (
           <Reveal className={brief.nums.length === 1 ? `${styles.nums} ${styles.one}` : styles.nums} delay={120}>
             {brief.nums.map((n) => (

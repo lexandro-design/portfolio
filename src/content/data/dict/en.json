@@ -502,7 +502,9 @@
       "label": "Project in brief",
       "task": "task",
       "did": "what I did",
-      "result": "result"
+      "result": "result",
+      "role": "role",
+      "process": "how the work went"
     },
     "show": {
       "example": "example",
