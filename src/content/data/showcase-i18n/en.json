@@ -5,10 +5,11 @@
       "did": [
         "Design system: colour and type in variables, a component library",
         "450+ screens at 1440, 768 and 375 with every state",
-        "3D video banners in Blender"
+        "3D video banners in Blender",
+        "The site from the layout in Next.js: my own initiative, built for myself"
       ],
       "result": "Every store flow is drawn down to empty states and errors, and the design is filled with the real catalog.",
-      "role": "The design system and all the design of the project: pages at three widths, the 3D banners and filling the design with the real catalog.",
+      "role": "The design system and all the design of the project: pages at three widths, the 3D banners and filling the design with the real catalog. I built the Next.js site myself, on my own initiative.",
       "process": [
         "The design system came first, and screens were then built only from its components.",
         "The design was delivered to the client in three stages: catalog and product page, footer pages and the account, then another 38 pages and 9 modals."
@@ -194,6 +195,53 @@
           {
             "shot": 19,
             "title": "Catalogs for perfume, makeup and care"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "section": 5,
+        "title": "The site from the layout",
+        "items": [
+          {
+            "shot": 28,
+            "title": "Home"
+          },
+          {
+            "shot": 29,
+            "title": "Perfumery catalog"
+          },
+          {
+            "shot": 30,
+            "title": "Product page"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "title": "The same site on a phone",
+        "items": [
+          {
+            "shot": 31,
+            "title": "Home"
+          },
+          {
+            "shot": 32,
+            "title": "Perfumery catalog"
+          },
+          {
+            "shot": 33,
+            "title": "Product page"
+          },
+          {
+            "shot": 34,
+            "title": "Brands"
+          },
+          {
+            "shot": 35,
+            "title": "Promotions"
           }
         ]
       }

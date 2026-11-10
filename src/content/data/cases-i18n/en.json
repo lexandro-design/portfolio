@@ -1,7 +1,7 @@
 {
   "parfumeria": {
     "tagline": "design system and 3D",
-    "lead": "A perfume and cosmetics store in Belarus: a design system, 450+ screens at three widths and 3D video banners for the home page.",
+    "lead": "A perfume and cosmetics store in Belarus: a design system, 450+ screens at three widths and 3D video banners for the home page. I also built the site from the layout in Next.js, on my own initiative.",
     "client": "Parfumeria.by · e-commerce, Belarus",
     "sections": [
       {
@@ -33,7 +33,15 @@
       {
         "title": "a real catalog",
         "body": [
-          "The layout is filled with a real assortment, not placeholders. I put together a catalog export from the store’s test site: 951 products, 56 brands, photos, prices and volumes. Products are arranged sensibly: perfumes in perfumery, only that brand on a brand page, a discount only where the catalog has one."
+          "The layout and the site are filled with a real assortment, not placeholders. I put together a catalog export from the store’s test site: 951 products, 56 brands, photos, prices and volumes. Products are arranged sensibly: perfumes in perfumery, only that brand on a brand page, a discount only where the catalog has one."
+        ]
+      },
+      {
+        "title": "the site from the layout",
+        "body": [
+          "My own initiative: I wanted to check the design in a browser, not only in Figma, so I built the site from my own layout. I did it for myself.",
+          "Every section of the layout is carried over: home, catalog with filters and sorting, product page with volume options, cart, sign-in, account, checkout, gift cards, brands, promotions, news, stores and help. That came to 33 routes and more than 170 components.",
+          "Next.js, React and TypeScript, styles in CSS Modules, the layout’s tokens moved into CSS variables. The catalog is read through a single data layer, so the product source changes without touching components. Cart and favourites are stored in the browser. Every screen is checked against the layout at 1440, 768 and 375: a script puts a shot of the site next to the layout frame. There are tests, including an accessibility check."
         ]
       }
     ],
@@ -65,7 +73,15 @@
       "Search: nothing found.",
       "Sign-in with an SMS code.",
       "Order placed.",
-      "Design system: buttons and their states."
+      "Design system: buttons and their states.",
+      "The site in a browser: home.",
+      "The site in a browser: perfumery catalog.",
+      "The site in a browser: product page.",
+      "The site on a phone: home.",
+      "The site on a phone: perfumery catalog.",
+      "The site on a phone: product page.",
+      "The site on a phone: brands.",
+      "The site on a phone: promotions."
     ]
   },
   "meeting-rooms": {
