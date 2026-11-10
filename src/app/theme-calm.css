@@ -52,11 +52,11 @@
 }
 
 /* Блоки при прокрутке проявляются на месте, без сдвига */
-html[data-theme='calm'] [class*='Reveal-module__reveal'] {
+html[data-theme='calm'] [class*='Reveal-module'][class*='__reveal'] {
   transition: opacity 700ms ease-out;
 }
 
-html.js[data-theme='calm'] [class*='Reveal-module__reveal']:not([data-visible]) {
+html.js[data-theme='calm'] [class*='Reveal-module'][class*='__reveal']:not([data-visible]) {
   transform: none;
 }
 
