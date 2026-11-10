@@ -407,7 +407,21 @@
         "v": "since 2024",
         "l": "doing design, code and automation"
       }
-    ]
+    ],
+    "numbers": {
+      "title": "in numbers",
+      "note": "The numbers count themselves from the work log and repositories; nobody edits them by hand. Updated {date}.",
+      "items": {
+        "lines": "lines of code in commits",
+        "commits": "commits",
+        "frames": "3D frames rendered",
+        "figma": "Figma files in work",
+        "screens": "screens and frames in the cases",
+        "hours": "hours at work"
+      },
+      "langs": "what the code is written in",
+      "other": "other"
+    }
   },
   "principles": [
     {
@@ -532,7 +546,28 @@
         "console": "switches are clickable"
       }
     },
-    "creditWith": "together with"
+    "creditWith": "together with",
+    "order": {
+      "label": "order {x} like this",
+      "want": "I’d like {x} like in the “{title}” case.",
+      "kinds": {
+        "shop": "a store",
+        "site": "a site",
+        "app": "an app",
+        "service": "a service",
+        "admin": "an admin panel",
+        "dashboard": "a dashboard",
+        "bot": "a bot",
+        "assistant": "an assistant",
+        "automation": "automation",
+        "agents": "an agent system",
+        "three": "3D graphics",
+        "game": "game design",
+        "landing": "a landing page",
+        "tool": "a tool",
+        "design": "a design"
+      }
+    }
   },
   "palette": {
     "open": "Search and commands",

@@ -48,6 +48,18 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   // Кейс со своей сценой: она стоит вместо шапки, «Коротко» и плеера первой главы
   const Scene = SCENES[slug]
   const scene = Scene ? getScene(locale, slug) : null
+  // Кнопка «заказать такой же»: у каждого кейса свой предмет заказа и свой текст заявки
+  const thing = t.case.order.kinds[item.order]
+  const want = t.case.order.want.replace('{x}', thing).replace('{title}', item.title)
+  const cta = (
+    <CaseCta
+      title={t.case.cta}
+      order={t.case.order.label.replace('{x}', thing)}
+      write={t.nav.write}
+      href={`${localePath(locale, '/')}?like=${slug}#brief`}
+      message={`${t.contact.brief.hello}\n${want}`}
+    />
+  )
   // Увеличение по нажатию нужно и кадрам из shots, и отдельным иллюстрациям в главах
   const zoom = item.shots.length > 0 || (show?.blocks ?? []).some((b) => b.kind === 'frames')
   const lightbox = zoom ? (
@@ -89,7 +101,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
         />
         {show.blocks.length > 1 && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="rest" />}
         <CaseBody item={item} t={t.case} used={used} />
-        <CaseCta title={t.case.cta} primary={t.hero.primary} write={t.nav.write} href={localePath(locale, '/#contact')} />
+        {cta}
         <NextCase
           item={next}
           index={items.indexOf(next) + 1}
@@ -125,12 +137,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
       {show && <Showcase data={show} item={item} t={t.case.show} pace={pace} part={pace === 'show' ? 'rest' : 'all'} cast={cast} />}
       <CaseBody item={item} t={t.case} used={used} />
       {chapters.length > 1 && <ChapterRail chapters={chapters} label={t.case.toc} />}
-      <CaseCta
-        title={t.case.cta}
-        primary={t.hero.primary}
-        write={t.nav.write}
-        href={localePath(locale, '/#contact')}
-      />
+      {cta}
       <NextCase
         item={next}
         index={items.indexOf(next) + 1}
