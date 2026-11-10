@@ -44,25 +44,36 @@
   color: var(--fg-secondary);
 }
 
+/* Широкий экран: цифры стоят под заголовком в левой колонке и кончаются на одной линии со списком слоёв */
+.layers {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
 .numbers {
-  grid-column: 1 / -1;
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  border-block: 1px solid var(--border-hair);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block-end: 1px solid var(--border-hair);
 }
 
 .numbers li {
   display: grid;
-  gap: 4px;
-  padding: var(--space-md) var(--space-sm);
+  align-content: start;
+  gap: 6px;
+  padding: var(--space-md) var(--space-sm) var(--space-md) 0;
+  border-block-start: 1px solid var(--border-hair);
 }
 
-.numbers li + li {
-  border-inline-start: 1px solid var(--border-hair);
+/* Пять цифр в три колонки: последняя занимает остаток ряда, линия над ней идёт до края */
+.numbers li:last-child {
+  grid-column: 2 / -1;
 }
 
 .numbers b {
-  font-size: var(--type-h2);
+  font-size: 56px;
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -79,20 +90,10 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .layers,
   .numbers {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .numbers li + li {
-    border-inline-start: 0;
-  }
-
-  .numbers li:nth-child(even) {
-    border-inline-start: 1px solid var(--border-hair);
-  }
-
-  .numbers li:nth-child(n + 3) {
-    border-block-start: 1px solid var(--border-hair);
+    grid-column: auto;
+    grid-row: auto;
   }
 }
 

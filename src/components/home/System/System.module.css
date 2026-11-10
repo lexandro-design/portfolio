@@ -226,6 +226,19 @@
   color: var(--fg-secondary);
 }
 
+/* Плитки одной высоты: образцы шрифта, шкала отступов и кривая расходятся на всю высоту, низ плитки не пустует */
+@media (min-width: 768px) {
+  .cell {
+    grid-template-rows: auto 1fr;
+  }
+
+  .type,
+  .spacing,
+  .motion {
+    align-content: space-between;
+  }
+}
+
 @media (max-width: 1199px) {
   .grid {
     grid-template-columns: 1fr 1fr;

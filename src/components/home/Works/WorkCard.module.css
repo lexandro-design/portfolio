@@ -185,12 +185,56 @@
     grid-row: 1;
   }
 
-  /* Номер и год сверху, название и лид прижаты к низу картинки */
+  /* Номер и год сверху, под ними цифры кейса, название и лид прижаты к низу картинки */
   .card[data-size='hero'] .text {
     grid-column: 1;
     grid-row: 1;
     grid-template-rows: 1fr auto auto auto;
     padding-block: 0;
+  }
+
+  .card[data-size='hero'][data-facts] .text {
+    grid-template-rows: auto 1fr auto auto auto;
+  }
+
+  .facts {
+    display: grid;
+    align-content: start;
+    margin-block: var(--space-md) var(--space-lg);
+    border-block-end: 1px solid var(--border-hair);
+  }
+
+  .facts li {
+    display: grid;
+    grid-template-columns: 5.5em minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding-block: 10px;
+    border-block-start: 1px solid var(--border-hair);
+  }
+
+  .facts b {
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .facts span {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono);
+    color: var(--fg-secondary);
+  }
+}
+
+/* Уже 1200 колонка текста узкая, на планшете и телефоне плитка стоит столбиком: цифры остаются на странице кейса */
+@media (max-width: 1199px) {
+  .facts {
+    display: none;
+  }
+
+  .card[data-size='hero'][data-facts] .text {
+    grid-template-rows: 1fr auto auto auto;
   }
 }
 
