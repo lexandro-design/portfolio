@@ -68,15 +68,13 @@ html[data-theme='calm'] {
   -webkit-backdrop-filter: none;
 }
 
-/* Технический блок о сборке сайта здесь лишний: кто я, что делаю, работы, цены, контакты */
-[data-theme='calm'] a[href$='#system'],
-[data-theme='calm'] #system,
+/* Полоса прокрутки наверху здесь лишняя */
 [data-theme='calm'] [class*='ScrollProgress-module'] {
   display: none;
 }
 
 /* Разделы в шапке и кнопки с заглавной буквы */
-[data-theme='calm'] header[class*='Nav-module'] a[class*='__link']:not([href$='#system']) {
+[data-theme='calm'] header[class*='Nav-module'] a[class*='__link'] {
   display: inline-block;
 }
 
