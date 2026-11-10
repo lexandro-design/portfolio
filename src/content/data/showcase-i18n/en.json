@@ -332,7 +332,7 @@
       ],
       "nums": [
         {
-          "v": "60+",
+          "v": "50+",
           "l": "screens with every state"
         },
         {
@@ -526,8 +526,12 @@
       ],
       "nums": [
         {
-          "v": "4",
-          "l": "departments: studio, game, content, personal"
+          "v": "5",
+          "l": "departments and 15 desks"
+        },
+        {
+          "v": "600+",
+          "l": "tasks in the first month"
         },
         {
           "v": "3",
@@ -621,8 +625,8 @@
       "role": "Designer of the admin panel: screens to the spec, modals and forms, several rounds of revisions.",
       "nums": [
         {
-          "v": "6",
-          "l": "check statuses"
+          "v": "3",
+          "l": "versions of the panel, the last one after a client meeting"
         },
         {
           "v": "1",
@@ -722,7 +726,7 @@
         "Routing by intent: SQL on the catalog, a ready answer, the model on the knowledge base, or a manager"
       ],
       "result": "The model is brought in only where you can’t do without it: products are found in the catalog, standard topics are covered by ready text.",
-      "role": "Development of both bots: intent detection, client onboarding and the lead in Bitrix24, catalog search, the knowledge base for staff.",
+      "role": "I built both bots myself: intent detection, client onboarding and the lead in Bitrix24, catalog search, the knowledge base for staff.",
       "nums": [
         {
           "v": "2",
@@ -789,7 +793,7 @@
       ],
       "nums": [
         {
-          "v": "~2 s",
+          "v": "seconds",
           "l": "to a spoken answer"
         }
       ]
@@ -1116,7 +1120,7 @@
         "A conversation summary goes into the lead card after an hour and a half"
       ],
       "result": "One bot takes the client from a question to a CRM lead and takes the routine on itself.",
-      "role": "Development of the client-facing bot: matching against a vector database of the catalog, collecting client details and the lead in Bitrix24.",
+      "role": "I built the client-facing bot myself: matching against a vector database of the catalog, collecting client details and the lead in Bitrix24.",
       "nums": [
         {
           "v": "15 s",
@@ -1174,7 +1178,7 @@
   },
   "pix-bi": {
     "brief": {
-      "task": "Reporting for the nuclear industry in PIX BI: contract security and project KPI calculation.",
+      "task": "Reporting for the nuclear industry in PIX BI: contract security.",
       "did": [
         "A \"Contract security\" report: six screens and a reference board",
         "Five urgency levels and a chart of obligations by month and type",
@@ -1296,7 +1300,7 @@
         "The lead and deal are created in Bitrix24 through Open Channels"
       ],
       "result": "The manager gets a filled-in request and sees the whole conversation.",
-      "role": "Development of the bot: message parsing, search across the resort's documents, leads and deals in Bitrix24.",
+      "role": "I built the bot myself: message parsing, search across the resort’s documents, leads and deals in Bitrix24.",
       "nums": []
     },
     "blocks": [
@@ -1473,7 +1477,7 @@
         "The type and a mark are set in the Bitrix24 deal, spam goes to rejection"
       ],
       "result": "Managers no longer sort the mail by hand.",
-      "role": "Development of incoming email parsing and the transfer of requests into Bitrix24.",
+      "role": "Built it myself: incoming email parsing and the transfer of requests into Bitrix24.",
       "nums": []
     },
     "blocks": [
@@ -1555,10 +1559,11 @@
       "did": [
         "Monochrome and a monospaced font, a lookbook on the home page",
         "A card with size choice, cart, delivery, an about page, documents",
-        "A cart on Tilda extended with JavaScript for the store's logic"
+        "A phone version: home, product, cart"
       ],
       "result": "The collection photos make the storefront, and the interface stays in the background.",
-      "nums": []
+      "nums": [],
+      "role": "The site design is mine. All the code is by Nika: Tilda and the JavaScript cart."
     },
     "blocks": [
       {
@@ -1720,7 +1725,7 @@
         "Five criteria and a grade on a five-point scale"
       ],
       "result": "The student sees what to fix and can show a new version as many times as they like.",
-      "role": "Development of the bot: photo intake, finding the teacher's closest reference, a review on five criteria and a grade.",
+      "role": "I built the bot myself: photo intake, finding the teacher’s closest reference, a review on five criteria and a grade.",
       "nums": [
         {
           "v": "5",
@@ -1841,7 +1846,7 @@
         "kind": "notify",
         "section": 1,
         "title": "Questions on the phone",
-        "app": "lexandro_assistant_bot",
+        "app": "LEXANDRO · assistant",
         "items": [
           {
             "text": "❓ #012 web: publishing the site?",
@@ -2288,7 +2293,8 @@
         "Personal reminders and an evening report for the day"
       ],
       "result": "Progress shows every evening without manual tracking.",
-      "nums": []
+      "nums": [],
+      "role": "Built together with Nika."
     },
     "blocks": [
       {
@@ -2364,10 +2370,10 @@
   },
   "media-to-rag": {
     "brief": {
-      "task": "Documents from Yandex Disk had to be turned into a knowledge base for the assistant.",
+      "task": "Documents, videos and voice messages from Yandex Disk had to be turned into a knowledge base for the assistant.",
       "did": [
         "New files are picked up from the Disk automatically",
-        "Text is extracted from docx, pdf and txt",
+        "Text is extracted from docx, pdf and txt, videos and voice messages are transcribed",
         "Chunking, embeddings and loading into a vector database"
       ],
       "result": "The assistant answers from the content of the files, and the base tracks changes on the Disk by itself.",
@@ -2402,7 +2408,7 @@
         "Heroes, hybrids, enemies and bosses by suit and rarity",
         "The Gardener with looks and weapons, chapter backgrounds, icons"
       ],
-      "result": "Screens and characters share one style, and the game was checked against the layout screen by screen.",
+      "result": "Screens and characters share one style, and the game was checked against the layout screen by screen. The game is being prepared for release on Yandex Games.",
       "role": "On the team I do design and art: the Figma layout and design system, heroes, enemies, bosses, the Gardener, chapter backgrounds and icons. The code is written by another team member.",
       "nums": []
     },
@@ -2604,7 +2610,7 @@
         "A design system on variables and a Figma prototype",
         "Seven 3D scenes on the first screens: models, light and animation in Blender"
       ],
-      "result": "The layout, prototype and 3D are done, approval with the client is under way. Nika is building the site.",
+      "result": "The layout is approved by the client, the prototype and 3D are done. Nika is building the site.",
       "role": "The design, design system, prototype and 3D are mine. The site is being developed by Nika.",
       "process": [
         "First the whole desktop at 1440, then a round of fixes on feedback, and after that the mobile versions and the prototype."

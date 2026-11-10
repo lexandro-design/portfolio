@@ -55,6 +55,15 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
       { label: t.case.facts.direction, value: item.directions.map((d) => t.works.directions[d]).join(', ') },
       { label: t.case.facts.stack, value: item.stack.join(' · ') },
       ...(item.link ? [{ label: t.case.facts.site, value: item.link.label, href: item.link.href }] : []),
+      ...(item.credit
+        ? [
+            {
+              label: item.credit.kind === 'with' ? t.case.creditWith : t.case.credit,
+              value: `github.com/${item.credit.handle}`,
+              href: item.credit.href,
+            },
+          ]
+        : []),
     ]
     return (
       <div

@@ -123,7 +123,8 @@ export type Case = {
   note?: string
   link?: { href: string; label: string }
   /** Соавтор: кнопка на его GitHub под лидом кейса. Роль подписывается из словаря */
-  credit?: { href: string; handle: string }
+  /** Соавтор: по умолчанию подпись «код», kind with значит делали вместе */
+  credit?: { href: string; handle: string; kind?: 'with' }
 }
 
 /**
