@@ -57,8 +57,9 @@ export function HomePage({ locale }: { locale: Locale }) {
   })
   const counts = GROUPS.map((group) => ({ group, n: items.filter((c) => c.group === group).length }))
 
-  // «В цифрах»: работа из stats.json (обновляется скриптом), экраны считаются из самих кейсов при сборке
-  const screens = items.reduce((sum, c) => {
+  // «В цифрах»: работа из stats.json (обновляется скриптом). Изображения считаются при сборке: это картинки,
+  // показанные в кейсах на сайте, а не число экранов в макетах (в одном макете их бывает больше, чем во всех галереях)
+  const images = items.reduce((sum, c) => {
     const extra = (getShowcase(locale, c.slug)?.blocks ?? []).flatMap((b) => (b.kind === 'frames' ? b.items.filter((i) => i.src) : []))
     return sum + c.shots.length + extra.length
   }, 0)
@@ -67,9 +68,8 @@ export function HomePage({ locale }: { locale: Locale }) {
     items: [
       { v: stats.work.lines, l: w.lines },
       { v: stats.work.commits, l: w.commits },
-      { v: stats.work.frames, l: w.frames },
       { v: stats.work.figma, l: w.figma },
-      { v: screens, l: w.screens },
+      { v: images, l: w.images },
       { v: stats.work.hours, l: w.hours },
     ],
     langs: stats.langs.map(([name, share]) => ({ name: name === 'other' ? t.about.numbers.other : name, share })),

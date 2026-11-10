@@ -7,6 +7,6 @@ import data from './data/stats.json'
  */
 export const stats = data as {
   updated: string
-  work: { lines: number; commits: number; frames: number; figma: number; hours: number }
+  work: { lines: number; commits: number; figma: number; hours: number }
   langs: [string, number][]
 }
