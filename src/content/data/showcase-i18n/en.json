@@ -8,6 +8,11 @@
         "3D video banners in Blender"
       ],
       "result": "Every store flow is drawn down to empty states and errors, and the design is filled with the real catalog.",
+      "role": "The design system and all the design of the project: pages at three widths, the 3D banners and filling the design with the real catalog.",
+      "process": [
+        "The design system came first, and screens were then built only from its components.",
+        "The design was delivered to the client in three stages: catalog and product page, footer pages and the account, then another 38 pages and 9 modals."
+      ],
       "nums": [
         {
           "v": "450+",
@@ -166,6 +171,11 @@
         "The product site at three widths, a web account and a payment page for the client"
       ],
       "result": "A concept where one number answers the main question and below it you can see why to trust it.",
+      "role": "My own concept: product logic, app screens, the site and web account, the design system and the prototype.",
+      "process": [
+        "The main flows are linked into a prototype, and screens have states: empty, loading, low on money, negative, offline, bank error.",
+        "Text contrast is checked against WCAG AA."
+      ],
       "nums": [
         {
           "v": "100+",
@@ -239,6 +249,10 @@
         "Screens on Taiga UI, frames named by the scheme \"route · role · state\""
       ],
       "result": "Delivered to the spec: from a frame's name a developer knows which screen it is and who it is for.",
+      "role": "Design only: from analysing the requirements to screens with every state. Desktop, 1440 px.",
+      "process": [
+        "Requirements were refined along the way: after questions to the client, booking editing, room access by the employee's location, working hours from 08:00 to 20:00 and in-app notifications were added."
+      ],
       "nums": [
         {
           "v": "60+",
@@ -338,6 +352,7 @@
         "All content in the database: the owner changes the bot without touching code"
       ],
       "result": "Preparing a reply got faster from about two seconds to 60 milliseconds.",
+      "role": "I wrote the bot's logic myself: request intake, the generation queue, payments, content in the database.",
       "nums": [
         {
           "v": "60 ms",
@@ -398,6 +413,10 @@
         "A board, supervision of silent desks, irreversible steps only through me"
       ],
       "result": "I set the goal, answer questions and accept the result. The dispatcher runs large assignments by itself for weeks.",
+      "role": "Conceived and designed it. Day to day I am the director: I set the goal, answer questions and accept the result.",
+      "process": [
+        "The first version: a dispatcher, desks and a board. The next day the desks were arranged into departments."
+      ],
       "nums": [
         {
           "v": "4",
@@ -492,6 +511,7 @@
         "All screens moved onto the AIPlan-R design system, new navigation after a meeting with the client"
       ],
       "result": "The panel covers the document's whole path: from the registry to the email with the check result.",
+      "role": "Designer of the admin panel: screens to the spec, modals and forms, several rounds of revisions.",
       "nums": [
         {
           "v": "6",
@@ -577,6 +597,7 @@
         "Routing by intent: SQL on the catalog, a ready answer, the model on the knowledge base, or a manager"
       ],
       "result": "The model is brought in only where you can’t do without it: products are found in the catalog, standard topics are covered by ready text.",
+      "role": "Development of both bots: intent detection, client onboarding and the lead in Bitrix24, catalog search, the knowledge base for staff.",
       "nums": [
         {
           "v": "2",
@@ -637,6 +658,10 @@
         "Yandex Station became the microphone and speaker, the cloud is not involved"
       ],
       "result": "The assistant answers with the person and memory in mind, and meetings appear at once in the calendar on the phone.",
+      "role": "My own project: from the idea and conversation scenarios to a working system on a home computer.",
+      "process": [
+        "At first the assistant lived in a window on the computer, later a Yandex Station became its microphone and speaker."
+      ],
       "nums": [
         {
           "v": "~2 s",
@@ -691,6 +716,11 @@
         "A request form per the spec and a block with nuclear industry procurement resources"
       ],
       "result": "The site is built entirely on the client's real texts, documents and reviews, including international ones.",
+      "role": "Design of the site in Figma to the client's spec: page structure, responsive layout for three widths, the request form.",
+      "process": [
+        "The client provided the content: the spec, section copy, a services presentation, certificates.",
+        "Went through the designs of every page against the real content and corrected the figures in the experience block, a duplicated document and the request form fields."
+      ],
       "nums": [
         {
           "v": "10",
@@ -767,6 +797,7 @@
         "A wholesale client portal: dashboard, catalog, materials, employees"
       ],
       "result": "The new product has its own page, and the wholesale client has a portal where the manager, orders and invoices sit on one dashboard.",
+      "role": "Design of the pages and the portal: the OctoBox promo page with scroll storytelling, the updated home page, the wholesale client portal interface.",
       "nums": [
         {
           "v": "5",
@@ -840,6 +871,10 @@
         "Two roles, light and dark theme"
       ],
       "result": "Every interface element rests on a requirement of the spec, so extras like a dashboard were removed.",
+      "role": "Interface design: screens in two themes, one consistent system of component variants.",
+      "process": [
+        "The product narrowed along the way: the dashboard, manual choice of projects and glossaries, a separate proofreading step and the \"Redo\" button were removed. The translation is refined in the chat."
+      ],
       "nums": [
         {
           "v": "2",
@@ -884,6 +919,11 @@
         "2026 redesign: a new layout for desktop and phone and a 3D scene"
       ],
       "result": "The store runs on its own domain with the whole catalog. The new layout is ready as a concept.",
+      "role": "The full cycle on my own: structure, design in Figma, graphics, build on Tilda and catalog migration.",
+      "process": [
+        "Started with the brief and structure, then design, graphics and the build.",
+        "I have maintained the site since February 2025."
+      ],
       "nums": [
         {
           "v": "2025",
@@ -947,6 +987,7 @@
         "A conversation summary goes into the lead card after an hour and a half"
       ],
       "result": "One bot takes the client from a question to a CRM lead and takes the routine on itself.",
+      "role": "Development of the client-facing bot: matching against a vector database of the catalog, collecting client details and the lead in Bitrix24.",
       "nums": [
         {
           "v": "15 s",
@@ -1011,6 +1052,7 @@
         "A file on styles and auto layout, linked into a prototype"
       ],
       "result": "The design is ready to hand over to development.",
+      "role": "Design of the report to the spec: a dashboard design ready for handover.",
       "nums": [
         {
           "v": "5",
@@ -1070,6 +1112,7 @@
         "Responsive for 1440, 1200 and phone"
       ],
       "result": "The community section is designed in full, from the profile to posts and contacts.",
+      "role": "Designed the whole section on my own: profile, tabs, responsive layout.",
       "nums": [
         {
           "v": "4",
@@ -1124,6 +1167,7 @@
         "The lead and deal are created in Bitrix24 through Open Channels"
       ],
       "result": "The manager gets a filled-in request and sees the whole conversation.",
+      "role": "Development of the bot: message parsing, search across the resort's documents, leads and deals in Bitrix24.",
       "nums": []
     },
     "blocks": [
@@ -1164,9 +1208,13 @@
       "did": [
         "The vacation plan and settings for the head admin, a local admin and a user",
         "Tables with frozen columns and double headers, eight modal variants",
-        "Component specs on Taiga UI, checks of the design against code and an acceptance checklist"
+        "Component specs on Taiga UI, checks of the finished interface against the design and an acceptance checklist"
       ],
       "result": "Screens were checked at widths up to 3440, the implementation was compared with the design.",
+      "role": "Design of the service: screens for three roles, component specs and checking the finished interface against the design.",
+      "process": [
+        "After feedback the tablet and phone layouts were dropped: the service is desktop only."
+      ],
       "nums": [
         {
           "v": "3",
@@ -1226,6 +1274,7 @@
         "Every page at five widths"
       ],
       "result": "The design went all the way to code: Nika built the site from the design.",
+      "role": "The design is mine, the front end is by Nika.",
       "nums": [
         {
           "v": "5",
@@ -1290,6 +1339,7 @@
         "The type and a mark are set in the Bitrix24 deal, spam goes to rejection"
       ],
       "result": "Managers no longer sort the mail by hand.",
+      "role": "Development of incoming email parsing and the transfer of requests into Bitrix24.",
       "nums": []
     },
     "blocks": [
@@ -1321,6 +1371,7 @@
         "Autoposting news to VK, Telegram and Dzen on a schedule, without duplicates"
       ],
       "result": "A bundle reads from one screen: what is included and what it costs.",
+      "role": "Design of the product page for bundles and the phone layout, plus autoposting of the store's news.",
       "nums": [
         {
           "v": "3",
@@ -1420,6 +1471,7 @@
         "Versions for desktop, tablet and phone"
       ],
       "result": "The page is published on the holding's site.",
+      "role": "Page design only: block structure, visual design, versions for desktop, tablet and phone.",
       "nums": [
         {
           "v": "3",
@@ -1463,13 +1515,14 @@
   },
   "svarprom-nn": {
     "brief": {
-      "task": "The same owners as Svarnoy 52 needed a second store with its own visual key.",
+      "task": "The client behind Svarnoy 52 needed a second store with its own visual key.",
       "did": [
         "A site on Tilda: standard blocks, Zero Block and custom code",
         "A dark blue palette with orange, catalog migration, \"About\" texts, reviews",
         "2026 redesign: a new layout and a 3D model of a welding machine for the first screen"
       ],
-      "result": "Two stores of the same owners look different, while the catalog is organised the same way.",
+      "result": "The two stores look different, while the catalog is organised the same way.",
+      "role": "Design and build on Tilda, catalog migration and the \"About\" texts.",
       "nums": [
         {
           "v": "2025",
@@ -1533,6 +1586,7 @@
         "Five criteria and a grade on a five-point scale"
       ],
       "result": "The student sees what to fix and can show a new version as many times as they like.",
+      "role": "Development of the bot: photo intake, finding the teacher's closest reference, a review on five criteria and a grade.",
       "nums": [
         {
           "v": "5",
@@ -1581,6 +1635,7 @@
         "Embeddings are computed locally, only what changed is reindexed"
       ],
       "result": "Only the found fragments go out, and the whole base stays on the computer.",
+      "role": "My own tool: the index, hybrid search and the connection to my working tools.",
       "nums": [
         {
           "v": "~17,000",
@@ -1632,6 +1687,10 @@
         "Office tasks, screenshots of finished work and a new task right from the chat"
       ],
       "result": "Work goes on while I'm away from the computer, and the bot writes only when it can't go on without me.",
+      "role": "My own tool: I came up with the reply scenarios, the buttons and the rules for when the bot writes.",
+      "process": [
+        "Started with questions on \"yes\", \"no\" and \"custom\" buttons, added voice messages and photos the next day, and later permission requests for actions as buttons."
+      ],
       "nums": [
         {
           "v": "4",
@@ -1689,6 +1748,10 @@
         "Writing to an agent, limit usage and a calendar in the same place"
       ],
       "result": "What is running and how to switch it off is visible in one window on Ctrl+Alt+P.",
+      "role": "My own tool: I designed the window, service statuses, the office tab, dark and light themes.",
+      "process": [
+        "First a window that switches services on and off, then a badge for failures of background services, and the office tab the next day."
+      ],
       "nums": [
         {
           "v": "1",
@@ -1742,7 +1805,8 @@
         "Transcription on the graphics card, by speaker",
         "Breakdown: the gist, agreements and tasks go into the base; a no-cloud mode for meetings under NDA"
       ],
-      "result": "A minute after the call ends, the transcript, the gist and the tasks are already in the knowledge base.",
+      "result": "A few minutes after the call ends, the transcript, the gist and the tasks are already in the knowledge base.",
+      "role": "My own tool: I came up with the recording, transcription by speaker and the meeting breakdown.",
       "nums": [
         {
           "v": "15 s → 1 s",
@@ -1815,6 +1879,10 @@
         "Every edit is saved as a \"before → after\" pair and teaches the next drafts"
       ],
       "result": "I approve or edit a post with a button, publishing goes out on schedule, and the system writes closer and closer to my voice.",
+      "role": "My own project: I designed the rubrics, the drafting passes, the bot with buttons and learning from my edits.",
+      "process": [
+        "The first drafts came out formulaic, so the text is now built in several passes: author, a cliché check, editor. My edits are saved, and the recurring ones become rules."
+      ],
       "nums": [
         {
           "v": "3",
@@ -1861,6 +1929,10 @@
         "Prepares a draft on a button, a person writes to the client"
       ],
       "result": "Suitable orders arrive as cards, while the price and the conversation with the client stay with us.",
+      "role": "A project shared with a partner. A person writes to the clients, the bot only prepares a draft.",
+      "process": [
+        "After the first run the score threshold was lowered from 65 to 50: none of 37 orders reached 65, while suitable ones turned up at 50–58."
+      ],
       "nums": [
         {
           "v": "50",
@@ -1913,6 +1985,10 @@
         "A training specialist's panel: a question without an answer becomes part of the base"
       ],
       "result": "The bot answers at once and only from the company's materials, and the base grows with every question that had no answer.",
+      "role": "A study project: role-aware search, the chat, the training specialist's panel and quality checks.",
+      "process": [
+        "After changes the bot goes through a set of 24 control questions."
+      ],
       "nums": []
     },
     "blocks": [
@@ -1960,6 +2036,7 @@
         "A check every 15 minutes by a cloud function, without a server of my own"
       ],
       "result": "The bot sends only what's needed and costs nothing.",
+      "role": "Built it for myself: the rules for what to send and when, and running it without a server of my own.",
       "nums": [
         {
           "v": "15 min",
@@ -2192,6 +2269,7 @@
         "The Gardener with looks and weapons, chapter backgrounds, icons"
       ],
       "result": "Screens and characters share one style, and the game was checked against the layout screen by screen.",
+      "role": "On the team I do design and art: the Figma layout and design system, heroes, enemies, bosses, the Gardener, chapter backgrounds and icons. The code is written by another team member.",
       "nums": []
     },
     "blocks": [
@@ -2393,6 +2471,10 @@
         "Seven 3D scenes on the first screens: models, light and animation in Blender"
       ],
       "result": "The layout, prototype and 3D are done, approval with the client is under way. Nika is building the site.",
+      "role": "The design, design system, prototype and 3D are mine. The site is being developed by Nika.",
+      "process": [
+        "First the whole desktop at 1440, then a round of fixes on feedback, and after that the mobile versions and the prototype."
+      ],
       "nums": [
         {
           "v": "8",
@@ -2545,6 +2627,7 @@
         "Blender, Cycles and Remotion, at the resolution the site needs"
       ],
       "result": "Each store has its own scene. The two companies' sites stay separate.",
+      "role": "The 3D, lighting, materials and the edit of the video are mine.",
       "nums": []
     },
     "blocks": [

@@ -265,7 +265,7 @@ export type Dict = {
     /** Заголовок оглавления глав в шапке кейса */
     toc: string
     /** «Коротко» под шапкой кейса */
-    brief: { label: string; task: string; did: string; result: string }
+    brief: { label: string; task: string; did: string; result: string; role: string; process: string }
     /** Интерактивные блоки раскрытия */
     show: {
       /** Пометка у демо ботов: данные в нём — пример */

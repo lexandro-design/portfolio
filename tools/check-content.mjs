@@ -14,6 +14,9 @@ const DIRECTIONS = ['design', 'web', 'ai']
 const GROUPS = ['titan', 'entersales', 'freelance', 'own']
 const PREVIEWS = ['flow', 'chat', 'inbox', 'search']
 
+/** Чего не бывает в текстах кейсов: длинного тире и названий инструментов */
+const BANNED = [/—/, /\bn8n\b/i, /claude/i, /openai|gpt|gemini|midjourney|flux/i]
+
 const type = (v) => (Array.isArray(v) ? 'array' : v === null ? 'null' : typeof v)
 const str = (v) => typeof v === 'string'
 const strs = (v) => Array.isArray(v) && v.every(str)
@@ -171,6 +174,17 @@ for (const c of cases) {
   if (!str(s.brief?.task) || !str(s.brief?.result) || !s.brief?.did?.length) {
     fail(`showcase.${c.slug}`, 'brief: нужны task, did, result')
   }
+  // Роль и ход работы необязательны, но пустыми не бывают: нет факта, нет и поля
+  if (s.brief?.role !== undefined && (!str(s.brief.role) || !s.brief.role.trim())) {
+    fail(`showcase.${c.slug}`, 'brief.role — непустая строка')
+  }
+  if (s.brief?.process !== undefined && (!strs(s.brief.process) || !s.brief.process.length)) {
+    fail(`showcase.${c.slug}`, 'brief.process — непустой список строк')
+  }
+  for (const v of [s.brief?.role, ...(s.brief?.process ?? [])]) {
+    if (!str(v)) continue
+    for (const re of BANNED) if (re.test(v)) fail(`showcase.${c.slug}`, `в тексте «${v.slice(0, 40)}» запрещённое: ${re}`)
+  }
   const refs = s.blocks.flatMap((b) => [
     ...['pages', 'steps', 'cards', 'items'].flatMap((k) =>
       (b[k] ?? []).map((p) => p.shot).filter((n) => typeof n === 'number'),
@@ -211,7 +225,6 @@ if (
 const sceneDir = new URL('src/content/data/scenes/', root)
 const sceneFiles = readdirSync(sceneDir).filter((f) => f.endsWith('.json'))
 const sceneCopy = Object.fromEntries(LOCALES.map((l) => [l, read(`scenes-i18n/${l}.json`)]))
-const BANNED = [/—/, /\bn8n\b/i, /claude/i, /openai|gpt|gemini|midjourney|flux/i]
 const walk = (v, where) => {
   if (str(v)) {
     for (const re of BANNED) if (re.test(v)) fail(where, `в тексте «${v.slice(0, 40)}» запрещённое: ${re}`)

@@ -75,6 +75,38 @@
   line-height: 1.55;
 }
 
+/* Роль и ход работы: вторая строка той же таблицы. Левая колонка стоит под задачей */
+.more {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  border-block-end: 1px solid var(--border-hair);
+}
+
+/* Одна часть из двух занимает всю строку, но текст не шире строки чтения */
+.more > .col:only-child {
+  grid-column: 1 / -1;
+}
+
+.wide {
+  padding-inline-end: 0;
+}
+
+.role {
+  max-inline-size: 64ch;
+  font-size: var(--type-body);
+  line-height: 1.55;
+}
+
+.process {
+  display: grid;
+  gap: 0.75em;
+  max-inline-size: 72ch;
+  list-style: none;
+  font-size: var(--type-body);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
 .nums {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -147,6 +179,14 @@
   .col:nth-child(2) {
     padding-inline-start: 0;
     border-inline-start: 0;
+  }
+
+  .more {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .more > .col:last-child {
+    border-block-end: 0;
   }
 
   .v {

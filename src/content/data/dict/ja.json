@@ -501,7 +501,9 @@
       "label": "プロジェクト概要",
       "task": "課題",
       "did": "やったこと",
-      "result": "結果"
+      "result": "結果",
+      "role": "役割",
+      "process": "進め方"
     },
     "show": {
       "example": "例",

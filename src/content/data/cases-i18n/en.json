@@ -346,7 +346,7 @@
       {
         "title": "the task",
         "body": [
-          "The company needed a store holding its whole range, not just a couple of showcases. Later the same owners ordered a second site, Svarprom NN."
+          "The company needed a store holding its whole range, not just a couple of showcases. Later the same client came back for a second site, Svarprom NN."
         ]
       },
       {
@@ -533,7 +533,7 @@
         "title": "what was done",
         "body": [
           "Two pages, the vacation plan and settings, for three roles: head admin, local admin and user.",
-          "A design system on Taiga UI, component specs for developers and an implementation audit. Tables with frozen columns and double headers for dense data, eight modal variants, a notification popover, design-to-code checks and an acceptance checklist."
+          "A design system on Taiga UI, component specs for developers and an implementation audit. Tables with frozen columns and double headers for dense data, eight modal variants, a notification popover, checks of the finished interface against the design and an acceptance checklist."
         ]
       }
     ],
@@ -702,7 +702,7 @@
   "svarprom-nn": {
     "title": "Svarprom NN",
     "tagline": "second store on Tilda",
-    "lead": "A second site for the same owners as Svarnoy 52: its own visual key, the same approach to the catalog.",
+    "lead": "A second site from the same client as Svarnoy 52: its own visual key, the same approach to the catalog.",
     "client": "freelance · welding equipment",
     "sections": [
       {
@@ -1066,7 +1066,7 @@
   "call-recorder": {
     "title": "Call Recorder",
     "tagline": "transcript and meeting summary",
-    "lead": "I record a call with one hotkey. A minute after it ends I have a transcript by speaker, the gist of the meeting and the tasks in my knowledge base. Speech recognition runs on my own computer.",
+    "lead": "I record a call with one hotkey. A few minutes after it ends I have a transcript by speaker, the gist of the meeting and the tasks in my knowledge base. Speech recognition runs on my own computer.",
     "client": "personal tool",
     "sections": [
       {
@@ -1100,7 +1100,7 @@
     },
     "scheme": {
       "kind": "pipeline",
-      "title": "a call → tasks in the knowledge base a minute later",
+      "title": "a call → tasks in the knowledge base a few minutes later",
       "steps": [
         {
           "label": "hotkey",
