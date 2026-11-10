@@ -98,7 +98,12 @@
       "Admin: new equipment.",
       "Empty list.",
       "Access denied.",
-      "The whole Figma file."
+      "The whole Figma file.",
+      "Room list: loading.",
+      "Room list: loading error.",
+      "Booking: an error in the time field.",
+      "Confirming a booking cancellation.",
+      "Page not found."
     ],
     "note": "All screenshots use demo data."
   },
@@ -182,7 +187,10 @@
       "Email with the check result.",
       "No file attached.",
       "Access denied.",
-      "The whole Figma file."
+      "The whole Figma file.",
+      "Card: an error while running the check.",
+      "Card: a repeat check.",
+      "Card: an archived version."
     ],
     "note": "All screenshots use demo data."
   },
@@ -271,7 +279,8 @@
       "Reviews.",
       "Complaints and appeals.",
       "Tablet: home.",
-      "The whole Figma file."
+      "The whole Figma file.",
+      "Contacts and the request form."
     ]
   },
   "osq": {
@@ -543,7 +552,9 @@
       "Vacation plan: user.",
       "Settings: positions.",
       "The table on a 3440 monitor.",
-      "The whole Figma file."
+      "The whole Figma file.",
+      "Vacation plan: local administrator.",
+      "Settings: employees for the local administrator."
     ],
     "note": "All screenshots use demo data."
   },
