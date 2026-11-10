@@ -1,4 +1,6 @@
 import { CasePage } from '@/components/case/CasePage'
+import { JsonLd } from '@/components/layout/JsonLd'
+import { caseLd } from '@/lib/jsonld'
 import { caseMeta, caseSlugs } from '@/lib/routes'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -11,5 +13,11 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function Page({ params }: Props) {
-  return <CasePage locale="ru" slug={(await params).slug} />
+  const { slug } = await params
+  return (
+    <>
+      <JsonLd data={caseLd('ru', slug)} />
+      <CasePage locale="ru" slug={slug} />
+    </>
+  )
 }
