@@ -112,7 +112,8 @@ export type Block = Titled &
       }
     | { kind: 'speed'; rows: { label: string; ms: number; value: string }[] }
     /** Статичные кадры в своей пропорции, без анимации: one, two, sheet (лист спрайтов), phones, phones-3 */
-    | { kind: 'frames'; variant: string; items: { shot: number; title: string }[] }
+    /** Кадр берётся из shots по номеру или стоит своим файлом (src, w, h): так иллюстрация не меняет подачу кейса */
+    | { kind: 'frames'; variant: string; items: { shot?: number; src?: string; w?: number; h?: number; title: string }[] }
   )
 
 export type Showcase = { brief: Brief; blocks: Block[] }

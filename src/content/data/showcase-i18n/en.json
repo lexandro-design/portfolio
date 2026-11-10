@@ -610,6 +610,31 @@
             "text": "the Study desk is silent with an open task, reminded the dispatcher"
           }
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/ai-office/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The board: who is working, who is waiting for me, who is free"
+          },
+          {
+            "src": "/cases/ai-office/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The path of a task: from a phrase to a one-line result"
+          },
+          {
+            "src": "/cases/ai-office/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "A question arrives on the phone"
+          }
+        ]
       }
     ]
   },
@@ -831,6 +856,31 @@
           {
             "who": "sys",
             "text": "the meeting and the reminder are already in the calendar on the phone"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/haiku/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "A conversation: a question, an answer with memory and a meeting in the calendar"
+          },
+          {
+            "src": "/cases/haiku/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "Conversation memory and the meeting on the phone"
+          },
+          {
+            "src": "/cases/haiku/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The speaker as microphone and loudspeaker, the logic on the home computer"
           }
         ]
       }
@@ -1875,6 +1925,25 @@
           "photo"
         ],
         "rule": "the same question no more than once in half an hour"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/tg-assistant/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "A question with buttons"
+          },
+          {
+            "src": "/cases/tg-assistant/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "Permission for an action and tasks from the chat"
+          }
+        ]
       }
     ]
   },
@@ -1933,6 +2002,25 @@
           }
         ],
         "foot": "lives in the tray · dark and light theme · this computer only"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/ai-console/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "Services: status and a switch"
+          },
+          {
+            "src": "/cases/ai-console/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The office tab and limit usage"
+          }
+        ]
       }
     ]
   },
@@ -2006,6 +2094,25 @@
             "text": "Raise the catalog, issue the invoice → into the to-do list"
           }
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/call-recorder/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "Two tracks and a transcript by speaker"
+          },
+          {
+            "src": "/cases/call-recorder/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "Meeting breakdown: the gist, agreements, tasks"
+          }
+        ]
       }
     ]
   },
@@ -2055,6 +2162,25 @@
           "news",
           "tip",
           "\"A Day Later\""
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/channel-pipeline/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "A draft with buttons in the bot"
+          },
+          {
+            "src": "/cases/channel-pipeline/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "Edits as “before → after” pairs and the automatic mode"
+          }
         ]
       }
     ]
@@ -2112,6 +2238,25 @@
           "ads and vacancies are filtered out",
           "the status is visible to the whole team"
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/lead-agent/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "An order card and the agent’s rules"
+          },
+          {
+            "src": "/cases/lead-agent/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "A reply draft and the order queue"
+          }
+        ]
       }
     ]
   },
@@ -2163,6 +2308,31 @@
             "the bot writes to those who asked"
           ]
         }
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/rag-mentor/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "An answer from the knowledge base with references and the “under the hood” mode"
+          },
+          {
+            "src": "/cases/rag-mentor/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The first-week programme and the trainer"
+          },
+          {
+            "src": "/cases/rag-mentor/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The methodologist’s panel: unanswered questions and onboarding"
+          }
+        ]
       }
     ]
   },
@@ -2211,6 +2381,25 @@
           }
         ],
         "tick": "a check every 15 minutes"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "Interface example",
+        "items": [
+          {
+            "src": "/cases/uni-bot/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The evening summary: tomorrow’s classes"
+          },
+          {
+            "src": "/cases/uni-bot/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "The menu and running without a server of its own"
+          }
+        ]
       }
     ]
   },

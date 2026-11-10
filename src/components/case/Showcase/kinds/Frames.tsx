@@ -19,9 +19,9 @@ export function Frames({ block, shots }: Props) {
   return (
     <ul className={styles.root} data-variant={block.variant}>
       {block.items.map((it, i) => {
-        const s = shots[it.shot]
+        const s = it.src ? { src: it.src, w: it.w ?? 1600, h: it.h ?? 1000, caption: it.title } : shots[it.shot ?? 0]
         return (
-          <li key={it.shot} className={styles.item}>
+          <li key={it.src ?? it.shot} className={styles.item}>
             <figure className={styles.fig}>
               <div
                 className={styles.media}
