@@ -1,7 +1,7 @@
 import { contacts, features, SECTION_COUNT } from '@/content/site'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
-import { Brief } from './Brief'
+import { Brief, type Likes } from './Brief'
 import { Ways } from './Ways'
 import styles from './Contact.module.css'
 
@@ -10,10 +10,11 @@ type Props = {
   label: string
   services: Dict['services']
   steps: Dict['process']['steps']
+  likes: Likes
 }
 
 /** Финальный экран: вопрос крупно, три пути связи сразу, ниже заявка для тех, кому удобнее собрать задачу */
-export function Contact({ t, label, services, steps }: Props) {
+export function Contact({ t, label, services, steps, likes }: Props) {
   const n = String(SECTION_COUNT).padStart(2, '0')
   return (
     <Reveal className={styles.contact}>
@@ -24,7 +25,7 @@ export function Contact({ t, label, services, steps }: Props) {
 
       <Ways t={t.ways} hello={t.brief.hello} />
 
-      {features.brief && <Brief t={t.brief} services={services} steps={steps} />}
+      {features.brief && <Brief t={t.brief} services={services} steps={steps} likes={likes} />}
 
       <div className={styles.foot}>
         <span>{t.location}</span>

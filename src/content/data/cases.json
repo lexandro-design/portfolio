@@ -312,7 +312,8 @@
         "w": 750,
         "h": 1180
       }
-    }
+    },
+    "order": "shop"
   },
   {
     "slug": "prosoft",
@@ -486,7 +487,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "site"
   },
   {
     "slug": "saldo",
@@ -644,7 +646,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "app"
   },
   {
     "slug": "meeting-rooms",
@@ -803,7 +806,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "service"
   },
   {
     "slug": "mimimibot",
@@ -872,7 +876,8 @@
       "w": 1216,
       "h": 860,
       "illustration": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "ai-office",
@@ -981,7 +986,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "agents"
   },
   {
     "slug": "otrx",
@@ -1121,7 +1127,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "admin"
   },
   {
     "slug": "food-assistants",
@@ -1203,7 +1210,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "assistant"
   },
   {
     "slug": "haiku",
@@ -1304,7 +1312,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "assistant"
   },
   {
     "slug": "meg-site",
@@ -1430,7 +1439,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "site"
   },
   {
     "slug": "osq",
@@ -1545,7 +1555,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "site"
   },
   {
     "slug": "ai-translator",
@@ -1626,7 +1637,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "service"
   },
   {
     "slug": "svarnoy52",
@@ -1761,7 +1773,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "shop"
   },
   {
     "slug": "packaging-bots",
@@ -1834,7 +1847,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "pix-bi",
@@ -1926,7 +1940,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "dashboard"
   },
   {
     "slug": "ubiray-rf",
@@ -2021,7 +2036,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "design"
   },
   {
     "slug": "resort-bot",
@@ -2085,7 +2101,8 @@
       "h": 1000,
       "caption": "AI-бот для базы отдыха",
       "illustration": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "vacation-plan",
@@ -2183,7 +2200,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "service"
   },
   {
     "slug": "lotus",
@@ -2275,7 +2293,8 @@
     "credit": {
       "href": "https://github.com/zeawale",
       "handle": "zeawale"
-    }
+    },
+    "order": "site"
   },
   {
     "slug": "mail-to-crm",
@@ -2341,7 +2360,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "automation"
   },
   {
     "slug": "tetrasis",
@@ -2431,7 +2451,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "design"
   },
   {
     "slug": "reckon",
@@ -2521,7 +2542,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "shop"
   },
   {
     "slug": "prof-study",
@@ -2606,7 +2628,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "landing"
   },
   {
     "slug": "svarprom-nn",
@@ -2735,7 +2758,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "shop"
   },
   {
     "slug": "svarka-3d",
@@ -2864,7 +2888,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "three"
   },
   {
     "slug": "garden-td",
@@ -3113,7 +3138,8 @@
       "caption": "",
       "w": 1216,
       "h": 860
-    }
+    },
+    "order": "game"
   },
   {
     "slug": "art-school",
@@ -3173,7 +3199,8 @@
       "h": 1000,
       "caption": "AI-ассистент художественной школы",
       "illustration": true
-    }
+    },
+    "order": "assistant"
   },
   {
     "slug": "brain-search",
@@ -3218,7 +3245,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "tool"
   },
   {
     "slug": "tg-assistant",
@@ -3321,7 +3349,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "ai-console",
@@ -3399,7 +3428,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "app"
   },
   {
     "slug": "call-recorder",
@@ -3490,7 +3520,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "tool"
   },
   {
     "slug": "channel-pipeline",
@@ -3596,7 +3627,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "automation"
   },
   {
     "slug": "lead-agent",
@@ -3698,7 +3730,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "rag-mentor",
@@ -3801,7 +3834,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "assistant"
   },
   {
     "slug": "uni-bot",
@@ -3902,7 +3936,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "salon-booking",
@@ -3946,7 +3981,8 @@
       "h": 1000,
       "caption": "Онлайн-запись в салоны и клиники",
       "illustration": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "team-reports",
@@ -3990,7 +4026,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "automation"
   },
   {
     "slug": "fitness-bot",
@@ -4040,7 +4077,8 @@
       "href": "https://github.com/zeawale",
       "handle": "zeawale",
       "kind": "with"
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "dice-bots",
@@ -4084,7 +4122,8 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "bot"
   },
   {
     "slug": "media-to-rag",
@@ -4129,6 +4168,7 @@
       "w": 1216,
       "h": 860,
       "perLocale": true
-    }
+    },
+    "order": "automation"
   }
 ]

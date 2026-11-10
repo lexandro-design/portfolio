@@ -18,10 +18,14 @@ export const routeOf = (codes: string[], total: number) =>
     .filter((i, n, all) => i < total && all.indexOf(i) === n)
     .sort((a, b) => a - b)
 
+/** Заявка «хочу такой же проект» из кейса: какие услуги отметить и что написать. Ключ — slug кейса из адреса ?like= */
+export type Likes = Record<string, { codes: string[]; text: string }>
+
 type Props = {
   t: Dict['contact']['brief']
   services: Dict['services']
   steps: Dict['process']['steps']
+  likes: Likes
 }
 
 /**
@@ -31,7 +35,7 @@ type Props = {
  * копируется и подставляется в чат, если клиент это умеет) или письмом.
  * Цены не складываем: «от» плюс «от» — это не честная сумма.
  */
-export function Brief({ t, services, steps }: Props) {
+export function Brief({ t, services, steps, likes }: Props) {
   const [picked, setPicked] = useState<string[]>([])
   const [deadline, setDeadline] = useState<number | null>(null)
   const [about, setAbout] = useState('')
@@ -42,6 +46,17 @@ export function Brief({ t, services, steps }: Props) {
     window.addEventListener(BRIEF_EVENT, fill)
     return () => window.removeEventListener(BRIEF_EVENT, fill)
   }, [])
+
+  /* Пришли из кейса по кнопке «заказать такой же»: услуги и текст уже стоят, человек может их поправить */
+  useEffect(() => {
+    const like = likes[new URLSearchParams(window.location.search).get('like') ?? '']
+    if (!like) return
+    const id = requestAnimationFrame(() => {
+      setPicked(like.codes)
+      setAbout(like.text)
+    })
+    return () => cancelAnimationFrame(id)
+  }, [likes])
 
   /* Хватает услуги или пары слов: заявка не должна мешать написать */
   const ready = picked.length > 0 || about.trim().length > 0

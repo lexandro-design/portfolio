@@ -3,6 +3,7 @@ import { getCases } from '@/content/cases-i18n'
 import { CAST_COUNT, getCast } from '@/content/casts'
 import { previewOf } from '@/content/flows'
 import { getShowcase } from '@/content/showcase'
+import { stats } from '@/content/stats'
 import { HTML_LANG, localePath, LOCALES, type Locale } from '@/i18n/config'
 import { getDict } from '@/i18n/dict'
 import { SectionHeader } from '@/components/ui/SectionHeader'
@@ -55,6 +56,38 @@ export function HomePage({ locale }: { locale: Locale }) {
     return { href: `${base}/cases/${slug}/`, title: item.title, text: did === undefined ? brief.task : brief.did[did] }
   })
   const counts = GROUPS.map((group) => ({ group, n: items.filter((c) => c.group === group).length }))
+
+  // «В цифрах»: работа из stats.json (обновляется скриптом), экраны считаются из самих кейсов при сборке
+  const screens = items.reduce((sum, c) => {
+    const extra = (getShowcase(locale, c.slug)?.blocks ?? []).flatMap((b) => (b.kind === 'frames' ? b.items.filter((i) => i.src) : []))
+    return sum + c.shots.length + extra.length
+  }, 0)
+  const w = t.about.numbers.items
+  const workNumbers = {
+    items: [
+      { v: stats.work.lines, l: w.lines },
+      { v: stats.work.commits, l: w.commits },
+      { v: stats.work.frames, l: w.frames },
+      { v: stats.work.figma, l: w.figma },
+      { v: screens, l: w.screens },
+      { v: stats.work.hours, l: w.hours },
+    ],
+    langs: stats.langs.map(([name, share]) => ({ name: name === 'other' ? t.about.numbers.other : name, share })),
+    date: new Intl.DateTimeFormat(HTML_LANG[locale], { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(
+      new Date(`${stats.updated}T00:00:00Z`),
+    ),
+  }
+
+  // Заявка из кейса: услуги по направлениям кейса и готовая фраза «хочу такой же …»
+  const likes = Object.fromEntries(
+    items.map((c) => [
+      c.slug,
+      {
+        codes: t.services.filter((s) => c.directions.includes(s.filter)).map((s) => s.code),
+        text: t.case.order.want.replace('{x}', t.case.order.kinds[c.order]).replace('{title}', c.title),
+      },
+    ]),
+  )
 
   return (
     <div lang={HTML_LANG[locale]}>
@@ -110,7 +143,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section id="about" className={styles.section}>
         <div className="container">
           <SectionHeader index={sectionIndex('about')} copy={t.sections.about} />
-          <About t={t.about} where={t.works.where} counts={counts} />
+          <About t={t.about} where={t.works.where} counts={counts} numbers={workNumbers} />
         </div>
       </section>
 
@@ -128,6 +161,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             label={t.sections.contact.label}
             services={t.services}
             steps={t.process.steps}
+            likes={likes}
           />
         </div>
       </section>

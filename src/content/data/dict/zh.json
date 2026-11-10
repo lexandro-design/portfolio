@@ -406,7 +406,21 @@
         "v": "2024 起",
         "l": "从事设计、代码和自动化"
       }
-    ]
+    ],
+    "numbers": {
+      "title": "用数字说话",
+      "note": "这些数字自动统计：来自工作日志和代码仓库，没有人手动修改。更新于 {date}。",
+      "items": {
+        "lines": "行提交的代码",
+        "commits": "次提交",
+        "frames": "帧 3D 渲染",
+        "figma": "个在用的 Figma 文件",
+        "screens": "张案例里的页面和画面",
+        "hours": "小时的工作"
+      },
+      "langs": "代码用什么写",
+      "other": "其他"
+    }
   },
   "principles": [
     {
@@ -531,7 +545,28 @@
         "console": "开关可以点击"
       }
     },
-    "creditWith": "合作"
+    "creditWith": "合作",
+    "order": {
+      "label": "订做同样的{x}",
+      "want": "想要和案例“{title}”一样的{x}。",
+      "kinds": {
+        "shop": "网店",
+        "site": "网站",
+        "app": "应用",
+        "service": "服务",
+        "admin": "管理后台",
+        "dashboard": "仪表盘",
+        "bot": "机器人",
+        "assistant": "助手",
+        "automation": "自动化",
+        "agents": "智能体系统",
+        "three": "3D 图形",
+        "game": "游戏设计",
+        "landing": "落地页",
+        "tool": "工具",
+        "design": "设计"
+      }
+    }
   },
   "palette": {
     "open": "搜索与命令",

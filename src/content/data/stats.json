@@ -1,0 +1,36 @@
+{
+  "updated": "2026-11-10",
+  "work": {
+    "lines": 605000,
+    "commits": 1100,
+    "frames": 200000,
+    "figma": 55,
+    "hours": 970
+  },
+  "langs": [
+    [
+      "Python",
+      47
+    ],
+    [
+      "JavaScript",
+      17
+    ],
+    [
+      "TypeScript",
+      15
+    ],
+    [
+      "HTML",
+      10
+    ],
+    [
+      "CSS",
+      6
+    ],
+    [
+      "other",
+      5
+    ]
+  ]
+}

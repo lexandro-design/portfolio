@@ -1,4 +1,4 @@
-import type { Case, Direction } from '@/content/cases'
+import type { Case, Direction, OrderKind } from '@/content/cases'
 
 /** Шапка секции главной: «02 / 08 · услуги», заголовок и пояснение справа */
 export type SectionCopy = { label: string; title: string; aside?: string }
@@ -185,6 +185,14 @@ export type Dict = {
     sources: { title: string; note: string }
     /** Только цифры из материалов кейсов */
     facts: { v: string; l: string }[]
+    /** «В цифрах»: сами числа приходят из content/data/stats.json и из кейсов, здесь только подписи. {date} — дата обновления */
+    numbers: {
+      title: string
+      note: string
+      items: { lines: string; commits: string; frames: string; figma: string; screens: string; hours: string }
+      langs: string
+      other: string
+    }
   }
 
   principles: { title: string; text: string }[]
@@ -261,6 +269,8 @@ export type Dict = {
     /** Подпись кнопки соавтора: «вёрстка — github.com/…» */
     credit: string
     creditWith: string
+    /** Кнопка в конце кейса: {x} — что заказывают (kinds), {title} — название кейса */
+    order: { label: string; want: string; kinds: Record<OrderKind, string> }
     /** Метка подробного текста кейса после интерактивных блоков */
     story: string
     /** Заголовок оглавления глав в шапке кейса */

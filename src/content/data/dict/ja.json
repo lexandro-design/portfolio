@@ -406,7 +406,21 @@
         "v": "2024〜",
         "l": "デザイン、コード、自動化"
       }
-    ]
+    ],
+    "numbers": {
+      "title": "数字で見る",
+      "note": "数字は作業ログとリポジトリから自動で集計され、手では直しません。{date} 更新。",
+      "items": {
+        "lines": "行のコード（コミット済み）",
+        "commits": "回のコミット",
+        "frames": "フレームの 3D レンダリング",
+        "figma": "個の Figma ファイル",
+        "screens": "枚のケース内の画面とカット",
+        "hours": "時間の作業"
+      },
+      "langs": "コードの言語",
+      "other": "その他"
+    }
   },
   "principles": [
     {
@@ -531,7 +545,28 @@
         "console": "スイッチは押せます"
       }
     },
-    "creditWith": "共同制作"
+    "creditWith": "共同制作",
+    "order": {
+      "label": "同じような{x}を依頼",
+      "want": "ケース「{title}」のような{x}を依頼したいです。",
+      "kinds": {
+        "shop": "ストア",
+        "site": "サイト",
+        "app": "アプリ",
+        "service": "サービス",
+        "admin": "管理画面",
+        "dashboard": "ダッシュボード",
+        "bot": "ボット",
+        "assistant": "アシスタント",
+        "automation": "自動化",
+        "agents": "エージェントの仕組み",
+        "three": "3D",
+        "game": "ゲームデザイン",
+        "landing": "ランディングページ",
+        "tool": "ツール",
+        "design": "デザイン"
+      }
+    }
   },
   "palette": {
     "open": "検索とコマンド",

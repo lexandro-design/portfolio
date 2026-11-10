@@ -36,6 +36,24 @@ export type Shot = {
   mobile?: Omit<Shot, 'caption' | 'mobile' | 'dark'>
 }
 
+/** Типы заказа для кнопки в конце кейса */
+export type OrderKind =
+  | 'shop'
+  | 'site'
+  | 'app'
+  | 'service'
+  | 'admin'
+  | 'dashboard'
+  | 'bot'
+  | 'assistant'
+  | 'automation'
+  | 'agents'
+  | 'three'
+  | 'game'
+  | 'landing'
+  | 'tool'
+  | 'design'
+
 export type CaseSection = {
   title: string
   body: string[]
@@ -122,9 +140,10 @@ export type Case = {
   /** Пометка к галерее, например про демо-данные */
   note?: string
   link?: { href: string; label: string }
-  /** Соавтор: кнопка на его GitHub под лидом кейса. Роль подписывается из словаря */
   /** Соавтор: по умолчанию подпись «код», kind with значит делали вместе */
   credit?: { href: string; handle: string; kind?: 'with' }
+  /** Что заказывают по этому кейсу: подпись кнопки «заказать такой же …» и текст заявки берутся из словаря */
+  order: OrderKind
 }
 
 /**
