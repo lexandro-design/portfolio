@@ -2,3 +2,8 @@
   padding-block: var(--section-y);
   border-block-start: 1px solid var(--border-hair);
 }
+
+/* Последний раздел: под ним сразу подвал, полный отступ секции давал пустой экран */
+.section[id='contact'] {
+  padding-block-end: var(--space-2xl);
+}
