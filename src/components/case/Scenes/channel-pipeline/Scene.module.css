@@ -564,7 +564,7 @@
   overflow: hidden;
   padding-inline: 6px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   line-height: 22px;
   white-space: nowrap;
@@ -599,7 +599,7 @@
   inset-block-start: 8px;
   inset-inline-start: 0;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   color: var(--fg-tertiary);
   transform: translateX(-50%);
@@ -617,7 +617,7 @@
   inset-block-start: -14px;
   inset-inline-end: 4px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   color: var(--fg-secondary);
 }
@@ -909,7 +909,7 @@
   }
 
   .snote {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .sname {
