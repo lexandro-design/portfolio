@@ -21,6 +21,8 @@ type Props = {
   note?: string
   /** Ячейка мозаики: hero — крупная, wide — широкая, base — малая. Нет — обычная плитка сетки */
   size?: 'hero' | 'wide' | 'base'
+  /** Цифры кейса из блока «Коротко»: показывает только крупная плитка на широком экране */
+  facts?: { v: string; l: string }[]
   style?: CSSProperties
   className?: string
 }
@@ -30,13 +32,15 @@ type Props = {
  * метка направления; снизу номер, название и строка «что это». В мозаике крупная ячейка
  * показывает ещё и лид. Кликается целиком
  */
-export function WorkCard({ item, index, href, flow, note, size, style, className }: Props) {
+export function WorkCard({ item, index, href, flow, note, size, facts, style, className }: Props) {
   const media = item.card ?? item.thumb ?? item.shots[0]
   const color = caseColor(item.slug)
+  const shown = size === 'hero' && facts && facts.length > 0 ? facts : null
   return (
     <article
       className={[styles.card, className].filter(Boolean).join(' ')}
       data-size={size}
+      data-facts={shown ? '' : undefined}
       style={color ? ({ ...style, '--case-color': color } as CSSProperties) : style}
     >
       <Link href={href} className={styles.link}>
@@ -63,6 +67,16 @@ export function WorkCard({ item, index, href, flow, note, size, style, className
             <span>{pad(index)}</span>
             <span>{item.year}</span>
           </div>
+          {shown && (
+            <ul className={styles.facts}>
+              {shown.map((f) => (
+                <li key={f.l}>
+                  <b>{f.v}</b>
+                  <span>{f.l}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           <h3 className={styles.title}>{item.title}</h3>
           <p className={styles.tagline}>{item.tagline}</p>
           {size === 'hero' && <p className={styles.lead}>{item.lead}</p>}

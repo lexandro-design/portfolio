@@ -37,6 +37,9 @@ export function HomePage({ locale }: { locale: Locale }) {
   // Автоматизации в карточках показывают, как работают, — схема из их же демо
   const flows = Object.fromEntries(items.map((c) => [c.slug, previewOf(c, getShowcase(locale, c.slug), getCast(locale, c.slug))]))
 
+  // Цифры кейсов из блока «Коротко»: крупная плитка подборки показывает их рядом с названием
+  const facts = Object.fromEntries(items.map((c) => [c.slug, getShowcase(locale, c.slug)?.brief.nums ?? []]))
+
   const n = t.system.stack.numbers
   const numbers = [
     { v: items.length, l: n.cases },
@@ -86,7 +89,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             index={sectionIndex('works')}
             copy={{ ...t.sections.works, aside: `${items.length} · ${t.sections.works.aside}` }}
           />
-          <Works items={items} flows={flows} t={t.works} base={base} />
+          <Works items={items} flows={flows} facts={facts} t={t.works} base={base} />
         </div>
       </section>
 

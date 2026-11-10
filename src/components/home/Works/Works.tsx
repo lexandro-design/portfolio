@@ -18,6 +18,8 @@ type Props = {
   items: Case[]
   /** Схема «как работает» по slug — у автоматизаций вместо картинки */
   flows: Record<string, Flow | null>
+  /** Цифры кейса по slug: для крупной плитки подборки */
+  facts: Record<string, { v: string; l: string }[]>
   t: Dict['works']
   /** Префикс языка для ссылок на кейсы: '' или '/en' */
   base: string
@@ -37,7 +39,7 @@ const order = (i: number) => ({ '--i': i }) as CSSProperties
  * плиткой или списком. Список с превью под курсором — 37 кейсов за пару
  * экранов вместо двадцати. Номер кейса — его место в общем списке.
  */
-export function Works({ items, flows, t, base }: Props) {
+export function Works({ items, flows, facts, t, base }: Props) {
   const [tab, setTab] = useState<Tab>('pick')
   const [where, setWhere] = useState<Where>('any')
   const [view, setView] = useState<View>('grid')
@@ -158,6 +160,7 @@ export function Works({ items, flows, t, base }: Props) {
                   flow={flows[c.slug]}
                   note={t.illustration}
                   size={i === 0 ? 'hero' : i < 3 || i >= 6 ? 'wide' : 'base'}
+                  facts={i === 0 ? facts[c.slug] : undefined}
                   style={order(i)}
                   className={styles.cell}
                 />
