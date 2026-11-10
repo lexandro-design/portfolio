@@ -324,16 +324,46 @@
       },
       {
         "kind": "deck",
+        "title": "One list, four states",
+        "cards": [
+          {
+            "shot": 0,
+            "title": "Loaded"
+          },
+          {
+            "shot": 11,
+            "title": "Loading"
+          },
+          {
+            "shot": 12,
+            "title": "Error"
+          },
+          {
+            "shot": 8,
+            "title": "Empty"
+          }
+        ]
+      },
+      {
+        "kind": "deck",
         "section": 1,
         "title": "Edges of the flows",
         "cards": [
           {
-            "shot": 8,
-            "title": "Empty list"
+            "shot": 13,
+            "title": "Form error"
+          },
+          {
+            "shot": 14,
+            "title": "Cancelling a booking"
           },
           {
             "shot": 9,
             "title": "Access denied"
+          },
+          {
+            "shot": 15,
+            "title": "Page not found"
           },
           {
             "shot": 10,
@@ -566,6 +596,24 @@
       },
       {
         "kind": "deck",
+        "title": "The card in other states",
+        "cards": [
+          {
+            "shot": 10,
+            "title": "Check error"
+          },
+          {
+            "shot": 11,
+            "title": "Repeat check"
+          },
+          {
+            "shot": 12,
+            "title": "Archived version"
+          }
+        ]
+      },
+      {
+        "kind": "deck",
         "title": "Rules and edges",
         "cards": [
           {
@@ -761,6 +809,10 @@
           {
             "shot": 6,
             "label": "reviews"
+          },
+          {
+            "shot": 10,
+            "label": "contacts"
           },
           {
             "shot": 8,
@@ -1240,6 +1292,11 @@
             "shot": 0,
             "title": "Administrator",
             "text": "The vacation plan of the whole department."
+          },
+          {
+            "shot": 6,
+            "title": "Local administrator",
+            "text": "The third role with its own access."
           },
           {
             "shot": 2,
