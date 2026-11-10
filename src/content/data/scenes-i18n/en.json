@@ -95,7 +95,7 @@
       },
       {
         "name": "editor",
-        "note": "score 1-10, rewrites, may pull it"
+        "note": "scores, rewrites, may pull it"
       },
       {
         "name": "console",
@@ -132,7 +132,7 @@
       },
       {
         "head": "editor by checklist",
-        "foot": "above the threshold of 6, code: no remarks"
+        "foot": "score above the threshold, code: no remarks"
       },
       {
         "head": "ready to show",
@@ -336,7 +336,7 @@
     "caps": [
       "A topic with a source or a hook, the author takes the sharpest thesis.",
       "Code without a model catches clichés, length and dashes, fixes the dash itself.",
-      "The editor scores 1 to 10 and rewrites, a weak post is pulled.",
+      "The editor scores the post and rewrites it, a weak one is pulled.",
       "The draft arrives in the control bot, I approve with one button.",
       "The post waits for its slot in the rubric window and goes out itself.",
       "Each of my edits is saved as a before → after pair and teaches drafts."
@@ -918,31 +918,31 @@
         "score": 86
       },
       {
-        "src": "@designwork_vacansii",
+        "src": "jobs channel",
         "text": "Looking for an in-house designer, 5/2 schedule",
         "cut": "staff job",
         "score": null
       },
       {
-        "src": "@FrWork3",
+        "src": "freelance channel",
         "text": "Figma course at a discount, promo code in the post",
         "cut": "course ad",
         "score": null
       },
       {
-        "src": "@FreeWorkFeed",
+        "src": "orders feed",
         "text": "Need a landing page for a coffee shop, layout and build",
         "cut": "duplicate",
         "score": null
       },
       {
-        "src": "@zakaz_design",
+        "src": "orders channel",
         "text": "Telegram bot for booking clients, no brief",
         "cut": null,
         "score": 48
       },
       {
-        "src": "@fordesigner",
+        "src": "designers channel",
         "text": "Set up warehouse accounting",
         "cut": null,
         "score": 12
@@ -1966,7 +1966,7 @@
       ],
       "weak": "doesn't answer",
       "meter": "best match",
-      "threshold": "\"no answer\" threshold 0.45",
+      "threshold": "\"no answer\" threshold",
       "gap": "Gap in the base",
       "gapText": "The question went to the methodologist: they will write up the procedure, and the bot will tell the employee.",
       "reply": "Methodologist's answer",
@@ -2500,7 +2500,7 @@
     "typing": "typing…",
     "phone": {
       "title": "LEXANDRO",
-      "sub": "lexandro_assistant_bot"
+      "sub": "LEXANDRO · assistant"
     },
     "office": "the office behind the phone",
     "desks": [
@@ -2793,7 +2793,7 @@
     }
   },
   "prosoft": {
-    "note": "Loops from the site layout. The site is in approval and in development.",
+    "note": "Loops from the site layout. The layout is approved, the site is in development.",
     "credit": {
       "role": "development by",
       "name": "Nika",

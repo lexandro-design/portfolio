@@ -260,6 +260,7 @@ export type Dict = {
     shotTheme: { label: string; light: string; dark: string }
     /** Подпись кнопки соавтора: «вёрстка — github.com/…» */
     credit: string
+    creditWith: string
     /** Метка подробного текста кейса после интерактивных блоков */
     story: string
     /** Заголовок оглавления глав в шапке кейса */

@@ -745,7 +745,7 @@
   },
   "tg-assistant": {
     "app": "LEXANDRO",
-    "sub": "lexandro_assistant_bot",
+    "sub": "LEXANDRO · ассистент",
     "screen": "chat",
     "view": {
       "kind": "chips",
@@ -1148,7 +1148,7 @@
       {
         "cap": "Встреча и напоминание уже в календаре на телефоне.",
         "big": {
-          "v": "~2 с",
+          "v": "секунды",
           "l": "до ответа голосом"
         }
       }

@@ -495,7 +495,7 @@
       "light": "light",
       "dark": "dark"
     },
-    "credit": "front end by",
+    "credit": "code by",
     "story": "more on the project",
     "toc": "in this case",
     "brief": {
@@ -531,7 +531,8 @@
         "reel": "pick a scene",
         "console": "switches are clickable"
       }
-    }
+    },
+    "creditWith": "together with"
   },
   "palette": {
     "open": "Search and commands",

@@ -551,7 +551,8 @@
      "l": "minimum between repeats"
     }
    }
-  ]
+  ],
+  "sub": "LEXANDRO · assistant"
  },
  "brain-search": {
   "app": "brain-search",
@@ -731,7 +732,7 @@
    {
     "cap": "The meeting and the reminder are already in the calendar on the phone.",
     "big": {
-     "v": "~2 s",
+     "v": "seconds",
      "l": "to a spoken answer"
     }
    }

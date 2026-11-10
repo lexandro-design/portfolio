@@ -494,7 +494,7 @@
       "light": "浅色",
       "dark": "深色"
     },
-    "credit": "前端",
+    "credit": "代码",
     "story": "项目详情",
     "toc": "本案例内容",
     "brief": {
@@ -530,7 +530,8 @@
         "reel": "选择场景",
         "console": "开关可以点击"
       }
-    }
+    },
+    "creditWith": "合作"
   },
   "palette": {
     "open": "搜索与命令",

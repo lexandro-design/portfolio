@@ -71,7 +71,7 @@
   "meeting-rooms": {
     "title": "Meeting Rooms",
     "tagline": "booking service",
-    "lead": "Internal service for booking meeting rooms across the holding. Two roles, 60+ screens with every state, delivered to spec.",
+    "lead": "Internal service for booking meeting rooms across the holding. Two roles, 50+ screens with every state, delivered to spec.",
     "client": "TITAN-2 · internal service",
     "sections": [
       {
@@ -441,7 +441,7 @@
   },
   "pix-bi": {
     "tagline": "reporting dashboards",
-    "lead": "PIX BI dashboards for the nuclear industry: a “Contract security” report with five urgency levels and project KPI calculation.",
+    "lead": "A PIX BI dashboard for the nuclear industry: a “Contract security” report with five urgency levels.",
     "client": "TITAN-2 · reporting",
     "sections": [
       {
@@ -500,7 +500,7 @@
     "title": "AI bot for a holiday resort",
     "tagline": "booking requests in chat",
     "lead": "The bot parses the guest’s message, clarifies dates, party and phone, answers questions from documents and creates a deal in the CRM. The manager confirms availability and price.",
-    "client": "EnterSales · Laguna Yug holiday resort",
+    "client": "EnterSales · Laguna Yug, a holiday resort",
     "sections": [
       {
         "title": "how it works",
@@ -670,7 +670,7 @@
   },
   "reckon": {
     "tagline": "clothing brand store",
-    "lead": "An online store for a streetwear brand: monochrome, a monospaced typeface, a lookbook on the home page and a Tilda cart extended with JavaScript.",
+    "lead": "An online store for a streetwear brand: monochrome, a monospaced typeface and a lookbook on the home page. The design is mine, the code is by Nika.",
     "client": "freelance · clothing brand",
     "sections": [
       {
@@ -683,7 +683,7 @@
         "title": "what I did",
         "body": [
           "A home page with a lookbook, a product page with size selection, cart and checkout, delivery, an about page, the offer and privacy policy, and a phone version.",
-          "I built the cart on Tilda and extended it with JavaScript for the store’s logic."
+          "The design is mine, all the code is by Nika: the site on Tilda and the cart, extended with JavaScript for the store’s logic."
         ]
       }
     ],
@@ -818,7 +818,7 @@
     "title": "Online booking for salons and clinics",
     "tagline": "booking bot",
     "lead": "The bot shows the nearest days and free slots as buttons, books the client and sends a reminder before the visit.",
-    "client": "freelance · beauty salons and dental clinics",
+    "client": "sample solution · beauty salons and dental clinics",
     "sections": [
       {
         "title": "how it works",
@@ -913,13 +913,13 @@
   "media-to-rag": {
     "title": "Documents into a knowledge base",
     "tagline": "data prep for RAG",
-    "lead": "Documents from Yandex Disk are picked up automatically, text is extracted from them, split into chunks and loaded into a vector database.",
+    "lead": "Documents, videos and voice messages from Yandex Disk are picked up automatically, text is extracted from them, split into chunks and loaded into a vector database.",
     "client": "freelance",
     "sections": [
       {
         "title": "how it works",
         "body": [
-          "New and changed files on Yandex Disk are found by MD5 and picked up automatically. Text is extracted from docx, pdf and txt, split into chunks with context, an embedding is calculated for each, and everything goes into the vector database the assistant answers from. A deleted file disappears from the base too."
+          "New and changed files on Yandex Disk are found by MD5 and picked up automatically. Text is extracted from docx, pdf and txt, while videos and voice messages are converted and transcribed. The text is split into chunks with context, an embedding is calculated for each, and everything goes into the vector database the assistant answers from. A deleted file disappears from the base too."
         ]
       }
     ],
@@ -1007,7 +1007,7 @@
       {
         "title": "how it’s organised",
         "body": [
-          "The dispatcher takes a task in plain words, decides whose desk it is and issues an assignment with a done criterion. The desks are grouped into departments: studio, game, content, personal. Each has its own zone and rules, and each hands in its work as a one-line result: done, question or failed.",
+          "The dispatcher takes a task in plain words, decides whose desk it is and issues an assignment with a done criterion. Fifteen desks are grouped into five departments: studio, game, content, personal and the office itself. Each has its own zone and rules, and each hands in its work as a one-line result: done, question or failed.",
           "Large assignments run as programs: the dispatcher runs them for weeks and hands the next step to the desk that has freed up."
         ]
       },
@@ -1181,7 +1181,7 @@
     "captions": [],
     "preview": {
       "kind": "chat",
-      "bot": "lexandro_design_bot",
+      "bot": "LEXANDRO · channel",
       "lines": [
         {
           "from": "bot",
@@ -1428,7 +1428,7 @@
       {
         "title": "quality",
         "body": [
-          "The models run on my own computer, so the company’s data goes nowhere. After every change the bot is run against a set of control questions, and the “under the hood” mode shows every step of an answer. From a phone the mentor is available in Telegram with a sign-in code."
+          "The models run on my own computer. After every change the bot is run against a set of control questions, and the “under the hood” mode shows every step of an answer. From a phone the mentor is available in Telegram with a sign-in code."
         ]
       }
     ],
@@ -1561,7 +1561,7 @@
     "captions": [],
     "preview": {
       "kind": "chat",
-      "bot": "lexandro_assistant_bot",
+      "bot": "LEXANDRO · assistant",
       "lines": [
         {
           "from": "bot",
@@ -1723,7 +1723,7 @@
       {
         "title": "boundaries",
         "body": [
-          "The game code is written by another team member; here is design and art. The battle shots were taken on a test build with the heroes placed by hand."
+          "The game code is written by another team member; here is design and art. The battle shots were taken on a test build with the heroes placed by hand. The game is being prepared for release on Yandex Games."
         ]
       }
     ],
@@ -1796,7 +1796,7 @@
       {
         "title": "who did what",
         "body": [
-          "Design, the design system, the Figma prototype and the 3D scenes are mine. Nika runs the research and builds the site on Next.js and Payload. The site is in approval and in development, data in the samples is illustrative."
+          "Design, the design system, the Figma prototype and the 3D scenes are mine. Nika runs the research and builds the site on Next.js and Payload. The layout is approved, the site is in development, data in the samples is illustrative."
         ]
       }
     ],
