@@ -38,7 +38,7 @@
 }
 
 .role {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .docs {
@@ -134,7 +134,7 @@
 }
 
 .doc[data-fresh] .tag {
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 @keyframes grow {
@@ -195,7 +195,7 @@
   margin-inline: 2px 0;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .cite[data-on] {
@@ -392,7 +392,7 @@
 
 .fragHead b {
   font-weight: 500;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .frag strong {
@@ -411,7 +411,7 @@
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   font-style: normal;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .frag[data-cited] {
@@ -589,7 +589,7 @@
 }
 
 .stages li[data-on]::before {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .stages li[data-on]::after {

@@ -185,7 +185,7 @@
 .stepN {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
   padding-block-start: 3px;
 }
 

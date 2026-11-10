@@ -40,7 +40,7 @@
   font-size: 21px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 @keyframes spin {

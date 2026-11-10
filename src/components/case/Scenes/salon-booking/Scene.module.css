@@ -148,7 +148,7 @@
 }
 
 .day[data-state='off'] {
-  opacity: 0.35;
+  opacity: 0.55;
 }
 
 .slot {

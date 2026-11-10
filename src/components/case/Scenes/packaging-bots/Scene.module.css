@@ -182,7 +182,7 @@
 }
 
 .src[data-on] {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Полка с карточками */
@@ -651,7 +651,7 @@
 
 .where li::before {
   content: '→ ';
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Ночная сверка базы */
@@ -688,7 +688,7 @@
 
 .sync li b {
   font-weight: 500;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .sync ul:not([data-on]) li,

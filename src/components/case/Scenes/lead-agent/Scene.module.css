@@ -129,7 +129,7 @@
   overflow: hidden;
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -221,7 +221,7 @@
 }
 
 .row[data-pass] .out {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Итоги воронки: сколько осталось на каждом сите */
@@ -278,7 +278,7 @@
 }
 
 .status {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .money {

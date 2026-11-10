@@ -181,3 +181,8 @@ img[data-variant='dark'],
   --case-color: var(--signal-live);
   --case-accent: color-mix(in oklab, var(--case-color) 78%, var(--fg-primary));
 }
+
+/* Мелкий текст цветом кейса на светлом фоне: цвет кейса сам по себе там не читается (янтарь на бумаге 1,9), берём его темнее */
+:is([data-theme='light'], [data-theme='calm']) [data-case] {
+  --case-ink: color-mix(in oklab, var(--case-color) 55%, var(--fg-primary));
+}

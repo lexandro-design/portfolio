@@ -195,7 +195,7 @@
   font-size: var(--type-mono-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 .tag::after {

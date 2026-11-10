@@ -165,7 +165,7 @@
 
 /* «ok» загорается, когда шаг сработал, и гаснет к следующему кругу */
 .status {
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
   opacity: 0;
   animation: done 6s steps(1, end) calc(var(--i) * 1.2s + 0.35s) infinite;
 }

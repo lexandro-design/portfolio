@@ -161,7 +161,7 @@
   font-family: var(--font-mono);
   font-size: 9px;
   letter-spacing: 0.06em;
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 /* ---------- Календарь брони ---------- */

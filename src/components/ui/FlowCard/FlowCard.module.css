@@ -130,7 +130,7 @@
 .tick {
   opacity: 0;
   font-size: 0.9em;
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
   transform: scale(0.6);
   transition:
     opacity 260ms,
@@ -249,7 +249,7 @@
 
 .lane[data-state='active'] .laneOut {
   opacity: 1;
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 /* Низкая карточка: реплики наезжали на метку направления сверху, остаются только шаги */

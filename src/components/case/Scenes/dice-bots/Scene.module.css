@@ -129,7 +129,7 @@
 }
 
 .player[data-max] .num {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Правила: строка, чья игра сейчас в чате, подсвечена */
@@ -181,7 +181,7 @@
 
 .list li[data-hit] .prize,
 .list[data-all] .prize {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Чат: эмодзи без пузыря, ответы бота, заявки */

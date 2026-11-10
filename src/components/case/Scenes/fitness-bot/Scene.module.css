@@ -85,7 +85,7 @@
 
 .dayHead small {
   font-size: var(--type-mono-sm);
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .dayHead[data-today] {
@@ -294,7 +294,7 @@
 }
 
 .ledger button[data-state='now'] span {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .ledger button:hover {
