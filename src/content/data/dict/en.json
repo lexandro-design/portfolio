@@ -407,20 +407,7 @@
         "v": "since 2024",
         "l": "doing design, code and automation"
       }
-    ],
-    "numbers": {
-      "title": "in numbers",
-      "note": "The numbers count themselves from the work log and repositories; nobody edits them by hand. Updated {date}.",
-      "items": {
-        "lines": "lines of code in commits",
-        "commits": "commits",
-        "figma": "Figma files in work",
-        "images": "images in the cases",
-        "hours": "hours at work"
-      },
-      "langs": "what the code is written in",
-      "other": "other"
-    }
+    ]
   },
   "principles": [
     {

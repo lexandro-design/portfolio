@@ -185,14 +185,6 @@ export type Dict = {
     sources: { title: string; note: string }
     /** Только цифры из материалов кейсов */
     facts: { v: string; l: string }[]
-    /** «В цифрах»: работа приходит из content/data/stats.json, изображения считаются из кейсов, здесь только подписи. {date} — дата обновления */
-    numbers: {
-      title: string
-      note: string
-      items: { lines: string; commits: string; figma: string; images: string; hours: string }
-      langs: string
-      other: string
-    }
   }
 
   principles: { title: string; text: string }[]
