@@ -1,7 +1,6 @@
 import type { Case } from '@/content/cases'
 import type { Dict } from '@/i18n/dict'
 import { Reveal } from '@/components/ui/Reveal'
-import { Numbers, type NumberItem } from './Numbers'
 import { Sources } from './Sources'
 import styles from './About.module.css'
 
@@ -9,11 +8,10 @@ type Props = {
   t: Dict['about']
   where: Dict['works']['where']
   counts: { group: Case['group']; n: number }[]
-  numbers: { items: NumberItem[]; langs: { name: string; share: number }[]; date: string }
 }
 
 /** Обо мне: подход крупным текстом слева, опыт строками справа */
-export function About({ t, where, counts, numbers }: Props) {
+export function About({ t, where, counts }: Props) {
   return (
     <>
     <div className={styles.grid}>
@@ -39,7 +37,6 @@ export function About({ t, where, counts, numbers }: Props) {
       </ol>
     </div>
     <Sources t={t.sources} labels={where} counts={counts} facts={t.facts} />
-    <Numbers t={t.numbers} items={numbers.items} langs={numbers.langs} date={numbers.date} />
     </>
   )
 }
