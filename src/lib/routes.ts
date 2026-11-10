@@ -19,16 +19,27 @@ export function homeMeta(locale: Locale): Metadata {
   }
 }
 
+/** Описание для выдачи: до 165 знаков, по границе предложения или слова */
+function clip(text: string, max = 165) {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max)
+  const end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('。'))
+  if (end > max * 0.6) return cut.slice(0, end + 1)
+  return `${cut.slice(0, cut.lastIndexOf(' ') > 0 ? cut.lastIndexOf(' ') : max).replace(/[,;:]$/, '')}…`
+}
+
 export function caseMeta(locale: Locale, slug: string): Metadata {
   const item = getCase(locale, slug)
   if (!item) return {}
-  const title = `${item.title} · ${item.tagline} · ${getDict(locale).meta.caseTitle}`
+  // Выдача режет заголовок около 60 знаков: длинному оставляем название и суть, имя есть в og:site_name
+  const full = `${item.title} · ${item.tagline} · ${getDict(locale).meta.caseTitle}`
+  const title = full.length > 65 ? `${item.title} · ${item.tagline}` : full
   return {
     ...pageMeta({
       locale,
       path: `/cases/${slug}/`,
       title,
-      description: item.lead,
+      description: clip(item.lead),
       image: `/og/${slug}.jpg`,
     }),
     title: { absolute: title },

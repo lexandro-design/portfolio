@@ -50,10 +50,18 @@
     padding-block: var(--space-xl) var(--space-2xl);
   }
 
+  /* Ссылки строкой с переносом: на 320 четыре слова в одну строку не влезают */
   .links {
+    display: flex;
+    flex-wrap: wrap;
     justify-self: start;
-    grid-auto-flow: column;
-    gap: var(--space-md);
+    gap: 0 var(--space-md);
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
   }
 
   .end {

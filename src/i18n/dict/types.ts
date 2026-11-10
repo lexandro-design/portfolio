@@ -31,6 +31,8 @@ export type Dict = {
     system: string
     about: string
     contact: string
+    /** Подпись основной навигации для скринридера */
+    sections: string
     status: string
     write: string
     menuOpen: string

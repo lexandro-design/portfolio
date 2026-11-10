@@ -167,6 +167,7 @@ export function Brief({ t, services, steps }: Props) {
               href={ready ? mail : undefined}
               onClick={() => !ready && setNote(t.empty)}
               role="button"
+              aria-disabled={!ready}
             >
               {t.email}
             </a>

@@ -493,7 +493,7 @@
   position: absolute;
   inset-inline: 12px;
   inset-block-end: 8px;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Способы ответа под лентой */
@@ -730,7 +730,7 @@
 
   .deskState {
     margin-block-start: 6px;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.02em;
     white-space: nowrap;
   }

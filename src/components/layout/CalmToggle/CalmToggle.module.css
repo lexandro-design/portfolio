@@ -81,3 +81,15 @@
     display: none;
   }
 }
+
+/* 320: подпись в две строки, иначе логотип, кнопка и меню шире экрана */
+@media (max-width: 359px) {
+  :global([data-theme='calm']) .toggle[data-place='nav'] {
+    max-inline-size: 96px;
+    padding-inline: 8px;
+    font-size: 14px;
+    line-height: 1.1;
+    text-align: start;
+    white-space: normal;
+  }
+}

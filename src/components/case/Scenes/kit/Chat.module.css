@@ -257,7 +257,7 @@
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
   line-height: 14px;
-  color: var(--fg-tertiary);
+  color: color-mix(in oklab, var(--fg-primary) 68%, var(--bub));
   text-decoration: none;
   white-space: nowrap;
 }

@@ -34,7 +34,7 @@ export function Sheet({
   return (
     <div className={[styles.sheet, className].filter(Boolean).join(' ')} style={{ '--cols': cols.length } as React.CSSProperties}>
       {title && <div className={styles.title}>{title}</div>}
-      <div className={styles.head} role="row">
+      <div className={styles.head}>
         {cols.map((c) => (
           <span key={c}>{c}</span>
         ))}

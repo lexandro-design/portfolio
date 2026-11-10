@@ -12,7 +12,7 @@
   --bg-subtle: #1a1a1a;
   --fg-primary: #f5f5f2;
   --fg-secondary: #a8a8a3;
-  --fg-tertiary: #83837f;
+  --fg-tertiary: #8c8c88;
   --border-hair: rgb(245 245 242 / 0.08);
   --border-hover: rgb(245 245 242 / 0.22);
   --signal-live: #4ade80;
@@ -30,10 +30,10 @@
   --bg-subtle: #e2dfd3;
   --fg-primary: #14140f;
   --fg-secondary: #57564e;
-  --fg-tertiary: #6b695f;
+  --fg-tertiary: #5f5d54;
   --border-hair: rgb(20 20 15 / 0.1);
   --border-hover: rgb(20 20 15 / 0.28);
-  --signal-live: #1f8a4c;
+  --signal-live: #19743f;
   --border-focus: #14140f;
   --bg-scrim: rgb(20 20 15 / 0.5);
   --overlay-tag: rgb(0 0 0 / 0.6);
