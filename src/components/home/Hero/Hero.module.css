@@ -235,18 +235,23 @@
   display: none;
 }
 
-/* Спокойный вид: заголовок, текст и кнопки слева, большое фото справа, служебных строк нет */
+/* Спокойный вид: мета сверху, крупный заголовок, текст и кнопки слева, большое фото справа,
+   под ними три настоящие работы. Строки «листайте вниз» и бегущей строки нет */
 :global([data-theme='calm']) .hero {
   grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   column-gap: var(--space-3xl);
-  row-gap: var(--space-lg);
+  row-gap: var(--space-xl);
   align-items: start;
-  padding-block: var(--space-2xl);
+  padding-block: var(--space-xl) var(--space-3xl);
 }
 
-:global([data-theme='calm']) :is(.meta, .foot, .moon) {
+:global([data-theme='calm']) :is(.foot, .moon) {
   display: none;
+}
+
+:global([data-theme='calm']) .meta {
+  grid-column: 1 / -1;
 }
 
 :global([data-theme='calm']) .main {
@@ -255,33 +260,23 @@
 
 :global([data-theme='calm']) .title {
   grid-column: 1;
-  font-size: calc(var(--type-h2) * 1.25);
-  line-height: 1.15;
-  font-weight: 500;
-}
-
-:global([data-theme='calm']) .line {
-  display: inline;
-  white-space: normal;
-}
-
-:global([data-theme='calm']) .line::after {
-  content: ' ';
-}
-
-:global([data-theme='calm']) .line[data-accent] {
-  color: inherit;
+  font-size: clamp(52px, 5.6vw, calc(var(--type-h1) * 0.75));
 }
 
 :global([data-theme='calm']) .photo {
   grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-row: 2 / span 2;
 }
 
 :global([data-theme='calm']) .bottom {
   grid-column: 1;
   grid-template-columns: 1fr;
   gap: var(--space-lg);
+}
+
+:global([data-theme='calm']) .lead {
+  max-inline-size: 30em;
+  color: var(--fg-secondary);
 }
 
 :global([data-theme='calm']) .buttons {
@@ -296,6 +291,10 @@
   :global([data-theme='calm']) .hero {
     grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
     column-gap: var(--space-xl);
+  }
+
+  :global([data-theme='calm']) .title {
+    font-size: 50px;
   }
 }
 
@@ -314,14 +313,20 @@
   :global([data-theme='calm']) .photo {
     max-inline-size: 360px;
   }
+
+  :global([data-theme='calm']) .title {
+    font-size: min(var(--type-h1), calc((100vw - var(--bleed) * 2) * 0.128));
+  }
 }
 
-/* Три настоящие работы под кнопками */
+/* Три настоящие работы под первым экраном: на всю ширину, на линии, как плитки работ ниже */
 :global([data-theme='calm']) .calmWorks {
-  grid-column: 1;
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-md);
+  gap: var(--space-lg);
+  padding-block-start: var(--space-lg);
+  border-block-start: 1px solid var(--border-hair);
 }
 
 .calmWorks a {
@@ -333,12 +338,20 @@
   display: block;
   inline-size: 100%;
   aspect-ratio: 1216 / 860;
-  margin-block-end: var(--space-xs);
+  margin-block-end: var(--space-sm);
   object-fit: cover;
+  transition: opacity var(--dur-base) var(--ease-out-quart);
+}
+
+.calmWorks a:hover img {
+  opacity: 0.86;
 }
 
 .calmWorks b {
-  font-weight: 500;
+  font-size: var(--type-h4);
+  font-weight: 450;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .calmWorks span {

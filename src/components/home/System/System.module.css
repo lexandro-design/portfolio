@@ -274,6 +274,17 @@
   }
 
   .swatches {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .name {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Узкий телефон: три образца в ряд не помещаются с длинной подписью */
+@media (max-width: 359px) {
+  .swatches {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

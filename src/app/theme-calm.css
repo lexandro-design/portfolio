@@ -1,32 +1,31 @@
-/* Спокойный вид: светлая страница, крупный текст, воздух, ничего не двигается.
+/* Спокойный вид: тот же сайт тихим голосом. Светлая бумага, текст крупнее, воздуха больше,
+   движения почти нет: блоки проявляются при прокрутке, наведение отвечает, петли и ролики стоят.
    Включается кнопкой в шапке или сам, если система просит меньше движения. Выключить флагом features.calm */
 [data-theme='calm'] {
-  --bg-base: #ffffff;
-  --bg-elevated: #f6f6f4;
-  --bg-subtle: #ececea;
-  --fg-primary: #15181d;
-  --fg-secondary: #3f444d;
-  --fg-tertiary: #565c66;
-  --border-hair: rgb(21 24 29 / 0.14);
-  --border-hover: rgb(21 24 29 / 0.36);
-  --signal-live: #1f7a48;
-  --border-focus: #1d4f91;
-  --bg-scrim: rgb(21 24 29 / 0.5);
-  --overlay-tag: rgb(21 24 29 / 0.78);
-  --fg-inverse: #ffffff;
-  --accent: #1d4f91;
-  --cta-bg: #1d4f91;
-  --cta-hover: #163e73;
-  --font-mono: var(--font-sans);
+  --bg-base: #f3f5f1;
+  --bg-elevated: #e9ece6;
+  --bg-subtle: #dfe3db;
+  --fg-primary: #121714;
+  --fg-secondary: #414a44;
+  --fg-tertiary: #56605a;
+  --border-hair: rgb(18 23 20 / 0.14);
+  --border-hover: rgb(18 23 20 / 0.36);
+  --signal-live: #1c6b45;
+  --border-focus: #121714;
+  --bg-scrim: rgb(18 23 20 / 0.5);
+  --overlay-tag: rgb(18 23 20 / 0.78);
+  --fg-inverse: #f3f5f1;
+  --accent: #c9ddce;
   --type-body-lg: 21px;
   --type-body: 19px;
   --type-body-sm: 17px;
-  --type-mono: 15px;
-  --type-mono-sm: 14px;
+  --type-mono: 13px;
+  --type-mono-sm: 12px;
   --type-h4: 24px;
-  --type-h3: 32px;
-  --type-h2: 52px;
-  --type-h1: 96px;
+  --type-h3: 34px;
+  --type-h2: 68px;
+  --type-h1: 112px;
+  --section-y: 160px;
   color-scheme: light;
 }
 
@@ -35,26 +34,40 @@
     --type-body-lg: 19px;
     --type-body: 18px;
     --type-body-sm: 16px;
-    --type-h2: 36px;
-    --type-h1: 56px;
+    --type-h3: 28px;
+    --type-h2: 40px;
+    --type-h1: 60px;
+    --section-y: 96px;
   }
 }
 
-/* Подписи обычным текстом: без разрядки и заглавных */
-[data-theme='calm'] body * {
-  text-transform: none !important;
-  letter-spacing: normal !important;
-}
-
-/* Неподвижно: анимации сразу приходят к концу, ролики стоят на постере (stillMotion) */
+/* Петли и появления по таймеру сразу приходят к концу, ролики стоят на постере (stillMotion).
+   Переходы остаются: наведение, раскрытие шага, смена темы */
 [data-theme='calm'] *,
 [data-theme='calm'] *::before,
 [data-theme='calm'] *::after {
   animation-duration: 0.01ms !important;
   animation-delay: 0s !important;
   animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-  transition-delay: 0s !important;
+}
+
+/* Блоки при прокрутке проявляются на месте, без сдвига */
+html[data-theme='calm'] [class*='Reveal-module'][class*='__reveal'] {
+  transition: opacity 700ms ease-out;
+}
+
+html.js[data-theme='calm'] [class*='Reveal-module'][class*='__reveal']:not([data-visible]) {
+  transform: none;
+}
+
+/* Система просит меньше движения: не движется ничего */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='calm'] *,
+  [data-theme='calm'] *::before,
+  [data-theme='calm'] *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
 }
 
 html[data-theme='calm'] {
@@ -71,20 +84,6 @@ html[data-theme='calm'] {
 /* Полоса прокрутки наверху здесь лишняя */
 [data-theme='calm'] [class*='ScrollProgress-module'] {
   display: none;
-}
-
-/* Разделы в шапке и кнопки с заглавной буквы */
-[data-theme='calm'] header[class*='Nav-module'] a[class*='__link'] {
-  display: inline-block;
-}
-
-[data-theme='calm'] header[class*='Nav-module'] a[class*='__link']::first-letter,
-[data-theme='calm'] [class*='Button-module'] > span:first-child::first-letter {
-  text-transform: uppercase;
-}
-
-[data-theme='calm'] [class*='Button-module__'][class*='__button'] {
-  font-size: var(--type-body-sm);
 }
 
 /* В шапке только путь назад: выбор остальных тем здесь лишний */
