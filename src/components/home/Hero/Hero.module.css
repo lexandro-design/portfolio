@@ -203,6 +203,17 @@
   background: var(--bg-scrim);
 }
 
+/* Шар отстаёт от страницы и заходит под текст: тень держит буквы читаемыми на светлом диске */
+:global([data-theme='space']) .bottom {
+  text-shadow:
+    0 0 2px rgb(0 0 0 / 0.9),
+    0 0 16px rgb(0 0 0 / 0.8);
+}
+
+:global([data-theme='space']) .buttons {
+  text-shadow: none;
+}
+
 :global([data-theme='space']) .moon {
   display: block;
   position: absolute;
