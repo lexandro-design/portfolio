@@ -610,6 +610,31 @@
             "text": "“学习”工位带着未完成的任务没有动静，已提醒调度员"
           }
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/ai-office/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "看板：谁在工作、谁在等我、谁空闲"
+          },
+          {
+            "src": "/cases/ai-office/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "任务的路径：从一句话到一行结果"
+          },
+          {
+            "src": "/cases/ai-office/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "问题发到手机上"
+          }
+        ]
       }
     ]
   },
@@ -831,6 +856,31 @@
           {
             "who": "sys",
             "text": "会议和提醒已经在手机日历里"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/haiku/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "对话：提问、带记忆的回答和日历里的会面"
+          },
+          {
+            "src": "/cases/haiku/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "对话记忆和手机上的会面"
+          },
+          {
+            "src": "/cases/haiku/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "音箱只当麦克风和扬声器，逻辑在家里的电脑上"
           }
         ]
       }
@@ -1875,6 +1925,25 @@
           "照片"
         ],
         "rule": "同一个问题半小时内最多一次"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/tg-assistant/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "带按钮的提问"
+          },
+          {
+            "src": "/cases/tg-assistant/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "操作许可和在聊天里下达的任务"
+          }
+        ]
       }
     ]
   },
@@ -1933,6 +2002,25 @@
           }
         ],
         "foot": "常驻托盘 · 深色和浅色主题 · 仅限这台电脑"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/ai-console/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "服务：状态和开关"
+          },
+          {
+            "src": "/cases/ai-console/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "办公室标签页和额度用量"
+          }
+        ]
       }
     ]
   },
@@ -2006,6 +2094,25 @@
             "text": "提前目录，开账单 → 进入待办"
           }
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/call-recorder/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "两条音轨和按角色区分的转写"
+          },
+          {
+            "src": "/cases/call-recorder/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "会议梳理：要点、约定、任务"
+          }
+        ]
       }
     ]
   },
@@ -2055,6 +2162,25 @@
           "新闻",
           "建议",
           "“一天之后”"
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/channel-pipeline/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "机器人里带按钮的草稿"
+          },
+          {
+            "src": "/cases/channel-pipeline/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "以“修改前 → 修改后”成对保存的修改和自动模式"
+          }
         ]
       }
     ]
@@ -2112,6 +2238,25 @@
           "广告和招聘会被过滤",
           "状态全队可见"
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/lead-agent/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "订单卡片和智能体的规则"
+          },
+          {
+            "src": "/cases/lead-agent/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "回复草稿和订单队列"
+          }
+        ]
       }
     ]
   },
@@ -2163,6 +2308,31 @@
             "机器人通知提过问的人"
           ]
         }
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/rag-mentor/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "基于知识库、带引用的回答和“内部视图”模式"
+          },
+          {
+            "src": "/cases/rag-mentor/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "第一周计划和情景练习"
+          },
+          {
+            "src": "/cases/rag-mentor/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "培训专员面板：未答上的问题和入职进度"
+          }
+        ]
       }
     ]
   },
@@ -2211,6 +2381,25 @@
           }
         ],
         "tick": "每 15 分钟检查一次"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "界面示例",
+        "items": [
+          {
+            "src": "/cases/uni-bot/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "晚间汇总：明天的课"
+          },
+          {
+            "src": "/cases/uni-bot/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "菜单，以及不用自己的服务器运行"
+          }
+        ]
       }
     ]
   },

@@ -48,6 +48,11 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   // Кейс со своей сценой: она стоит вместо шапки, «Коротко» и плеера первой главы
   const Scene = SCENES[slug]
   const scene = Scene ? getScene(locale, slug) : null
+  // Увеличение по нажатию нужно и кадрам из shots, и отдельным иллюстрациям в главах
+  const zoom = item.shots.length > 0 || (show?.blocks ?? []).some((b) => b.kind === 'frames')
+  const lightbox = zoom ? (
+    <Lightbox labels={{ viewer: t.case.viewer, close: t.case.close, prev: t.case.prev, next: t.case.nextShot }} />
+  ) : null
   if (Scene && scene && show) {
     const facts = [
       { label: t.case.facts.client, value: item.client },
@@ -92,6 +97,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
           href={localePath(locale, `/cases/${next.slug}/`)}
           label={t.case.next}
         />
+        {lightbox}
       </div>
     )
   }
@@ -132,16 +138,7 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
         href={localePath(locale, `/cases/${next.slug}/`)}
         label={t.case.next}
       />
-      {item.shots.length > 0 && (
-        <Lightbox
-          labels={{
-            viewer: t.case.viewer,
-            close: t.case.close,
-            prev: t.case.prev,
-            next: t.case.nextShot,
-          }}
-        />
-      )}
+      {lightbox}
     </div>
   )
 }

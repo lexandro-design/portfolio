@@ -610,6 +610,31 @@
             "text": "「学習」デスクがタスクを抱えたまま黙っている、ディスパッチャーに知らせた"
           }
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/ai-office/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "ボード：作業中、自分待ち、空きのデスク"
+          },
+          {
+            "src": "/cases/ai-office/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "タスクの流れ：ひと言から一行の結果まで"
+          },
+          {
+            "src": "/cases/ai-office/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "質問がスマホに届く"
+          }
+        ]
       }
     ]
   },
@@ -831,6 +856,31 @@
           {
             "who": "sys",
             "text": "会議とリマインドはもうスマホのカレンダーにあります"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/haiku/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "会話：質問、記憶を踏まえた答え、カレンダーの予定"
+          },
+          {
+            "src": "/cases/haiku/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "会話の記憶とスマホに届く予定"
+          },
+          {
+            "src": "/cases/haiku/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "スピーカーはマイクと音声出力だけ、ロジックは自宅のパソコンに"
           }
         ]
       }
@@ -1875,6 +1925,25 @@
           "写真"
         ],
         "rule": "同じ質問は 30 分に 1 回まで"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/tg-assistant/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "ボタンつきの質問"
+          },
+          {
+            "src": "/cases/tg-assistant/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "操作の許可と、チャットから出すタスク"
+          }
+        ]
       }
     ]
   },
@@ -1933,6 +2002,25 @@
           }
         ],
         "foot": "トレイに常駐 · ダークとライトのテーマ · このパソコンだけ"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/ai-console/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "サービス：状態とスイッチ"
+          },
+          {
+            "src": "/cases/ai-console/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "オフィスのタブとリミットの消費"
+          }
+        ]
       }
     ]
   },
@@ -2006,6 +2094,25 @@
             "text": "カタログを上げる、請求書を出す → やることリストへ"
           }
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/call-recorder/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "2 つのトラックと話者別の文字起こし"
+          },
+          {
+            "src": "/cases/call-recorder/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "打ち合わせの整理：要点、合意、タスク"
+          }
+        ]
       }
     ]
   },
@@ -2055,6 +2162,25 @@
           "ニュース",
           "コツ",
           "「翌日」"
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/channel-pipeline/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "ボットに届くボタンつきの下書き"
+          },
+          {
+            "src": "/cases/channel-pipeline/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "「前 → 後」のペアで残る修正と自動モード"
+          }
         ]
       }
     ]
@@ -2112,6 +2238,25 @@
           "広告と求人は除外",
           "ステータスはチーム全員に見える"
         ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/lead-agent/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "案件カードとエージェントのルール"
+          },
+          {
+            "src": "/cases/lead-agent/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "応募文の下書きと案件のキュー"
+          }
+        ]
       }
     ]
   },
@@ -2163,6 +2308,31 @@
             "ボットが質問した人に連絡"
           ]
         }
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/rag-mentor/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "出典つきのナレッジベース回答と「内部表示」モード"
+          },
+          {
+            "src": "/cases/rag-mentor/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "最初の一週間のプログラムとトレーニング"
+          },
+          {
+            "src": "/cases/rag-mentor/ui-3.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "教育担当のパネル：未回答の質問とオンボーディング"
+          }
+        ]
       }
     ]
   },
@@ -2211,6 +2381,25 @@
           }
         ],
         "tick": "15 分ごとにチェック"
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "インターフェースの例",
+        "items": [
+          {
+            "src": "/cases/uni-bot/ui-1.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "夕方のまとめ：明日の授業"
+          },
+          {
+            "src": "/cases/uni-bot/ui-2.jpg",
+            "w": 1600,
+            "h": 1000,
+            "title": "メニューと、自前のサーバーなしでの運用"
+          }
+        ]
       }
     ]
   },
