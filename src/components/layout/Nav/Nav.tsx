@@ -40,7 +40,7 @@ export function Nav() {
       <div className={`container ${styles.inner}`}>
         <Logo href={localePath(locale, '/')} />
 
-        <nav className={styles.links} aria-label={t.nav.works}>
+        <nav className={styles.links} aria-label={t.nav.sections}>
           {links.map((item) => (
             <Link key={item.href} href={item.href} className={styles.link}>
               {item.label}
@@ -55,7 +55,9 @@ export function Nav() {
           </span>
           {features.palette && <PaletteButton label={t.nav.search} />}
           <CalmToggle t={t.nav.calm} place="nav" />
-          <LangSwitch locale={locale} rest={rest} label={t.nav.language} />
+          <span className={styles.lang}>
+            <LangSwitch locale={locale} rest={rest} label={t.nav.language} />
+          </span>
           <ThemeSwitch labels={t.nav.themes} label={t.nav.theme} />
           <Button href={contacts.telegram} external className={styles.cta}>
             {t.nav.write}

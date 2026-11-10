@@ -32,6 +32,9 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  /* Зона касания 44 при той же строке текста */
+  min-block-size: 44px;
+  margin-block: -12px;
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   letter-spacing: 0.08em;

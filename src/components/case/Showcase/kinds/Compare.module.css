@@ -10,6 +10,8 @@
   position: relative;
   aspect-ratio: 16 / 10;
   min-block-size: 280px;
+  /* Высота 280 при пропорции 16:10 просила 448 по ширине: на 320 кадр вылезал за экран */
+  max-inline-size: 100%;
   overflow: hidden;
   border: 1px solid var(--border-hair);
   background: var(--bg-elevated);

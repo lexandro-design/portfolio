@@ -67,6 +67,10 @@
   margin-inline-start: auto;
 }
 
+.lang {
+  display: contents;
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -115,6 +119,13 @@
   .cta {
     min-block-size: 36px;
     padding-inline: 14px;
+  }
+}
+
+/* Спокойный вид на 320: кнопка «обычный вид» с подписью, язык остаётся в меню, иначе шапка шире экрана */
+@media (max-width: 359px) {
+  :global([data-theme='calm']) .lang {
+    display: none;
   }
 }
 
