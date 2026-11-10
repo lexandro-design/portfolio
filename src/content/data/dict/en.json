@@ -414,9 +414,8 @@
       "items": {
         "lines": "lines of code in commits",
         "commits": "commits",
-        "frames": "3D frames rendered",
         "figma": "Figma files in work",
-        "screens": "screens and frames in the cases",
+        "images": "images in the cases",
         "hours": "hours at work"
       },
       "langs": "what the code is written in",

@@ -413,9 +413,8 @@
       "items": {
         "lines": "行提交的代码",
         "commits": "次提交",
-        "frames": "帧 3D 渲染",
         "figma": "个在用的 Figma 文件",
-        "screens": "张案例里的页面和画面",
+        "images": "张案例里的图片",
         "hours": "小时的工作"
       },
       "langs": "代码用什么写",
