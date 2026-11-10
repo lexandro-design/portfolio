@@ -30,14 +30,18 @@ const TYPE = [
 const SPACING = [4, 8, 16, 24, 32, 48, 64, 96, 128]
 
 /* Значения токенов читаются из CSS прямо сейчас: переключили тему —
-   подписи под образцами сменились вместе с цветом */
+   подписи под образцами сменились вместе с цветом. Размеры шрифта тоже:
+   в спокойном виде шкала крупнее, и подпись должна говорить правду */
 const subscribe = (cb: () => void) => {
   window.addEventListener(THEME_EVENT, cb)
   return () => window.removeEventListener(THEME_EVENT, cb)
 }
 const readValues = () => {
   const css = getComputedStyle(document.documentElement)
-  return SWATCHES.map(([, v]) => css.getPropertyValue(v).trim()).join('|')
+  return [
+    ...SWATCHES.map(([, v]) => css.getPropertyValue(v).trim()),
+    ...TYPE.map((row) => css.getPropertyValue(`--type-${row.token}`).trim()),
+  ].join('|')
 }
 
 type Props = {
@@ -119,7 +123,7 @@ export function System({ t, themes, numbers }: Props) {
                   {row.mono ? 'MONO 0123' : row.token === 'body' ? t.specimen : 'Aa'}
                 </span>
                 <code className={styles.code}>
-                  {row.token} · {row.size}
+                  {row.token} · {parseInt(values[SWATCHES.length + i] ?? '', 10) || row.size}
                 </code>
               </li>
             ))}
