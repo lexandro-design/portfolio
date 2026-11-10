@@ -109,7 +109,7 @@
   font-weight: 450;
   line-height: 1;
   letter-spacing: -0.05em;
-  color: var(--case-color);
+  color: var(--case-ink, var(--case-color));
 }
 
 .metric span {
@@ -170,7 +170,7 @@
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--case-color);
+  color: var(--case-ink, var(--case-color));
 }
 
 /* Табло */
@@ -273,7 +273,7 @@
 }
 
 .feed span {
-  color: var(--case-color);
+  color: var(--case-ink, var(--case-color));
 }
 
 @keyframes lineIn {
@@ -301,7 +301,7 @@
 }
 
 .prompt span {
-  color: var(--case-color);
+  color: var(--case-ink, var(--case-color));
 }
 
 .trace ol {
@@ -329,7 +329,7 @@
   padding-block-start: 0.4em;
   overflow: hidden;
   border-block-start: 1px solid var(--border-hair);
-  color: var(--case-color);
+  color: var(--case-ink, var(--case-color));
   opacity: 0;
   transition: opacity 240ms var(--ease-out-quart);
   -webkit-box-orient: vertical;

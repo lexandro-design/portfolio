@@ -272,7 +272,7 @@
 }
 
 .state:nth-child(1) {
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
   opacity: 1;
 }
 

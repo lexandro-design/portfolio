@@ -111,7 +111,7 @@
   background: var(--bg-subtle);
   font-family: var(--font-mono);
   font-size: var(--type-mono-sm);
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
   text-align: center;
 }
 

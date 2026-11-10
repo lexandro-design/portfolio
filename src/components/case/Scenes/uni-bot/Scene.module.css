@@ -81,7 +81,7 @@
 }
 
 .count dd[data-hot] {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Сетка шкалы: 72 проверки по горизонтали, ряды: пары, метки проверок, часы, флажки */
@@ -196,7 +196,7 @@
 
 .flag b {
   font-weight: 400;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .flag[data-on] {
@@ -347,7 +347,7 @@
 
 .keysList i {
   font-style: normal;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .keysList code {
@@ -366,7 +366,7 @@
 
 .keysList em {
   font-style: normal;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .more {

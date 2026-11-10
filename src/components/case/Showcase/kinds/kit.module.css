@@ -134,7 +134,7 @@
   font-size: var(--type-mono-sm);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 .live::before {

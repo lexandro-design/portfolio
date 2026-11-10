@@ -70,7 +70,7 @@
 }
 
 .out[data-on] {
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 @media (max-width: 1023px) {

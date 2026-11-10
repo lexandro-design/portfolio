@@ -20,7 +20,7 @@
 }
 
 .prompt {
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 .caret {

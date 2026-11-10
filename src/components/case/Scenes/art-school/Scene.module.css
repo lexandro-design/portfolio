@@ -53,7 +53,7 @@
 .log {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
   animation: logIn 400ms var(--ease-out-quart) both;
   white-space: nowrap;
 }
@@ -206,7 +206,7 @@
 
 .who[data-side='r'] {
   inset-inline-end: 10px;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .who[data-on] {
@@ -388,11 +388,11 @@
   font-style: normal;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .pin[data-ok] > span em {
-  color: var(--signal-live);
+  color: var(--signal-ink, var(--signal-live));
 }
 
 .pin[data-side='in'] > span {

@@ -588,7 +588,7 @@
 .num strong {
   font-size: var(--type-body-lg);
   font-weight: 500;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .rule p {

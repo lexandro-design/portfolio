@@ -22,11 +22,11 @@
 }
 
 :global(:is([data-theme='light'], [data-theme='calm'])) :is(.sheet, .desks, .sketch, .doc) {
-  --cast-warn: #c0341d;
+  --cast-warn: #a82a14;
 }
 
 :global([data-theme='steel']) :is(.sheet, .desks, .sketch, .doc) {
-  --cast-warn: #8f1d0a;
+  --cast-warn: #4a1000;
 }
 
 /* Этапы: квадрат и линия вниз, идущий этап мигает */

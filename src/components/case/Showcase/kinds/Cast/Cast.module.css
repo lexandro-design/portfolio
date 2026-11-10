@@ -139,6 +139,11 @@
   color: var(--bg-base);
 }
 
+/* На светлых темах фон страницы светлый, а пузырь цвета кейса средний по тону: текст тёмный */
+:global(:is([data-theme='light'], [data-theme='calm'])) .out p {
+  color: var(--fg-primary);
+}
+
 .btns {
   display: flex;
   flex-wrap: wrap;
@@ -303,7 +308,7 @@
 }
 
 .line[data-tone='ok'] {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .rows {
@@ -601,6 +606,16 @@
 }
 
 @media (max-width: 1023px) {
+  /* Палец: кнопки «назад», «пауза» и «вперёд» по 44, узкие отрезки шкалы остаются вторым способом перейти к шагу */
+  .ctl {
+    inline-size: 44px;
+    block-size: 44px;
+  }
+
+  .ctl[data-wide] {
+    inline-size: 52px;
+  }
+
   /* Шкала сразу под экраном: что бы ни менялось ниже, кнопки стоят на месте */
   .stage {
     display: contents;

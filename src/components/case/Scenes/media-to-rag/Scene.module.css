@@ -154,7 +154,7 @@
 
 .name b {
   font-weight: 400;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .tag {
@@ -165,7 +165,7 @@
 }
 
 .tag[data-tone='hot'] {
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 .tag[data-tone='skip'] {
@@ -254,7 +254,7 @@
   margin-inline-start: auto;
   font-size: 18px;
   font-variant-numeric: tabular-nums;
-  color: var(--case-color, var(--accent));
+  color: var(--case-ink, var(--case-color, var(--accent)));
 }
 
 /* Счётчик кусков в базе */
@@ -400,13 +400,13 @@
 
   .fname b {
     font-weight: 400;
-    color: var(--case-color, var(--accent));
+    color: var(--case-ink, var(--case-color, var(--accent)));
   }
 
   .fnum {
     font-size: 16px;
     font-variant-numeric: tabular-nums;
-    color: var(--case-color, var(--accent));
+    color: var(--case-ink, var(--case-color, var(--accent)));
     animation: capIn 400ms var(--ease-out-quart) both;
   }
 
@@ -459,7 +459,7 @@
   }
 
   .fstage em[data-tone='hot'] {
-    color: var(--case-color, var(--accent));
+    color: var(--case-ink, var(--case-color, var(--accent)));
   }
 
   .fcard[data-skip] .fstage span {
