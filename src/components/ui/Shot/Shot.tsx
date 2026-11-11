@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import type { Shot as ShotType } from '@/content/cases'
 import { LoopVideo } from './LoopVideo'
 
@@ -62,6 +62,7 @@ function Single({ shot, className, eager, zoom, screen }: Props & { screen?: 'wi
       key={src}
       className={className}
       src={asset(src)}
+      srcSet={srcSet(src, shot.w)}
       alt={shot.caption}
       width={shot.w}
       height={shot.h}
