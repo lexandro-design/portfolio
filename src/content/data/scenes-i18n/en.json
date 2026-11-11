@@ -2853,6 +2853,20 @@
       "theme": "Theme",
       "lang": "Language",
       "replay": "Replay"
+    },
+    "hud": {
+      "title": "Widgets",
+      "text": "Four widgets from the component set. Each one draws when it enters the view: the load curve from left to right, the time ring clockwise from the zero mark, the cells column by column, the route station by station. Colours follow the theme picked above.",
+      "note": "Widget labels are in English in the design"
+    },
+    "flow": {
+      "title": "Screens and transitions",
+      "text": "Twelve prototype screens with its click map: a shift block opens the task, a route station leads to the desk, a log line opens the log, the manual contents scroll to a chapter. Screens change with a 300 ms dissolve. A click outside highlights the active areas.",
+      "note": "Design frames in the main theme. Sign-off and Manual stay on paper in any theme",
+      "label": "RELAY/DESK prototype screens",
+      "back": "Back",
+      "to": "Open screen",
+      "scroll": "Scroll to chapter"
     }
   }
 }

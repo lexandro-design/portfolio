@@ -6,6 +6,9 @@ import type { SceneProps } from '../types'
 import { Back, Brief, Facts, Lead, Meta, Note, Reveal, Title, useInView, useReduced } from '../kit'
 import scene from '../Scene.module.css'
 import styles from './Scene.module.css'
+import extra from './Extra.module.css'
+import { Hud } from './Hud'
+import { Flow } from './Flow'
 import { cellsOf, paint, taskAt, R_SLIM, R_WIDE, TICK } from './grain'
 import { THEMES, type ThemeId } from './tokens'
 import copy from './copy.json'
@@ -33,6 +36,8 @@ type Data = {
   note: string
   lang: Lang
   labels: { screen: string; theme: string; lang: string; replay: string }
+  hud: { title: string; text: string; note: string }
+  flow: { title: string; text: string; note: string; label: string; back: string; to: string; scroll: string }
 }
 
 /** Строки самого макета на двух его языках, из коллекции Copy. От языка страницы не зависят */
@@ -128,6 +133,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
   const [headAt, setHeadAt] = useState(HEAD_AT)
   const [slim, setSlim] = useState(false)
   const [size, setSize] = useState(0)
+  const [hudRun, setHudRun] = useState(0)
   const screen = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
   const task = useRef<SVGRectElement>(null)
@@ -200,6 +206,10 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
     '--rd-raised': theme.raised,
     '--rd-sunken': theme.sunken,
     '--rd-line': theme.line,
+    '--rd-line-soft': theme.lineSoft,
+    '--rd-ghost': theme.ghost,
+    '--rd-accent-dim': theme.accentDim,
+    '--rd-accent-ghost': theme.accentGhost,
     '--rd-line-strong': theme.lineStrong,
     '--rd-text': theme.text,
     '--rd-text-2': theme.text2,
@@ -419,6 +429,31 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
         </Reveal>
       </div>
       <Brief brief={brief} t={t.brief} />
+
+      <section className={extra.part}>
+        <div className={extra.hudRow}>
+          <div className={extra.head}>
+            <h2>{d.hud.title}</h2>
+            <p>{d.hud.text}</p>
+            <small>{d.hud.note}</small>
+            <button type="button" className={extra.again} onClick={() => setHudRun((n) => n + 1)}>
+              {d.labels.replay}
+            </button>
+          </div>
+          <div className={extra.slab} style={vars} data-theme={theme.id}>
+            <Hud run={hudRun} />
+          </div>
+        </div>
+      </section>
+
+      <section className={extra.part}>
+        <div className={extra.head}>
+          <h2>{d.flow.title}</h2>
+          <p>{d.flow.text}</p>
+          <small>{d.flow.note}</small>
+        </div>
+        <Flow labels={d.flow} />
+      </section>
     </header>
   )
 }
