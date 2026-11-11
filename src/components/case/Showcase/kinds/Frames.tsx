@@ -3,7 +3,7 @@
 import type { UIEvent } from 'react'
 import type { Shot } from '@/content/cases'
 import type { Block } from '@/content/showcase'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import kit from './kit.module.css'
 import styles from './Frames.module.css'
 
@@ -41,6 +41,7 @@ export function Frames({ block, shots }: Props) {
                 {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
                 <img
                   src={asset(s.src)}
+                  srcSet={srcSet(s.src, s.w)}
                   alt={s.caption || it.title}
                   width={s.w}
                   height={s.h}

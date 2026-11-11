@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import { useReduced } from '../kit'
 import styles from './Extra.module.css'
 import { SCREENS, START, type Screen } from './screens'
@@ -18,6 +18,7 @@ const DISSOLVE = 300
 const SCROLL = 600
 const BY_ID = new Map(SCREENS.map((s) => [s.id, s]))
 const src = (file: string) => asset(`/cases/relay-desk/${file}.webp`)
+const set = (file: string) => srcSet(`/cases/relay-desk/${file}.webp`, 1440)
 
 /** Кадры экрана должны быть готовы до перехода, иначе растворяться не во что. Ждём недолго */
 function preload(screen: Screen) {
@@ -26,6 +27,8 @@ function preload(screen: Screen) {
       new Promise<void>((done) => {
         const img = new Image()
         img.onload = img.onerror = () => done()
+        const s = set(file)
+        if (s) img.srcset = s
         img.src = src(file)
       }),
   )
@@ -41,6 +44,7 @@ function Layer({ screen, entering, flash, labels, go }: { screen: Screen; enteri
           <img
             key={file}
             src={src(file)}
+            srcSet={set(file)}
             alt={i === 0 ? `RELAY/DESK, ${screen.name}` : ''}
             width={1440}
             height={height}

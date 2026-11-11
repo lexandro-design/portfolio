@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties } from 'react'
 import type { Shot } from '@/content/cases'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import { useInView } from '../hooks'
 import kit from './kit.module.css'
 import styles from './Browse.module.css'
@@ -71,6 +71,7 @@ export function Browse({ pages, shots }: Props) {
           <img
             key={shot.src}
             src={asset(shot.src)}
+            srcSet={srcSet(shot.src, shot.w)}
             alt={shot.caption}
             width={shot.w}
             height={shot.h}

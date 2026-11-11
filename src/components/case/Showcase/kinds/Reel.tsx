@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type { Shot } from '@/content/cases'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import { LoopVideo } from '@/components/ui/Shot/LoopVideo'
 import styles from './Reel.module.css'
 
@@ -31,7 +31,7 @@ export function Reel({ items, shots }: Props) {
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка
-          <img src={asset(shot.src)} alt={shot.caption} width={shot.w} height={shot.h} className={styles.video} />
+          <img src={asset(shot.src)} srcSet={srcSet(shot.src, shot.w)} alt={shot.caption} width={shot.w} height={shot.h} className={styles.video} />
         )}
         <figcaption className={styles.caption} key={i}>
           {shot.caption}
