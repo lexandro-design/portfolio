@@ -441,7 +441,7 @@ export function Scene({ item, meta, facts, brief, t, data }: SceneProps) {
             </button>
           </div>
           <div className={extra.slab} style={vars} data-theme={theme.id}>
-            <Hud run={hudRun} />
+            <Hud run={hudRun} lang={lang} />
           </div>
         </div>
       </section>

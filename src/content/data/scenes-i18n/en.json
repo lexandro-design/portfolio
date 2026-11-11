@@ -2857,7 +2857,7 @@
     "hud": {
       "title": "Widgets",
       "text": "Four widgets from the component set. Each one draws when it enters the view: the load curve from left to right, the time ring clockwise from the zero mark, the cells column by column, the route station by station. Colours follow the theme picked above.",
-      "note": "Widget labels are in English in the design"
+      "note": "Widget labels are in English in the design. The Russian ones follow the glossary of the Russian version"
     },
     "flow": {
       "title": "Screens and transitions",
