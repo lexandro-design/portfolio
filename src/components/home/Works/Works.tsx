@@ -27,10 +27,10 @@ type Props = {
 
 /**
  * Подборка на первом экране блока: самые сложные работы и сданные проекты настоящих заказчиков.
- * Порядок задан руками: сайт, концепт, игра и бот, затем проекты ТИТАН-2, в конце Parfumeria.
+ * Порядок задан руками: первой Parfumeria, затем сайт, концепт, игра и бот, в конце проекты ТИТАН-2.
  * Из концептов здесь один, RELAY/DESK: он показывает систему и движение целиком
  */
-const PICK = ['prosoft', 'relay-desk', 'garden-td', 'mimimibot', 'otrx', 'meeting-rooms', 'prof-study', 'parfumeria']
+const PICK = ['parfumeria', 'prosoft', 'relay-desk', 'garden-td', 'mimimibot', 'otrx', 'meeting-rooms', 'prof-study']
 const GROUPS: Case['group'][] = ['titan', 'entersales', 'freelance', 'own']
 
 const pad = (n: number) => String(n).padStart(2, '0')
