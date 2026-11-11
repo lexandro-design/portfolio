@@ -1,0 +1,389 @@
+/* Блоки под первым экраном: виджеты макета и экраны прототипа с переходами */
+
+.part {
+  display: grid;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-2xl);
+  padding-inline: clamp(16px, 2.2vw, 40px);
+}
+
+.part > * {
+  inline-size: 100%;
+  max-inline-size: 1440px;
+  margin-inline: auto;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.head h2 {
+  font-size: var(--type-h3);
+  font-weight: 450;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.head p {
+  max-inline-size: 72ch;
+  color: var(--fg-secondary);
+}
+
+.head small {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.06em;
+  color: var(--fg-tertiary);
+  text-transform: uppercase;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tab,
+.back,
+.again {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-block-size: 36px;
+  padding: 0 12px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.06em;
+  color: var(--fg-secondary);
+  text-transform: uppercase;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border-hair);
+  transition:
+    border-color var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.tab:hover,
+.back:hover:not(:disabled),
+.again:hover {
+  border-color: var(--border-hover);
+}
+
+.tab[aria-pressed='true'] {
+  color: var(--fg-primary);
+  border-color: var(--fg-primary);
+}
+
+.back svg {
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+.back:disabled {
+  color: var(--fg-tertiary);
+  cursor: default;
+  opacity: 0.5;
+}
+
+.again {
+  justify-self: start;
+  inline-size: auto;
+  margin-inline: 0;
+}
+
+/* ---------- Виджеты ---------- */
+
+/* Плита в цветах макета: фон и линии идут за выбранной темой */
+.slab {
+  container-type: inline-size;
+  max-inline-size: 912px;
+  margin-inline: 0;
+  padding: 32px;
+  font-family: 'Geist Mono Variable', var(--font-mono);
+  background: var(--rd-bg);
+  border: 1px solid var(--border-hair);
+}
+
+.hudRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 912px);
+  gap: var(--space-lg) var(--space-xl);
+  align-items: start;
+}
+
+.widgets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.widget {
+  padding: 24px;
+  background: var(--rd-raised);
+  border: 1px solid var(--rd-line);
+}
+
+.widget svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+
+.wl {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  dominant-baseline: central;
+}
+
+.value {
+  font-size: 40px;
+  font-weight: 600;
+  dominant-baseline: central;
+}
+
+.muted {
+  fill: var(--rd-muted);
+}
+
+.text {
+  fill: var(--rd-text);
+}
+
+.text2 {
+  fill: var(--rd-text-2);
+}
+
+.accent {
+  fill: var(--rd-accent-text);
+}
+
+.signal {
+  fill: var(--rd-signal);
+}
+
+.textFill {
+  fill: var(--rd-text);
+}
+
+.accentFill {
+  fill: var(--rd-accent);
+}
+
+.accentDim {
+  fill: var(--rd-accent-dim);
+}
+
+.accentGhost {
+  fill: var(--rd-accent-ghost);
+}
+
+.ghost {
+  fill: var(--rd-ghost);
+}
+
+.lineSoft {
+  fill: var(--rd-line-soft);
+}
+
+.line {
+  fill: var(--rd-line);
+}
+
+.curve,
+.dashed,
+.track,
+.spent,
+.planned,
+.ahead,
+.doneLine,
+.ret,
+.ring,
+.stationAhead,
+.legendAhead {
+  fill: none;
+}
+
+.curve {
+  stroke: var(--rd-accent);
+  stroke-width: 2;
+}
+
+.dashed {
+  stroke: var(--rd-line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.track {
+  stroke: var(--rd-line);
+  stroke-width: 12;
+}
+
+.spent {
+  stroke: var(--rd-accent);
+  stroke-width: 12;
+}
+
+.planned {
+  stroke: var(--rd-line);
+  stroke-width: 1;
+}
+
+.ahead {
+  stroke: var(--rd-line-strong);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.doneLine {
+  stroke: var(--rd-text);
+  stroke-width: 2;
+}
+
+.ret {
+  stroke: var(--rd-accent-dim);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+}
+
+.ring {
+  stroke: var(--rd-accent);
+  stroke-width: 1;
+}
+
+.stationAhead,
+.legendAhead {
+  fill: var(--rd-raised);
+  stroke: var(--rd-line-strong);
+  stroke-width: 2;
+}
+
+@container (max-width: 640px) {
+  .widgets {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Экраны и переходы ---------- */
+
+.flow {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.back {
+  margin-inline-end: 8px;
+}
+
+/* Окно экрана: 1440 × 900, как кадр прототипа. Кадр длиннее окна листается внутри */
+.stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1440 / 900;
+  background: #0a0a0b;
+  border: 1px solid var(--border-hair);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden auto;
+  overscroll-behavior: auto;
+  scrollbar-width: thin;
+}
+
+.layer[data-enter] {
+  animation: dissolve 300ms linear both;
+}
+
+@keyframes dissolve {
+  from {
+    opacity: 0;
+  }
+}
+
+.sheet {
+  position: relative;
+  inline-size: 100%;
+}
+
+.sheet img {
+  position: absolute;
+  inset-inline: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.hot {
+  position: absolute;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  transition:
+    outline-color 80ms steps(1, end),
+    background-color 80ms steps(1, end);
+}
+
+.hot:hover,
+.hot:focus-visible,
+.layer[data-flash] .hot {
+  background: rgb(255 91 20 / 12%);
+  outline-color: #ff5b14;
+}
+
+@media (max-width: 1359px) {
+  .hudRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .part {
+    margin-block-start: var(--space-xl);
+    padding-inline: 16px;
+  }
+
+  .slab {
+    padding: 12px;
+  }
+
+  .widget {
+    padding: 12px;
+  }
+
+  .widgets {
+    gap: 12px;
+  }
+
+  .tab,
+  .back,
+  .again {
+    min-block-size: 40px;
+  }
+
+  /* На телефоне окно выше: в кадре помещается больше экрана */
+  .stage {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer[data-enter] {
+    animation: none;
+  }
+}

@@ -3089,5 +3089,237 @@
         ]
       }
     ]
+  },
+  "relay-desk": {
+    "brief": {
+      "task": "自发的概念：一个调度楼层，工作在工位之间流转，交接有记录，发布之前由人签字。把想法做成一份可以交给动画和开发的文件。",
+      "did": [
+        "13 个桌面页面和 4 个手机页面",
+        "基于变量的设计系统：18 个组件族、五套主题、两种语言",
+        "动效：七页规范和带时间轴的原型"
+      ],
+      "result": "一份带原型的 Figma 文件：桌面端七个起始流程，手机端两个。这是概念，没有实际产品。",
+      "role": "想法、设计、系统和动效由我完成。",
+      "process": [
+        "题材从同一风格的五个方向里选出。",
+        "先做令牌和组件，再做桌面页面，最后是手机页面。",
+        "颗粒和黑洞是第一轮之后加入的，后来成了项目的签名。",
+        "主题和俄语是用变量模式加上的，页面没有重画。"
+      ],
+      "nums": [
+        {
+          "v": "13",
+          "l": "个桌面页面"
+        },
+        {
+          "v": "18",
+          "l": "个组件族"
+        },
+        {
+          "v": "5",
+          "l": "套配色主题"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "reel",
+        "section": 5,
+        "title": "原型里的动效",
+        "items": [
+          {
+            "shot": 0,
+            "title": "首屏"
+          },
+          {
+            "shot": 15,
+            "title": "加载页"
+          },
+          {
+            "shot": 16,
+            "title": "收尾区块"
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "section": 1,
+        "title": "首页：一个页面，一个班次",
+        "pages": [
+          {
+            "shot": 1,
+            "label": "00:00–05:00"
+          },
+          {
+            "shot": 2,
+            "label": "05:00–07:30"
+          },
+          {
+            "shot": 3,
+            "label": "班次结束"
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "section": 2,
+        "title": "产品页面",
+        "pages": [
+          {
+            "shot": 4,
+            "label": "看板"
+          },
+          {
+            "shot": 5,
+            "label": "任务"
+          },
+          {
+            "shot": 6,
+            "label": "工位"
+          },
+          {
+            "shot": 7,
+            "label": "工位护照"
+          },
+          {
+            "shot": 8,
+            "label": "日志"
+          },
+          {
+            "shot": 9,
+            "label": "签收"
+          },
+          {
+            "shot": 10,
+            "label": "手册"
+          },
+          {
+            "shot": 11,
+            "label": "套餐"
+          },
+          {
+            "shot": 12,
+            "label": "更新记录"
+          },
+          {
+            "shot": 13,
+            "label": "访问申请"
+          },
+          {
+            "shot": 14,
+            "label": "404"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "section": 4,
+        "title": "同一组变量上的五套主题",
+        "items": [
+          {
+            "shot": 17,
+            "title": "Ampere，主色调"
+          },
+          {
+            "shot": 18,
+            "title": "Phosphor"
+          },
+          {
+            "shot": 19,
+            "title": "Ultraviolet"
+          },
+          {
+            "shot": 20,
+            "title": "Glacier"
+          },
+          {
+            "shot": 21,
+            "title": "Paper"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "two",
+        "title": "俄语版本",
+        "items": [
+          {
+            "shot": 22,
+            "title": "俄语首屏"
+          },
+          {
+            "shot": 23,
+            "title": "俄语首页的区块"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "title": "手机",
+        "items": [
+          {
+            "shot": 24,
+            "title": "首页"
+          },
+          {
+            "shot": 25,
+            "title": "班次看板"
+          },
+          {
+            "shot": 26,
+            "title": "签收"
+          },
+          {
+            "shot": 27,
+            "title": "加载页"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "two",
+        "section": 3,
+        "title": "动效说明页",
+        "items": [
+          {
+            "shot": 28,
+            "title": "M02：时间令牌"
+          },
+          {
+            "shot": 29,
+            "title": "M03：一个页面，一个班次"
+          },
+          {
+            "shot": 30,
+            "title": "M04：组件动效"
+          },
+          {
+            "shot": 31,
+            "title": "M05：关键时刻"
+          },
+          {
+            "shot": 32,
+            "title": "M06：交接说明"
+          },
+          {
+            "shot": 33,
+            "title": "M07：Figma 里能播放什么"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "文件封面",
+        "items": [
+          {
+            "shot": 34,
+            "title": "文件的每一页都已签收"
+          }
+        ]
+      }
+    ]
   }
 }

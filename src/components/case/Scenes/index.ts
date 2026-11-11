@@ -28,6 +28,7 @@ export const SCENES: Record<string, ComponentType<SceneProps>> = {
   'media-to-rag': dynamic(() => import('./media-to-rag/Scene').then((m) => m.Scene)),
   'tg-assistant': dynamic(() => import('./tg-assistant/Scene').then((m) => m.Scene)),
   prosoft: dynamic(() => import('./prosoft/Scene').then((m) => m.Scene)),
+  'relay-desk': dynamic(() => import('./relay-desk/Scene').then((m) => m.Scene)),
 }
 
 export const hasScene = (slug: string) => slug in SCENES

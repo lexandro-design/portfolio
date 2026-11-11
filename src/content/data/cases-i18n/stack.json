@@ -2,6 +2,7 @@
   "Дизайн-система": { "en": "Design system", "zh": "设计系统", "ja": "デザインシステム" },
   "Дизайн-система AIPlan-R": { "en": "AIPlan-R design system", "zh": "AIPlan-R 设计系统", "ja": "AIPlan-R デザインシステム" },
   "Прототип": { "en": "Prototype", "zh": "原型", "ja": "プロトタイプ" },
+  "Переменные": { "en": "Variables", "zh": "变量", "ja": "バリアブル" },
   "LLM-агенты": { "en": "LLM agents", "zh": "LLM 智能体", "ja": "LLM エージェント" },
   "Распознавание речи": { "en": "Speech recognition", "zh": "语音识别", "ja": "音声認識" },
   "Синтез речи": { "en": "Speech synthesis", "zh": "语音合成", "ja": "音声合成" },

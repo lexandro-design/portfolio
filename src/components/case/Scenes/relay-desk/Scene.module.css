@@ -1,0 +1,760 @@
+.root {
+  padding-block-end: 0;
+}
+
+/* Экран макета шире колонки текста: первый экран 1440 показывается целиком */
+.band {
+  margin-block-start: var(--space-xl);
+  padding-inline: clamp(16px, 2.2vw, 40px);
+}
+
+/* Первый экран RELAY/DESK. Цвета приходят переменными темы макета и не зависят от темы сайта */
+.screen {
+  position: relative;
+  overflow: hidden;
+  max-inline-size: 1440px;
+  margin-inline: auto;
+  container-type: inline-size;
+  font-family: 'Geist Mono Variable', var(--font-mono);
+  font-weight: 500;
+  color: var(--rd-text);
+  text-transform: uppercase;
+  background: var(--rd-bg);
+  border: 1px solid var(--border-hair);
+}
+
+/* Раскладка макета 1440 в масштабе экрана: единица --u равна одному пикселю макета */
+.inner {
+  --u: calc(100cqi / 1440);
+
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    'bar bar'
+    'tag floor'
+    'lead floor'
+    'actions floor'
+    'facts floor'
+    '. floor'
+    'head head'
+    'strip strip';
+  grid-template-rows: repeat(5, auto) 1fr auto auto;
+  grid-template-columns: calc(528 * var(--u)) calc(752 * var(--u));
+  column-gap: calc(32 * var(--u));
+  padding: 0 calc(64 * var(--u)) calc(32 * var(--u));
+}
+
+.screen b {
+  font-weight: inherit;
+  color: var(--rd-accent-text);
+}
+
+.screen button {
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.screen button:focus-visible {
+  outline: 2px solid var(--rd-text);
+  outline-offset: 2px;
+}
+
+.arrow {
+  flex: none;
+  inline-size: calc(16 * var(--u));
+  block-size: calc(16 * var(--u));
+}
+
+/* ---------- Шапка макета ---------- */
+
+.bar {
+  display: flex;
+  grid-area: bar;
+  gap: calc(24 * var(--u));
+  align-items: center;
+  block-size: calc(64 * var(--u));
+  font-size: calc(12 * var(--u));
+  line-height: calc(16 * var(--u));
+  letter-spacing: calc(0.8 * var(--u));
+  white-space: nowrap;
+}
+
+.logo {
+  display: flex;
+  gap: calc(4 * var(--u));
+  align-items: center;
+  font-size: calc(15 * var(--u));
+  letter-spacing: calc(1 * var(--u));
+}
+
+.logo i {
+  inline-size: calc(8 * var(--u));
+  block-size: calc(16 * var(--u));
+  background: var(--rd-accent);
+}
+
+.logo i + i {
+  background: none;
+  border: calc(2 * var(--u)) solid var(--rd-accent);
+}
+
+.logo span {
+  margin-inline-start: calc(8 * var(--u));
+}
+
+.logo b {
+  color: var(--rd-accent);
+}
+
+.clock {
+  display: flex;
+  gap: calc(8 * var(--u));
+  align-items: center;
+  color: var(--rd-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock i {
+  inline-size: calc(8 * var(--u));
+  block-size: calc(8 * var(--u));
+  background: var(--rd-signal);
+}
+
+.nav {
+  display: flex;
+  gap: calc(24 * var(--u));
+  margin-inline: auto;
+  color: var(--rd-text-2);
+}
+
+.nav em {
+  margin-inline-end: calc(8 * var(--u));
+  font-style: normal;
+  color: var(--rd-muted);
+}
+
+.lang {
+  display: flex;
+  gap: calc(8 * var(--u));
+}
+
+.lang button {
+  padding: calc(8 * var(--u)) calc(4 * var(--u));
+  color: var(--rd-muted);
+  background: none;
+  border: 0;
+}
+
+.lang button[aria-pressed='true'] {
+  color: var(--rd-text);
+}
+
+.signin {
+  display: flex;
+  gap: calc(8 * var(--u));
+  padding-inline: calc(8 * var(--u));
+  font-size: calc(15 * var(--u));
+  letter-spacing: calc(1 * var(--u));
+}
+
+.request,
+.cta {
+  display: flex;
+  gap: calc(16 * var(--u));
+  align-items: center;
+  font-size: calc(15 * var(--u));
+  line-height: calc(20 * var(--u));
+  letter-spacing: calc(1 * var(--u));
+  color: var(--rd-on-accent);
+  background: var(--rd-accent);
+}
+
+.request {
+  block-size: calc(48 * var(--u));
+  padding-inline: calc(24 * var(--u));
+}
+
+/* ---------- Левая колонка ---------- */
+
+.tag {
+  display: flex;
+  grid-area: tag;
+  gap: calc(8 * var(--u));
+  margin-block-start: calc(64 * var(--u));
+  font-size: calc(12 * var(--u));
+  line-height: calc(16 * var(--u));
+  letter-spacing: calc(0.8 * var(--u));
+}
+
+.lead {
+  grid-area: lead;
+  margin-block-start: calc(32 * var(--u));
+  font-size: calc(20 * var(--u));
+  font-weight: 400;
+  line-height: calc(32 * var(--u));
+  color: var(--rd-text-2);
+  text-transform: none;
+}
+
+.actions {
+  display: flex;
+  grid-area: actions;
+  gap: calc(16 * var(--u));
+  margin-block-start: calc(32 * var(--u));
+  white-space: nowrap;
+}
+
+.cta {
+  block-size: calc(64 * var(--u));
+  padding-inline: calc(32 * var(--u));
+}
+
+.ghost {
+  display: flex;
+  gap: calc(8 * var(--u));
+  align-items: center;
+  padding-inline: calc(16 * var(--u));
+  font-size: calc(15 * var(--u));
+  letter-spacing: calc(1 * var(--u));
+}
+
+.facts {
+  display: flex;
+  grid-area: facts;
+  gap: calc(48 * var(--u));
+  margin-block-start: calc(32 * var(--u));
+}
+
+.facts div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: calc(4 * var(--u));
+}
+
+.facts dd {
+  font-size: calc(20 * var(--u));
+  font-weight: 600;
+  line-height: calc(24 * var(--u));
+}
+
+.facts dt {
+  font-size: calc(12 * var(--u));
+  line-height: calc(16 * var(--u));
+  letter-spacing: calc(0.8 * var(--u));
+  color: var(--rd-muted);
+  white-space: nowrap;
+}
+
+/* ---------- Изометрия: холст зерна под вектором стопки ---------- */
+
+.floor {
+  position: relative;
+  grid-area: floor;
+  block-size: calc(452 * var(--u));
+  margin-block-start: calc(64 * var(--u));
+}
+
+.grain,
+.iso {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(-16 * var(--u));
+  inline-size: calc(768 * var(--u));
+  block-size: calc(496 * var(--u));
+}
+
+.iso {
+  overflow: visible;
+}
+
+.orbit {
+  fill: none;
+  stroke: var(--rd-line-strong);
+  stroke-dasharray: 2 6;
+  animation: show 480ms steps(4, jump-none) 1300ms both;
+}
+
+.task {
+  fill: var(--rd-text);
+  stroke: var(--rd-bg);
+  stroke-width: 2;
+  animation: show 160ms steps(3, jump-none) 1300ms both;
+}
+
+/* Стопка собирается снизу вверх: нижний уровень первым */
+.level {
+  animation: drop 480ms cubic-bezier(0.16, 1, 0.3, 1) calc(500ms + var(--n) * 120ms) both;
+}
+
+.side {
+  fill: var(--rd-sunken);
+  stroke: var(--rd-line);
+}
+
+.top {
+  fill: var(--rd-raised);
+  stroke: var(--rd-line-strong);
+}
+
+.level[data-on] path {
+  stroke: var(--rd-accent);
+}
+
+.sheet {
+  animation: show 160ms steps(3, jump-none) 1400ms both;
+}
+
+.dot {
+  fill: var(--rd-line-strong);
+}
+
+.paper {
+  fill: var(--rd-accent);
+}
+
+.ink {
+  fill: none;
+  stroke: var(--rd-on-accent);
+  stroke-width: 2;
+}
+
+.iso text {
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  dominant-baseline: central;
+  fill: var(--rd-muted);
+}
+
+.out {
+  animation: show 240ms steps(3, jump-none) calc(1500ms + var(--n) * 80ms) both;
+}
+
+.leader {
+  fill: none;
+  stroke: var(--rd-line-strong);
+  stroke-dasharray: 1;
+  animation: draw 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(1500ms + var(--n) * 80ms) both;
+}
+
+.iso .name {
+  font-size: 15px;
+  letter-spacing: 1px;
+  fill: var(--rd-text);
+}
+
+.out[data-on] .leader {
+  stroke: var(--rd-accent);
+}
+
+.out[data-on] .name {
+  fill: var(--rd-accent-text);
+}
+
+.iso .time {
+  font-variant-numeric: tabular-nums;
+}
+
+.iso .caption {
+  text-anchor: end;
+  animation: show 240ms steps(3, jump-none) 1500ms both;
+}
+
+.corners {
+  fill: none;
+  stroke: var(--rd-line-strong);
+  stroke-width: 2;
+  animation: show 240ms steps(3, jump-none) 300ms both;
+}
+
+/* Метка NOW идёт вниз по уровням ступенями; наверх возвращается сразу, движение в одну сторону */
+.now {
+  transition: transform 240ms steps(3, end);
+  animation: show 160ms steps(3, jump-none) 2400ms both;
+}
+
+.now[data-back] {
+  transition: none;
+}
+
+.nowLine {
+  fill: none;
+  stroke: var(--rd-accent);
+}
+
+.nowEdge {
+  fill: var(--rd-bg);
+}
+
+.nowTag {
+  fill: var(--rd-accent);
+}
+
+.iso .nowText {
+  text-anchor: middle;
+  font-variant-numeric: tabular-nums;
+  fill: var(--rd-on-accent);
+}
+
+/* ---------- Заголовок по буквам и нижняя строка ---------- */
+
+.headline {
+  position: relative;
+  display: grid;
+  grid-area: head;
+  margin-block-start: calc(24 * var(--u));
+  font-size: calc(120 * var(--u));
+  font-weight: 700;
+  line-height: calc(112 * var(--u));
+  letter-spacing: calc(-2 * var(--u));
+  white-space: nowrap;
+}
+
+.headline > span + span {
+  color: var(--rd-muted);
+}
+
+.word {
+  display: inline-block;
+  margin-inline-end: 0.6em;
+}
+
+.word > span {
+  display: inline-block;
+  animation: type 160ms steps(3, jump-none) calc(var(--head-at) + var(--c) * 20ms) both;
+}
+
+.strip {
+  display: flex;
+  grid-area: strip;
+  justify-content: space-between;
+  margin-block-start: calc(24 * var(--u));
+  font-size: calc(12 * var(--u));
+  line-height: calc(16 * var(--u));
+  letter-spacing: calc(0.8 * var(--u));
+  color: var(--rd-muted);
+  white-space: nowrap;
+}
+
+/* ---------- Рейка тем: закреплена справа в поле макета ---------- */
+
+.rail {
+  position: absolute;
+  inset-block-start: calc(352 * var(--u));
+  inset-inline-end: calc(16 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--u));
+  align-items: center;
+  inline-size: calc(32 * var(--u));
+  padding-block: calc(12 * var(--u));
+  background: var(--rd-bg);
+  border: 1px solid var(--rd-line);
+}
+
+.rail span {
+  margin-block-end: calc(8 * var(--u));
+  font-size: calc(12 * var(--u));
+  letter-spacing: calc(0.8 * var(--u));
+  color: var(--rd-muted);
+  writing-mode: vertical-rl;
+}
+
+.rail button {
+  display: grid;
+  place-items: center;
+  inline-size: calc(16 * var(--u));
+  block-size: calc(16 * var(--u));
+  padding: 0;
+  background: var(--sw-bg);
+  border: 1px solid var(--rd-line-strong);
+}
+
+.rail button::before {
+  inline-size: calc(6 * var(--u));
+  block-size: calc(6 * var(--u));
+  content: '';
+  background: var(--sw);
+}
+
+.rail button[aria-pressed='true'] {
+  border-color: var(--rd-text);
+}
+
+/* Ступени без скачка в конце: последний шаг наступает раньше финиша, иначе доля кадра оставляет элемент полупрозрачным */
+
+/* ---------- Вход: всё стоит на паузе, пока экран не зашёл в окно ---------- */
+
+.in {
+  animation: rise 240ms cubic-bezier(0.16, 1, 0.3, 1) calc(var(--at) * 120ms) both;
+}
+
+.screen[data-run='idle'] * {
+  animation-play-state: paused;
+}
+
+.screen[data-still] * {
+  transition: none;
+  animation: none;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(calc(8 * var(--u)));
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes type {
+  from {
+    opacity: 0;
+    transform: translateY(0.12em);
+  }
+}
+
+/* ---------- Планшет: одна колонка, размеры макета без масштаба ---------- */
+
+@container (max-width: 1099px) {
+  .inner {
+    --u: 1px;
+
+    grid-template-areas: 'bar' 'tag' 'lead' 'actions' 'facts' 'floor' 'head' 'strip';
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 32px 24px;
+  }
+
+  .nav,
+  .signin,
+  .rail {
+    display: none;
+  }
+
+  .clock {
+    margin-inline-end: auto;
+  }
+
+  .tag {
+    margin-block-start: 40px;
+  }
+
+  .lead {
+    max-inline-size: 528px;
+  }
+
+  .floor {
+    block-size: auto;
+    aspect-ratio: 768 / 496;
+    margin-block-start: 32px;
+  }
+
+  .grain,
+  .iso {
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .headline {
+    margin-block-start: 8px;
+    font-size: calc((100cqi - 64px) * 0.0914);
+    line-height: 0.94;
+    letter-spacing: -0.016em;
+  }
+}
+
+/* ---------- Телефон: порядок мобильного макета, стопка и кольцо без выносок ---------- */
+
+@container (max-width: 699px) {
+  .inner {
+    grid-template-areas: 'bar' 'tag' 'head' 'lead' 'actions' 'floor';
+    padding: 0 20px 24px;
+  }
+
+  .clock,
+  .request,
+  .ghost,
+  .facts,
+  .strip,
+  .wide {
+    display: none;
+  }
+
+  .bar {
+    justify-content: space-between;
+    block-size: 56px;
+  }
+
+  .tag {
+    margin-block-start: 32px;
+  }
+
+  .headline {
+    display: block;
+    margin-block-start: 24px;
+    font-size: calc((100cqi - 40px) * 0.119);
+    line-height: 1;
+    white-space: normal;
+  }
+
+  .headline > span {
+    display: block;
+  }
+
+  .lead {
+    margin-block-start: 24px;
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .actions {
+    margin-block-start: 24px;
+  }
+
+  .cta {
+    flex: 1;
+    justify-content: space-between;
+    block-size: 56px;
+  }
+
+  .floor {
+    aspect-ratio: 608 / 480;
+    margin-block-start: 24px;
+  }
+}
+
+/* ---------- Над экраном: выбор темы и языка крупными кнопками, рядом со сценой ---------- */
+
+.under {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-lg);
+  justify-content: space-between;
+  max-inline-size: 1440px;
+  margin-block-end: var(--space-sm);
+  margin-inline: auto;
+}
+
+.pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.06em;
+  color: var(--fg-tertiary);
+  text-transform: uppercase;
+}
+
+.pick > span:first-child {
+  margin-inline-end: 8px;
+}
+
+.chip,
+.replay,
+.langOut button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-block-size: 36px;
+  padding: 0 12px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--fg-secondary);
+  text-transform: inherit;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border-hair);
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+
+.chip:hover,
+.replay:hover,
+.langOut button:hover {
+  border-color: var(--border-hover);
+}
+
+.chip[aria-pressed='true'],
+.langOut button[aria-pressed='true'] {
+  color: var(--fg-primary);
+  border-color: var(--fg-primary);
+}
+
+.chip i {
+  display: grid;
+  place-items: center;
+  inline-size: 14px;
+  block-size: 14px;
+  background: var(--sw-bg);
+  border: 1px solid var(--border-hover);
+}
+
+.chip i::before {
+  inline-size: 6px;
+  block-size: 6px;
+  content: '';
+  background: var(--sw);
+}
+
+.langOut {
+  display: flex;
+  gap: 8px;
+}
+
+.replay {
+  margin-inline-start: 8px;
+}
+
+.note {
+  margin-block-start: var(--space-md);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-lg);
+  margin-block-start: var(--space-xl);
+}
+
+.caseFacts {
+  margin-block-start: 0;
+}
+
+@media (max-width: 767px) {
+  .band {
+    margin-block-start: var(--space-lg);
+    padding-inline: 16px;
+  }
+
+  .chip,
+  .replay,
+  .langOut button {
+    min-block-size: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen * {
+    transition: none;
+    animation: none;
+  }
+}

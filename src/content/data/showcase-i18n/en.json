@@ -3089,5 +3089,237 @@
         ]
       }
     ]
+  },
+  "relay-desk": {
+    "brief": {
+      "task": "A self-initiated concept: a dispatch floor where work moves from desk to desk, handoffs are logged and a person signs before anything ships. Take the idea to a file that is ready for animation and development.",
+      "did": [
+        "13 desktop screens and 4 mobile",
+        "A design system on variables: 18 component families, five themes, two languages",
+        "Motion: seven spec sheets and a prototype with timelines"
+      ],
+      "result": "A Figma file with a prototype: seven starting flows on desktop and two on mobile. It is a concept, there is no product.",
+      "role": "The idea, design, system and motion are mine.",
+      "process": [
+        "The subject was picked from five directions in one genre.",
+        "Tokens and components first, then the desktop screens, then mobile.",
+        "The grain and the hole came after the first pass and became the signature of the project.",
+        "Themes and Russian were added as variable modes, no screen was redrawn."
+      ],
+      "nums": [
+        {
+          "v": "13",
+          "l": "desktop screens"
+        },
+        {
+          "v": "18",
+          "l": "component families"
+        },
+        {
+          "v": "5",
+          "l": "colour themes"
+        }
+      ]
+    },
+    "blocks": [
+      {
+        "kind": "reel",
+        "section": 5,
+        "title": "Motion from the prototype",
+        "items": [
+          {
+            "shot": 0,
+            "title": "First screen"
+          },
+          {
+            "shot": 15,
+            "title": "Loader"
+          },
+          {
+            "shot": 16,
+            "title": "Closing block"
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "section": 1,
+        "title": "Home: one page, one shift",
+        "pages": [
+          {
+            "shot": 1,
+            "label": "00:00 to 05:00"
+          },
+          {
+            "shot": 2,
+            "label": "05:00 to 07:30"
+          },
+          {
+            "shot": 3,
+            "label": "End of shift"
+          }
+        ]
+      },
+      {
+        "kind": "browse",
+        "section": 2,
+        "title": "Product screens",
+        "pages": [
+          {
+            "shot": 4,
+            "label": "Board"
+          },
+          {
+            "shot": 5,
+            "label": "Task"
+          },
+          {
+            "shot": 6,
+            "label": "Desks"
+          },
+          {
+            "shot": 7,
+            "label": "Desk passport"
+          },
+          {
+            "shot": 8,
+            "label": "Log"
+          },
+          {
+            "shot": 9,
+            "label": "Sign-off"
+          },
+          {
+            "shot": 10,
+            "label": "Manual"
+          },
+          {
+            "shot": 11,
+            "label": "Plans"
+          },
+          {
+            "shot": 12,
+            "label": "Changelog"
+          },
+          {
+            "shot": 13,
+            "label": "Access"
+          },
+          {
+            "shot": 14,
+            "label": "404"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "three",
+        "section": 4,
+        "title": "Five themes on the same variables",
+        "items": [
+          {
+            "shot": 17,
+            "title": "Ampere, the main one"
+          },
+          {
+            "shot": 18,
+            "title": "Phosphor"
+          },
+          {
+            "shot": 19,
+            "title": "Ultraviolet"
+          },
+          {
+            "shot": 20,
+            "title": "Glacier"
+          },
+          {
+            "shot": 21,
+            "title": "Paper"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "two",
+        "title": "Russian version",
+        "items": [
+          {
+            "shot": 22,
+            "title": "First screen in Russian"
+          },
+          {
+            "shot": 23,
+            "title": "Home sections in Russian"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "phones",
+        "title": "Phone",
+        "items": [
+          {
+            "shot": 24,
+            "title": "Home"
+          },
+          {
+            "shot": 25,
+            "title": "Shift board"
+          },
+          {
+            "shot": 26,
+            "title": "Sign-off"
+          },
+          {
+            "shot": 27,
+            "title": "Loader"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "two",
+        "section": 3,
+        "title": "Motion sheets",
+        "items": [
+          {
+            "shot": 28,
+            "title": "M02: time tokens"
+          },
+          {
+            "shot": 29,
+            "title": "M03: one page, one shift"
+          },
+          {
+            "shot": 30,
+            "title": "M04: component motion"
+          },
+          {
+            "shot": 31,
+            "title": "M05: key moments"
+          },
+          {
+            "shot": 32,
+            "title": "M06: handoff notes"
+          },
+          {
+            "shot": 33,
+            "title": "M07: what plays in Figma"
+          }
+        ]
+      },
+      {
+        "kind": "frames",
+        "variant": "one",
+        "title": "File cover",
+        "items": [
+          {
+            "shot": 34,
+            "title": "Every page of the file is signed off"
+          }
+        ]
+      }
+    ]
   }
 }
