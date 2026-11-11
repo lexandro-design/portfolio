@@ -1,0 +1,88 @@
+{
+  "en": {
+    "shift": "SHIFT",
+    "nav": [
+      "BOARD",
+      "DESKS",
+      "LOG",
+      "PLANS",
+      "MANUAL"
+    ],
+    "signIn": "SIGN IN",
+    "request": "REQUEST ACCESS",
+    "label": "SHIFT 0412 / FLOOR 01",
+    "lead": "A dispatch floor for work that moves from desk to desk. Every task has a route, every handoff is logged, and a person signs before anything ships.",
+    "open": "OPEN THE BOARD",
+    "manual": "READ THE MANUAL",
+    "facts": [
+      [
+        "06",
+        "DESKS ON THE FLOOR"
+      ],
+      [
+        "22",
+        "TASKS THIS SHIFT"
+      ],
+      [
+        "01",
+        "PERSON SIGNS"
+      ]
+    ],
+    "caption": "FLOOR 01 / FIVE LEVELS",
+    "now": "NOW",
+    "levels": [
+      "BRIEF",
+      "QUEUE",
+      "DESKS",
+      "REVIEW",
+      "SIGN-OFF"
+    ],
+    "line1": "WORK CHANGES HANDS",
+    "line2": "NOTHING GETS LOST",
+    "hint": "SCROLL / ONE PAGE IS ONE SHIFT",
+    "theme": "THEME"
+  },
+  "ru": {
+    "shift": "СМЕНА",
+    "nav": [
+      "ДОСКА",
+      "СТОЛЫ",
+      "ЖУРНАЛ",
+      "ТАРИФЫ",
+      "РЕГЛАМЕНТ"
+    ],
+    "signIn": "ВХОД",
+    "request": "ПОЛУЧИТЬ ДОСТУП",
+    "label": "СМЕНА 0412 / ЭТАЖ 01",
+    "lead": "Диспетчерский этаж для работы, которая идёт от стола к столу. У каждой задачи есть маршрут, каждая передача записана, и перед отправкой подписывает человек.",
+    "open": "ОТКРЫТЬ ДОСКУ",
+    "manual": "ЧИТАТЬ РЕГЛАМЕНТ",
+    "facts": [
+      [
+        "06",
+        "СТОЛОВ НА ЭТАЖЕ"
+      ],
+      [
+        "22",
+        "ЗАДАЧ ЗА СМЕНУ"
+      ],
+      [
+        "01",
+        "ЧЕЛОВЕК ПОДПИСЫВАЕТ"
+      ]
+    ],
+    "caption": "ЭТАЖ 01 / ПЯТЬ УРОВНЕЙ",
+    "now": "СЕЙЧАС",
+    "levels": [
+      "БРИФ",
+      "ОЧЕРЕДЬ",
+      "СТОЛЫ",
+      "ПРОВЕРКА",
+      "ПОДПИСЬ"
+    ],
+    "line1": "ИЗ РУК В РУКИ",
+    "line2": "НИЧЕГО НЕ ТЕРЯЕТСЯ",
+    "hint": "ЛИСТАЙТЕ / ОДНА СТРАНИЦА, ОДНА СМЕНА",
+    "theme": "ТЕМА"
+  }
+}

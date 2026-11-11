@@ -22,6 +22,9 @@ import { NextCase } from './NextCase'
 /** Разделы, которые почти дословно повторяют блок «Коротко»: дважды одно и то же не показываем */
 const SAID: Record<string, number[]> = { 'meeting-rooms': [2], lotus: [0], 'tg-assistant': [0], 'ai-console': [0] }
 
+/** Сцены, которые не заменяют первую главу: показ под ними идёт целиком */
+const WHOLE = new Set(['relay-desk'])
+
 /** Страница кейса на любом языке */
 export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
   const item = getCase(locale, slug)
@@ -99,7 +102,9 @@ export function CasePage({ locale, slug }: { locale: Locale; slug: string }) {
           t={t.case}
           data={scene}
         />
-        {show.blocks.length > 1 && <Showcase data={show} item={item} t={t.case.show} pace={pace} part="rest" />}
+        {(WHOLE.has(slug) || show.blocks.length > 1) && (
+          <Showcase data={show} item={item} t={t.case.show} pace={pace} part={WHOLE.has(slug) ? 'all' : 'rest'} />
+        )}
         <CaseBody item={item} t={t.case} used={used} />
         {cta}
         <NextCase

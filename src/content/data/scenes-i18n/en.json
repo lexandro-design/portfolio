@@ -2844,5 +2844,15 @@
         "text": "Even the error page stays in the same world."
       }
     ]
+  },
+  "relay-desk": {
+    "note": "The first screen is built in code from the design. Theme and language switch in place, as in the prototype.",
+    "lang": "en",
+    "labels": {
+      "screen": "RELAY/DESK first screen",
+      "theme": "Theme",
+      "lang": "Language",
+      "replay": "Replay"
+    }
   }
 }

@@ -15,6 +15,7 @@ import mimimibot from './data/scenes/mimimibot.json'
 import packagingBots from './data/scenes/packaging-bots.json'
 import prosoft from './data/scenes/prosoft.json'
 import ragMentor from './data/scenes/rag-mentor.json'
+import relayDesk from './data/scenes/relay-desk.json'
 import resortBot from './data/scenes/resort-bot.json'
 import salonBooking from './data/scenes/salon-booking.json'
 import teamReports from './data/scenes/team-reports.json'
@@ -42,6 +43,7 @@ const RU: Record<string, Data> = {
   'packaging-bots': packagingBots,
   prosoft,
   'rag-mentor': ragMentor,
+  'relay-desk': relayDesk,
   'resort-bot': resortBot,
   'salon-booking': salonBooking,
   'team-reports': teamReports,
