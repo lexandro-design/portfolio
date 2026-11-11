@@ -1881,5 +1881,96 @@
       "Svarnoy 52, About mask: the final version.",
       "Svarprom NN: ATIG 210PAC loop."
     ]
+  },
+  "relay-desk": {
+    "title": "RELAY/DESK",
+    "tagline": "service concept: design, system and motion",
+    "lead": "A self-initiated concept: a dispatch floor for work that moves from desk to desk. 13 desktop screens and 4 mobile, a design system on variables, five themes, two languages and a prototype where everything moves.",
+    "client": "own project · concept",
+    "sections": [
+      {
+        "title": "task",
+        "body": [
+          "This is a concept with no client. I wanted a project where interface, system and motion are built as one thing and are ready to hand to animation and development. The subject comes from what people talk about now: more and more work is done by autonomous agents, and what matters is no longer who did it, but where the task is right now and who signed for it."
+        ]
+      },
+      {
+        "title": "idea",
+        "body": [
+          "The product works like a dispatch floor. Work moves from desk to desk, every task has a route, every handoff is logged, and a person signs before anything ships. The home page is one shift: scroll runs from 00:00 to 08:00, and the header clock, the progress bar and the now tag read the same time.",
+          "The first screen shows the floor as five levels: brief, queue, desks, review, sign-off. Colour says who holds the work: orange is a desk working, green is a person, dashed is not started or sent back."
+        ]
+      },
+      {
+        "title": "screens",
+        "body": [
+          "The shift board is a timetable: one lane per desk, eight hours across, a block is a task. A task is shown as a route through stations, a desk as a passport, and the log writes one line per event. The acceptance sheet and the operator manual are set on paper: dark is the live shift, paper is what a person reads and signs.",
+          "There are also plans, a changelog, a request for access, a 404 page and a loader. Four mobile screens: home, board, sign-off and loader."
+        ]
+      },
+      {
+        "title": "system",
+        "body": [
+          "Everything stands on variables: 19 semantic colours, the 1440 and 375 grids, spacing and type scales, motion durations and easings. There are no raw colours in the file, so a theme changes with one mode. One typeface, the monospaced Geist Mono, in sizes that are multiples of 5 px. 18 component families: from button and field to task card, timetable lane, window with widgets, desk passport and stamp."
+        ]
+      },
+      {
+        "title": "themes and languages",
+        "body": [
+          "Five themes: the main Ampere, Phosphor, Ultraviolet, Glacier and the paper one, Paper. The switch is a rail at the right edge and it re-colours every screen at once. Sign-off and the manual stay on paper in any theme. Contrast is calculated for each theme.",
+          "The home page is translated into Russian: 254 strings live in variables with EN and RU modes, the switch sits in the header. Russian headlines are fitted to the same grid, and no line breaks the layout."
+        ]
+      },
+      {
+        "title": "motion",
+        "body": [
+          "One rule: everything moves the way a shift clock does. States flip on an 80 ms tick with no smooth fades, work moves left to right, time moves top to bottom, nothing blinks for attention. Six durations, two staggers and three easings live in variables, so design and code read the same numbers.",
+          "Grain is the signature of the project: a ring of dots under the stack of levels, dissolve bands between sections, a horizon that pours into the hole at the end. In Figma the motion can be played: the loader, the first screen and the closing block run on timelines, and clicks, themes and language work in the prototype. Seven sheets are prepared for animation and development: principles, tokens, the scroll storyboard, the component table, key moments, handoff notes and the list of prototype flows."
+        ]
+      },
+      {
+        "title": "what it is",
+        "body": [
+          "The concept is self-initiated: there is no product and no client, and the prices, tasks and numbers in the layout are made up. Design, system and motion are mine."
+        ]
+      }
+    ],
+    "captions": [
+      "First screen: the shift floor in five levels on a ring of grain.",
+      "Home, 00:00 to 05:00: the brief, the queue and the handoff between desks.",
+      "Home, 05:00 to 07:30: sign-off on paper, the floor poster, desks and the log.",
+      "Home, end of shift: plans, the closing block and the footer.",
+      "Shift board: one lane per desk, eight hours across, the now line.",
+      "Task: the route by stations, a three-line brief and the task log.",
+      "Desks: six passports and the chain the work follows.",
+      "Desk passport: what it takes, who it hands to, what is on it now.",
+      "Shift log: one line for every event, handoff, return and signature.",
+      "Sign-off: the acceptance sheet on paper and the stamp a person puts on it.",
+      "Operator manual: six chapters with contents, also on paper.",
+      "Plans: three tiers, a comparison table and questions. Prices are made up.",
+      "Changelog: one line per change, the way the shift log is written.",
+      "Request access: the form as a terminal window and three steps after sending.",
+      "Page 404: the desk is not on the floor, the log knows where the task went.",
+      "Loader: grain gathers into a ring, the counter runs from 000 to 100.",
+      "Closing block: a grain horizon pours into the hole at the right edge.",
+      "Ampere theme, the main one.",
+      "Phosphor theme.",
+      "Ultraviolet theme.",
+      "Glacier theme.",
+      "Paper theme: the same home page on paper.",
+      "First screen in Russian: headlines fitted to the same grid.",
+      "Home in Russian: the brief, the queue and the handoff.",
+      "Phone: home.",
+      "Phone: the shift board as a list by desk.",
+      "Phone: sign-off and the acceptance sheet.",
+      "Phone: the loader.",
+      "Sheet M02: six durations, two staggers and three easings in variables.",
+      "Sheet M03: the home page tied to scroll as one shift from 00:00 to 08:00.",
+      "Sheet M04: what triggers a component, what moves and for how long.",
+      "Sheet M05: three key moments in milliseconds and the grain card.",
+      "Sheet M06: handoff notes, 11 points for motion and 14 for the build.",
+      "Sheet M07: which flows play in the prototype and what Figma cannot show.",
+      "File cover: 13 desktop screens, 4 mobile, 18 component families."
+    ]
   }
 }
