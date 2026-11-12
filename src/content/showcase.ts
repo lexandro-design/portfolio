@@ -37,6 +37,8 @@ export type Block = Titled &
         b: string
         /** dark — справа тёмная версия того же скрина */
         pairs: { a: number; b: number; label: string; dark?: boolean }[]
+        /** Два кадра рядом вместо шторки: у пары разная раскладка, и шов резал бы текст пополам */
+        side?: boolean
       }
     | { kind: 'steps'; steps: { shot: number; title: string; text: string }[] }
     | { kind: 'deck'; cards: { shot: number; title: string }[] }

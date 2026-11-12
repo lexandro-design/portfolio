@@ -58,24 +58,51 @@ export function Compare({ block, shots, drag }: Props) {
     e.preventDefault()
   }
 
+  const tabs = block.pairs.length > 1 && (
+    <div className={kit.tabs} role="tablist">
+      {block.pairs.map((q, k) => (
+        <button key={q.label} type="button" role="tab" aria-selected={k === pair} className={kit.tab} onClick={() => setPair(k)}>
+          {q.label}
+        </button>
+      ))}
+    </div>
+  )
+
+  // Разная раскладка (старый сайт и редизайн, два состояния карточки): шторка ровно не сойдётся, кадры стоят рядом
+  if (block.side)
+    return (
+      <div ref={ref} className={styles.root} data-side="">
+        {tabs}
+        {/* Короткие кадры: рамка по более высокому из пары, оба прижаты к верху в одном масштабе */}
+        <div className={styles.pair} style={tall <= 1 ? ({ '--ratio': `1 / ${tall}` } as CSSProperties) : undefined}>
+          {(
+            [
+              [a, a.src, block.a],
+              [bShot, bSrc, block.b],
+            ] as const
+          ).map(([s, src, tag]) => {
+            const t = s.h / s.w
+            return (
+              <figure
+                key={tag}
+                className={styles.frame}
+                data-long={t > 1 || undefined}
+                data-play={inView || undefined}
+                style={{ '--pan': `${Math.min(24, 6 + t * 3)}s` } as CSSProperties}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
+                <img src={asset(src)} srcSet={srcSet(src, s.w)} alt={s.caption} width={s.w} height={s.h} className={kit.img} />
+                <span className={`${styles.tag} ${styles.tagA}`}>{tag}</span>
+              </figure>
+            )
+          })}
+        </div>
+      </div>
+    )
+
   return (
     <div ref={ref} className={styles.root}>
-      {block.pairs.length > 1 && (
-        <div className={kit.tabs} role="tablist">
-          {block.pairs.map((q, k) => (
-            <button
-              key={q.label}
-              type="button"
-              role="tab"
-              aria-selected={k === pair}
-              className={kit.tab}
-              onClick={() => setPair(k)}
-            >
-              {q.label}
-            </button>
-          ))}
-        </div>
-      )}
+      {tabs}
       <div
         ref={frame}
         className={styles.frame}
