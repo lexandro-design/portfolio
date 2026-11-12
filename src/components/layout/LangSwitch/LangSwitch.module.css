@@ -93,10 +93,3 @@
     block-size: 44px;
   }
 }
-
-@media (min-width: 3440px) {
-  .trigger {
-    block-size: 52px;
-    padding-inline: 16px;
-  }
-}

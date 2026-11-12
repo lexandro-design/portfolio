@@ -85,15 +85,3 @@
     font-size: 14px;
   }
 }
-
-@media (min-width: 3440px) {
-  .button {
-    min-block-size: 58px;
-    padding-inline: 30px;
-    font-size: 18px;
-  }
-
-  .button[data-variant='ghost'] {
-    font-size: 17px;
-  }
-}

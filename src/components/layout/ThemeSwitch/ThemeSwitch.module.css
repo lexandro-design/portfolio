@@ -40,7 +40,8 @@
   color: var(--fg-inverse);
 }
 
-@media (max-width: 767px) {
+/* Телефон и планшет (#770): высота 44 под палец, на планшете было 30 */
+@media (max-width: 767px), (pointer: coarse) {
   .option {
     inline-size: 32px;
     block-size: 44px;
@@ -75,17 +76,5 @@
   .option {
     inline-size: 38px;
     block-size: 36px;
-  }
-}
-
-@media (min-width: 3440px) {
-  .option {
-    inline-size: 46px;
-    block-size: 44px;
-  }
-
-  .option svg {
-    inline-size: 18px;
-    block-size: 18px;
   }
 }
