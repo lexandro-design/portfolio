@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type { Shot } from '@/content/cases'
-import { asset, srcSet } from '@/lib/asset'
+import { asset, srcSet, video2x } from '@/lib/asset'
 import { LoopVideo } from '@/components/ui/Shot/LoopVideo'
 import styles from './Reel.module.css'
 
@@ -24,6 +24,7 @@ export function Reel({ items, shots }: Props) {
             key={shot.src}
             className={styles.video}
             src={asset(shot.video)}
+            src2x={video2x(shot.video)}
             poster={asset(shot.src)}
             width={shot.w}
             height={shot.h}
