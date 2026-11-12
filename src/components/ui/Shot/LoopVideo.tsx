@@ -5,6 +5,8 @@ import { stillMotion } from '@/lib/still'
 
 type Props = {
   src: string
+  /** Файл @2x: берётся, если блок в физических пикселях шире width */
+  src2x?: string
   poster: string
   width: number
   height: number
@@ -21,7 +23,7 @@ type Props = {
  * На главной таких дюжина: без этого телефон качал бы все сразу. Пока видео
  * не началось и при prefers-reduced-motion виден постер — первый кадр
  */
-export function LoopVideo({ src, poster, width, height, className, style, label, screen, eager }: Props) {
+export function LoopVideo({ src, src2x, poster, width, height, className, style, label, screen, eager }: Props) {
   const ref = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function LoopVideo({ src, poster, width, height, className, style, label,
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          if (!video.src) video.src = src
+          if (!video.src) video.src = src2x && video.clientWidth * devicePixelRatio > width * 1.05 ? src2x : src
           video.play().catch(() => {})
         } else video.pause()
       },
@@ -38,7 +40,7 @@ export function LoopVideo({ src, poster, width, height, className, style, label,
     )
     io.observe(video)
     return () => io.disconnect()
-  }, [src])
+  }, [src, src2x, width])
 
   return (
     <video

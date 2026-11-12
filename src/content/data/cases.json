@@ -562,7 +562,8 @@
         "src": "/cases/relay-desk/hero.webp",
         "caption": "Первый экран: этаж смены из пяти уровней на кольце зерна.",
         "w": 1440,
-        "h": 900
+        "h": 900,
+        "video": "/cases/relay-desk/hero.mp4"
       },
       {
         "src": "/cases/relay-desk/home-1.webp",

@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { asset, srcSet } from '@/lib/asset'
+import { asset, srcSet, video2x } from '@/lib/asset'
 import type { Shot as ShotType } from '@/content/cases'
 import { LoopVideo } from './LoopVideo'
 
@@ -45,6 +45,7 @@ function Single({ shot, className, eager, zoom, screen }: Props & { screen?: 'wi
       <LoopVideo
         className={className}
         src={asset(shot.video)}
+        src2x={video2x(shot.video)}
         poster={asset(shot.src)}
         width={shot.w}
         height={shot.h}
