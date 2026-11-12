@@ -720,7 +720,8 @@
             "b": 2,
             "label": "チェックカード"
           }
-        ]
+        ],
+        "side": true
       },
       {
         "kind": "steps",
@@ -1194,7 +1195,8 @@
             "b": 3,
             "label": "スマホ"
           }
-        ]
+        ],
+        "side": true
       },
       {
         "kind": "reel",
@@ -1799,7 +1801,8 @@
             "b": 3,
             "label": "スマホ"
           }
-        ]
+        ],
+        "side": true
       },
       {
         "kind": "reel",
