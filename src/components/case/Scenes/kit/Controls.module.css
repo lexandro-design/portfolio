@@ -118,6 +118,18 @@
   color: var(--fg-tertiary);
 }
 
+/* Палец (#770): шагов бывает 7-12 на полосе 250 px, шире сегмент не сделать.
+   Зазоры между шагами отдаём кнопкам, чтобы касание мимо черты всё равно попадало в шаг, и высота 44 */
+@media (pointer: coarse) {
+  .track {
+    gap: 0;
+  }
+
+  .track button {
+    padding: 20px 1.5px;
+  }
+}
+
 @media (max-width: 1023px) {
   .time {
     display: none;

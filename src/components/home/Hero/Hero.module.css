@@ -393,3 +393,16 @@
     scroll-snap-align: start;
   }
 }
+
+/* Палец (#770): ссылка в одну строку ниже 32 px, область касания выше самой строки */
+@media (pointer: coarse) {
+  .scroll {
+    position: relative;
+  }
+
+  .scroll::before {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+  }
+}

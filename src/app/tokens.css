@@ -122,23 +122,8 @@
   }
 }
 
-@media (min-width: 3440px) {
-  :root {
-    --container: 2960px;
-    --bleed: 128px;
-    --nav-h: 104px;
-    --section-y: 256px;
-    --type-h1: 240px;
-    --type-h2: 136px;
-    --type-h3: 56px;
-    --type-h4: 34px;
-    --type-body-lg: 30px;
-    --type-body: 26px;
-    --type-body-sm: 22px;
-    --type-mono: 18px;
-    --type-mono-sm: 16px;
-  }
-}
+/* Потолок роста (#770): на 3440 остаются размеры 2560. Колонка 2960 тянула
+   кадры 1600 px вдвое, главная вырастала до 18 500 px, строки до 225 знаков */
 
 /* Планшет (Landing / Tablet 768): поля 32, секции 128, H1 88 */
 @media (max-width: 1023px) {

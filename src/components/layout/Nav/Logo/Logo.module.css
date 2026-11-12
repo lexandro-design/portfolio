@@ -33,9 +33,3 @@
     font-size: 23px;
   }
 }
-
-@media (min-width: 3440px) {
-  .logo {
-    font-size: 28px;
-  }
-}

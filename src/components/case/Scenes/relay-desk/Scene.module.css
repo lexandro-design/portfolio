@@ -146,6 +146,23 @@
   border: 0;
 }
 
+/* Палец (#770): в макете 1:1 кнопки 24×32, область касания шире самой надписи */
+@media (pointer: coarse) {
+  .lang button {
+    position: relative;
+  }
+
+  .lang button::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+  }
+
+  .langOut button {
+    min-block-size: 44px;
+  }
+}
+
 .lang button[aria-pressed='true'] {
   color: var(--rd-text);
 }
@@ -454,7 +471,8 @@
 
 .rail span {
   margin-block-end: calc(8 * var(--u));
-  font-size: calc(12 * var(--u));
+  /* в уменьшенном макете подпись выходила 7.5 px (#770) */
+  font-size: max(9px, calc(12 * var(--u)));
   letter-spacing: calc(0.8 * var(--u));
   color: var(--rd-muted);
   writing-mode: vertical-rl;

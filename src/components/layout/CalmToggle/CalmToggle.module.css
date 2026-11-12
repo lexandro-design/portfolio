@@ -40,7 +40,21 @@
   font-size: var(--type-body);
 }
 
-/* Шапка узкая: остаётся значок на 44 px, подпись есть на первом экране и в меню */
+/* Шапка узкая или на экране кнопка первого экрана: остаётся значок, подпись есть рядом и в меню */
+.toggle[data-place='nav'][data-twin] {
+  justify-content: center;
+  inline-size: 38px;
+  padding: 0;
+}
+
+.toggle[data-place='nav'][data-twin] .name {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
 @media (max-width: 1359px) {
   .toggle[data-place='nav'] {
     justify-content: center;

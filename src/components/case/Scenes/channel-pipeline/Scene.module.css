@@ -572,6 +572,15 @@
   color: var(--fg-tertiary);
 }
 
+/* Телефон 360 (#770): «новость» и «день позже» не влезали в свои окна на 7-12 px */
+@media (max-width: 479px) {
+  .band i {
+    padding-inline: 3px;
+    font-size: 10px;
+    letter-spacing: -0.03em;
+  }
+}
+
 .band[data-low] {
   border-style: dashed;
   background: none;

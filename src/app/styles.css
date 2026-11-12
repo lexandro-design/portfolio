@@ -107,6 +107,12 @@ img[data-zoom] {
   padding-inline: var(--bleed);
 }
 
+/* Длина строки (#770): абзац и пункт списка не шире ~75 знаков, на широком окне
+   иначе выходило 130-225 знаков и глаз терял начало следующей строки */
+main p {
+  max-inline-size: 68ch;
+}
+
 .srOnly {
   position: absolute;
   inline-size: 1px;

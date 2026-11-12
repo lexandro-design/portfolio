@@ -339,6 +339,15 @@
     background-color 80ms steps(1, end);
 }
 
+/* Палец (#770): зона на уменьшенном экране прототипа бывает 9 px в высоту, область касания шире рамки */
+@media (pointer: coarse) {
+  .hot::before {
+    content: '';
+    position: absolute;
+    inset: -12px -4px;
+  }
+}
+
 .hot:hover,
 .hot:focus-visible,
 .layer[data-flash] .hot {
