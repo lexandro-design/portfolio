@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+import videoW from '@/content/data/video-w.json'
 import x2 from '@/content/data/x2.json'
 
 /**
@@ -21,3 +23,12 @@ export const srcSet = (path: string, w: number) =>
 
 /** Ролик, у которого есть файл @2x: LoopVideo берёт его, когда блок шире натуральной ширины 1x */
 export const video2x = (path: string) => (X2.has(path) ? asset(at2x(path)) : undefined)
+
+const VW: Record<string, number> = videoW
+
+/**
+ * Ролик без пары @2x не шире своего файла (#770): на широком экране сцена 2000+ px
+ * тянула петлю 1280 px вдвое. Блок встаёт по центру своей колонки
+ */
+export const videoFit = (path: string): CSSProperties | undefined =>
+  !X2.has(path) && VW[path] ? { maxInlineSize: VW[path], marginInline: 'auto' } : undefined

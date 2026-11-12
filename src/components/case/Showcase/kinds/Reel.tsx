@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type { Shot } from '@/content/cases'
-import { asset, srcSet, video2x } from '@/lib/asset'
+import { asset, srcSet, video2x, videoFit } from '@/lib/asset'
 import { LoopVideo } from '@/components/ui/Shot/LoopVideo'
 import styles from './Reel.module.css'
 
@@ -29,6 +29,7 @@ export function Reel({ items, shots }: Props) {
             width={shot.w}
             height={shot.h}
             label={shot.caption}
+            style={videoFit(shot.video)}
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка
