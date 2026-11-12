@@ -1,5 +1,5 @@
 import type { Shot } from '@/content/cases'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import styles from './Wide.module.css'
 
 /**
@@ -14,6 +14,7 @@ export function Wide({ shot }: { shot: Shot }) {
           {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
           <img
             src={asset(shot.src)}
+            srcSet={srcSet(shot.src, shot.w)}
             alt={shot.caption}
             width={shot.w}
             height={shot.h}

@@ -2,7 +2,7 @@
 
 import { useRef, type CSSProperties } from 'react'
 import type { Shot } from '@/content/cases'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import { useAuto, useInView, useReserve } from '../hooks'
 import kit from './kit.module.css'
 import styles from './Steps.module.css'
@@ -58,6 +58,7 @@ export function Steps({ steps, shots }: Props) {
             <img
               key={s.shot}
               src={asset(shot.src)}
+              srcSet={srcSet(shot.src, shot.w)}
               alt={shot.caption}
               width={shot.w}
               height={shot.h}

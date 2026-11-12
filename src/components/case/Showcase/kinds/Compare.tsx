@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
 import type { Shot } from '@/content/cases'
 import type { Block } from '@/content/showcase'
-import { asset } from '@/lib/asset'
+import { asset, srcSet } from '@/lib/asset'
 import { useInView } from '../hooks'
 import kit from './kit.module.css'
 import styles from './Compare.module.css'
@@ -93,10 +93,10 @@ export function Compare({ block, shots, drag }: Props) {
         onPointerCancel={() => setDragging(false)}
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
-        <img src={asset(a.src)} alt={a.caption} width={a.w} height={a.h} className={kit.img} draggable={false} />
+        <img src={asset(a.src)} srcSet={srcSet(a.src, a.w)} alt={a.caption} width={a.w} height={a.h} className={kit.img} draggable={false} />
         <div className={styles.after}>
           {/* eslint-disable-next-line @next/next/no-img-element -- статическая выгрузка */}
-          <img src={asset(bSrc)} alt={bShot.caption} width={bShot.w} height={bShot.h} className={kit.img} draggable={false} />
+          <img src={asset(bSrc)} srcSet={srcSet(bSrc, bShot.w)} alt={bShot.caption} width={bShot.w} height={bShot.h} className={kit.img} draggable={false} />
         </div>
         <span className={`${styles.tag} ${styles.tagA}`}>{block.a}</span>
         <span className={`${styles.tag} ${styles.tagB}`}>{block.b}</span>
