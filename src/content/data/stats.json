@@ -1,15 +1,15 @@
 {
-  "updated": "2026-11-11",
+  "updated": "2026-11-26",
   "work": {
-    "lines": 422000,
-    "commits": 1880,
-    "figma": 55,
-    "hours": 970
+    "lines": 436000,
+    "commits": 2000,
+    "figma": 56,
+    "hours": 990
   },
   "langs": [
     [
       "Python",
-      46
+      47
     ],
     [
       "JavaScript",
@@ -29,7 +29,7 @@
     ],
     [
       "other",
-      5
+      4
     ]
   ]
 }
